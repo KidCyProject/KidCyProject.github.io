@@ -114,8 +114,8 @@ export const contentSE = {
           {
             // ID: 5.2.2
             kind: 'Szenariokarten',
-            name: 'Beispiele für emotionale Manipulation',
-            filename: 'Szenariokarten - Beispiele für emotionale Manipulation',
+            name: 'Puzzle zur emotionalen Manipulation',
+            filename: 'Szenariokarten - Puzzle zur emotionalen Manipulation',
             ariaLabel: 'Material herunterladen',
           },
           {
@@ -290,10 +290,10 @@ export const contentSE = {
       imageSrc: '/images/learning-hub/06_malware.webp',
     },
     {
-      moduleId: 'da',
-      brand: 'DA',
-      href: '/learning-hub/digital-abuse/content',
-      imageSrc: '/images/learning-hub/07_digital-abuse.webp',
+      moduleId: 'dm',
+      brand: 'DM',
+      href: '/learning-hub/digital-misuse/content',
+      imageSrc: '/images/learning-hub/07_digital-misuse.webp',
     },
   ],
 }

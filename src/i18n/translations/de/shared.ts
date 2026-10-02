@@ -140,6 +140,8 @@ export const shared = {
 
         download: 'Herunterladen',
         downloadGuide: 'Unterrichtsleitfaden herunterladen',
+        downloadIntro: 'Einführungsmaterialien herunterladen',
+        introPackage: 'Einführungsmaterialien',
         downloadAll: 'Alle Materialien herunterladen',
         downloadPackage: 'Paket herunterladen',
 
@@ -155,6 +157,7 @@ export const shared = {
 
         dividerContent: 'Was ist drin',
         dividerMore: 'Weitere Ressourcen',
+        dividerActivities: 'Zusätzliche Aktivitäten',
 
         moduleContent: 'Modulinhalt',
         moduleContentSubtitle: 'Erkunden Sie jeden Teil dieses Moduls — Aktivitäten, Materialien und Videos zum Unterrichten.',
@@ -249,7 +252,7 @@ export const shared = {
               title: 'Daten-Detektive – Digitale Fußabdrücke',
             },
             p4: {
-              title: 'Daten-Detektive – Bereinigen Sie Ihren digitalen Fußabdruck',
+              title: 'Bereinigen Sie Ihren digitalen Fußabdruck',
             },
           },
         },
@@ -291,7 +294,7 @@ export const shared = {
             },
           },
         },
-        da: {
+        dm: {
           title: 'Digitaler Missbrauch',
           description:
             'Digitaler Missbrauch umfasst schädliches Verhalten online wie Bedrohungen, Belästigung oder unerwünschten Kontakt. Dieses Modul hilft Pädagogen, Schülern beizubringen, unsicheres Verhalten zu erkennen, Grenzen zu setzen und Unterstützung zu finden.',
@@ -345,7 +348,7 @@ export const shared = {
         mw: {
           description: 'Treffen Sie kluge Entscheidungen, um Geräte gesund und schnell zu halten.',
         },
-        da: {
+        dm: {
           description:
             'Treffen Sie Entscheidungen. Sehen Sie Konsequenzen. Lernen Sie, wie man mit Cybermobbing, Online-Druck und digitalem Missbrauch umgeht.',
         },
@@ -387,7 +390,7 @@ export const shared = {
           subtitle: 'Treten Sie in ein rasantes Rennen ein, bei dem das Verständnis von Malware Ihnen den Vorteil verschafft. Beginnen Sie damit, verschiedene Gegenstände auf der Strecke zu erkunden — wie Viren, Würmer, Ransomware und Schutzwerkzeuge wie Antivirensoftware, Firewalls und Updates — jedes mit seiner eigenen Wirkung und realer Bedeutung. Fahren Sie dann durch drei Runden und sammeln Sie Gegenstände, die je nachdem, ob sie Bedrohungen oder Schutzmaßnahmen darstellen, entweder Ihre Leistung steigern oder Sie verlangsamen können. An der Ziellinie überprüfen Sie, was Sie gesammelt haben, und erfahren, wie jedes Element mit realer Cybersicherheit verbunden ist, zusammen mit praktischen Tipps, wie Sie geschützt bleiben.',
           altText: 'Spielvorschau',
         },
-        da: {
+        dm: {
           title: 'Freundlichkeitsquest: Rettet die Stadt',
           description: 'Treten Sie in eine lebhafte Stadt ein, in der digitale Konflikte für Spannungen unter den Bewohnern gesorgt haben.',
           subtitle: 'Treten Sie in eine lebhafte Stadt ein, in der digitale Konflikte für Spannungen unter den Bewohnern gesorgt haben. Übernehmen Sie die Rolle eines Problemlösers und helfen Sie den Menschen, mit Problemen wie Cybermobbing, Deepfakes und Online-Missbrauch umzugehen, und treffen Sie durchdachte Entscheidungen, um ihre Streitigkeiten zu lösen. Mit jedem Konflikt, den Sie erfolgreich lösen, verbessern sich die Beziehungen und die Stadt wird einladender. Beobachten Sie, wie Ihre Handlungen die Atmosphäre verwandeln — was zu einer freudvollen Feier führt, bei der die Gemeinschaft zusammenkommt und das einst distanzierte Maskottchen zunehmend freundlicher wird.',

@@ -7,37 +7,42 @@
 // ---------------------------------------------------------------------------
 
 export const contentDP = {
-  aim: 'Pomoci žákům rozpoznat, co se počítá jako osobní údaje, pochopit, proč je soukromí důležité, a dělat bezpečnější rozhodnutí před sdílením informací online.',
+  aim:
+    'Poskytnout základní znalosti o tom, co je soukromí dat, a o zásadách ochrany soukromých údajů v digitálním prostředí.',
   objectives: [
-    'Definovat osobní údaje a identifikovat, co je citlivé.',
-    'Podporovat promyšlené sdílení a rozhodnutí založená na souhlasu.',
-    'Budovat povědomí o nastavení soukromí a bezpečných výchozích hodnotách.',
+    'Představit, jaké typy dat se objevují při sdílení obsahu v digitálním prostředí.',
+    'Zdůraznit důležitost soukromí dat v digitálním prostředí.',
+    'Představit zásady ochrany soukromí dat v digitálním prostředí.',
+    'Rozvinout porozumění tomu, jak se digitální data používají a jak je lze v případě potřeby smazat.',
   ],
   outcomes: [
-    'Rozpoznat běžné typy osobních informací.',
-    'Vysvětlit, jak mohou data putovat a být ukládána online.',
-    'Aplikovat jednoduchá pravidla soukromí před sdílením nebo zveřejňováním.',
+    'Umím popsat, jaké typy dat se objevují při sdílení obsahu v digitálním prostředí.',
+    'Umím vysvětlit, proč je soukromí dat v digitálním prostředí důležité.',
+    'Umím v zadaných situacích předvést zásady ochrany soukromí dat v digitálním prostředí a zdůvodnit svoje rozhodnutí.',
+    'Umím v zadaných situacích rozpoznat způsoby sdílení dat, které vedou k narušení soukromí.',
+    'Umím vysvětlit, jak se digitální data používají a jak je lze v případě potřeby smazat.',
+    'Umím v zadaných situacích rozpoznat příklady soukromých údajů.',
   ],
   parts: [
     {
-      goal: 'Pomoci žákům pochopit, co jsou osobní údaje, identifikovat různé typy citlivých informací a rozpoznat, proč jejich ochrana záleží.',
+      goal: 'Pomoct žákům pochopit, co jsou osobní údaje, rozpoznat různé typy citlivých informací a uvědomit si, proč na jejich ochraně záleží.',
       bundle: {
-        filename: 'Ochrana osobních údajů - balíček - Část 1',
+        filename: 'Soukromí dat - balíček - Část 1',
       },
       included: {
         materials: [
           {
             // ID: 4.1.2
-            kind: 'Třídící karty',
+            kind: 'Třídicí kartičky',
             name: 'Soukromé, nebo veřejné',
-            filename: 'Třídící karty - Soukromé, nebo veřejné',
+            filename: 'Třídicí kartičky - Soukromé, nebo veřejné',
             ariaLabel: 'Stáhnout materiál',
           },
           {
             // ID: 4.1.3
             kind: 'Pracovní list',
-            name: 'Reflexe: Veřejná vs. soukromá data',
-            filename: 'Pracovní list - Reflexe Veřejná vs. soukromá data',
+            name: 'Zamyšlení: veřejné vs. soukromé údaje',
+            filename: 'Pracovní list - Zamyšlení veřejné vs. soukromé údaje',
             ariaLabel: 'Stáhnout materiál',
           },
         ],
@@ -49,46 +54,46 @@ export const contentDP = {
             title: 'Co jsou osobní údaje?',
           },
           {
-            title: 'Plénum: Shrnutí a neformální hodnocení',
+            title: 'Závěr: shrnutí a neformální hodnocení',
           },
         ],
       },
       featuredVideo: {
         // ID: 4.1.1
-        title: 'Co jsou soukromá data?',
+        title: 'Co jsou soukromé údaje?',
         supportText:
-          'Použijte toto video k představení konceptu soukromých dat a zahájení diskuse o typech informací, které žáci každý den sdílejí. Pozastavte se a zeptejte se žáků, které detaily považují za soukromé.',
+          'Použijte video k představení pojmu soukromé údaje a k rozproudění diskuse o tom, jaké informace žáci každý den sdílejí. Zastavte se a zeptejte se jich, co považují za soukromé.',
         downloads: {
           video: {
-            filename: 'Co jsou soukromá data',
+            filename: 'Co jsou soukromé údaje',
             ariaLabel: 'Stáhnout video',
           },
           subtitles: {
-            filename: 'Co jsou soukromá data - Titulky',
+            filename: 'Co jsou soukromé údaje - Titulky',
             ariaLabel: 'Stáhnout titulky',
           },
         },
       },
     },
     {
-      goal: 'Pomoci žákům pochopit, jak a proč se data sdílejí online, důležitost souhlasu a jak dělat promyšlená rozhodnutí před sdílením osobních informací.',
+      goal: 'Pomoct žákům pochopit, jak a proč se data online sdílejí, proč je důležitý souhlas a jak se rozhodovat s rozmyslem, než osobní údaje sdělí.',
       bundle: {
-        filename: 'Ochrana osobních údajů - balíček - Část 2',
+        filename: 'Soukromí dat - balíček - Část 2',
       },
       included: {
         materials: [
           {
             // ID: 4.2.1
             kind: 'Obrázek',
-            name: 'Sdílení online: Bezpečné vs. rizikové',
-            filename: 'Obrázek - Sdílení online Bezpečné vs. rizikové',
+            name: 'Sdílení online: bezpečné vs. riskantní',
+            filename: 'Obrázek - Sdílení online bezpečné vs. riskantní',
             ariaLabel: 'Stáhnout materiál',
           },
           {
             // ID: 4.2.2
-            kind: 'Scénářové karty',
+            kind: 'Kartičky se situacemi',
             name: 'Hraní rolí',
-            filename: 'Scénářové karty - Hraní rolí',
+            filename: 'Kartičky se situacemi - Hraní rolí',
             ariaLabel: 'Stáhnout materiál',
           },
           {
@@ -104,50 +109,47 @@ export const contentDP = {
             title: 'Úvod',
           },
           {
-            title: 'Jak se sdílejí data?',
+            title: 'Situace při sdílení dat',
           },
           {
-            title: 'Souhlas a oprávnění',
-          },
-          {
-            title: 'Plénum - Shrnutí a neformální hodnocení',
+            title: 'Závěr: shrnutí a neformální hodnocení',
           },
         ],
       },
     },
     {
-      goal: 'Pomoci žákům objevit, co je digitální stopa, pochopit, jak každodenní online aktivity zanechávají trvalé stopy, a uvažovat o dlouhodobém dopadu jejich online chování.',
+      goal: 'Pomoct žákům zjistit, co je digitální stopa, pochopit, jak běžná online činnost zanechává trvalé stopy, a zamyslet se nad dlouhodobým dopadem jejich chování online.',
       bundle: {
-        filename: 'Ochrana osobních údajů - balíček - Část 3',
+        filename: 'Soukromí dat - balíček - Část 3',
       },
       included: {
         materials: [
           {
             // ID: 4.3.2
             kind: 'Obrázek',
-            name: 'Komiks: Den ze života Sama online',
-            filename: 'Obrázek - Komiks Den ze života Sama online',
+            name: 'Komiks: Den v Samově životě online',
+            filename: 'Obrázek - Komiks Den v Samově životě online',
             ariaLabel: 'Stáhnout materiál',
           },
           {
             // ID: 4.3.3
             kind: 'Pracovní list',
-            name: 'Sleduj Samovu stopu',
-            filename: 'Pracovní list - Sleduj Samovu stopu',
+            name: 'Vystopuj Samovu digitální stopu',
+            filename: 'Pracovní list - Vystopuj Samovu digitální stopu',
             ariaLabel: 'Stáhnout materiál',
           },
           {
             // ID: 4.3.4
             kind: 'Schéma',
-            name: 'Hrací deska: Hodnota soukromí',
-            filename: 'Schéma - Hrací deska Hodnota soukromí',
+            name: 'Herní plán: Hodnota soukromí',
+            filename: 'Schéma - Herní plán Hodnota soukromí',
             ariaLabel: 'Stáhnout materiál',
           },
           {
             // ID: 4.3.5
             kind: 'Herní sada',
-            name: 'Karty: Hodnota soukromí',
-            filename: 'Herní sada - Karty Hodnota soukromí',
+            name: 'Hodnota soukromí',
+            filename: 'Herní sada - Hodnota soukromí',
             ariaLabel: 'Stáhnout materiál',
           },
         ],
@@ -159,10 +161,10 @@ export const contentDP = {
             title: 'Co je digitální stopa?',
           },
           {
-            title: 'Mapování vašich online stop',
+            title: 'Digitální stopy',
           },
           {
-            title: 'Plénum - Shrnutí a neformální hodnocení',
+            title: 'Závěr: shrnutí a neformální hodnocení',
           },
         ],
       },
@@ -170,7 +172,7 @@ export const contentDP = {
         // ID: 4.3.1
         title: 'Co je digitální stopa?',
         supportText:
-          'Použijte toto video, aby si žáci dokázali představit stopu dat, kterou zanechávají online. Podpořte reflexi o tom, které jejich nedávné aktivity mohly zanechat stopu.',
+          'Použijte video, aby si žáci dokázali představit stopu dat, kterou po sobě online nechávají. Nechte je zamyslet se, po kterých jejich nedávných činnostech nějaká stopa zůstala.',
         downloads: {
           video: {
             filename: 'Co je digitální stopa',
@@ -184,9 +186,9 @@ export const contentDP = {
       },
     },
     {
-      goal: 'Pomoci žákům naučit se praktické strategie pro přezkoumání a správu jejich digitální stopy, včetně způsobu úpravy nastavení soukromí a odstranění nežádoucích dat.',
+      goal: 'Pomoct žákům osvojit si praktické postupy, jak si digitální stopu projít a spravovat, včetně toho, jak upravit nastavení soukromí a odstranit nežádoucí údaje.',
       bundle: {
-        filename: 'Ochrana osobních údajů - balíček - Část 4',
+        filename: 'Soukromí dat - balíček - Část 4',
       },
       included: {
         materials: [
@@ -200,29 +202,29 @@ export const contentDP = {
           {
             // ID: 4.4.2
             kind: 'Pracovní list',
-            name: 'Oprav tento profil!',
-            filename: 'Pracovní list - Oprav tento profil',
+            name: 'Oprav tenhle profil!',
+            filename: 'Pracovní list - Oprav tenhle profil',
             ariaLabel: 'Stáhnout materiál',
           },
           {
             // ID: 4.4.3
             kind: 'Pracovní list',
-            name: 'Tipy na ochranu soukromí pro děti',
-            filename: 'Pracovní list - Tipy na ochranu soukromí pro děti',
+            name: 'Tipy na soukromí pro děti',
+            filename: 'Pracovní list - Tipy na soukromí pro děti',
             ariaLabel: 'Stáhnout materiál',
           },
           {
             // ID: 4.4.4
             kind: 'Pracovní list',
-            name: 'Šablona plakátu',
-            filename: 'Pracovní list - Šablona plakátu',
+            name: 'Předloha plakátu',
+            filename: 'Pracovní list - Předloha plakátu',
             ariaLabel: 'Stáhnout materiál',
           },
           {
             // ID: 4.4.6
             kind: 'Pracovní list',
-            name: 'Hádanka: Využití digitálních stop „Členové týmu Brain Fights“',
-            filename: 'Pracovní list - Hádanka Využití digitálních stop Členové týmu Brain Fights',
+            name: 'Hlavolam: Využití digitálních stop „Členové týmu Souboje mozků“',
+            filename: 'Pracovní list - Hlavolam Využití digitálních stop Členové týmu Souboje mozků',
             ariaLabel: 'Stáhnout materiál',
           },
         ],
@@ -231,28 +233,25 @@ export const contentDP = {
             title: 'Úvod',
           },
           {
-            title: 'Přezkoumání vaší digitální stopy',
+            title: 'Jak chránit svoje osobní údaje online',
           },
           {
-            title: 'Správa nastavení soukromí',
-          },
-          {
-            title: 'Plénum - Shrnutí a neformální hodnocení',
+            title: 'Závěr: shrnutí a neformální hodnocení',
           },
         ],
       },
       featuredVideo: {
         // ID: 4.4.5
-        title: 'Ochrana vašich osobních dat online',
+        title: 'Jak chránit svoje osobní údaje online',
         supportText:
-          'Použijte toto video k představení konceptu osobních dat a zahájení diskuse o typech informací, které žáci každý den sdílejí.',
+          'Použijte video k představení pojmu osobní údaje a k rozproudění diskuse o tom, jaké informace žáci každý den sdílejí.',
         downloads: {
           video: {
-            filename: 'Ochrana vašich osobních dat online',
+            filename: 'Jak chránit svoje osobní údaje online',
             ariaLabel: 'Stáhnout video',
           },
           subtitles: {
-            filename: 'Ochrana vašich osobních dat online - Titulky',
+            filename: 'Jak chránit svoje osobní údaje online - Titulky',
             ariaLabel: 'Stáhnout titulky',
           },
         },
@@ -291,122 +290,122 @@ export const contentDP = {
       imageSrc: '/images/learning-hub/06_malware.webp',
     },
     {
-      moduleId: 'da',
-      brand: 'DA',
-      href: '/learning-hub/digital-abuse/content',
-      imageSrc: '/images/learning-hub/07_digital-abuse.webp',
+      moduleId: 'dm',
+      brand: 'DM',
+      href: '/learning-hub/digital-misuse/content',
+      imageSrc: '/images/learning-hub/07_digital-misuse.webp',
     },
   ],
 }
 
 export const challengeDP = {
-  title: 'Třídič digitální stopy',
-  subtitle: 'Roztřiďte každou aktivitu do správné kategorie. Zjistěte, které vaše každodenní činnosti zanechávají stopy online!',
+  title: 'Třídění digitální stopy',
+  subtitle: 'Roztřiďte každou činnost do správné kategorie. Zjistěte, po kterých vašich každodenních činnostech zůstává online stopa!',
   howItWorks: 'Jak to funguje',
-  instruction: 'Přetáhněte každou kartičku s aktivitou do zóny, kam patří. Na mobilu klepněte na kartičku pro výběr, poté klepněte na zónu pro vložení.',
-  tip: 'Přemýšlejte, zda aktivita zahrnuje internet, aplikaci nebo webovou stránku. Pokud ano, pravděpodobně zanechává digitální stopu!',
+  instruction: 'Přetáhněte každou kartičku s činností do zóny, kam patří. Na mobilu kartičku vyberte klepnutím a potom klepněte na zónu.',
+  tip: 'Zamyslete se, jestli je u té činnosti ve hře internet, aplikace nebo webová stránka. Pokud ano, nejspíš po sobě zanechává digitální stopu!',
   tipLabel: 'Tip',
   tryAgain: 'Zkusit znovu',
-  activitiesToSort: 'Aktivity k roztřídění',
+  activitiesToSort: 'Činnosti k roztřídění',
   leavesFootprint: 'Zanechává stopu',
-  dragOnlineHere: 'Sem přetáhněte online aktivity',
+  dragOnlineHere: 'Sem přetáhněte online činnosti',
   noFootprint: 'Žádná stopa',
-  dragOfflineHere: 'Sem přetáhněte offline aktivity',
+  dragOfflineHere: 'Sem přetáhněte offline činnosti',
   correct: 'Správně! 🎯',
-  tryOtherZone: 'Skoro — zkus druhou zónu!',
-  winTitle: 'Úžasné! Roztřídil/a jsi je všechny!',
-  winMessage: 'Nyní víš, které aktivity zanechávají digitální stopu. Pamatuj: každé kliknutí, vyhledávání a příspěvek vytváří stopu online!',
+  tryOtherZone: 'Ne tak docela — zkuste jinou zónu!',
+  winTitle: 'Skvěle! Roztřídili jste je všechny!',
+  winMessage: 'Teď víte, po kterých činnostech zůstává digitální stopa. Pamatujte: každé kliknutí, hledání i příspěvek po sobě online nechává stopu!',
   playAgain: 'Hrát znovu',
   activities: [
     {
-      text: 'Sdílení fotografie na Instagramu',
+      text: 'Zveřejnění fotky na Instagramu',
       category: 'footprint',
       emoji: '📸',
-      explanation: 'Fotografie, které sdílíte online, zůstávají na serverech a může je najít kdokoli — i roky poté!',
+      explanation: 'Fotky, které sdílíte online, zůstávají na serverech a může je najít kdokoli — i po letech!',
     },
     {
       text: 'Čtení papírové knihy doma',
       category: 'no-footprint',
       emoji: '📖',
-      explanation: 'Žádné připojení k internetu znamená, že nevzniká žádná digitální stopa.',
+      explanation: 'Bez připojení k internetu žádná digitální stopa nevzniká.',
     },
     {
       text: 'Vyhledávání odpovědí na Googlu',
       category: 'footprint',
       emoji: '🔍',
-      explanation: 'Vyhledávače zaznamenávají, co hledáte, a používají to k zobrazování personalizovaných výsledků.',
+      explanation: 'Vyhledávače si zaznamenávají, co hledáte, a podle toho vám pak zobrazují výsledky na míru.',
     },
     {
       text: 'Hraní fotbalu venku',
       category: 'no-footprint',
       emoji: '⚽',
-      explanation: 'Venkovní aktivity bez telefonu nebo aplikace nezanechávají žádný digitální záznam.',
+      explanation: 'Činnosti venku bez telefonu nebo aplikace žádný digitální záznam nezanechávají.',
     },
     {
       text: 'Odesílání zprávy na WhatsApp',
       category: 'footprint',
       emoji: '💬',
-      explanation: 'Zprávy jsou uloženy na serverech a vytváří trvalý záznam vašich konverzací.',
+      explanation: 'Zprávy se ukládají na servery a vzniká tak trvalý záznam vašich konverzací.',
     },
     {
       text: 'Kreslení obrázku pastelkami',
       category: 'no-footprint',
       emoji: '🖍️',
-      explanation: 'Tradiční tvorba s fyzickými materiály nevytváří žádná online data.',
+      explanation: 'Tvoření s papírem a pastelkami žádná online data nevytváří.',
     },
     {
       text: 'Vytvoření účtu na herní webové stránce',
       category: 'footprint',
       emoji: '🎮',
-      explanation: 'Registrace ukládá vaše jméno, e-mail a každou akci, kterou na webu provedete.',
+      explanation: 'Při registraci se uloží vaše jméno, e-mail i každá činnost, kterou na webu uděláte.',
     },
     {
       text: 'Jízda na kole po okolí',
       category: 'no-footprint',
       emoji: '🚲',
-      explanation: 'Pokud nepoužíváte sledovací aplikaci, jízda na kole je čistě offline aktivita.',
+      explanation: 'Pokud nepoužíváte aplikaci na sledování trasy, je jízda na kole čistě offline činnost.',
     },
     {
       text: 'Sledování videí na YouTube',
       category: 'footprint',
       emoji: '▶️',
-      explanation: 'YouTube sleduje každé video, které sledujete, a používá to k doporučování dalšího obsahu.',
+      explanation: 'YouTube sleduje každé video, které si pustíte, a podle toho vám doporučuje další obsah.',
     },
     {
       text: 'Psaní do papírového deníku',
       category: 'no-footprint',
       emoji: '📓',
-      explanation: 'Papírový deník nemá připojení k internetu — vaše myšlenky zůstávají skutečně soukromé.',
+      explanation: 'Papírový deník nemá připojení k internetu — vaše myšlenky zůstanou opravdu soukromé.',
     },
     {
       text: 'Lajkování TikTok videa kamaráda',
       category: 'footprint',
       emoji: '❤️',
-      explanation: 'Každý lajk, který dáte, je zaznamenán a formuje váš online profil a doporučení.',
+      explanation: 'Každý lajk se zaznamená a spoluutváří váš online profil i doporučení, která dostáváte.',
     },
     {
       text: 'Hraní deskové hry s rodinou',
       category: 'no-footprint',
       emoji: '🎲',
-      explanation: 'Deskové hry jsou offline zábavou — žádná data nejsou vytvářena ani nikde ukládána.',
+      explanation: 'Deskové hry jsou zábava offline — nevznikají u nich žádná data a nikde se nic neukládá.',
     },
     {
       text: 'Vyplňování online kvízu',
       category: 'footprint',
       emoji: '📝',
-      explanation: 'Webové stránky sbírají každou odpověď, kterou zadáte, a mohou ji sdílet s ostatními.',
+      explanation: 'Weby si ukládají každou odpověď, kterou zadáte, a můžou ji předat dál.',
     },
     {
       text: 'Povídání si s přáteli ve škole',
       category: 'no-footprint',
       emoji: '🗣️',
-      explanation: 'Osobní rozhovory nezanechávají vůbec žádnou digitální stopu.',
+      explanation: 'Rozhovor tváří v tvář nezanechá vůbec žádnou digitální stopu.',
     },
     {
       text: 'Zanechání komentáře na blogu',
       category: 'footprint',
       emoji: '💻',
-      explanation: 'Komentáře jsou veřejné, spojené s vaším jménem a zůstávají na webové stránce navždy.',
+      explanation: 'Komentáře jsou veřejné, spojené s vaším jménem a na webu zůstanou navždy.',
     },
   ],
 }

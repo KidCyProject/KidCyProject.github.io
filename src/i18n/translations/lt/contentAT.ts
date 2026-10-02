@@ -32,8 +32,8 @@ export const contentAT = {
           {
             // ID: 3.1.1
             kind: 'Paveikslėlis',
-            name: 'Internetinė tapatybė',
-            filename: 'Paveikslėlis - Internetinė tapatybė',
+            name: 'Skaitmeninė tapatybė',
+            filename: 'Paveikslėlis - Skaitmeninė tapatybė',
             ariaLabel: 'Atsisiųsti medžiagą',
           },
           {
@@ -431,10 +431,10 @@ export const contentAT = {
       imageSrc: '/images/learning-hub/06_malware.webp',
     },
     {
-      moduleId: 'da',
-      brand: 'DA',
-      href: '/learning-hub/digital-abuse/content',
-      imageSrc: '/images/learning-hub/07_digital-abuse.webp',
+      moduleId: 'dm',
+      brand: 'DM',
+      href: '/learning-hub/digital-misuse/content',
+      imageSrc: '/images/learning-hub/07_digital-misuse.webp',
     },
   ],
 }

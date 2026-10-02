@@ -255,10 +255,10 @@ export const contentMW = {
       imageSrc: '/images/learning-hub/05_social-engineering.webp',
     },
     {
-      moduleId: 'da',
-      brand: 'DA',
-      href: '/learning-hub/digital-abuse/content',
-      imageSrc: '/images/learning-hub/07_digital-abuse.webp',
+      moduleId: 'dm',
+      brand: 'DM',
+      href: '/learning-hub/digital-misuse/content',
+      imageSrc: '/images/learning-hub/07_digital-misuse.webp',
     },
   ],
 }

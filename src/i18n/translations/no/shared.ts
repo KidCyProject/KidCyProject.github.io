@@ -140,6 +140,8 @@ export const shared = {
 
         download: 'Last ned',
         downloadGuide: 'Last ned undervisningsveiledning',
+        downloadIntro: 'Last ned introduksjonsmateriell',
+        introPackage: 'Introduksjonsmateriell',
         downloadAll: 'Last ned alt materiell',
         downloadPackage: 'Last ned pakke',
 
@@ -155,6 +157,7 @@ export const shared = {
 
         dividerContent: 'Hva er inni',
         dividerMore: 'Flere ressurser',
+        dividerActivities: 'Tilleggsaktiviteter',
 
         moduleContent: 'Modulinnhold',
         moduleContentSubtitle: 'Utforsk hver del av denne modulen — aktiviteter, materiell og videoer å undervise med.',
@@ -249,7 +252,7 @@ export const shared = {
               title: 'Datadetektiver – digitale fotavtrykk',
             },
             p4: {
-              title: 'Datadetektiver – rens ditt digitale fotavtrykk',
+              title: 'Rens ditt digitale fotavtrykk',
             },
           },
         },
@@ -291,7 +294,7 @@ export const shared = {
             },
           },
         },
-        da: {
+        dm: {
           title: 'Digital misbruk',
           description:
             'Digital misbruk inkluderer skadelig atferd på nett som trusler, trakassering eller uønsket kontakt. Denne modulen hjelper pedagoger å lære elever å gjenkjenne utrygg atferd, sette grenser og finne støtte.',
@@ -345,7 +348,7 @@ export const shared = {
         mw: {
           description: 'Ta smarte valg for å holde enheter sunne og raske.',
         },
-        da: {
+        dm: {
           description:
             'Ta valg. Se konsekvenser. Lær hvordan du håndterer nettmobbing, nettpress og digital misbruk.',
         },
@@ -387,7 +390,7 @@ export const shared = {
           subtitle: 'Tred inn i et lynraskt løp der forståelse av skadelig programvare gir deg fordelen. Begynn med å utforske ulike gjenstander på banen — som virus, ormer, løsepengevirus og beskyttelsesverktøy som antivirusprogramvare, brannmurer og oppdateringer — hver med sin egen effekt og virkelige betydning. Kjør deretter gjennom tre runder og samle gjenstander som enten kan øke prestasjonen din eller bremse deg, avhengig av om de representerer trusler eller beskyttelse. Ved målstreken, gjennomgå hva du har samlet og lær hvordan hvert element kobler seg til virkelig cybersikkerhet, sammen med praktiske tips om hvordan du holder deg beskyttet.',
           altText: 'Spillminiatyr',
         },
-        da: {
+        dm: {
           title: 'Vennlighetsmisjon: Redd byen',
           description: 'Tred inn i en livlig by der digitale konflikter har skapt spenning blant innbyggerne.',
           subtitle: 'Tred inn i en livlig by der digitale konflikter har skapt spenning blant innbyggerne. Ta på deg rollen som problemløser når du hjelper folk med å navigere problemer som nettmobbing, deepfakes og digital misbruk, og ta gjennomtenkte valg for å løse tvistene deres. Med hver konflikt du vellykket løser, forbedres forholdet og byen blir mer innbydende. Se hvordan handlingene dine transformerer atmosfæren — og fører til en gledelig feiring der fellesskapet samles og den en gang fjerne maskoten blir stadig mer vennlig.',

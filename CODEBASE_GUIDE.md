@@ -45,7 +45,7 @@ src/
 ### Translation files
 `src/i18n/translations/<locale>/`
 - `shared.ts` — all UI strings: nav, footer, hero, home, about, hub labels, module titles, content page labels, game page, 404.
-- `contentDC.ts`, `contentAP.ts`, `contentAT.ts`, `contentDP.ts`, `contentSE.ts`, `contentMW.ts`, `contentDA.ts` — per-module content: aim, objectives, outcomes, parts (translatable text only — no file paths).
+- `contentDC.ts`, `contentAP.ts`, `contentAT.ts`, `contentDP.ts`, `contentSE.ts`, `contentMW.ts`, `contentDM.ts` — per-module content: aim, objectives, outcomes, parts (translatable text only — no file paths).
 - `index.ts` — re-exports everything as a single namespace object.
 
 ### `useTranslations(locale)` — `src/i18n/index.ts`
@@ -81,9 +81,9 @@ Defines `modules: ModuleData[]` — one entry per learning module:
 | `dp` | `data-privacy` | `#14B8A6` |
 | `se` | `social-engineering` | `#D946EF` |
 | `mw` | `malware` | `#93CC16` |
-| `da` | `digital-abuse` | `#EF4444` |
+| `da` | `digital-misuse` | `#EF4444` |
 
-Each `ModuleData` holds: `id`, `slug`, `color`, `materials` (count), `videos` (count), `challenges` (0 or 1), `games` (0 or 1), `teachersGuide.href`.
+Each `ModuleData` holds: `id`, `slug`, `color`, `materials` (count), `videos` (count), `challenges` (0 or 1), `games` (0 or 1), `teachingGuide.languages` and `materialsPackage.languages` (one zip per language, shown as a language dropdown). `introMaterials.languages` holds the shared introductory-materials zips.
 
 Counts are **derived automatically** from `modulePartsData` at build time — do not hard-code them.
 
@@ -91,7 +91,7 @@ Counts are **derived automatically** from `modulePartsData` at build time — do
 
 `modulePartsData: Record<ModuleId, PartDefinition[]>` — the single source of truth for all file paths and structural data. Each `PartDefinition` has:
 - `anchorId` — URL hash for deep-linking to a part (e.g. `digital-environments`).
-- `assets.bundle.href` — ZIP download path for the whole part.
+- `assets.bundle.languages` — one ZIP per language for the whole part (`partN/partN-<lang>.zip`, built by `scripts/generate-zips.sh`).
 - `assets.materials[]` — array of `{ id, href, isGuide?, languages? }` asset entries.
   - Material **without translatable text** (e.g. an image): set only `href` → the page shows a plain **Download** button.
   - Material **translated into several languages**: also add `languages: [{ lang: 'en', href }, { lang: 'cs', href }, …]` → **Download** opens a language dropdown (one option per entry, in the listed order; names come from `MATERIAL_LANGUAGE_LABELS`). Keep `href` pointing to a default file (it is used for the material counts). Example: `1.1.1` in Digital Citizenship.
@@ -165,7 +165,7 @@ Extracted from the component for testability. `initializeNavigation()` must be c
 | File | Contents |
 |------|---------|
 | `_root.scss` | CSS variables: colors, spacing scale (`--space-xs` … `--space-2xl`), elevation shadows, border radii |
-| `_modules.scss` | `--brand-DC`, `--brand-AP`, `--brand-AT`, `--brand-DP`, `--brand-SE`, `--brand-MW`, `--brand-DA` color tokens used by module pages |
+| `_modules.scss` | `--brand-DC`, `--brand-AP`, `--brand-AT`, `--brand-DP`, `--brand-SE`, `--brand-MW`, `--brand-DM` color tokens used by module pages |
 | `_dark.scss` | Dark mode surface/border/fg tokens (`--dm-surface-*`, `--dm-border-*`, `--dm-fg*`) |
 | `_general.scss` | Base typography, container, section spacing |
 | `_button.scss` | `.button`, `.has-icon`, `.is-outline` button styles |

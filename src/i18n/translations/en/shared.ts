@@ -35,7 +35,7 @@ export const shared = {
 
       learningModulesTitle: 'Learning\nModules',
       learningModulesText:
-        'Empower your students with the digital literacy skills they need to navigate today\'s connected world safely and responsibly. Our seven structured learning modules guide learners step by step — from foundational concepts like digital citizenship and online privacy, to more advanced topics such as recognizing phishing attempts and social engineering tactics. Each module blends clear explanations with hands-on activities, making complex cybersecurity concepts accessible and memorable regardless of prior tech experience. Designed with classroom flexibility in mind, modules can be taught sequentially as a full course or integrated individually into your existing curriculum.',
+        'Empower your students with the digital literacy skills they need to navigate today\'s connected world safely and responsibly. Our seven structured learning modules guide learners step by step — from foundational concepts like digital citizenship and online privacy, to more advanced topics such as recognising phishing attempts and social engineering tactics. Each module blends clear explanations with hands-on activities, making complex cybersecurity concepts accessible and memorable regardless of prior tech experience. Designed with classroom flexibility in mind, modules can be taught sequentially as a full course or integrated individually into your existing curriculum.',
 
       challengesTitle: 'Interactive\nChallenges',
       challengesText:
@@ -141,6 +141,8 @@ export const shared = {
 
         download: 'Download',
         downloadGuide: 'Download Teaching Guide',
+        downloadIntro: 'Download Introductory Materials',
+        introPackage: 'Introductory Materials',
         downloadAll: 'Download All Materials',
         downloadPackage: 'Download Package',
 
@@ -156,6 +158,7 @@ export const shared = {
 
         dividerContent: 'What\'s Inside',
         dividerMore: 'More Resources',
+        dividerActivities: 'Additional Activities',
 
         moduleContent: 'Module Content',
         moduleContentSubtitle: 'Explore each part of this module — activities, materials, and videos to teach with.',
@@ -181,7 +184,7 @@ export const shared = {
             'Digital citizenship helps students navigate online spaces with confidence, empathy, and responsibility. This module supports educators in teaching safe habits, respectful communication, and thoughtful decision-making in digital environments.',
           parts: {
             p1: {
-              title: 'Digital Environments',
+              title: 'What is a Digital Environment?',
             },
             p2: {
               title: 'What Does it Mean to be a Digital Citizen?',
@@ -200,16 +203,16 @@ export const shared = {
         ap: {
           title: 'Attacker Perspective',
           description:
-            'This module helps children understand how attackers might try to gain their trust and how to make safer choices. The attacker perspective module supports educators in teaching children about the tactics that adversaries use to gain trust and how to recognize and respond to these tactics.',
+            'This module helps children understand how attackers might try to gain their trust and how to make safer choices. The attacker perspective module supports educators in teaching children about the tactics that adversaries use to gain trust and how to recognise and respond to these tactics.',
           parts: {
             p1: {
-              title: 'Let us Define The Circle of Trustees',
+              title: 'Let us Define the Circle of Trusted People',
             },
             p2: {
-              title: 'What Is an Adversary?',
+              title: 'What is an Attacker?',
             },
             p3: {
-              title: 'What Are the Attacker Techniques?',
+              title: 'What are the Attacker Techniques?',
             },
           },
         },
@@ -219,10 +222,10 @@ export const shared = {
             'Authentication helps students understand how we prove who we are online. This module supports educators in teaching strong sign-in habits, why extra verification matters, and how to keep accounts protected.',
           parts: {
             p1: {
-              title: 'What Is Identity and What Are Digital Assets?',
+              title: 'What is Identity and What are Digital Assets?',
             },
             p2: {
-              title: 'What Is Authentication and Why Is It Important?',
+              title: 'What is Authentication and Why is it Important?',
             },
             p3: {
               title: 'How to Create Strong Usernames and Passwords',
@@ -241,7 +244,7 @@ export const shared = {
             'Data privacy helps students understand what information is personal, why it matters, and how to make careful choices when sharing online. This module supports educators in building safe, confident decision-making around personal data.',
           parts: {
             p1: {
-              title: 'What Is Private Data?',
+              title: 'What is Private Data?',
             },
             p2: {
               title: 'Data Sharing',
@@ -250,7 +253,7 @@ export const shared = {
               title: 'Data Detectives - Digital Footprints',
             },
             p4: {
-              title: 'Data Detectives - Clean Up Your Digital Footprint',
+              title: 'Clean Up Your Digital Footprint',
             },
           },
         },
@@ -260,16 +263,16 @@ export const shared = {
             'Social engineering is when someone uses pressure, tricks, or false trust to get information or access. This module helps educators teach students how to spot manipulation and respond safely.',
           parts: {
             p1: {
-              title: 'What Is Social Engineering?',
+              title: 'What is Social Engineering?',
             },
             p2: {
-              title: 'Why Is Social Engineering Used by Attackers?',
+              title: 'Why is Social Engineering Used by Attackers?',
             },
             p3: {
               title: 'Recognising Social Engineering in Everyday Contexts',
             },
             p4: {
-              title: 'Protecting Yourself and Others From Social Engineering',
+              title: 'Protecting Yourself and Others from Social Engineering',
             },
           },
         },
@@ -292,10 +295,10 @@ export const shared = {
             },
           },
         },
-        da: {
-          title: 'Digital Abuse',
+        dm: {
+          title: 'Digital Misuse',
           description:
-            'Digital abuse includes harmful behavior online such as threats, harassment, or unwanted contact. This module helps educators teach students to recognize unsafe behavior, set boundaries, and find support.',
+            'Digital misuse includes harmful behaviour online such as threats, harassment, or unwanted contact. This module helps educators teach students to recognise unsafe behaviour, set boundaries, and find support.',
           parts: {
             p1: {
               title: 'Misinformation',
@@ -304,7 +307,7 @@ export const shared = {
               title: 'Disinformation',
             },
             p3: {
-              title: 'Cyber Bullying',
+              title: 'Cyberbullying',
             },
             p4: {
               title: 'Stranger Danger',
@@ -313,7 +316,7 @@ export const shared = {
               title: 'Influencers',
             },
             p6: {
-              title: 'How Can We Deal With the Behaviour of Digital Abusers?',
+              title: 'Dealing with Digital Misusers',
             },
           },
         },
@@ -346,9 +349,9 @@ export const shared = {
         mw: {
           description: 'Make smart choices to keep devices healthy and fast.',
         },
-        da: {
+        dm: {
           description:
-            'Make choices. See consequences. Learn how to handle cyberbullying, online pressure, and digital abuse.',
+            'Make choices. See consequences. Learn how to handle cyberbullying, online pressure, and digital misuse.',
         },
       },
 
@@ -357,7 +360,7 @@ export const shared = {
         noGame: 'No Game Available',
         noGameDescription: 'No game is currently available for this module.',
 
-        howItWorks: 'How It Works',
+        howItWorks: 'How it Works',
         tipLabel: 'Tip',
         gameInstructions:
           'To play the game, you need to have the Roblox app installed on your device. After clicking the Play button, the game will open in the Roblox application. If you don\'t have Roblox installed yet, you will be prompted to download and install it first.',
@@ -388,7 +391,7 @@ export const shared = {
           subtitle: 'Step into a fast-paced race where understanding malware gives you the edge. Begin by exploring different items on the track—such as viruses, worms, ransomware, and protective tools like antivirus software, firewalls, and updates—each with its own effect and real-world meaning. Then speed through three laps, collecting items that can either boost your performance or slow you down, depending on whether they represent threats or protections. At the finish line, review what you\'ve gathered and learn how each element connects to real-world cybersecurity, along with practical tips on how to stay protected.',
           altText: 'Game thumbnail',
         },
-        da: {
+        dm: {
           title: 'Kindness Quest: Save the City',
           description: 'Step into a lively city where digital conflicts have caused tension among its inhabitants.',
           subtitle: 'Step into a lively city where digital conflicts have caused tension among its inhabitants. Take on the role of a problem-solver as you help people navigate issues like cyberbullying, deepfakes, and online misuse, making thoughtful choices to resolve their disputes. With each conflict you successfully address, relationships improve and the city grows more welcoming. Watch as your actions transform the atmosphere—leading to a joyful celebration where the community comes together and the once-distant mascot becomes increasingly friendly.',

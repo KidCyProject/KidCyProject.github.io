@@ -7,19 +7,20 @@
 // ---------------------------------------------------------------------------
 
 export const contentDC = {
-  aim: 'To provide an understanding of what digital citizenship is and how to follow its core principles.',
+  aim:
+    'To provide an understanding of what digital citizenship is and how to follow its core principles.',
   objectives: [
     'To stress the importance of digital citizenship.',
-    'To introduce the concept of digital citizenship and its principles of rights, responsibility and respect in digital environments.',
-    'To develop students understanding of how to apply these principles of rights, responsibility and respect in digital environments - to be safe, savvy, and social.',
+    'To introduce the concept of digital citizenship and its principles of rights, responsibilities and respect in digital environments.',
+    'To develop understanding of how to apply these principles of rights, responsibilities and respect in digital environments - to be safe, savvy, and social.',
   ],
   outcomes: [
     'I can explain what digital citizenship is and why it is important.',
-    'I can discuss the principles of rights, responsibility and respect in digital environments, including how to stay safe, act savvy and engage socially.',
+    'I can discuss the principles of rights, responsibilities and respect in digital environments, including how to stay safe, act savvy and engage socially.',
   ],
   parts: [
     {
-      goal: 'Help students understand what a digital environment is and positive aspects of this.',
+      goal: 'Help students understand what a digital environment is and its positive aspects.',
       bundle: {
         filename: 'Digital Citizenship Part 1 Package',
       },
@@ -38,7 +39,7 @@ export const contentDC = {
             title: 'Introduction',
           },
           {
-            title: 'What is a digital environment?',
+            title: 'What is a Digital Environment?',
           },
           {
             title: 'Plenary: Summary and Informal Assessment',
@@ -47,16 +48,16 @@ export const contentDC = {
       },
       featuredVideo: {
         // ID: 1.1.2
-        title: 'What Is a Digital Environment and Digital Systems?',
+        title: 'What is a Digital Environment and Digital Systems?',
         supportText:
           'Use this video to spark discussion about online spaces students already use, from learning platforms to games and messaging apps. Pause for quick reflections on where students spend time online.',
         downloads: {
           video: {
-            filename: 'What Is a Digital Environment and Digital Systems',
+            filename: 'What is a Digital Environment and Digital Systems',
             ariaLabel: 'Download video',
           },
           subtitles: {
-            filename: 'What Is a Digital Environment and Digital Systems - Subtitles',
+            filename: 'What is a Digital Environment and Digital Systems - Subtitles',
             ariaLabel: 'Download subtitles',
           },
         },
@@ -89,7 +90,7 @@ export const contentDC = {
             title: 'Introduction',
           },
           {
-            title: 'Digitel Citizenship',
+            title: 'Digital Citizenship',
           },
           {
             title: 'Rights, Respect and Responsibilities in Digital Environments',
@@ -154,16 +155,16 @@ export const contentDC = {
       },
       featuredVideo: {
         // ID: 1.3.3
-        title: 'What Are Privacy Settings?',
+        title: 'What are Privacy Settings?',
         supportText:
           'Use this video to introduce privacy settings as a practical tool students can control on the apps and devices they already own. Pause to ask which settings they have checked or changed before.',
         downloads: {
           video: {
-            filename: 'What Are Privacy Settings',
+            filename: 'What are Privacy Settings',
             ariaLabel: 'Download video',
           },
           subtitles: {
-            filename: 'What Are Privacy Settings - Subtitles',
+            filename: 'What are Privacy Settings - Subtitles',
             ariaLabel: 'Download subtitles',
           },
         },
@@ -245,6 +246,9 @@ export const contentDC = {
             title: 'Acting Responsibly in Digital Environments',
           },
           {
+            title: 'Acting Respectfully in Digital Environments',
+          },
+          {
             title: 'Curating a Positive Digital Footprint',
           },
           {
@@ -286,10 +290,10 @@ export const contentDC = {
       imageSrc: '/images/learning-hub/06_malware.webp',
     },
     {
-      moduleId: 'da',
-      brand: 'DA',
-      href: '/learning-hub/digital-abuse/content',
-      imageSrc: '/images/learning-hub/07_digital-abuse.webp',
+      moduleId: 'dm',
+      brand: 'DM',
+      href: '/learning-hub/digital-misuse/content',
+      imageSrc: '/images/learning-hub/07_digital-misuse.webp',
     },
   ],
 }
@@ -297,7 +301,7 @@ export const contentDC = {
 export const challengeDC = {
   title: 'GOOD or BAD Content to Post?',
   subtitle: 'Drag each post into the correct category. Learn what\'s safe to share online!',
-  howItWorks: 'How It Works',
+  howItWorks: 'How it Works',
   instruction: 'Drag each post card into the zone where it belongs. On mobile, tap a card to select it, then tap a drop zone.',
   tip: 'Think about whether the information could identify you or put you in danger if a stranger saw it.',
   tipLabel: 'Tip',

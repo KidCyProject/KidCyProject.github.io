@@ -7,20 +7,25 @@
 // ---------------------------------------------------------------------------
 
 export const contentDP = {
-  aim: 'To help students recognize what counts as personal data, understand why privacy matters, and make safer choices before sharing information online.',
+  aim:
+    'To provide core knowledge of what data privacy is and principles for protecting private data in digital environments.',
   objectives: [
-    'Define personal data and identify what is sensitive.',
-    'Encourage thoughtful sharing and consent-based choices.',
-    'Build awareness of privacy settings and safe defaults.',
+    'To introduce what types of data are involved in sharing content in digital environments.',
+    'To stress the importance of data privacy in digital environments.',
+    'To introduce the principles for protecting data privacy in digital environments.',
+    'To develop understanding of how digital data is used and how it can be deleted if needed.',
   ],
   outcomes: [
-    'Recognize common types of personal information.',
-    'Explain how data can travel and be stored online.',
-    'Apply simple privacy rules before sharing or posting.',
+    'I can describe what types of data are involved in sharing content in digital environments.',
+    'I can explain the importance of data privacy in digital environments.',
+    'I can demonstrate the principles for protecting data privacy in digital environments in given scenarios and justify why I made those choices.',
+    'I can recognise data-sharing patterns that lead to privacy violations in given scenarios.',
+    'I can explain how digital data is used and how it can be deleted if needed.',
+    'I can recognise examples of private data in given scenarios.',
   ],
   parts: [
     {
-      goal: 'Help students understand what personal data is, identify different types of sensitive information, and recognise why protecting it matters.',
+      goal: 'Help students understand what types of data are involved in sharing content in digital environments.',
       bundle: {
         filename: 'Data Privacy Part 1 Package',
       },
@@ -46,7 +51,7 @@ export const contentDP = {
             title: 'Introduction',
           },
           {
-            title: 'What Is Personal Data?',
+            title: 'What is Private Data?',
           },
           {
             title: 'Plenary: Summary and Informal Assessment',
@@ -55,23 +60,23 @@ export const contentDP = {
       },
       featuredVideo: {
         // ID: 4.1.1
-        title: 'What Is Private Data?',
+        title: 'What is Private Data?',
         supportText:
           'Use this video to introduce the concept of private data and spark discussion about the types of information students share every day. Pause to ask students which details they consider private.',
         downloads: {
           video: {
-            filename: 'What Is Private Data',
+            filename: 'What is Private Data',
             ariaLabel: 'Download video',
           },
           subtitles: {
-            filename: 'What Is Private Data - Subtitles',
+            filename: 'What is Private Data - Subtitles',
             ariaLabel: 'Download subtitles',
           },
         },
       },
     },
     {
-      goal: 'Help students understand how and why data gets shared online, the importance of consent, and how to make thoughtful decisions before sharing personal information.',
+      goal: 'Help students recognise data-sharing patterns that can lead to privacy violations in given scenarios.',
       bundle: {
         filename: 'Data Privacy Part 2 Package',
       },
@@ -104,10 +109,7 @@ export const contentDP = {
             title: 'Introduction',
           },
           {
-            title: 'How Is Data Shared?',
-          },
-          {
-            title: 'Consent and Permissions',
+            title: 'Data Sharing Scenarios',
           },
           {
             title: 'Plenary: Summary and Informal Assessment',
@@ -116,7 +118,7 @@ export const contentDP = {
       },
     },
     {
-      goal: 'Help students discover what a digital footprint is, understand how everyday online activities leave lasting traces, and consider the long-term impact of their online behaviour.',
+      goal: 'Help students understand how digital data is used in digital systems and what a digital footprint is.',
       bundle: {
         filename: 'Data Privacy Part 3 Package',
       },
@@ -146,8 +148,8 @@ export const contentDP = {
           {
             // ID: 4.3.5
             kind: 'Game Set',
-            name: 'Cards Privacy Value',
-            filename: 'Game Set - Cards Privacy Value',
+            name: 'Privacy Value',
+            filename: 'Game Set - Privacy Value',
             ariaLabel: 'Download material',
           },
         ],
@@ -156,10 +158,10 @@ export const contentDP = {
             title: 'Introduction',
           },
           {
-            title: 'What Is a Digital Footprint?',
+            title: 'What is a Digital Footprint?',
           },
           {
-            title: 'Mapping Your Online Traces',
+            title: 'Digital Traces',
           },
           {
             title: 'Plenary: Summary and Informal Assessment',
@@ -168,23 +170,23 @@ export const contentDP = {
       },
       featuredVideo: {
         // ID: 4.3.1
-        title: 'What Is a Digital Footprint?',
+        title: 'What is a Digital Footprint?',
         supportText:
           'Use this video to help students visualise the trail of data they leave behind online. Encourage reflection on which of their recent activities might have created a footprint.',
         downloads: {
           video: {
-            filename: 'What Is a Digital Footprint',
+            filename: 'What is a Digital Footprint',
             ariaLabel: 'Download video',
           },
           subtitles: {
-            filename: 'What Is a Digital Footprint - Subtitles',
+            filename: 'What is a Digital Footprint - Subtitles',
             ariaLabel: 'Download subtitles',
           },
         },
       },
     },
     {
-      goal: 'Help students learn practical strategies for reviewing and managing their digital footprint, including how to adjust privacy settings and remove unwanted data.',
+      goal: 'Help students understand how digital data is used and how it can be deleted if needed.',
       bundle: {
         filename: 'Data Privacy Part 4 Package',
       },
@@ -221,7 +223,7 @@ export const contentDP = {
           {
             // ID: 4.4.6
             kind: 'Worksheet',
-            name: 'Puzzle: Using Digital Traces “Members of the Brain Fights Team”',
+            name: 'Puzzle - Using Digital Traces “Members of the Brain Fights Team”',
             filename: 'Worksheet - Puzzle Using Digital Traces Members of the Brain Fights Team',
             ariaLabel: 'Download material',
           },
@@ -231,10 +233,7 @@ export const contentDP = {
             title: 'Introduction',
           },
           {
-            title: 'Reviewing Your Digital Footprint',
-          },
-          {
-            title: 'Managing Privacy Settings',
+            title: 'Protecting Your Private Data Online',
           },
           {
             title: 'Plenary: Summary and Informal Assessment',
@@ -243,16 +242,16 @@ export const contentDP = {
       },
       featuredVideo: {
         // ID: 4.4.5
-        title: 'Protecting Your Personal Data Online',
+        title: 'Protecting Your Private Data Online',
         supportText:
           'Use this video to introduce the concept of personal data and spark discussion about the types of information students share every day.',
         downloads: {
           video: {
-            filename: 'Protecting Your Personal Data Online',
+            filename: 'Protecting Your Private Data Online',
             ariaLabel: 'Download video',
           },
           subtitles: {
-            filename: 'Protecting Your Personal Data Online - Subtitles',
+            filename: 'Protecting Your Private Data Online - Subtitles',
             ariaLabel: 'Download subtitles',
           },
         },
@@ -291,10 +290,10 @@ export const contentDP = {
       imageSrc: '/images/learning-hub/06_malware.webp',
     },
     {
-      moduleId: 'da',
-      brand: 'DA',
-      href: '/learning-hub/digital-abuse/content',
-      imageSrc: '/images/learning-hub/07_digital-abuse.webp',
+      moduleId: 'dm',
+      brand: 'DM',
+      href: '/learning-hub/digital-misuse/content',
+      imageSrc: '/images/learning-hub/07_digital-misuse.webp',
     },
   ],
 }
@@ -302,7 +301,7 @@ export const contentDP = {
 export const challengeDP = {
   title: 'Digital Footprint Sorter',
   subtitle: 'Sort each activity into the right category. Learn which of your everyday actions leave traces online!',
-  howItWorks: 'How It Works',
+  howItWorks: 'How it Works',
   instruction: 'Drag each activity card into the zone where it belongs. On mobile, tap a card to select it, then tap a drop zone.',
   tip: 'Think about whether the activity involves the internet, an app, or a website. If it does, it probably leaves a digital footprint!',
   tipLabel: 'Tip',

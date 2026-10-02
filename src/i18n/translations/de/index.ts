@@ -10,7 +10,7 @@
 //   contentDP.ts    → Data Privacy content + challenge
 //   contentSE.ts    → Social Engineering content + challenge
 //   contentMW.ts    → Malware content + challenge
-//   contentDA.ts    → Digital Abuse content + challenge
+//   contentDM.ts    → Digital Misuse content + challenge
 // ---------------------------------------------------------------------------
 
 import { shared } from './shared'
@@ -20,7 +20,7 @@ import { contentAT, challengeAT } from './contentAT'
 import { contentDP, challengeDP } from './contentDP'
 import { contentSE, challengeSE } from './contentSE'
 import { contentMW, challengeMW } from './contentMW'
-import { contentDA, challengeDA } from './contentDA'
+import { contentDM, challengeDM } from './contentDM'
 
 export const de = {
   ...shared,
@@ -36,6 +36,6 @@ export const de = {
   challengeSE,
   contentMW,
   challengeMW,
-  contentDA,
-  challengeDA,
+  contentDM,
+  challengeDM,
 }

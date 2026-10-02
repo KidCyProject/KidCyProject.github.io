@@ -172,9 +172,9 @@ export const contentAP = {
           },
           {
             // ID: 2.3.4
-            kind: 'Bilde',
+            kind: 'Scenariokort',
             name: 'Vanlige angriperteknikker',
-            filename: 'Bilde - Vanlige angriperteknikker',
+            filename: 'Scenariokort - Vanlige angriperteknikker',
             ariaLabel: 'Last ned materiell',
           },
           {
@@ -244,10 +244,10 @@ export const contentAP = {
       imageSrc: '/images/learning-hub/06_malware.webp',
     },
     {
-      moduleId: 'da',
-      brand: 'DA',
-      href: '/learning-hub/digital-abuse/content',
-      imageSrc: '/images/learning-hub/07_digital-abuse.webp',
+      moduleId: 'dm',
+      brand: 'DM',
+      href: '/learning-hub/digital-misuse/content',
+      imageSrc: '/images/learning-hub/07_digital-misuse.webp',
     },
   ],
 }

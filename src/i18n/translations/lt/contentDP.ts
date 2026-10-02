@@ -146,8 +146,8 @@ export const contentDP = {
           {
             // ID: 4.3.5
             kind: 'Žaidimo rinkinys',
-            name: 'Kortelės: Privatumo vertė',
-            filename: 'Žaidimo rinkinys - Kortelės Privatumo vertė',
+            name: 'Privatumo vertė',
+            filename: 'Žaidimo rinkinys - Privatumo vertė',
             ariaLabel: 'Atsisiųsti medžiagą',
           },
         ],
@@ -291,10 +291,10 @@ export const contentDP = {
       imageSrc: '/images/learning-hub/06_malware.webp',
     },
     {
-      moduleId: 'da',
-      brand: 'DA',
-      href: '/learning-hub/digital-abuse/content',
-      imageSrc: '/images/learning-hub/07_digital-abuse.webp',
+      moduleId: 'dm',
+      brand: 'DM',
+      href: '/learning-hub/digital-misuse/content',
+      imageSrc: '/images/learning-hub/07_digital-misuse.webp',
     },
   ],
 }

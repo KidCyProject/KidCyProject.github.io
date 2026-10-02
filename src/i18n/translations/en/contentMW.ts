@@ -7,20 +7,21 @@
 // ---------------------------------------------------------------------------
 
 export const contentMW = {
-  aim: 'To help students understand what malware is, how infections happen, and which habits reduce the risk of unsafe downloads, files, and installations.',
+  aim:
+    'To provide core knowledge of what malware is, its risks, and principles for protecting against it.',
   objectives: [
-    'Introduce what malware is and why it is risky.',
-    'Identify common ways malware spreads.',
-    'Build habits for safer downloads and updates.',
+    'To introduce what malware is and types of malware.',
+    'To explain malware behaviour, and signs that a device has been infected.',
+    'To develop skills to protect against malware-related risks.',
   ],
   outcomes: [
-    'Explain the difference between safe and unsafe files or links.',
-    'Recognize warning signs of suspicious downloads.',
-    'Use trusted sources and ask for help when unsure.',
+    'I can describe what malware is and identify it in given scenarios.',
+    'I can explain different malware types, their behaviour, and signs that my device has been infected.',
+    'I can demonstrate ways to protect against malware infections in given scenarios and justify why I made those choices.',
   ],
   parts: [
     {
-      goal: 'Help students understand the concept of malware.',
+      goal: 'Help students understand what malware is and identify it in given scenarios.',
       bundle: {
         filename: 'Malware Part 1 Package',
       },
@@ -36,8 +37,8 @@ export const contentMW = {
           {
             // ID: 6.1.2
             kind: 'Image',
-            name: 'What Is Malicious?',
-            filename: 'Image - What Is Malicious',
+            name: 'What is Malicious?',
+            filename: 'Image - What is Malicious',
             ariaLabel: 'Download material',
           },
           {
@@ -62,23 +63,23 @@ export const contentMW = {
       },
       featuredVideo: {
         // ID: 6.1.3
-        title: 'What Is Malware?',
+        title: 'What is Malware?',
         supportText:
           'Use this video to introduce malware as software designed to cause harm, giving students a foundation before they explore specific types in more depth. Pause to ask what they already know or have heard about computer viruses.',
         downloads: {
           video: {
-            filename: 'What Is Malware',
+            filename: 'What is Malware',
             ariaLabel: 'Download video',
           },
           subtitles: {
-            filename: 'What Is Malware - Subtitles',
+            filename: 'What is Malware - Subtitles',
             ariaLabel: 'Download subtitles',
           },
         },
       },
     },
     {
-      goal: 'Introduce common types of malwares.',
+      goal: 'Help students understand different malware types, their behaviour, and signs that a device has been infected.',
       bundle: {
         filename: 'Malware Part 2 Package',
       },
@@ -94,18 +95,17 @@ export const contentMW = {
           {
             // ID: 6.2.3
             kind: 'Schema',
-            name: 'Knot the Ties Board',
-            filename: 'Schema - Knot the Ties Board',
+            name: 'Knot Ties Board',
+            filename: 'Schema - Knot Ties Board',
             ariaLabel: 'Download material',
           },
         ],
         activityPlan: [
           {
-
             title: 'Introduction',
           },
           {
-            title: 'Tie the Knots for Malware Types',
+            title: 'Malware Types',
           },
           {
             title: 'Plenary: Summary and Informal Assessment',
@@ -129,7 +129,7 @@ export const contentMW = {
       },
     },
     {
-      goal: 'Provide an overview of the characteristics of the malware to recognise and detect it.',
+      goal: 'Help students recognise and detect different types of malware.',
       bundle: {
         filename: 'Malware Part 3 Package',
       },
@@ -171,7 +171,7 @@ export const contentMW = {
       },
     },
     {
-      goal: 'Help students understand protection measures against malware.',
+      goal: 'Help students identify ways to protect against malware infections in given scenarios and justify why they made those choices.',
       bundle: {
         filename: 'Malware Part 4 Package',
       },
@@ -195,7 +195,7 @@ export const contentMW = {
             // ID: 6.4.3
             kind: 'Images',
             name: 'Associative Pictures: Be Aware',
-            filename: 'Images - Associative Pictures Be Aware',
+            filename: 'Images - Associative Pictures be Aware',
             ariaLabel: 'Download material',
           },
           {
@@ -211,7 +211,7 @@ export const contentMW = {
             title: 'Introduction',
           },
           {
-            title: 'Analysing the Situation of Uncareful Behaviour',
+            title: 'Analysing the Context of Malware Infection',
           },
           {
             title: 'Learning Basic Protection Measures',
@@ -255,10 +255,10 @@ export const contentMW = {
       imageSrc: '/images/learning-hub/05_social-engineering.webp',
     },
     {
-      moduleId: 'da',
-      brand: 'DA',
-      href: '/learning-hub/digital-abuse/content',
-      imageSrc: '/images/learning-hub/07_digital-abuse.webp',
+      moduleId: 'dm',
+      brand: 'DM',
+      href: '/learning-hub/digital-misuse/content',
+      imageSrc: '/images/learning-hub/07_digital-misuse.webp',
     },
   ],
 }
@@ -266,7 +266,7 @@ export const contentMW = {
 export const challengeMW = {
   title: 'Malware Detective',
   subtitle: 'You are a cybersecurity analyst. Inspect files on your virtual computer, scan your inbox, handle suspicious pop-ups, and review app permissions across 4 interactive levels. Can you keep the system clean?',
-  howItWorks: 'How It Works',
+  howItWorks: 'How it Works',
   instruction: 'Work through 4 levels on your virtual computer. Each level presents a different cybersecurity scenario. Examine each case carefully and decide whether it is safe or a threat — then learn from the explanation.',
   tip: 'Malware often disguises itself as something harmless. Look for suspicious file extensions, misspelled domains, unnecessary permissions, and promises that seem too good to be true.',
   tipLabel: 'Tip',

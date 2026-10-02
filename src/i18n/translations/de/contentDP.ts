@@ -146,8 +146,8 @@ export const contentDP = {
           {
             // ID: 4.3.5
             kind: 'Spielset',
-            name: 'Karten: Wert der Privatsphäre',
-            filename: 'Spielset - Karten Wert der Privatsphäre',
+            name: 'Wert der Privatsphäre',
+            filename: 'Spielset - Wert der Privatsphäre',
             ariaLabel: 'Material herunterladen',
           },
         ],
@@ -291,10 +291,10 @@ export const contentDP = {
       imageSrc: '/images/learning-hub/06_malware.webp',
     },
     {
-      moduleId: 'da',
-      brand: 'DA',
-      href: '/learning-hub/digital-abuse/content',
-      imageSrc: '/images/learning-hub/07_digital-abuse.webp',
+      moduleId: 'dm',
+      brand: 'DM',
+      href: '/learning-hub/digital-misuse/content',
+      imageSrc: '/images/learning-hub/07_digital-misuse.webp',
     },
   ],
 }

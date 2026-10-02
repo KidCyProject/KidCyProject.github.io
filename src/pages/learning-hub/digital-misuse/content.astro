@@ -1,0 +1,1962 @@
+---
+import DefaultLayout from '@layouts/DefaultLayout.astro'
+import PageHeader from '@components/PageHeader.astro'
+import ModuleActivities from '@components/ModuleActivities.astro'
+import { Icon } from 'astro-icon/components'
+import { localizePath } from 'src/i18n/i18n'
+import { getModule, introMaterials } from 'src/data/modules'
+import type { ModuleId } from 'src/data/modules'
+import { modulePartsData, mergeParts, MATERIAL_LANGUAGE_LABELS, languageDownloadName } from 'src/data/moduleParts'
+import type { LanguagePackage, TranslationPart, TeachingGuide, RelatedModuleCard, MergedPart, MergedMaterial, MergedActivityStep, PartMeta } from 'src/data/moduleParts'
+import { useTranslations } from 'src/i18n/index'
+
+const locale = Astro.currentLocale
+const { t, v } = useTranslations(locale)
+
+const objectives = v<ReadonlyArray<string>>('contentDM.objectives') ?? []
+const outcomes = v<ReadonlyArray<string>>('contentDM.outcomes') ?? []
+const teachingGuide = v<TeachingGuide>('contentDM.teachingGuide') ?? {}
+const currentModule = getModule('dm')!
+// Language options for the page-header download dropdowns.
+const headerLanguages = (pkg: LanguagePackage, base: string) =>
+  pkg.languages.map((file) => ({
+    lang: file.lang,
+    label: MATERIAL_LANGUAGE_LABELS[file.lang],
+    href: file.href,
+    download: languageDownloadName(base, file),
+  }))
+// mergeParts combines structural asset data (file paths, video sources) from
+// modulePartsData with the locale-specific text from contentDM.parts. The
+// result is what the template consumes — neither source alone is sufficient.
+const parts = mergeParts('dm', v<ReadonlyArray<TranslationPart>>('contentDM.parts') ?? [])
+
+// Related module cards are authored in the translation file but their counts
+// (parts, materials, videos, etc.) are overwritten here with live values from
+// modulePartsData. This keeps cards accurate when a module gains new content
+// without requiring editors to update every locale's translation file.
+const relatedModuleCards = (v<ReadonlyArray<RelatedModuleCard>>('contentDM.relatedModuleCards') ?? []).map(card => { const mod = getModule(card.moduleId); if (!mod) return card; return { ...card, parts: modulePartsData[mod.id].length, materials: mod.materials, videos: mod.videos, challenges: mod.challenges, games: mod.games } })
+
+const hasCount = (value: unknown): value is number => typeof value === 'number' && value > 0
+
+const formatCount = (count: number, singularKey: string, pluralKey: string) =>
+  `${count} ${t(count === 1 ? singularKey : pluralKey)}`
+
+const getPartTitle = (part: MergedPart) => part.titleKey ? t(part.titleKey) : ''
+
+const moduleImages = {
+  dc: '/images/learning-hub/01_digital-citizenship.webp',
+  ap: '/images/learning-hub/02_attacker-perspective.webp',
+  at: '/images/learning-hub/03_authentication.webp',
+  dp: '/images/learning-hub/04_data-privacy.webp',
+  se: '/images/learning-hub/05_social-engineering.webp',
+  mw: '/images/learning-hub/06_malware.webp',
+  dm: '/images/learning-hub/07_digital-misuse.webp',
+}
+---
+
+<DefaultLayout title={t('pages.hub.modules.dm.title')}>
+  <PageHeader
+      title={t('pages.hub.modules.dm.title')}
+      subtitle={t('pages.hub.modules.dm.description')}
+      underlineColor="var(--brand-DM)"
+      bgType="module"
+      buttons={[
+        {
+          text: t('pages.hub.contentPage.downloadIntro'),
+          href: introMaterials.languages[0].href,
+          variant: 'primary',
+          icon: 'lucide:download',
+          languages: headerLanguages(introMaterials, t('pages.hub.contentPage.introPackage')),
+        },
+        {
+          text: t('pages.hub.contentPage.downloadAll'),
+          href: currentModule.materialsPackage.languages[0].href,
+          variant: 'primary',
+          icon: 'lucide:download',
+          languages: headerLanguages(currentModule.materialsPackage, 'Digital Misuse Material Package'),
+        },
+      ]}
+      />
+
+  <!-- Main Content Area -->
+  <section class="my-12">
+    <div class="container dm-theme">
+
+      <!-- Learning Overview: Aim / Objectives / Outcomes tabs -->
+      <div class="aoo-card">
+        <div class="dm-tabs">
+          <div class="dm-tabs__bar" role="tablist">
+            <button class="dm-tab" role="tab" aria-selected="true" data-panel="aoo-aim">
+              <img class="dm-tab-img-icon" src="/images/learning-hub/aim.webp" alt="" aria-hidden="true" />
+              {t('pages.hub.contentPage.aimTitle')}
+            </button>
+            <button class="dm-tab" role="tab" aria-selected="false" data-panel="aoo-objectives">
+              <img class="dm-tab-img-icon" src="/images/learning-hub/objectives.webp" alt="" aria-hidden="true" />
+              {t('pages.hub.contentPage.objectivesTitle')}
+              <span class="dm-tab__badge">{objectives.length}</span>
+            </button>
+            <button class="dm-tab" role="tab" aria-selected="false" data-panel="aoo-outcomes">
+              <img class="dm-tab-img-icon" src="/images/learning-hub/outcomes.webp" alt="" aria-hidden="true" />
+              {t('pages.hub.contentPage.outcomesTitle')}
+              <span class="dm-tab__badge">{outcomes.length}</span>
+            </button>
+          </div>
+
+          <div class="dm-tab-panel" role="tabpanel" id="aoo-aim">
+            <div class="dm-aim-content">
+              <p class="dm-aim-text">{t('contentDM.aim')}</p>
+            </div>
+          </div>
+
+          <div class="dm-tab-panel" role="tabpanel" id="aoo-objectives" hidden>
+            <ul class="dm-step-list">
+              {objectives.map((obj, i) => (
+                <li class="dm-step-item dm-step-item--plain">
+                  <span class="dm-step-num">{String(i + 1).padStart(2, '0')}</span>
+                  <p class="dm-step-title">{obj}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="dm-tab-panel" role="tabpanel" id="aoo-outcomes" hidden>
+            <ul class="dm-step-list">
+              {outcomes.map((outcome, i) => (
+                <li class="dm-step-item dm-step-item--plain">
+                  <span class="dm-step-num">{String(i + 1).padStart(2, '0')}</span>
+                  <p class="dm-step-title">{outcome}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Divider -->
+      <div class="dm-divider dm-divider--center" style="margin-top: var(--space-xl);">{t('pages.hub.contentPage.dividerContent')}</div>
+
+      <!-- Module Content -->
+      <div class="dm-section" id="module-content">
+        <div class="dm-section__header">
+          <h2>{t('pages.hub.contentPage.moduleContent')}</h2>
+          <p class="dm-section__subtitle">{t('pages.hub.contentPage.moduleContentSubtitle')}</p>
+        </div>
+        <div class="dm-module-list">
+          <div class="dm-module-row">
+            <a class="dm-part-button" href="#teaching-guide">{t('pages.hub.labels.guide')}</a>
+            <div class="dm-teaching-guide" id="teaching-guide">
+              <div class="dm-package-banner__copy">
+                <h3>{t('pages.hub.contentPage.guideTitle')}</h3>
+                <p class="dm-package-banner__sub">{t('pages.hub.contentPage.guideDescription')}</p>
+              </div>
+              <div class="dm-package-btn-wrap">
+                <button
+                  type="button"
+                  class="button has-icon dm-package-btn dm-download-trigger"
+                  aria-expanded="false"
+                  aria-controls="teaching-guide-download"
+                  aria-label={String(teachingGuide.ariaLabel || t('pages.hub.contentPage.downloadGuide'))}
+                  data-download-trigger
+                >
+                  <Icon name="lucide:download" />
+                  <span>{t('pages.hub.contentPage.downloadGuide')}</span>
+                  <Icon name="lucide:chevron-down" />
+                </button>
+                <ul
+                  class="dm-download-menu"
+                  id="teaching-guide-download"
+                  aria-label={String(teachingGuide.ariaLabel || t('pages.hub.contentPage.downloadGuide'))}
+                  data-download-menu
+                  hidden
+                >
+                  {(currentModule.teachingGuide.languages ?? []).map((file) => (
+                    <li>
+                      <a
+                        class="dm-download-option"
+                        href={file.href}
+                        download={languageDownloadName(teachingGuide.download || t('pages.hub.contentPage.guideTitle'), file)}
+                        hreflang={file.lang}
+                      >
+                        <span class="dm-download-code" aria-hidden="true">{file.lang.toUpperCase()}</span>
+                        <span lang={file.lang}>{MATERIAL_LANGUAGE_LABELS[file.lang]}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {parts.map((part) => {
+            const meta: PartMeta = part.meta ?? { steps: 0, materials: 0, videos: 0 }
+            const included = part.included ?? {}
+            const partMaterials = included.materials ?? []
+            const partActivity = included.activityPlan ?? []
+            const featuredVideo = part.featuredVideo
+            const title = getPartTitle(part)
+            // Activity plan opens first when present — it is the primary teaching
+            // sequence. Materials are secondary. Video is the fallback tab.
+            const firstPanel = partActivity.length ? 'activity' : partMaterials.length ? 'materials' : 'video'
+
+            return (
+              <div class="dm-module-row">
+                <a class="dm-part-button" href={`#${part.anchorId}`}>{t('pages.hub.labels.part')} {part.number}</a>
+                <details class="dm-module" id={part.anchorId}>
+                  <summary class="dm-module__header">
+                    <div class="dm-module__copy">
+                      <h3>{title}</h3>
+                      <div class="dm-module__meta">
+                        {hasCount(meta.steps) ? (
+                          <span class="dm-meta-item"><Icon name="lucide:list-checks" /> {formatCount(meta.steps, 'pages.hub.labels.step', 'pages.hub.labels.steps')}</span>
+                        ) : null}
+                        {hasCount(meta.materials) ? (
+                          <span class="dm-meta-item"><Icon name="lucide:file-text" /> {formatCount(meta.materials, 'pages.hub.labels.material', 'pages.hub.labels.materials')}</span>
+                        ) : null}
+                        {hasCount(meta.videos) ? (
+                          <span class="dm-meta-item"><Icon name="lucide:play-circle" /> {formatCount(meta.videos, 'pages.hub.labels.video', 'pages.hub.labels.videos')}</span>
+                        ) : null}
+                      </div>
+                      <p class="dm-goal"><b>{t('pages.hub.labels.goal')}</b> {String(part.goal ?? '')}</p>
+                    </div>
+                    <span class="dm-module__toggle" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M8 5l8 7-8 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </span>
+                  </summary>
+                  <div class="dm-module__content">
+                    <div class="dm-package-banner">
+                      <div class="dm-package-banner__copy">
+                        <p class="dm-package-banner__title">{t('pages.hub.contentPage.materialPackage')}</p>
+                        <p class="dm-package-banner__sub">{t('pages.hub.contentPage.materialPackageSub')}</p>
+                      </div>
+                      <div class="dm-package-btn-wrap">
+                        <button
+                          type="button"
+                          class="button has-icon dm-package-btn dm-download-trigger"
+                          aria-expanded="false"
+                          aria-controls={`package-${part.anchorId}`}
+                          aria-label={`${t('pages.hub.contentPage.downloadPackage')}: ${title}`}
+                          data-download-trigger
+                        >
+                          <Icon name="lucide:download" />
+                          <span>{t('pages.hub.contentPage.downloadPackage')}</span>
+                          <Icon name="lucide:chevron-down" />
+                        </button>
+                        <ul
+                          class="dm-download-menu"
+                          id={`package-${part.anchorId}`}
+                          aria-label={`${t('pages.hub.contentPage.downloadPackage')}: ${title}`}
+                          data-download-menu
+                          hidden
+                        >
+                          {(part.bundle?.languages ?? []).map((file) => (
+                            <li>
+                              <a
+                                class="dm-download-option"
+                                href={file.href}
+                                download={languageDownloadName(part.bundle?.filename, file)}
+                                hreflang={file.lang}
+                              >
+                                <span class="dm-download-code" aria-hidden="true">{file.lang.toUpperCase()}</span>
+                                <span lang={file.lang}>{MATERIAL_LANGUAGE_LABELS[file.lang]}</span>
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+
+                    {(partMaterials.length || partActivity.length || featuredVideo) ? (
+                      <div class="dm-tabs">
+                        <div class="dm-tabs__bar" role="tablist">
+                          {partActivity.length ? (
+                            <button
+                              class="dm-tab"
+                              role="tab"
+                              aria-selected={firstPanel === 'activity' ? 'true' : 'false'}
+                              data-panel={`activity-${part.anchorId}`}
+                            >
+                              <Icon name="lucide:list" />
+                              {t('pages.hub.labels.activityPlan')}
+                              <span class="dm-tab__badge">{partActivity.length}</span>
+                            </button>
+                          ) : null}
+                          {partMaterials.length ? (
+                            <button
+                              class="dm-tab"
+                              role="tab"
+                              aria-selected={firstPanel === 'materials' ? 'true' : 'false'}
+                              data-panel={`materials-${part.anchorId}`}
+                            >
+                              <Icon name="lucide:file-text" />
+                              {t('pages.hub.labels.materials')}
+                              <span class="dm-tab__badge">{partMaterials.length}</span>
+                            </button>
+                          ) : null}
+                          {featuredVideo ? (
+                            <button
+                              class="dm-tab"
+                              role="tab"
+                              aria-selected={firstPanel === 'video' ? 'true' : 'false'}
+                              data-panel={`video-${part.anchorId}`}
+                            >
+                              <Icon name="lucide:video" />
+                              {t('pages.hub.labels.videos')}
+                              <span class="dm-tab__badge">1</span>
+                            </button>
+                          ) : null}
+                        </div>
+
+                        {partMaterials.length ? (
+                          <div
+                            class="dm-tab-panel"
+                            role="tabpanel"
+                            id={`materials-${part.anchorId}`}
+                            hidden={firstPanel !== 'materials'}
+                          >
+                            <ul class="dm-step-list">
+                              {partMaterials.map((item: MergedMaterial, i: number) => (
+                                <li class="dm-step-item dm-step-item--material">
+                                  <span class="dm-step-num dm-material-id">{item.id ?? String(i + 1).padStart(2, '0')}</span>
+                                  <p class="dm-step-title"><b>{String(item.kind ?? '')} –</b> {String(item.name ?? '')}</p>
+                                  {item.languages?.length ? (
+                                    <div class="dm-material-download">
+                                      <button
+                                        type="button"
+                                        class="dm-item-download dm-download-trigger"
+                                        aria-expanded="false"
+                                        aria-controls={`material-${part.anchorId}-${i}`}
+                                        aria-label={`${t('pages.hub.contentPage.download')}: ${String(item.kind ?? '')} – ${String(item.name ?? '')}`}
+                                        data-download-trigger
+                                      >
+                                        <Icon name="lucide:download" />
+                                        <span>{t('pages.hub.contentPage.download')}</span>
+                                        <Icon name="lucide:chevron-down" />
+                                      </button>
+                                      <ul
+                                        class="dm-download-menu"
+                                        id={`material-${part.anchorId}-${i}`}
+                                        aria-label={String(item.ariaLabel ?? t('pages.hub.contentPage.download'))}
+                                        data-download-menu
+                                        hidden
+                                      >
+                                        {item.languages.map((file) => (
+                                          <li>
+                                            <a
+                                              class="dm-download-option"
+                                              href={file.href}
+                                              download={item.filename ? `${item.filename} (${file.lang.toUpperCase()}).${file.href.split('.').pop()}` : file.href.split('/').pop()}
+                                              hreflang={file.lang}
+                                            >
+                                              <span class="dm-download-code" aria-hidden="true">{file.lang.toUpperCase()}</span>
+                                              <span lang={file.lang}>{MATERIAL_LANGUAGE_LABELS[file.lang]}</span>
+                                            </a>
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                  ) : (
+                                    <a
+                                      class="dm-item-download"
+                                      href={String(item.href ?? '')}
+                                      download={String(item.filename ?? '')}
+                                      aria-label={String(item.ariaLabel ?? '')}
+                                    >
+                                      <Icon name="lucide:download" />
+                                      <span>{t('pages.hub.contentPage.download')}</span>
+                                    </a>
+                                  )}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ) : null}
+
+                        {partActivity.length ? (
+                          <div
+                            class="dm-tab-panel"
+                            role="tabpanel"
+                            id={`activity-${part.anchorId}`}
+                            hidden={firstPanel !== 'activity'}
+                          >
+                            <ul class="dm-step-list">
+                              {partActivity.map((step: MergedActivityStep) => (
+                                <li class="dm-step-item dm-step-item--plain">
+                                  <span class="dm-step-num">{String(step.stepNumber ?? 0).padStart(2, '0')}</span>
+                                  <p class="dm-step-title"><b>{t('pages.hub.labels.step')} {String(step.stepNumber ?? '')} –</b> {String(step.title ?? '')}</p>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ) : null}
+
+                        {featuredVideo ? (
+                          <div
+                            class="dm-tab-panel"
+                            role="tabpanel"
+                            id={`video-${part.anchorId}`}
+                            hidden={firstPanel !== 'video'}
+                          >
+                            <div class="dm-video-preview">
+                              <div class="dm-video-preview__thumb">
+                                <video
+                                  controls
+                                  preload="metadata"
+                                  poster={String(featuredVideo.posterSrc ?? '')}
+                                >
+                                  <source src={String(featuredVideo.videoSrc ?? '')} />
+                                  {(featuredVideo.tracks ?? []).map((track) => (
+                                    <track
+                                      label={String(track.label ?? '')}
+                                      kind="subtitles"
+                                      srclang={String(track.srclang ?? '')}
+                                      src={String(track.src ?? '')}
+                                    />
+                                  ))}
+                                </video>
+                              </div>
+                              <div class="dm-video-preview__info">
+                                <h4 class="dm-video-preview__title">{String(featuredVideo.title ?? '')}</h4>
+                                <p class="dm-video-preview__desc">{String(featuredVideo.supportText ?? '')}</p>
+                                <div class="dm-video-preview__actions">
+                                  <div class="dm-video-action-wrap">
+                                    <a
+                                      class="dm-item-download"
+                                      href={String(featuredVideo.downloads?.video?.href ?? '')}
+                                      download={String(featuredVideo.downloads?.video?.filename ?? '')}
+                                      aria-label={String(featuredVideo.downloads?.video?.ariaLabel ?? '')}
+                                    >
+                                      <Icon name="lucide:download" />
+                                      <span>{t('pages.hub.labels.video')}</span>
+                                    </a>
+                                  </div>
+                                  <div class="dm-video-action-wrap">
+                                    <button
+                                      type="button"
+                                      class="dm-item-download dm-download-trigger"
+                                      aria-expanded="false"
+                                      aria-controls={`subtitles-${part.anchorId}`}
+                                      data-download-trigger
+                                    >
+                                      <Icon name="lucide:captions" />
+                                      <span>{t('pages.hub.labels.subtitles')}</span>
+                                      <Icon name="lucide:chevron-down" />
+                                    </button>
+                                    <ul
+                                      class="dm-download-menu"
+                                      id={`subtitles-${part.anchorId}`}
+                                      aria-label={String(featuredVideo.downloads?.subtitles?.ariaLabel ?? t('pages.hub.labels.subtitles'))}
+                                      data-download-menu
+                                      hidden
+                                    >
+                                      {(featuredVideo.tracks ?? []).map((track) => (
+                                        <li>
+                                          <a
+                                            class="dm-download-option"
+                                            href={String(track.src ?? '')}
+                                            download={String(track.src ?? '').split('/').pop()}
+                                            hreflang={String(track.srclang ?? '')}
+                                          >
+                                            <span class="dm-download-code" aria-hidden="true">{String(track.srclang ?? '').toUpperCase()}</span>
+                                            <span lang={String(track.srclang ?? '')}>{String(track.label ?? '')}</span>
+                                          </a>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ) : null}
+                      </div>
+                    ) : null}
+                  </div>
+                </details>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+
+      <!-- Section Divider -->
+      <div class="dm-divider dm-divider--center">{t('pages.hub.contentPage.dividerActivities')}</div>
+
+      <!-- Additional Activities: challenge + game (same cards as the Learning Hub introduction) -->
+      <section id="additional-activities" aria-labelledby="additional-activities-heading">
+        <h2 id="additional-activities-heading" class="sr-only">{t('pages.hub.contentPage.dividerActivities')}</h2>
+        <ModuleActivities moduleId="dm" />
+      </section>
+
+      <!-- Section Divider -->
+      <div class="dm-divider dm-divider--center">{t('pages.hub.contentPage.dividerMore')}</div>
+
+      <!-- Related Modules -->
+      <div class="dm-section">
+        <div class="dm-section__header">
+          <h2>{t('pages.hub.contentPage.relatedModules')}</h2>
+          <p class="dm-section__subtitle">{t('pages.hub.contentPage.relatedModulesSubtitle')}</p>
+        </div>
+
+        <div class="dm-rm-list">
+          {relatedModuleCards.map((card, idx) => {
+            const moduleId = String(card.moduleId ?? '')
+            const title = t(`pages.hub.modules.${moduleId}.title`)
+            const href = localizePath(locale, String(card.href ?? ''))
+            const image = moduleImages[moduleId as keyof typeof moduleImages]
+            const brandVar = `var(--brand-${String(card.brand ?? '')})`
+
+            return (
+              <a
+                class={`dm-rm-row${idx === 0 ? ' dm-rm-row--first' : ''}`}
+                href={href}
+                style={`--rm-color: ${brandVar};`}
+              >
+                <div class="dm-rm-icon">
+                  <img src={image} alt="" decoding="async" loading="eager" />
+                </div>
+                <div class="dm-rm-body">
+                  <strong class="dm-rm-title">{title}</strong>
+                  <span class="dm-rm-desc">{t(`pages.hub.modules.${moduleId}.description`)}</span>
+                </div>
+                <div class="dm-rm-meta" aria-label={title}>
+                  {hasCount(card.parts) ? (
+                    <span class="dm-rm-stat">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                      {card.parts}
+                    </span>
+                  ) : null}
+                  {hasCount(card.materials) ? (
+                    <span class="dm-rm-stat">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+                      {card.materials}
+                    </span>
+                  ) : null}
+                  {hasCount(card.videos) ? (
+                    <span class="dm-rm-stat">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                      {card.videos}
+                    </span>
+                  ) : null}
+                  {hasCount(card.challenges) ? (
+                    <span class="dm-rm-stat">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                      {card.challenges}
+                    </span>
+                  ) : null}
+                  {hasCount(card.games) ? (
+                    <span class="dm-rm-stat">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 12h4M8 10v4"/><circle cx="15" cy="11" r="0.8" fill="currentColor" stroke="none"/><circle cx="17" cy="13" r="0.8" fill="currentColor" stroke="none"/><path d="M2 9a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v1c0 1-0.5 2-1 2.5L19 17a3 3 0 0 1-2.5 1.5h-9A3 3 0 0 1 5 17l-2-4.5C2.5 12 2 11 2 10V9z"/></svg>
+                      {card.games}
+                    </span>
+                  ) : null}
+                </div>
+                <span class="dm-rm-arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M8 5l8 7-8 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </a>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  </section>
+</DefaultLayout>
+
+<script>
+  import { initDownloadMenus } from '../../../utils/downloadMenu'
+
+  // When a URL contains a hash that targets a <details> element (e.g. a direct
+  // link to a module part like /content#digital-environments), open it and
+  // scroll to it. requestAnimationFrame gives the browser one paint cycle to
+  // render the newly open details before scrollIntoView fires — without it the
+  // element may not yet have layout and scrolling lands in the wrong position.
+  const expandFromHash = () => {
+    const hash = window.location.hash.slice(1)
+    if (!hash) return
+
+    const target = document.getElementById(hash)
+    if (target instanceof HTMLDetailsElement) {
+      target.open = true
+      requestAnimationFrame(() => {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      })
+    }
+  }
+
+  // astro:page-load fires on every view-transition navigation, so both handlers
+  // must be re-registered here to stay active after client-side routing.
+  document.addEventListener('astro:page-load', expandFromHash)
+  expandFromHash()
+
+  const initTabs = () => {
+    document.querySelectorAll('.dm-tabs').forEach(tabs => {
+      const bar = tabs.querySelector('.dm-tabs__bar')
+      if (!bar) return
+      bar.addEventListener('click', e => {
+        const btn = (e.target as Element).closest('[role="tab"]') as HTMLElement | null
+        if (!btn) return
+        const targetId = btn.dataset.panel
+        if (!targetId) return
+        bar.querySelectorAll('[role="tab"]').forEach(t => {
+          t.setAttribute('aria-selected', t === btn ? 'true' : 'false')
+        })
+        tabs.querySelectorAll('[role="tabpanel"]').forEach(p => {
+          (p as HTMLElement).hidden = p.id !== targetId
+        })
+      })
+    })
+  }
+
+  document.addEventListener('astro:page-load', initTabs)
+  initTabs()
+
+  document.addEventListener('astro:page-load', initDownloadMenus)
+  initDownloadMenus()
+</script>
+
+<style>
+  .dm-grid {
+    display: grid;
+    gap: var(--space-l);
+  }
+
+  .dm-grid--two {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+  .dm-grid--three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  :global(.dm-panel) {
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+    border: 2px solid #dbe2ea;
+    border-radius: var(--radius-l);
+    padding: var(--space-l);
+    box-shadow: var(--elevation-1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .dm-panel:hover,
+  .dm-panel:focus-within {
+    transform: translateY(-4px);
+    box-shadow: var(--elevation-3);
+    border: 2px solid color-mix(in oklab,var(--brand-DM),white 60%);
+  }
+
+  .dm-grid--learning-overview {
+    align-items: stretch;
+  }
+
+  .dm-panel--compact {
+    padding: var(--space-m);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dm-panel--learning {
+    height: 100%;
+  }
+
+  .dm-panel--objectives {
+    background: linear-gradient(165deg, color-mix(in oklab, var(--color-neutral-100), white 42%), color-mix(in oklab, var(--color-neutral-300), white 28%));
+  }
+
+  .dm-panel--outcomes {
+    background: linear-gradient(165deg, color-mix(in oklab, var(--color-neutral-100), white 40%), color-mix(in oklab, var(--color-neutral-300), white 26%));
+  }
+
+  .dm-panel--learning h3 {
+    margin: 0;
+    min-height: 2.6rem;
+    display: flex;
+    align-items: flex-start;
+    font-size: clamp(1.35rem, 1vw + 1rem, 1.9rem);
+    line-height: 1.1;
+  }
+
+  .dm-panel__content {
+    margin-top: var(--space-xs);
+    border-top: 2px solid color-mix(in oklab, var(--color-neutral-500), white 35%);
+    padding-top: var(--space-s);
+  }
+
+  .dm-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0;
+  }
+
+  .dm-list li {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    padding: 0;
+    font-size: var(--font-size--1);
+    line-height: 1.5;
+  }
+
+  .dm-list li + li {
+    margin-top: var(--space-s);
+    padding-top: var(--space-s);
+    border-top: 1px solid color-mix(in oklab, var(--color-neutral-500), white 55%);
+  }
+
+  .dm-aim-text {
+    margin: 0;
+    line-height: 1.32;
+    font-size: var(--text-xl);
+    color: var(--foreground-color);
+  }
+
+  .dm-section {
+    margin-top: var(--space-xl);
+  }
+
+  .dm-section__header {
+    display: grid;
+    gap: var(--space-2xs);
+    margin-bottom: var(--space-l);
+  }
+
+  .dm-section__subtitle {
+    color: var(--foreground-color);
+  }
+
+  .dm-module-list {
+    --dm-part-column: clamp(88px, 11vw, 120px);
+    --dm-part-gap: var(--space-l);
+    --dm-part-button-height: 2.8rem;
+    display: grid;
+    gap: var(--dm-part-gap);
+  }
+
+  .dm-module-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--dm-part-column) minmax(0, 1fr);
+    gap: var(--space-m);
+    align-items: start;
+  }
+
+  .dm-module-row:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: calc(var(--dm-part-column) / 2);
+    top: calc(var(--dm-part-button-height) + var(--space-2xs));
+    height: calc(100% + var(--dm-part-gap) - var(--dm-part-button-height) - var(--space-s));
+    border-left: 2px dashed color-mix(in oklab, var(--brand-DM), white 50%);
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  .dm-part-button {
+    min-height: var(--dm-part-button-height);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0 var(--space-s);
+    border: 2px solid var(--brand-DM);
+    border-radius: 0.5rem;
+    background: var(--brand-DM);
+    color: #fff;
+    box-shadow: var(--elevation-1);
+    text-decoration: none;
+    font-size: var(--font-size--3);
+    font-weight: 800;
+    line-height: 1;
+    white-space: nowrap;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .dm-part-button:hover {
+    background: transparent;
+    color: var(--foreground-color);
+    transform: translateY(-1px);
+  }
+
+  .dm-part-button:focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--brand-DM), black 20%);
+    outline-offset: 2px;
+  }
+
+  :global(.dm-module) {
+    border: 2px solid color-mix(in oklab, var(--brand-DM), white 60%);
+    border-radius: 1.25rem;
+    padding: 0;
+    background: linear-gradient(155deg, color-mix(in oklab, var(--brand-DM), white 92%), #ffffff 55%);
+    box-shadow: var(--elevation-2);
+    margin-bottom: 0;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .dm-module:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--elevation-3);
+  }
+
+  .dm-module__header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-m);
+    align-items: center;
+    list-style: none;
+    cursor: pointer;
+    padding: clamp(1rem, 2vw, 1.75rem);
+  }
+
+  .dm-module__header::-webkit-details-marker {
+    display: none;
+  }
+
+  .dm-module__header::marker {
+    content: '';
+  }
+
+  .dm-module__header h3 {
+    margin: 0;
+    font-size: clamp(1.6rem, 1.3rem + 1vw, 2.4rem);
+    line-height: 1.1;
+    font-weight: 900;
+    text-decoration: underline;
+    text-decoration-color: var(--brand-DM);
+    text-underline-offset: 0.35rem;
+    text-decoration-thickness: 0.15rem;
+  }
+
+  .dm-module__header h3 a {
+    color: var(--color-neutral-900);
+    text-decoration: none;
+  }
+
+  .dm-module__header h3 a:hover,
+  .dm-module__header h3 a:focus-visible {
+    color: var(--brand-DM);
+  }
+
+  .dm-module__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    border: 2px solid color-mix(in oklab, var(--brand-DM), white 60%);
+    background: color-mix(in oklab, var(--brand-DM), white 86%);
+    color: var(--brand-DM);
+    pointer-events: none;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .dm-module__header:hover .dm-module__toggle {
+    background: var(--brand-DM);
+    border-color: var(--brand-DM);
+    color: #ffffff;
+  }
+
+  .dm-module__toggle svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    transition: transform 0.3s ease;
+  }
+
+  .dm-module:not([open]) .dm-module__toggle svg {
+    transform: rotate(0deg);
+  }
+
+  .dm-module[open] .dm-module__toggle svg {
+    transform: rotate(90deg);
+  }
+
+  .dm-module__content {
+    padding: 0 clamp(1rem, 2vw, 1.75rem) clamp(1rem, 2vw, 1.75rem);
+  }
+
+  .dm-goal {
+    font-size: 1.05rem;
+    line-height: 1.5;
+    margin-top: var(--space-xs);
+    color: var(--foreground-color);
+    max-width: 70ch;
+  }
+
+  .dm-module__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: var(--space-s);
+  }
+
+  .dm-meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--foreground-color);
+  }
+
+  .dm-meta-item [data-icon] {
+    width: 1.1rem;
+    height: 1.1rem;
+    flex-shrink: 0;
+    color: var(--brand-DM);
+  }
+
+  .dm-divider {
+    margin: var(--space-l) 0 var(--space-m);
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+    font-size: var(--font-size--1);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: color-mix(in oklab, var(--brand-DM), black 20%);
+  }
+
+  .dm-divider::before,
+  .dm-divider::after {
+    content: '';
+    flex: 1;
+    border-top: 1px solid var(--brand-DM);
+  }
+
+  .dm-divider--center {
+    justify-content: center;
+    color: var(--foreground-color);
+  }
+
+  .dm-divider--center::before,
+  .dm-divider--center::after {
+    flex: 0.6;
+  }
+
+  .dm-item-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    border: 1px solid color-mix(in oklab,var(--brand-DM),white 45%);
+    color: color-mix(in oklab, var(--brand-DM), black 10%);
+    background: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    padding: 0.35rem 0.8rem;
+    font-weight: 700;
+    font-size: var(--font-size--1);
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .dm-item-download:hover {
+    background-color: var(--brand-DM);
+    color: #fff;
+    border-color: color-mix(in oklab, var(--brand-DM), black 6%);
+    transform: translateY(-1px);
+  }
+
+  .dm-module-card {
+    border: 2px solid color-mix(in oklab, var(--module-card-color, var(--brand-DM)), white 30%);
+    border-radius: var(--radius-l);
+    padding: var(--space-m);
+    background: color-mix(in oklab, var(--module-card-color, var(--brand-DM)), white 90%);
+    box-shadow: var(--elevation-1);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    align-content: start;
+  }
+
+  .dm-module-card h4 {
+    color: color-mix(in oklab, var(--module-card-color, var(--brand-DM)), black 2%);
+  }
+
+  .dm-card-text {
+    color: var(--foreground-color);
+  }
+
+  .dm-card-button {
+    width: 100%;
+    justify-content: center;
+    border-radius: 10px;
+    margin-top: auto;
+    background: var(--module-card-color, var(--brand-DM));
+    color: #fff;
+    border: 2px solid color-mix(in oklab,var(--module-card-color, var(--brand-DM)),white 30%);
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .dm-card-button:hover {
+    background: color-mix(in oklab, var(--module-card-color, var(--brand-DM)), black 10%);
+    color: #fff;
+    border: 2px solid color-mix(in oklab, var(--module-card-color, var(--brand-DM)), black 10%);
+    transform: translateY(-1px);
+  }
+
+  /* ── Teaching Guide ──────────────────────────────────────────────────────── */
+  .dm-teaching-guide {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-xl);
+    padding: var(--space-m) var(--space-l);
+    border-radius: 1.25rem;
+    background: color-mix(in oklab, var(--brand-DM), white 88%);
+    border: 1.5px solid color-mix(in oklab, var(--brand-DM), white 60%);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .dm-teaching-guide:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--elevation-3);
+  }
+
+  .dm-teaching-guide h3 {
+    margin: 0;
+    font-size: clamp(1.6rem, 1.3rem + 1vw, 2.4rem);
+    line-height: 1.1;
+    font-weight: 900;
+    text-decoration: underline;
+    text-decoration-color: var(--brand-DM);
+    text-underline-offset: 0.35rem;
+    text-decoration-thickness: 0.15rem;
+  }
+
+  /* ── Package Banner ───────────────────────────────────────────────────────── */
+  .dm-package-banner {
+    margin-top: var(--space-m);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-s);
+    padding: var(--space-m) var(--space-l);
+    border-radius: var(--radius-m);
+    background: color-mix(in oklab, var(--brand-DM), white 88%);
+    border: 1.5px solid color-mix(in oklab, var(--brand-DM), white 60%);
+    overflow: hidden;
+  }
+
+  .dm-package-banner__copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .dm-package-banner__title {
+    margin: 0;
+    font-weight: 700;
+    font-size: var(--font-size-1);
+    color: var(--color-neutral-900);
+  }
+
+  .dm-package-banner__sub {
+    margin-top: 0;
+    font-size: var(--font-size-0);
+    color: var(--foreground-color);
+  }
+
+  .dm-package-btn-wrap {
+    flex-shrink: 0;
+  }
+
+  .dm-package-btn {
+    border-radius: 10px;
+    background: var(--brand-DM);
+    color: #fff;
+    border: 2px solid color-mix(in oklab, var(--brand-DM), black 10%);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .dm-package-btn:hover {
+    background: color-mix(in oklab, var(--brand-DM), black 12%);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  /* ── AoO Overview Card ──────────────────────────────────────────────────── */
+  .aoo-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+    border: 1px solid #dbe2ea;
+    border-radius: 1rem;
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+    box-shadow: var(--elevation-1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-bottom: var(--space-l);
+  }
+
+  .aoo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--elevation-3);
+  }
+
+  :global(html.darkmode) .aoo-card {
+    background: linear-gradient(180deg, var(--dm-surface-2) 0%, var(--dm-surface-1) 100%);
+    border-color: var(--dm-border-sub);
+  }
+
+  .aoo-card > .dm-tabs {
+    margin-top: 0;
+  }
+
+  /* ── Tabs ─────────────────────────────────────────────────────────────────── */
+  .dm-tabs {
+    margin-top: var(--space-m);
+  }
+
+  .dm-tabs__bar {
+    display: flex;
+    gap: 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    border-bottom: 2px solid color-mix(in oklab, var(--brand-DM), white 70%);
+    margin-bottom: var(--space-m);
+    padding-right: var(--space-2xs);
+  }
+
+  .dm-tabs__bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .dm-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1rem;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    color: color-mix(in oklab, var(--color-neutral-700), transparent 20%);
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .dm-tab:hover {
+    color: var(--brand-DM);
+  }
+
+  .dm-tab[aria-selected="true"] {
+    color: var(--color-neutral-900);
+    border-bottom-color: var(--brand-DM);
+    font-weight: 700;
+  }
+
+  .dm-tab [data-icon] {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+  }
+
+  .dm-tab__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.4rem;
+    height: 1.4rem;
+    padding: 0 0.3rem;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--brand-DM), white 75%);
+    color: color-mix(in oklab, var(--brand-DM), black 15%);
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .dm-tab[aria-selected="true"] .dm-tab__badge {
+    background: var(--brand-DM);
+    color: #fff;
+  }
+
+  /* ── Step List ────────────────────────────────────────────────────────────── */
+  .dm-step-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .dm-step-item {
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+    gap: var(--space-s);
+    align-items: center;
+    padding: var(--space-s) 0;
+    border-bottom: 1px dashed color-mix(in oklab, var(--brand-DM), white 65%);
+  }
+
+  .dm-step-item:last-child {
+    border-bottom: none;
+  }
+
+  .dm-step-num {
+    font-size: var(--font-size-1);
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    color: color-mix(in oklab, var(--brand-DM), black 15%);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .dm-step-title {
+    margin: 0;
+    font-size: var(--font-size-0);
+    line-height: 1.4;
+    color: var(--foreground-color);
+  }
+
+  /* ── Video Preview Card ───────────────────────────────────────────────────── */
+  .dm-video-preview {
+    display: grid;
+    grid-template-columns: minmax(140px, 350px) 1fr;
+    gap: var(--space-m);
+    background: color-mix(in oklab, var(--brand-DM), white 93%);
+    border: 1.5px solid color-mix(in oklab, var(--brand-DM), white 72%);
+    border-radius: var(--radius-m);
+    padding: var(--space-m);
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .dm-video-preview__thumb {
+    border-radius: var(--radius-s);
+    overflow: hidden;
+    background: #111;
+    flex-shrink: 0;
+  }
+
+  .dm-video-preview__thumb video {
+    width: 100%;
+    display: block;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  .dm-video-preview__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .dm-video-preview__title {
+    margin: 0;
+    font-size: var(--font-size-1);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--color-neutral-900);
+  }
+
+  .dm-video-preview__desc {
+    margin: 0;
+    font-size: var(--font-size-0);
+    line-height: 1.5;
+    color: var(--foreground-color);
+  }
+
+  .dm-video-preview__actions {
+    display: flex;
+    /* keeps the original spacing above the buttons (info gap is now 0.2rem) */
+    margin-top: calc(var(--space-s) - 0.2rem);
+    gap: var(--space-s);
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 900px) {
+    .dm-grid--three {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .dm-panel--aim {
+      grid-column: 1 / -1;
+    }
+
+    .dm-module-list {
+      --dm-part-column: 96px;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .dm-grid--three {
+      grid-template-columns: 1fr;
+    }
+
+    .dm-panel--aim {
+      grid-column: auto;
+    }
+
+    .dm-module-row {
+      grid-template-columns: 1fr;
+      gap: var(--space-xs);
+    }
+
+    .dm-module-row::after {
+      display: none;
+    }
+
+    .dm-part-button {
+      width: fit-content;
+      min-width: 7rem;
+      justify-self: start;
+    }
+
+    .dm-teaching-guide {
+      flex-direction: column;
+      align-items: stretch;
+      padding: var(--space-s) var(--space-m);
+    }
+
+    .dm-package-banner {
+      flex-direction: column;
+      align-items: stretch;
+      padding: var(--space-s) var(--space-m);
+    }
+
+    .dm-package-banner__title {
+      font-size: var(--font-size-0);
+    }
+
+    .dm-package-btn-wrap {
+      align-self: stretch;
+    }
+
+    .dm-package-btn {
+      width: auto;
+      justify-content: center;
+      white-space: normal;
+      text-align: center;
+      font-size: 0.9rem;
+      display: flex;
+      gap: var(--space-s);
+      flex-wrap: wrap;
+    }
+
+    .dm-video-preview__actions {
+      flex-direction: column;
+    }
+
+    .dm-video-action-wrap {
+      width: 100%;
+    }
+
+    .dm-video-action-wrap .dm-item-download {
+      display: flex;
+      gap: var(--space-s);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .dm-tab {
+      padding: 0.5rem 0.7rem;
+      font-size: 0.875rem;
+      white-space: nowrap;
+      gap: 0.3rem;
+    }
+
+    .dm-tab [data-icon] {
+      display: none;
+    }
+
+    .dm-step-item {
+      grid-template-columns: 2rem minmax(0, 1fr) auto;
+    }
+
+    .dm-video-preview {
+      grid-template-columns: 1fr;
+    }
+
+    .dm-video-preview__title {
+      font-size: var(--font-size-0);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .dm-tab {
+      padding: 0.45rem 0.55rem;
+      font-size: 0.70rem;
+    }
+
+    .dm-tab__badge {
+      min-width: 1.2rem;
+      height: 1.2rem;
+      font-size: 0.7rem;
+    }
+
+    .dm-step-item {
+      grid-template-columns: 2rem 1fr;
+      row-gap: var(--space-xs);
+    }
+
+    .dm-step-item > :last-child {
+      grid-column: 2;
+      justify-self: start;
+    }
+
+    .dm-step-title {
+      font-size: 0.9rem;
+    }
+  }
+
+  /* ── Dark mode overrides ─────────────────────────────────────────────────── */
+  :global(html.darkmode) .dm-panel {
+    background: linear-gradient(180deg, var(--dm-surface-2) 0%, var(--dm-surface-1) 100%);
+    border-color: var(--dm-border-sub);
+  }
+
+  :global(html.darkmode) .dm-panel__content {
+    color: var(--dm-fg-muted);
+    border-top-color: var(--dm-border);
+  }
+
+  :global(html.darkmode) .dm-list li {
+    color: var(--dm-fg-muted);
+  }
+
+  :global(html.darkmode) .dm-list li + li {
+    border-top-color: var(--dm-border-sub);
+  }
+
+  :global(html.darkmode) .dm-aim-text {
+    color: var(--dm-fg-muted);
+  }
+
+  :global(html.darkmode) .dm-section__subtitle {
+    color: var(--dm-fg-muted);
+  }
+
+  :global(html.darkmode) .dm-goal {
+    color: var(--dm-fg-muted);
+  }
+
+  :global(html.darkmode) .dm-meta-item {
+    color: var(--dm-fg);
+  }
+
+  :global(html.darkmode) .dm-module-row:not(:last-child)::after {
+    border-left-color: color-mix(in oklab, var(--brand-DM) 40%, var(--dm-border-sub));
+  }
+
+  :global(html.darkmode) .dm-module {
+    background: linear-gradient(155deg, var(--dm-surface-2) 0%, var(--dm-surface-1) 55%);
+    border-color: var(--dm-border-sub);
+  }
+
+  :global(html.darkmode) .dm-module__header h3 a {
+    color: var(--dm-fg);
+  }
+
+  :global(html.darkmode) .dm-module__header h3 a:hover,
+  :global(html.darkmode) .dm-module__header h3 a:focus-visible {
+    color: var(--brand-DM);
+  }
+
+  :global(html.darkmode) .dm-module__toggle {
+    background: color-mix(in oklab, var(--brand-DM) 18%, var(--dm-surface-3));
+    border-color: color-mix(in oklab, var(--brand-DM) 35%, var(--dm-border));
+    color: var(--brand-DM);
+  }
+
+  :global(html.darkmode) .dm-module__header:hover .dm-module__toggle {
+    background: var(--brand-DM);
+    border-color: var(--brand-DM);
+    color: #1c1917;
+  }
+
+  :global(html.darkmode) .dm-divider {
+    color: color-mix(in oklab, var(--brand-DM), white 20%);
+  }
+
+  :global(html.darkmode) .dm-divider::before,
+  :global(html.darkmode) .dm-divider::after {
+    border-top-color: color-mix(in oklab, var(--brand-DM) 50%, var(--dm-border-sub));
+  }
+
+  :global(html.darkmode) .dm-divider--center {
+    color: var(--dm-fg-muted);
+  }
+
+  /* ── Language dropdowns: subtitles + materials (behaviour: src/utils/downloadMenu.ts) ───── */
+  .dm-download-trigger {
+    font-family: inherit;
+    line-height: inherit;
+    cursor: pointer;
+  }
+
+  .dm-download-trigger :global(svg:last-child) {
+    transition: transform 0.2s ease;
+  }
+
+  .dm-download-trigger[aria-expanded="true"] {
+    background-color: var(--brand-DM);
+    color: #fff;
+    border-color: color-mix(in oklab, var(--brand-DM), black 6%);
+  }
+
+  .dm-download-trigger[aria-expanded="true"] :global(svg:last-child) {
+    transform: rotate(180deg);
+  }
+
+  .dm-download-menu {
+    position: fixed;
+    z-index: 1000;
+    min-width: 12rem;
+    margin: 0;
+    padding: 0.35rem;
+    list-style: none;
+    background: #fff;
+    border: 1px solid color-mix(in oklab, var(--brand-DM), white 45%);
+    border-radius: 10px;
+    box-shadow: 0 12px 28px -8px rgb(0 0 0 / 0.22);
+  }
+
+  .dm-download-menu[hidden] {
+    display: none;
+  }
+
+  .dm-download-menu li {
+    margin: 0;
+  }
+
+  .dm-download-option {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.65rem;
+    border-radius: 6px;
+    color: var(--color-neutral-900, #1c1917);
+    font-weight: 600;
+    font-size: var(--font-size--1);
+    text-decoration: none;
+  }
+
+  .dm-download-option:hover,
+  .dm-download-option:focus-visible {
+    background: color-mix(in oklab, var(--brand-DM), white 88%);
+    outline: none;
+  }
+
+  .dm-download-option:focus-visible {
+    box-shadow: inset 0 0 0 2px var(--brand-DM);
+  }
+
+  .dm-download-code {
+    min-width: 2rem;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    background: color-mix(in oklab, var(--brand-DM), white 85%);
+    color: color-mix(in oklab, var(--brand-DM), black 45%);
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-align: center;
+  }
+
+  :global(html.darkmode) .dm-download-trigger[aria-expanded="true"] {
+    background: var(--brand-DM);
+    color: #1c1917;
+    border-color: var(--brand-DM);
+  }
+
+  :global(html.darkmode) .dm-download-menu {
+    background: var(--dm-surface-2);
+    border-color: color-mix(in oklab, var(--brand-DM) 40%, var(--dm-border-sub));
+  }
+
+  :global(html.darkmode) .dm-download-option {
+    color: var(--dm-fg);
+  }
+
+  :global(html.darkmode) .dm-download-option:hover,
+  :global(html.darkmode) .dm-download-option:focus-visible {
+    background: color-mix(in oklab, var(--brand-DM) 18%, var(--dm-surface-2));
+  }
+
+  :global(html.darkmode) .dm-download-code {
+    background: color-mix(in oklab, var(--brand-DM) 25%, var(--dm-surface-3));
+    color: var(--dm-fg);
+  }
+
+  :global(html.darkmode) .dm-item-download {
+    background: var(--dm-surface-1);
+    color: color-mix(in oklab, var(--brand-DM), white 25%);
+    border-color: color-mix(in oklab, var(--brand-DM) 40%, var(--dm-border-sub));
+  }
+
+  :global(html.darkmode) .dm-item-download:hover {
+    background: var(--brand-DM);
+    color: #1c1917;
+    border-color: var(--brand-DM);
+  }
+
+  :global(html.darkmode) .dm-module-card {
+    background: color-mix(in oklab, var(--module-card-color, var(--brand-DM)) 12%, var(--dm-surface-1));
+    border-color: color-mix(in oklab, var(--module-card-color, var(--brand-DM)) 40%, var(--dm-border-sub));
+  }
+
+  :global(html.darkmode) .dm-module-card h4 {
+    color: color-mix(in oklab, var(--module-card-color, var(--brand-DM)), white 35%);
+  }
+
+  :global(html.darkmode) .dm-card-text {
+    color: var(--dm-fg-muted);
+  }
+
+  :global(html.darkmode) .dm-card-button {
+    background: var(--module-card-color, var(--brand-DM));
+    border-color: color-mix(in oklab, var(--module-card-color, var(--brand-DM)), black 10%);
+    color: #ffffff;
+  }
+
+  :global(html.darkmode) .dm-card-button:hover {
+    background: color-mix(in oklab, var(--module-card-color, var(--brand-DM)), white 15%);
+    border-color: var(--module-card-color, var(--brand-DM));
+    color: #ffffff;
+  }
+
+  :global(html.darkmode) .dm-teaching-guide {
+    background: color-mix(in oklab, var(--brand-DM) 14%, var(--dm-surface-2));
+    border-color: color-mix(in oklab, var(--brand-DM) 35%, var(--dm-border-sub));
+  }
+
+  :global(html.darkmode) .dm-package-banner {
+    background: color-mix(in oklab, var(--brand-DM) 14%, var(--dm-surface-2));
+    border-color: color-mix(in oklab, var(--brand-DM) 35%, var(--dm-border-sub));
+  }
+
+  :global(html.darkmode) .dm-package-banner__title {
+    color: var(--dm-fg);
+  }
+
+  :global(html.darkmode) .dm-package-banner__sub {
+    color: var(--dm-fg-muted);
+  }
+
+  :global(html.darkmode) .dm-tabs__bar {
+    border-bottom-color: color-mix(in oklab, var(--brand-DM) 30%, var(--dm-border-sub));
+  }
+
+  :global(html.darkmode) .dm-tab {
+    color: var(--dm-fg-muted);
+  }
+
+  :global(html.darkmode) .dm-tab:hover {
+    color: color-mix(in oklab, var(--brand-DM), white 20%);
+  }
+
+  :global(html.darkmode) .dm-tab[aria-selected="true"] {
+    color: var(--dm-fg);
+  }
+
+  :global(html.darkmode) .dm-tab__badge {
+    background: color-mix(in oklab, var(--brand-DM) 25%, var(--dm-surface-3));
+    color: color-mix(in oklab, var(--brand-DM), white 30%);
+  }
+
+  :global(html.darkmode) .dm-tab[aria-selected="true"] .dm-tab__badge {
+    background: var(--brand-DM);
+    color: #1c1917;
+  }
+
+  :global(html.darkmode) .dm-step-num {
+    color: color-mix(in oklab, var(--brand-DM), white 25%);
+  }
+
+  :global(html.darkmode) .dm-step-title {
+    color: var(--dm-fg-muted);
+  }
+
+  :global(html.darkmode) .dm-step-item {
+    border-bottom-color: color-mix(in oklab, var(--brand-DM) 20%, var(--dm-border-sub));
+  }
+
+  :global(html.darkmode) .dm-video-preview {
+    background: color-mix(in oklab, var(--brand-DM) 10%, var(--dm-surface-2));
+    border-color: color-mix(in oklab, var(--brand-DM) 28%, var(--dm-border-sub));
+  }
+
+  :global(html.darkmode) .dm-video-preview__title {
+    color: var(--dm-fg);
+  }
+
+  :global(html.darkmode) .dm-video-preview__desc {
+    color: var(--dm-fg-muted);
+  }
+
+  /* ── Vertical tabs ──────────────────────────────────────────────────────── */
+  .dm-tabs--vertical {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    align-items: start;
+    gap: 0;
+  }
+
+  .dm-tabs--vertical .dm-tabs__bar {
+    flex-direction: column;
+    border-bottom: none;
+    border-right: 2px solid color-mix(in oklab, var(--brand-DM), white 70%);
+    overflow-x: unset;
+    padding-right: 0;
+    margin-bottom: 0;
+    gap: 10px;
+  }
+
+  .dm-tabs--vertical .dm-tab {
+    justify-content: flex-start;
+    white-space: nowrap;
+    border-bottom-color: transparent;
+    border-right: 3px solid transparent;
+    margin-bottom: 0;
+    margin-right: -2px;
+    padding-right: var(--space-l);
+    font-size: var(--font-size--3);
+    font-weight: 800;
+  }
+
+  .dm-tabs--vertical .dm-tab[aria-selected="true"] {
+    border-bottom-color: transparent;
+    border-right-color: var(--brand-DM);
+  }
+
+  .dm-tabs-v__body {
+    padding-left: var(--space-l);
+  }
+
+  @media (max-width: 640px) {
+    .dm-tabs--vertical {
+      grid-template-columns: 1fr;
+    }
+
+    .dm-tabs--vertical .dm-tabs__bar {
+      flex-direction: row;
+      border-right: none;
+      border-bottom: 2px solid color-mix(in oklab, var(--brand-DM), white 70%);
+      overflow-x: auto;
+      padding-right: var(--space-2xs);
+      margin-bottom: var(--space-m);
+    }
+
+    .dm-tabs--vertical .dm-tab {
+      white-space: nowrap;
+      border-right-color: transparent;
+      border-bottom: 3px solid transparent;
+      margin-right: 0;
+      margin-bottom: -2px;
+      padding-right: 1rem;
+    }
+
+    .dm-tabs--vertical .dm-tab[aria-selected="true"] {
+      border-right-color: transparent;
+      border-bottom-color: var(--brand-DM);
+    }
+
+    .dm-tabs-v__body {
+      padding-left: 0;
+    }
+  }
+
+  :global(html.darkmode) .dm-tabs--vertical .dm-tabs__bar {
+    border-right-color: color-mix(in oklab, var(--brand-DM) 30%, var(--dm-border-sub));
+  }
+
+  /* ── AOO tab icon + aim panel ───────────────────────────────────────────── */
+  .dm-tab-img-icon {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    flex-shrink: 0;
+    border-radius: 50%;
+  }
+
+  .dm-step-item--plain {
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+  }
+
+  .dm-aim-content {
+    display: flex;
+    align-items: center;
+    gap: var(--space-l);
+    padding: var(--space-s) 0;
+  }
+
+  /* ── Related Modules compact list ───────────────────────────────────────── */
+  .dm-rm-list {
+    border: 2px solid color-mix(in oklab, var(--color-neutral-500), white 55%);
+    border-radius: var(--radius-l);
+    overflow: hidden;
+  }
+
+  .dm-rm-row {
+    display: grid;
+    grid-template-columns: 56px 1fr auto auto;
+    gap: var(--space-m);
+    align-items: center;
+    padding: var(--space-m) var(--space-l);
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+
+  .dm-rm-row + .dm-rm-row {
+    border-top: 1px solid color-mix(in oklab, var(--color-neutral-500), white 55%);
+  }
+
+  .dm-rm-row:hover {
+    background: color-mix(in oklab, var(--rm-color, var(--brand-DM)), white 93%);
+    border-left-color: var(--rm-color, var(--brand-DM));
+  }
+
+  .dm-rm-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .dm-rm-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .dm-rm-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+
+  .dm-rm-title {
+    font-size: var(--font-size-0);
+    font-weight: 700;
+    color: var(--color-neutral-900);
+    line-height: 1.2;
+  }
+
+  .dm-rm-desc {
+    font-size: var(--font-size--1);
+    color: var(--foreground-color);
+    line-height: 1.4;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .dm-rm-meta {
+    display: flex;
+    gap: var(--space-s);
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .dm-rm-stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: var(--font-size--1);
+    font-weight: 600;
+    color: var(--foreground-color);
+    white-space: nowrap;
+  }
+
+  .dm-rm-stat svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+
+  .dm-rm-row:hover .dm-rm-stat svg {
+    color: var(--rm-color);
+    opacity: 1;
+    transition: color 0.2s ease, opacity 0.2s ease;
+  }
+
+  .dm-rm-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--color-neutral-400);
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .dm-rm-arrow svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  .dm-rm-row:hover .dm-rm-arrow {
+    color: var(--rm-color, var(--brand-DM));
+    transform: translateX(3px);
+  }
+
+  @media (max-width: 640px) {
+    .dm-rm-row {
+      grid-template-columns: 44px 1fr auto;
+      gap: var(--space-s);
+      padding: var(--space-s) var(--space-m);
+    }
+
+    .dm-rm-icon {
+      width: 44px;
+      height: 44px;
+    }
+
+    .dm-rm-meta {
+      display: none;
+    }
+  }
+
+  :global(html.darkmode) .dm-rm-list {
+    border-color: var(--dm-border-sub);
+  }
+
+  :global(html.darkmode) .dm-rm-row + .dm-rm-row {
+    border-top-color: var(--dm-border-sub);
+  }
+
+  :global(html.darkmode) .dm-rm-row:hover {
+    background: color-mix(in oklab, var(--rm-color, var(--brand-DM)) 12%, var(--dm-surface-2));
+  }
+
+  :global(html.darkmode) .dm-rm-title {
+    color: var(--dm-fg);
+  }
+
+  :global(html.darkmode) .dm-rm-desc {
+    color: var(--dm-fg-muted);
+  }
+
+  :global(html.darkmode) .dm-rm-stat {
+    color: var(--dm-fg-muted);
+  }
+
+  /* Materials list: show the material ID (e.g. 1.2.1, matching the resources
+     overview sheet) instead of a running number, so the first column is wider. */
+  .dm-step-item.dm-step-item--material {
+    grid-template-columns: 4rem minmax(0, 1fr) auto;
+  }
+
+  .dm-material-id {
+    font-size: var(--font-size-0);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 480px) {
+    .dm-step-item.dm-step-item--material {
+      grid-template-columns: 3.5rem 1fr;
+    }
+  }
+</style>

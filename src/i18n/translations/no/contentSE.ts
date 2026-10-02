@@ -114,8 +114,8 @@ export const contentSE = {
           {
             // ID: 5.2.2
             kind: 'Scenariokort',
-            name: 'Eksempler på emosjonell manipulasjon',
-            filename: 'Scenariokort - Eksempler på emosjonell manipulasjon',
+            name: 'Puslespill om emosjonell manipulasjon',
+            filename: 'Scenariokort - Puslespill om emosjonell manipulasjon',
             ariaLabel: 'Last ned materiell',
           },
           {
@@ -290,10 +290,10 @@ export const contentSE = {
       imageSrc: '/images/learning-hub/06_malware.webp',
     },
     {
-      moduleId: 'da',
-      brand: 'DA',
-      href: '/learning-hub/digital-abuse/content',
-      imageSrc: '/images/learning-hub/07_digital-abuse.webp',
+      moduleId: 'dm',
+      brand: 'DM',
+      href: '/learning-hub/digital-misuse/content',
+      imageSrc: '/images/learning-hub/07_digital-misuse.webp',
     },
   ],
 }

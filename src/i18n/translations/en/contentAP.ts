@@ -7,19 +7,20 @@
 // ---------------------------------------------------------------------------
 
 export const contentAP = {
-  aim: 'To provide an overview of the attacker perspective by helping learners recognize attacker techniques and understand the motives behind cyber-attacks.',
+  aim:
+    'To provide an overview of the attacker perspective by helping learners recognise attacker techniques and understand the motivations behind cyber-attacks.',
   objectives: [
-    'To develop students understanding of attacker motivations, including psychological, social, and economic factors.',
-    'To build students skills in recognizing common attacker techniques.',
+    'To develop understanding of attacker motivations, including psychological, social, and economic factors.',
+    'To build skills in recognising common attacker techniques.',
   ],
   outcomes: [
-    'I understand the attacker motives and can give examples related to psychological, social and economic factors.',
-    'I can recognize attacker techniques in given scenarios.',
+    'I understand the attacker motivations and can give examples related to psychological, social and economic factors.',
+    'I can recognise attacker techniques in given scenarios.',
   ],
   parts: [
     {
       goal:
-        'Help children gain knowledge of the concept of a trusted person and develop skills in identifying the circle of trusted persons.',
+        'Help students understand the concept of a trusted person and develop skills in identifying the circle of trusted persons.',
       bundle: {
         filename: 'Attacker Perspective Part 1 Package',
       },
@@ -28,8 +29,8 @@ export const contentAP = {
           {
             // ID: 2.1.1
             kind: 'Worksheet',
-            name: 'Trustees: People Around Me',
-            filename: 'Worksheet - Trustees People Around Me',
+            name: 'Trusted People Around Me',
+            filename: 'Worksheet - Trusted People Around Me',
             ariaLabel: 'Download material',
           },
           {
@@ -59,7 +60,7 @@ export const contentAP = {
             title: 'Introduction',
           },
           {
-            title: 'Define the Circle of Trustees',
+            title: 'Define the Circle of Trusted People',
           },
           {
             title: 'Plenary: Summary and Informal Assessment',
@@ -68,7 +69,7 @@ export const contentAP = {
       },
     },
     {
-      goal: 'Introduce the concept of an attacker and motivation from the attacker perspective.',
+      goal: 'Help students understand the concept of an attacker and attacker motivation.',
       bundle: {
         filename: 'Attacker Perspective Part 2 Package',
       },
@@ -98,8 +99,8 @@ export const contentAP = {
           {
             // ID: 2.2.5
             kind: 'Image',
-            name: 'Looking Into the Fairytale: Attacker Motivation and Means',
-            filename: 'Image - Looking Into the Fairytale Attacker Motivation and Means',
+            name: 'Looking into the Fairytale: Attacker Motivation and Means',
+            filename: 'Image - Looking into the Fairytale Attacker Motivation and Means',
             ariaLabel: 'Download material',
           },
           {
@@ -143,7 +144,7 @@ export const contentAP = {
       },
     },
     {
-      goal: 'Introduce the basic techniques (tactics) relevant to children that attackers use to achieve their goals.',
+      goal: 'Help students understand the basic techniques (tactics) relevant to children that attackers use to achieve their goals and to recognise attacker techniques in given scenarios.',
       bundle: {
         filename: 'Attacker Perspective Part 3 Package',
       },
@@ -172,9 +173,9 @@ export const contentAP = {
           },
           {
             // ID: 2.3.4
-            kind: 'Image',
+            kind: 'Scenario Cards',
             name: 'Common Adversary Techniques',
-            filename: 'Image - Common Adversary Techniques',
+            filename: 'Scenario Cards - Common Adversary Techniques',
             ariaLabel: 'Download material',
           },
           {
@@ -187,8 +188,8 @@ export const contentAP = {
           {
             // ID: 2.3.6
             kind: 'Worksheet',
-            name: 'Puzzle: Party of Attackers',
-            filename: 'Worksheet - Puzzle Party of Attackers',
+            name: 'Puzzle for the Game Party of Attackers',
+            filename: 'Worksheet - Puzzle for the Game Party of Attackers',
             ariaLabel: 'Download material',
           },
         ],
@@ -197,10 +198,10 @@ export const contentAP = {
             title: 'Introduction',
           },
           {
-            title: 'Understand Behavioural Patterns',
+            title: 'Understanding Behavioural Patterns',
           },
           {
-            title: 'Understand Attack Paths',
+            title: 'Understanding Attack Paths',
           },
           {
             title: 'Plenary: Summary and Informal Assessment',
@@ -244,10 +245,10 @@ export const contentAP = {
       imageSrc: '/images/learning-hub/06_malware.webp',
     },
     {
-      moduleId: 'da',
-      brand: 'DA',
-      href: '/learning-hub/digital-abuse/content',
-      imageSrc: '/images/learning-hub/07_digital-abuse.webp',
+      moduleId: 'dm',
+      brand: 'DM',
+      href: '/learning-hub/digital-misuse/content',
+      imageSrc: '/images/learning-hub/07_digital-misuse.webp',
     },
   ],
 }
@@ -256,7 +257,7 @@ export const challengeAP = {
   title: "In Hacker's Mind",
   subtitle:
     "You are an ethical hacker scanning a social media profile. Click on anything that looks like a security flaw — but watch your lives!",
-  howItWorks: 'How It Works',
+  howItWorks: 'How it Works',
   instruction:
     "Examine this social media profile as if you were a hacker looking for weak spots. Almost everything on the screen is clickable — think carefully, because clicking something that is not a real vulnerability costs you a life!",
   tipLabel: 'Tip',

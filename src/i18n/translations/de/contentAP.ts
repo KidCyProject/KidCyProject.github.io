@@ -172,9 +172,9 @@ export const contentAP = {
           },
           {
             // ID: 2.3.4
-            kind: 'Bild',
+            kind: 'Szenariokarten',
             name: 'Häufige Angreifertechniken',
-            filename: 'Bild - Häufige Angreifertechniken',
+            filename: 'Szenariokarten - Häufige Angreifertechniken',
             ariaLabel: 'Material herunterladen',
           },
           {
@@ -244,10 +244,10 @@ export const contentAP = {
       imageSrc: '/images/learning-hub/06_malware.webp',
     },
     {
-      moduleId: 'da',
-      brand: 'DA',
-      href: '/learning-hub/digital-abuse/content',
-      imageSrc: '/images/learning-hub/07_digital-abuse.webp',
+      moduleId: 'dm',
+      brand: 'DM',
+      href: '/learning-hub/digital-misuse/content',
+      imageSrc: '/images/learning-hub/07_digital-misuse.webp',
     },
   ],
 }

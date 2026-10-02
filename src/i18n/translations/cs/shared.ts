@@ -35,15 +35,15 @@ export const shared = {
 
       learningModulesTitle: 'Vzdělávací\nmoduly',
       learningModulesText:
-        'Vybavte své žáky dovednostmi digitální gramotnosti, které potřebují k bezpečnému a zodpovědnému pohybu v dnešním propojeném světě. Našich sedm strukturovaných vzdělávacích modulů provází žáky krok za krokem — od základních konceptů, jako jsou digitální občanství a ochrana soukromí online, až po pokročilejší témata, jako je rozpoznávání phishingových pokusů a taktik sociálního inženýrství. Každý modul kombinuje jasná vysvětlení s praktickými aktivitami, čímž zpřístupňuje složité koncepty kybernetické bezpečnosti a činí je zapamatovatelnými bez ohledu na předchozí technické zkušenosti. Moduly jsou navrženy s ohledem na flexibilitu ve třídě — lze je vyučovat postupně jako ucelený kurz nebo je jednotlivě zařadit do stávajícího učebního plánu.',
+        'Vybavte své žáky dovednostmi digitální gramotnosti, které potřebují k bezpečnému a odpovědnému pohybu v dnešním propojeném světě. Našich sedm strukturovaných vzdělávacích modulů provází žáky krok za krokem — od základních pojmů, jako jsou digitální občanství a ochrana soukromí online, až po pokročilejší témata, jako je rozpoznávání phishingu a taktik sociálního inženýrství. Každý modul spojuje srozumitelný výklad s praktickými aktivitami, díky čemuž jsou i složitá témata kyberbezpečnosti pochopitelná a zapamatovatelná bez ohledu na předchozí technické zkušenosti. Moduly jsou navržené s ohledem na flexibilitu ve třídě — dají se učit postupně jako ucelený kurz nebo je můžete jednotlivě zařadit do svého učebního plánu.',
 
       challengesTitle: 'Interaktivní\nvýzvy',
       challengesText:
-        'Převeďte znalosti do praxe prostřednictvím výzev založených na scénářích, které staví děti do role řešitele problémů. Každá výzva představuje realistickou situaci — podezřelý e-mail, nezabezpečený účet, klamný odkaz — a vyzývá děti ke kritickému myšlení, rozhodování a sledování důsledků. Okamžitá zpětná vazba pomáhá žákům pochopit nejen správnou odpověď, ale také proč, čímž posiluje trvalé porozumění místo pouhého memorování. Jako pedagog máte jasný přehled o uvažování každého žáka, což tyto výzvy činí užitečnými jak pro formativní hodnocení, tak pro zapojení žáků.',
+        'Převeďte znalosti do praxe pomocí výzev založených na situacích, které staví děti do role toho, kdo problém řeší. Každá výzva představuje realistickou situaci — podezřelý e-mail, nezabezpečený účet, klamný odkaz — a vede děti ke kritickému myšlení, rozhodování a sledování důsledků. Okamžitá zpětná vazba pomáhá žákům pochopit nejen to, která odpověď je správná, ale i proč, čímž posiluje trvalé porozumění místo pouhého memorování. Vy jako pedagog přitom získáte jasný vhled do uvažování každého žáka, takže výzvy poslouží stejně dobře k formativnímu hodnocení jako k zapojení třídy.',
 
       gamesTitle: 'Kyberbezpečnostní\nhry',
       gamesText:
-        'Učení se efektivní, když je zábavné — a naše hry zaměřené na kybernetickou bezpečnost jsou navrženy přesně s tímto záměrem. Pokrývají vše od zabezpečení hesel až po identifikaci online hrozeb a každá hra přeměňuje klíčové koncepty našeho kurikula na hrou řízené zážitky, ke kterým se děti mohou vracet. Ať už jsou použity pro rozehřátí skupiny, jako odměna či formou plnohodnotné aktivity v rámci lekce, hry udržují žáky motivované a nenápadně posilují nejdůležitější dovednosti. Jsou vhodné pro různé věkové skupiny a úrovně dovedností a snadno se spouštějí ve třídě, v počítačové učebně nebo jako samostatná domácí aktivita.',
+        'Učení funguje nejlíp, když je zábavné — a přesně s tím jsme naše hry o kyberbezpečnosti navrhovali. Pokrývají vše od bezpečnosti hesel až po rozpoznávání online hrozeb a každá hra proměňuje klíčová témata kurikula ve hru, ke které se děti rády vracejí. Ať už je použijete na rozehřátí, jako odměnu nebo jako plnohodnotnou aktivitu v hodině, hry udržují žáky motivované a nenápadně posilují nejdůležitější dovednosti. Hodí se pro různý věk i různé úrovně dovedností a snadno je spustíte ve třídě, v počítačové učebně i jako samostatnou domácí aktivitu.',
 
       wantToKnowMore: 'Chcete vědět více?',
       wantToKnowMoreSub: 'Zjistěte více o našem poslání vytvořit bezpečnější digitální prostředí.',
@@ -53,18 +53,18 @@ export const shared = {
     about: {
       title: 'O projektu',
       subtitle:
-        'Zjistěte více o našem poslání vytvořit bezpečnější digitální prostředí. Ponořte se do našich vzdělávacích modulů navržených k výuce jednotlivců o digitálním občanství, autentizaci, ochraně dat a dalším.',
+        'Zjistěte více o našem poslání vytvořit bezpečnější digitální prostředí. Ponořte se do našich vzdělávacích modulů, které učí o digitálním občanství, ověřování totožnosti, soukromí dat a dalších tématech.',
 
       cofundEU: 'Podporováno EU',
       cofundEUDesc: 'Tento projekt je spolufinancován Evropskou unií v rámci programu Digitální Evropa.',
 
       missionTitle: 'Naše poslání',
       missionP1:
-        'Internet, chytré telefony a sociální média jsou nyní přirozenou součástí každodenního života dětí — plnou příležitostí, ale také skutečných rizik. Jak mladí lidé tráví více času online, kyberbezpečnost se stala nezbytnou životní dovedností, nejen tématem pro specialisty.',
+        'Internet, chytré telefony a sociální sítě jsou dnes přirozenou součástí každodenního života dětí — plnou příležitostí, ale i skutečných rizik. Jak mladí lidé tráví online stále víc času, stává se z kyberbezpečnosti nezbytná životní dovednost, ne jen téma pro specialisty.',
       missionP2:
         'Mnoho pedagogů však čelí skutečné výzvě: bez specializovaného školení nebo materiálů připravených k použití může být začlenění těchto témat do výuky jasným a věkově přiměřeným způsobem náročné. Přesně proto existuje tato platforma.',
       missionP3:
-        'Poskytujeme přístupné a poutavé zdroje navržené speciálně pro učitele a děti, aby každá třída — bez ohledu na technické zázemí — mohla vybavit mladé lidi znalostmi, sebedůvěrou a praktickými dovednostmi k bezpečnému a zodpovědnému prozkoumávání digitálního světa.',
+        'Poskytujeme dostupné a poutavé materiály připravené speciálně pro učitele a děti, aby každá třída — bez ohledu na technické zázemí — mohla mladé lidi vybavit znalostmi, sebedůvěrou a praktickými dovednostmi k bezpečnému a odpovědnému objevování digitálního světa.',
 
       partnersTitle: 'Partneři iniciativy',
       initiativeDesc: 'Tato sada nástrojů je zpřístupněna díky projektu KidCy v rámci spolupráce mezi předními institucemi v oblasti vzdělávání a výzkumu kyberbezpečnosti po celé Evropě, z nichž každá přináší jedinečnou odbornost a perspektivy k vytvoření komplexního vzdělávacího zážitku pro mladé žáky.',
@@ -87,31 +87,31 @@ export const shared = {
       coreValuesTitle: 'Naše základní hodnoty',
       scalableImpact: 'Škálovatelný dopad',
       scalableImpactDesc:
-        'Dobrá výuka kyberbezpečnosti by neměla záviset na tom, do které školy dítě chodí. Tím, že vybavujeme pedagogy materiály připravenými k použití a praktickými pokyny, jsou naše zdroje navrženy tak, aby oslovily děti v různých školách a třídách — rostoucí dosah bez rostoucí složitosti.',
+        'Dobrá výuka kyberbezpečnosti by neměla záviset na tom, do které školy dítě chodí. Tím, že pedagogům dáváme materiály připravené k použití a praktické pokyny, míří naše zdroje k dětem v nejrůznějších školách a třídách — dosah roste, složitost ne.',
       internationalCollab: 'Mezinárodní spolupráce',
       internationalCollabDesc:
         'Kybernetické hrozby se nezastavují na hranicích, a to ani náš přístup. Propojením pedagogů, výzkumníků a institucí napříč zeměmi budujeme bohatší a různorodější zásobu znalostí — aby každý zdroj, který vytvoříme, těžil ze skutečných zkušeností ze tříd napříč Evropou.',
-      practicalAdaptable: 'Praktický a adaptabilní',
+      practicalAdaptable: 'Praktické a přizpůsobivé',
       practicalAdaptableDesc:
-        'Víme, že žádné dvě třídy nejsou stejné. Proto je každý modul, výzva a hra navržena tak, aby byla flexibilní — snadno integrovatelná do stávajících lekcí, přizpůsobitelná různým stylům výuky a přístupná pedagogům bez ohledu na jejich technické zázemí.',
+        'Víme, že žádné dvě třídy nejsou stejné. Proto je každý modul, výzva i hra navržená tak, aby byla pružná — snadno se zařadí do stávajících hodin, přizpůsobí se různým stylům výuky a poradí si s ní i pedagog bez technického zázemí.',
       europeanCohesion: 'Evropská digitální soudržnost',
       europeanCohesionDesc:
         'Na základě Evropského rámce digitálních kompetencí (DigComp) pracujeme na sdíleném standardu kybernetické gramotnosti pro mladé žáky napříč Evropou. Podporou výměny osvědčených postupů mezi zeměmi pomáháme zajistit, aby každé dítě — kdekoliv se nachází — mělo přístup ke konzistentnímu, vysoce kvalitnímu vzdělávání v oblasti digitální bezpečnosti.',
 
       getInvolvedTitle: 'Jak se zapojit',
       getInvolvedP1:
-        'Tento projekt je otevřenou, rozvíjející se iniciativou a věříme, že nejlepší výuka kyberbezpečnosti roste prostřednictvím spolupráce.',
+        'Tento projekt je otevřená, stále se rozvíjející iniciativa a věříme, že nejlepší výuka kyberbezpečnosti vzniká ve spolupráci.',
       getInvolvedP2:
-        'Ať už jste pedagog se zkušenostmi z třídy, výzkumník, praktik nebo organizace pracující s mladými žáky, váš pohled je důležitý — a rádi vás uslyšíme. Pokud máte zpětnou vazbu k našim materiálům, nápady na nové vzdělávací aktivity nebo návrhy na partnerství, váš přínos přímo ovlivňuje způsob, jakým se tyto zdroje vyvíjejí a zlepšují.',
+        'Ať už jste pedagog se zkušenostmi ze třídy, výzkumník, odborník z praxe nebo organizace pracující s mladými lidmi, váš pohled je důležitý — a rádi se vám ozveme. Pokud máte zpětnou vazbu k našim materiálům, nápady na nové vzdělávací aktivity nebo návrhy na spolupráci, přímo tím ovlivníte, jak se tyto materiály budou vyvíjet a zlepšovat.',
       getInvolvedP3:
-        'Zapojit se je jednoduché: obraťte se na některého z partnerů projektu uvedených na těchto stránkách a pojďme společně pracovat na tom, aby kvalitní výuka kyberbezpečnosti byla dostupná každému dítěti.',
+        'Zapojit se je jednoduché: obraťte se na kteréhokoli z partnerů projektu uvedených na těchto stránkách a pojďme společně pracovat na tom, aby kvalitní výuka kyberbezpečnosti byla dostupná každému dítěti.',
     },
 
 
     hub: {
       title: 'Vzdělávací centrum',
       subtitle:
-        'Toto je centrální prostor pro všechny moduly, školicí materiály a další vzdělávací zdroje. Najdete zde lekce připravené k použití, praktické aktivity a pokyny navržené k podpoře výuky kyberbezpečnosti v různorodém školním prostředí. Všechny materiály jsou strukturované, adaptabilní a vytvořené tak, aby pomohly pedagogům sebejistě představit témata digitální bezpečnosti dětem. Ať už hledáte ucelené moduly nebo jednotlivé výukové zdroje, výukové centrum vám poskytne vše potřebné na jednom místě.',
+        'Toto je centrální prostor pro všechny moduly, školicí materiály a další vzdělávací zdroje. Najdete zde hodiny připravené k použití, praktické aktivity a pokyny na podporu výuky kyberbezpečnosti v různém školním prostředí. Všechny materiály jsou přehledně uspořádané, přizpůsobivé a vytvořené tak, aby pedagogům pomohly sebejistě dětem představit témata digitální bezpečnosti. Ať už hledáte ucelené moduly, nebo jednotlivé výukové materiály, vzdělávací centrum vám poskytne všechno na jednom místě.',
 
       labels: {
         showDetails: 'Zobrazit části a aktivity',
@@ -133,13 +133,15 @@ export const shared = {
         activityPlan: 'Plán aktivit',
         guide: 'Příručka',
         interactiveChallenge: 'Interaktivní výzva',
-        cybersecurityGame: 'Kybernebezpečnostní hra',
+        cybersecurityGame: 'Kyberbezpečnostní hra',
       },
 
       contentPage: {
 
         download: 'Stáhnout',
-        downloadGuide: 'Stáhnout příručku pro učitele',
+        downloadGuide: 'Stáhnout metodickou příručku',
+        downloadIntro: 'Stáhnout úvodní materiály',
+        introPackage: 'Úvodní materiály',
         downloadAll: 'Stáhnout všechny materiály',
         downloadPackage: 'Stáhnout balíček',
 
@@ -147,7 +149,7 @@ export const shared = {
         objectivesTitle: 'Vzdělávací cíle',
         outcomesTitle: 'Vzdělávací výstupy',
 
-        guideTitle: 'Příručka pro učitele',
+        guideTitle: 'Metodická příručka',
         guideDescription: 'Tato příručka nabízí základní kontext pro každý zdroj a poskytuje jasné popisy, které vám pomohou efektivně využít poskytnuté materiály ve vaší třídě.',
 
         materialPackage: 'Balíček materiálů',
@@ -155,12 +157,13 @@ export const shared = {
 
         dividerContent: 'Co je uvnitř',
         dividerMore: 'Další zdroje',
+        dividerActivities: 'Doplňkové aktivity',
 
         moduleContent: 'Obsah modulu',
         moduleContentSubtitle: 'Prozkoumejte každou část tohoto modulu — aktivity, materiály a videa pro výuku.',
 
         relatedModules: 'Ostatní moduly',
-        relatedModulesSubtitle: 'Pokračujte v rozšiřování znalostí o kyberbezpečnosti vašich žáků s těmito souvisejícími tématy.',
+        relatedModulesSubtitle: 'Rozšiřujte znalosti svých žáků o kyberbezpečnosti dál pomocí těchto souvisejících témat.',
       },
 
       aria: {
@@ -177,7 +180,7 @@ export const shared = {
         dc: {
           title: 'Digitální občanství',
           description:
-            'Digitální občanství pomáhá žákům orientovat se v online prostorech s jistotou, empatií a zodpovědností. Tento modul podporuje pedagogy ve výuce bezpečných návyků, respektující komunikace a uvažovaného rozhodování v digitálním prostředí.',
+            'Digitální občanství pomáhá žákům pohybovat se v online prostoru s jistotou, empatií a odpovědností. Tento modul podporuje pedagogy ve výuce bezpečných návyků, komunikace s respektem a promyšleného rozhodování v digitálním prostředí.',
           parts: {
             p1: {
               title: 'Digitální prostředí',
@@ -189,39 +192,39 @@ export const shared = {
               title: 'Jak zůstat v bezpečí v digitálním prostředí – nastavení soukromí',
             },
             p4: {
-              title: 'Jak jednat chytře v digitálním prostředí – být moudrý a odolný',
+              title: 'Jak jednat v digitálním prostředí s rozvahou – být moudří a odolní',
             },
             p5: {
-              title: 'Jak jednat zodpovědně v digitálním prostředí – respektovat sebe i ostatní v digitálním prostředí',
+              title: 'Jak se v digitálním prostředí chovat odpovědně – respektovat sebe i druhé v digitálním prostředí',
             },
           },
         },
         ap: {
-          title: 'Útočníkův pohled',
+          title: 'Pohled útočníka',
           description:
-            'Tento modul pomáhá dětem pochopit, jak by útočníci mohli zkusit získat jejich důvěru, a jak dělat bezpečnější rozhodnutí. Modul z pohledu útočníka podporuje pedagogy ve výuce dětí o taktikách, které protivníci používají k získání důvěry, a jak tyto taktiky rozpoznat a reagovat na ně.',
+            'Tento modul pomáhá dětem pochopit, jak se útočníci můžou snažit získat jejich důvěru a jak se rozhodovat bezpečněji. Modul Pohled útočníka podporuje pedagogy ve výuce o technikách, kterými si útočníci získávají důvěru, a o tom, jak je rozpoznat a jak na ně reagovat.',
           parts: {
             p1: {
-              title: 'Definujme okruh důvěryhodných osob',
+              title: 'Vymezme si okruh lidí, kterým věříme',
             },
             p2: {
-              title: 'Kdo je protivník?',
+              title: 'Kdo je útočník?',
             },
             p3: {
-              title: 'Jaké jsou techniky útočníka?',
+              title: 'Jaké techniky útočníci používají?',
             },
           },
         },
         at: {
-          title: 'Autentizace',
+          title: 'Ověřování totožnosti',
           description:
-            'Autentizace pomáhá žákům pochopit, jak prokazujeme svou identitu online. Tento modul podporuje pedagogy ve výuce silných přihlašovacích návyků, proč záleží na dodatečném ověření a jak udržet účty chráněné.',
+            'Ověřování totožnosti pomáhá žákům pochopit, jak online prokazujeme, kdo jsme. Tento modul podporuje pedagogy ve výuce bezpečných přihlašovacích návyků, v tom, proč záleží na ověření navíc, a jak udržet účty chráněné.',
           parts: {
             p1: {
-              title: 'Co je identita a co jsou digitální aktiva?',
+              title: 'Co je identita a co je digitální majetek?',
             },
             p2: {
-              title: 'Co je autentizace a proč je důležitá?',
+              title: 'Co je ověřování totožnosti a proč je důležité?',
             },
             p3: {
               title: 'Jak vytvořit silná uživatelská jména a hesla',
@@ -230,17 +233,17 @@ export const shared = {
               title: 'Jak bezpečně spravovat hesla – používání správce hesel',
             },
             p5: {
-              title: 'Jak chránit naši digitální identitu – bezpečná a zodpovědná rozhodnutí',
+              title: 'Jak chránit svoji digitální identitu – bezpečná a odpovědná rozhodnutí',
             },
           },
         },
         dp: {
-          title: 'Ochrana osobních údajů',
+          title: 'Soukromí dat',
           description:
-            'Ochrana osobních údajů pomáhá žákům pochopit, které informace jsou osobní, proč na tom záleží a jak dělat opatrná rozhodnutí při sdílení online. Tento modul podporuje pedagogy v budování bezpečného, sebejistého rozhodování ohledně osobních dat.',
+            'Soukromí dat pomáhá žákům pochopit, které informace jsou osobní, proč na tom záleží a jak se při sdílení online rozhodovat obezřetně. Tento modul podporuje pedagogy v tom, aby žáci uměli o svých osobních údajích rozhodovat bezpečně a s jistotou.',
           parts: {
             p1: {
-              title: 'Co jsou soukromá data?',
+              title: 'Co jsou soukromé údaje?',
             },
             p2: {
               title: 'Sdílení dat',
@@ -249,33 +252,33 @@ export const shared = {
               title: 'Datoví detektivové – digitální stopy',
             },
             p4: {
-              title: 'Datoví detektivové – vyčistěte svou digitální stopu',
+              title: 'Ukliďte si svoji digitální stopu',
             },
           },
         },
         se: {
           title: 'Sociální inženýrství',
           description:
-            'Sociální inženýrství je taktika využívající nátlaku, triků nebo falešné důvěry k získání informací nebo přístupu. Tento modul pomáhá pedagogům učit žáky, jak rozpoznat manipulaci a bezpečně reagovat.',
+            'Sociální inženýrství je, když někdo pomocí nátlaku, triků nebo předstírané důvěry získává informace nebo přístup. Tento modul pomáhá pedagogům učit žáky, jak manipulaci rozpoznat a jak na ni bezpečně reagovat.',
           parts: {
             p1: {
               title: 'Co je sociální inženýrství?',
             },
             p2: {
-              title: 'Proč útočníci používají sociální inženýrství?',
+              title: 'Proč útočníci sociální inženýrství používají?',
             },
             p3: {
-              title: 'Rozpoznávání sociálního inženýrství v každodenních situacích',
+              title: 'Jak sociální inženýrství poznat v běžných situacích',
             },
             p4: {
-              title: 'Jak se chránit před sociálním inženýrstvím',
+              title: 'Jak chránit sebe i druhé před sociálním inženýrstvím',
             },
           },
         },
         mw: {
           title: 'Malware',
           description:
-            'Malware je škodlivý software, který může zpomalit zařízení, krást informace nebo způsobit škody. Tento modul pomáhá pedagogům učit žáky, jak se malware šíří a jak udržet zařízení v bezpečí.',
+            'Malware je škodlivý software, který může zpomalit zařízení, ukrást informace nebo napáchat škodu. Tento modul pomáhá pedagogům učit žáky, jak se malware šíří a jak udržet zařízení v bezpečí.',
           parts: {
             p1: {
               title: 'Co je malware?',
@@ -284,17 +287,17 @@ export const shared = {
               title: 'Typy malwaru',
             },
             p3: {
-              title: 'Rozpoznávání malwaru',
+              title: 'Jak malware poznat',
             },
             p4: {
-              title: 'Ochranná opatření proti malwaru',
+              title: 'Opatření na ochranu před malwarem',
             },
           },
         },
-        da: {
-          title: 'Digitální zneužívání',
+        dm: {
+          title: 'Zneužívání digitálního prostředí',
           description:
-            'Digitální zneužívání zahrnuje škodlivé chování online, jako jsou výhrůžky, obtěžování nebo nevyžádaný kontakt. Tento modul pomáhá pedagogům učit žáky rozpoznávat nebezpečné chování, nastavovat hranice a hledat pomoc.',
+            'Zneužívání digitálního prostředí zahrnuje škodlivé chování online, jako jsou výhrůžky, obtěžování nebo nevyžádaný kontakt. Tento modul pomáhá pedagogům učit žáky rozpoznat nebezpečné chování, nastavit si hranice a najít pomoc.',
           parts: {
             p1: {
               title: 'Misinformace',
@@ -306,13 +309,13 @@ export const shared = {
               title: 'Kyberšikana',
             },
             p4: {
-              title: 'Nebezpečí od cizinců',
+              title: 'Nebezpečí od cizích lidí',
             },
             p5: {
               title: 'Influenceři',
             },
             p6: {
-              title: 'Jak se vypořádat s chováním digitálních agresorů?',
+              title: 'Jak se vypořádat s těmi, kdo digitální prostředí zneužívají?',
             },
           },
         },
@@ -320,11 +323,11 @@ export const shared = {
 
       challenges: {
         openChallengeCta: 'Spustit výzvu',
-        challengeFallbackDescription: 'Spusťte výzvu modulu a prozkoumejte aktivitu.',
+        challengeFallbackDescription: 'Spusťte výzvu k modulu a prozkoumejte aktivitu.',
 
         dc: {
           description:
-            'Rozhodněte u ruzných typů obsahu, co je bezpečné a zodpovědné sdílet online a co zveřejnit.',
+            'U různých typů obsahu rozhodněte, co je bezpečné a odpovědné sdílet online a co raději nezveřejňovat.',
         },
         ap: {
           description:
@@ -336,18 +339,18 @@ export const shared = {
         },
         dp: {
           description:
-            'Rozhodněte, které informace je bezpečné sdílet a které si ponechat v soukromí. Roztřiďte různé typy dat do správných kategorií, abyste chránili svou digitální stopu.',
+            'Rozhodněte, které informace je bezpečné sdílet a které si nechat pro sebe. Roztřiďte různé typy údajů do správných kategorií a ochraňte tak svoji digitální stopu.',
         },
         se: {
           description:
-            'Staňte se detektivem zpráv a odhalte, které zprávy jsou bezpečné a které jsou phishingové pokusy. Použijte vodítka k správnému rozhodnutí.',
+            'Staňte se detektivem zpráv a odhalte, které zprávy jsou bezpečné a které jsou phishing. Pomozte si vodítky a rozhodněte se správně.',
         },
         mw: {
           description: 'Dělejte chytrá rozhodnutí, aby zařízení zůstala zdravá a rychlá.',
         },
-        da: {
+        dm: {
           description:
-            'Dělejte rozhodnutí. Sledujte důsledky. Naučte se, jak zvládnout kyberšikanu, online tlak a digitální zneužívání.',
+            'Rozhodujte se. Sledujte důsledky. Naučte se zvládat kyberšikanu, tlak online a zneužívání digitálního prostředí.',
         },
       },
 
@@ -365,32 +368,32 @@ export const shared = {
 
         at: {
           title: 'Mistrovské kouzlo: Odemkněte trezor',
-          description: 'Vstupte do fantasy světa, kde vaše znalosti autentizace se stávají klíčem k pokroku.',
-          subtitle: 'Vstupte do fantasy světa, kde vaše znalosti autentizace se stávají klíčem k pokroku. Začněte výběrem silnějšího ze dvou hesel pro stavbu mostu, poté čelíte hradní výzvě, kde otestujete své porozumění dvoufaktorové autentizaci sledováním správného rytíře. Jak pokračujete, identifikujte, které předměty jsou digitální, a zabezpečte je vytvořením silných hesel, přičemž každé uložte do magické knihy. Po opakování tohoto procesu vytvořte mocné mistrovské kouzlo a použijte ho k odemčení skrytých truhlic — a tím dokažte, že jste zvládli principy silných hesel a autentizace, než se vrátíte do svého domácího pokoje.',
+          description: 'Vstupte do fantasy světa, kde se vaše znalosti o ověřování totožnosti stanou klíčem k dalšímu postupu.',
+          subtitle: 'Vstupte do fantasy světa, kde se vaše znalosti o ověřování totožnosti stanou klíčem k dalšímu postupu. Nejdřív vyberete silnější ze dvou hesel a postavíte most, potom vás čeká hradní výzva, kde si sledováním správného rytíře ověříte, jak rozumíte dvoufaktorovému ověření. Dál určíte, které předměty jsou digitální, zabezpečíte je silnými hesly a každé uložíte do kouzelné knihy. Po zopakování celého postupu vytvoříte mocné mistrovské kouzlo a odemknete jím skryté truhly — a tím prokážete, že jste principy silných hesel a ověřování totožnosti zvládli, než se vrátíte do své domovské místnosti.',
           altText: 'Náhled hry',
         },
         dp: {
           title: 'Tajemství perly a mušle',
-          description: 'Vstupte do pohádkového světa, kde vaše rozhodnutí formují, jak dobře chráníte své osobní informace.',
-          subtitle: 'Vstupte do pohádkového světa, kde vaše rozhodnutí formují, jak dobře chráníte své osobní informace. Začněte tříděním informací jako veřejných nebo soukromých, přičemž pomocí mušlí a perel rozhodujete, co by mělo být sdíleno a co by mělo zůstat skryté. Poté přejděte k výzvě na sociálních sítích, kde budete kontrolovat příspěvky na rozhraní podobném telefonu a rozhodovat, zda jsou bezpečné ke sdílení nebo odhalují citlivá data. Jak pokračujete, sledujte tajemného skřítka a odhalte své digitální stopy a odpovídejte na otázky o tématech jako cookies a VPN. V závěrečné fázi reagujte na upozornění telefonu o správě a čištění vaší digitální stopy a dokažte své porozumění ochraně osobních údajů před dokončením cesty.',
+          description: 'Vstupte do pohádkového světa, kde vaše rozhodnutí určují, jak dobře ochráníte své osobní údaje.',
+          subtitle: 'Vstupte do pohádkového světa, kde vaše rozhodnutí určují, jak dobře ochráníte své osobní údaje. Nejdřív budete pomocí mušlí a perel třídit informace na veřejné a soukromé a rozhodovat, co se má sdílet a co má zůstat skryté. Potom vás čeká výzva ze sociálních sítí: na rozhraní podobném telefonu budete procházet příspěvky a rozhodovat, jestli je bezpečné je sdílet, nebo jestli prozrazují citlivé údaje. Dál budete sledovat tajemného skřítka, odhalíte své digitální stopy a odpovíte na otázky třeba o cookies a VPN. V poslední fázi zareagujete na upozornění v telefonu o správě a úklidu digitální stopy a na konci cesty prokážete, že soukromí dat rozumíte.',
           altText: 'Náhled hry',
         },
         se: {
-          title: 'Podvod nebo pohoda? Nenechte se napálit!',
-          description: 'Vstupte do vysoce sázkové výzvy, kde vaše schopnost odhalit klamstva je klíčem k přežití.',
-          subtitle: 'Vstupte do vysoce sázkové výzvy, kde vaše schopnost odhalit klamstva je klíčem k přežití. Začněte skákáním mezi platformami a identifikujte, zda jsou příklady jako webové stránky, zprávy nebo e-maily legitimní nebo phishingové pokusy — vyberte správně, abyste postoupili, ale udělejte chybu a riskujete ztrátu štítu a pád. Jak se výzva stupňuje, pokračujte po náročnější cestě, kde každý krok představuje nový scénář, vyžadující rozhodnutí, zda se jedná o phishing, bezpečný obsah nebo nejistou situaci. Prokažte svou ostražitost vůči taktikám sociálního inženýrství a zostřete svůj instinkt při procházení touto nebezpečnou cestou.',
+          title: 'Podvod, nebo bezpečná zpráva? Nenaleťte!',
+          description: 'Vstupte do výzvy, kde jde o hodně a kde je schopnost odhalit klam klíčem k přežití.',
+          subtitle: 'Vstupte do výzvy, kde jde o hodně a kde je schopnost odhalit klam klíčem k přežití. Nejdřív budete skákat mezi plošinami a určovat, jestli jsou ukázky webů, zpráv nebo e-mailů pravé, nebo jde o phishing — když zvolíte správně, postoupíte dál, ale při chybě riskujete ztrátu štítu a pád. Jak výzva přituhuje, pokračujete náročnější cestou, kde vás na každém kroku čeká nová situace a rozhodnutí, jestli jde o phishing, o bezpečný obsah, nebo si nejste jistí. Prokažte, že taktiky sociálního inženýrství poznáte, a vytrénujte si na téhle nebezpečné cestě instinkt.',
           altText: 'Náhled hry',
         },
         mw: {
-          title: 'Malwarové šílenství',
-          description: 'Vstupte do rychlého závodu, kde porozumění malwaru vám dává výhodu.',
-          subtitle: 'Vstupte do rychlého závodu, kde porozumění malwaru vám dává výhodu. Začněte prozkoumáváním různých předmětů na dráze — jako jsou viry, červy, ransomware a ochranné nástroje jako antivirový software, firewally a aktualizace — každý s vlastním efektem a skutečným světovým významem. Poté projeďte třemi koly a sbírejte předměty, které mohou buď zvýšit váš výkon, nebo vás zpomalit, podle toho, zda představují hrozby nebo ochrany. Na cílové čáře zkontrolujte, co jste nasbírali, a naučte se, jak každý prvek souvisí se skutečnou kybernetickou bezpečností, spolu s praktickými tipy, jak zůstat chráněni.',
+          title: 'Malwarové šílenství: závod',
+          description: 'Vstupte do rychlého závodu, kde vám porozumění malwaru dává výhodu.',
+          subtitle: 'Vstupte do rychlého závodu, kde vám porozumění malwaru dává výhodu. Nejdřív si na trati prohlédnete různé předměty — viry, červy, ransomware i ochranné nástroje jako antivirový program, firewall a aktualizace — a u každého zjistíte, co dělá a co znamená ve skutečném světě. Potom projedete tři kola a budete sbírat předměty, které vás podle toho, jestli představují hrozbu, nebo ochranu, buď zrychlí, nebo zpomalí. V cíli si projdete, co jste nasbírali, a dozvíte se, jak každý prvek souvisí se skutečnou kyberbezpečností, i praktické tipy, jak zůstat chránění.',
           altText: 'Náhled hry',
         },
-        da: {
-          title: 'Mise: Zachraňte město',
-          description: 'Vstupte do města, kde digitální konflikty způsobily napětí mezi jeho obyvateli.',
-          subtitle: 'Vstupte do města, kde digitální konflikty způsobily napětí mezi jeho obyvateli. Ujměte se role řešitele problémů a pomáhejte lidem orientovat se v problémech jako kyberšikana, deepfaky a online zneužívání a dělejte uvažovaná rozhodnutí k řešení jejich sporů. S každým konfliktem, který úspěšně vyřešíte, se vztahy zlepšují a město se stává příjemnějším. Sledujte, jak vaše činy proměňují atmosféru — vedou k radostné oslavě, kde se komunita shromáždí a kdysi vzdálený maskot se stává stále přátelštějším.',
+        dm: {
+          title: 'Mise laskavost: Zachraňte město',
+          description: 'Vstupte do živého města, kde digitální spory způsobily mezi obyvateli napětí.',
+          subtitle: 'Vstupte do živého města, kde digitální spory způsobily mezi obyvateli napětí. Ujměte se role toho, kdo problémy řeší, a pomozte lidem zvládnout situace jako kyberšikana, deepfaky nebo zneužívání digitálního prostředí — rozhodujte se uvážlivě a spory urovnejte. S každým vyřešeným sporem se vztahy zlepší a město se stává přívětivějším. Sledujte, jak vaše jednání proměňuje atmosféru — až k radostné oslavě, kde se celá komunita sejde a zprvu odtažitý maskot je čím dál přátelštější.',
           altText: 'Náhled hry',
         },
       },

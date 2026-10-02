@@ -16,7 +16,7 @@ const imageMap: Record<string, string> = {
   dp: '/images/learning-hub/04_data-privacy.webp',
   se: '/images/learning-hub/05_social-engineering.webp',
   mw: '/images/learning-hub/06_malware.webp',
-  da: '/images/learning-hub/07_digital-abuse.webp',
+  dm: '/images/learning-hub/07_digital-misuse.webp',
 }
 
 const modules = moduleData.map(m => ({
@@ -43,7 +43,7 @@ const modulePartsOverrides = Object.fromEntries(
       {
         label: t('pages.hub.labels.guide'),
         title: t('pages.hub.contentPage.guideTitle'),
-        href: `/learning-hub/${m.slug}/content/#teachers-guide`,
+        href: `/learning-hub/${m.slug}/content/#teaching-guide`,
       },
       ...(modulePartsData[m.id] ?? []).map((p, i) => ({
         label: `${t('pages.hub.labels.part')} ${i + 1}`,

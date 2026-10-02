@@ -63,6 +63,17 @@ interface Props {
     variant?: 'primary' | 'secondary'
     icon?: string
     download?: string
+    /**
+     * Language versions of the download. When set, the button opens a
+     * language dropdown (behaviour: src/utils/downloadMenu.ts — the page
+     * must call initDownloadMenus()) instead of linking to `href`.
+     */
+    languages?: {
+      lang: string
+      label: string
+      href: string
+      download?: string
+    }[]
   }[];
 }
 
@@ -132,20 +143,62 @@ const sanitizedSubtitle: string = subtitle
       {sanitizedSubtitle && <p class="text-2xl" set:html={sanitizedSubtitle} />}
       {
         buttons && buttons.length > 0 && (
-          <div class="mt-6 flex gap-4">
-            {buttons.map((button) => (
-              <a
-                class:list={[
-                  'btn',
-                  `btn-${button.variant || 'primary'}`,
-                  button.icon && 'has-icon',
-                ]}
-                href={button.href}
-                download={button.download}
-              >
-                {button.icon && <Icon name={button.icon} />} {button.text}
-              </a>
-            ))}
+          <div class="mt-6 flex flex-wrap gap-4">
+            {buttons.map((button, i) =>
+              button.languages?.length ? (
+                <div class="page-header__download">
+                  <button
+                    type="button"
+                    class:list={[
+                      'btn',
+                      `btn-${button.variant || 'primary'}`,
+                      button.icon && 'has-icon',
+                      'page-header__download-trigger',
+                    ]}
+                    aria-expanded="false"
+                    aria-controls={`page-header-download-${i}`}
+                    data-download-trigger
+                  >
+                    {button.icon && <Icon name={button.icon} />} {button.text}
+                    <Icon name="lucide:chevron-down" class="page-header__chevron" />
+                  </button>
+                  <ul
+                    class="page-header__download-menu"
+                    id={`page-header-download-${i}`}
+                    aria-label={button.text}
+                    style={`--menu-color: ${underlineColor};`}
+                    data-download-menu
+                    hidden
+                  >
+                    {button.languages.map((file) => (
+                      <li>
+                        <a
+                          class="page-header__download-option"
+                          href={file.href}
+                          download={file.download}
+                          hreflang={file.lang}
+                        >
+                          <span class="page-header__download-code" aria-hidden="true">{file.lang.toUpperCase()}</span>
+                          <span lang={file.lang}>{file.label}</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : (
+                <a
+                  class:list={[
+                    'btn',
+                    `btn-${button.variant || 'primary'}`,
+                    button.icon && 'has-icon',
+                  ]}
+                  href={button.href}
+                  download={button.download}
+                >
+                  {button.icon && <Icon name={button.icon} />} {button.text}
+                </a>
+              )
+            )}
           </div>
         )
       }
@@ -255,5 +308,102 @@ const sanitizedSubtitle: string = subtitle
 
   html.darkmode .page-header .bg-module p {
     color: var(--dm-fg-muted);
+  }
+  /* ── Language dropdown for header downloads (behaviour: src/utils/downloadMenu.ts) ──
+     The menu is moved to <body> while open, so its colour comes from --menu-color
+     set inline on the list rather than from the header's --page-header-underline. */
+  .page-header .page-header__download-trigger {
+    border: 0;
+    font: inherit;
+    font-weight: 700;
+    line-height: inherit;
+    cursor: pointer;
+  }
+
+  .page-header .btn.has-icon .page-header__chevron {
+    inline-size: 18px;
+    transition: transform 0.2s ease;
+  }
+
+  .page-header .btn.has-icon:hover .page-header__chevron,
+  .page-header .btn.has-icon:focus-visible .page-header__chevron {
+    animation: none;
+  }
+
+  .page-header .page-header__download-trigger[aria-expanded='true'] .page-header__chevron {
+    transform: rotate(180deg);
+  }
+
+  .page-header__download-menu {
+    position: fixed;
+    z-index: 1000;
+    min-width: 12rem;
+    margin: 0;
+    padding: 0.35rem;
+    list-style: none;
+    background: #fff;
+    border: 1px solid color-mix(in oklab, var(--menu-color, #2563EB), white 45%);
+    border-radius: 10px;
+    box-shadow: 0 12px 28px -8px rgb(0 0 0 / 0.22);
+  }
+
+  .page-header__download-menu[hidden] {
+    display: none;
+  }
+
+  .page-header__download-menu li {
+    margin: 0;
+  }
+
+  .page-header__download-option {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.65rem;
+    border-radius: 6px;
+    color: var(--color-neutral-900, #1c1917);
+    font-weight: 600;
+    font-size: var(--font-size--1);
+    text-decoration: none;
+  }
+
+  .page-header__download-option:hover,
+  .page-header__download-option:focus-visible {
+    background: color-mix(in oklab, var(--menu-color, #2563EB), white 88%);
+    outline: none;
+  }
+
+  .page-header__download-option:focus-visible {
+    box-shadow: inset 0 0 0 2px var(--menu-color, #2563EB);
+  }
+
+  .page-header__download-code {
+    min-width: 2rem;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    background: color-mix(in oklab, var(--menu-color, #2563EB), white 85%);
+    color: color-mix(in oklab, var(--menu-color, #2563EB), black 45%);
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-align: center;
+  }
+
+  html.darkmode .page-header__download-menu {
+    background: var(--dm-surface-2);
+    border-color: color-mix(in oklab, var(--menu-color, #2563EB) 40%, var(--dm-border-sub));
+  }
+
+  html.darkmode .page-header__download-option {
+    color: var(--dm-fg);
+  }
+
+  html.darkmode .page-header__download-option:hover,
+  html.darkmode .page-header__download-option:focus-visible {
+    background: color-mix(in oklab, var(--menu-color, #2563EB) 18%, var(--dm-surface-2));
+  }
+
+  html.darkmode .page-header__download-code {
+    background: color-mix(in oklab, var(--menu-color, #2563EB) 25%, var(--dm-surface-3));
+    color: var(--dm-fg);
   }
 </style>

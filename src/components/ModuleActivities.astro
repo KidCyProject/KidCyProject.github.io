@@ -1,0 +1,212 @@
+---
+/**
+ * ModuleActivities — the "Additional Activities" cards (interactive challenge +
+ * cybersecurity game) shown on each module content page.
+ *
+ * Mirrors the activity cards inside the module panels on the Learning Hub
+ * introduction page so both places stay consistent. All data comes from the
+ * module registry (src/data/modules.ts) and translation files — the page only
+ * needs to pass its module ID.
+ */
+import { localizePath } from 'src/i18n/i18n'
+import { useTranslations } from 'src/i18n/index'
+import { getModule } from 'src/data/modules'
+import type { ModuleId } from 'src/data/modules'
+
+interface Props {
+  moduleId: ModuleId
+}
+
+const { moduleId } = Astro.props
+const locale = Astro.currentLocale
+const { t } = useTranslations(locale)
+
+const mod = getModule(moduleId)!
+const moduleUrl = localizePath(locale, `/learning-hub/${mod.slug}/content`)
+
+const challenge = mod.challenges > 0
+  ? {
+      href: localizePath(locale, `/learning-hub/${mod.slug}/challenge/`),
+      title: t(`challenge${mod.id.toUpperCase()}.title`),
+      description: t(`pages.hub.challenges.${mod.id}.description`),
+    }
+  : undefined
+
+const game = mod.games > 0
+  ? {
+      href: localizePath(locale, `/learning-hub/${mod.slug}/game/`),
+      title: t(`pages.hub.games.${mod.id}.title`),
+      description: t(`pages.hub.games.${mod.id}.description`),
+    }
+  : undefined
+
+// Same colour treatment as the introduction page: rgba() tints computed from
+// the module's hex colour and passed as inline CSS variables.
+const hexToRgb = (hex: string) => {
+  let raw = hex.replace('#', '')
+  if (raw.length === 3) raw = raw.split('').map((c) => c + c).join('')
+  const value = Number.parseInt(raw, 16)
+  return { r: (value >> 16) & 255, g: (value >> 8) & 255, b: value & 255 }
+}
+const rgba = (hex: string, alpha: number) => {
+  const { r, g, b } = hexToRgb(hex)
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`
+}
+
+const style = `--module-color: ${mod.color}; --panel-border: ${rgba(mod.color, 0.4)}; --panel-surface: ${rgba(mod.color, 0.08)};`
+---
+
+<div class="module-activities" style={style}>
+  <div class="ma-card-wrapper">
+    <div class="ma-card">
+      <p class="ma-label">{t('pages.hub.labels.interactiveChallenge')}</p>
+      <h3>{challenge?.title ?? t('pages.hub.labels.challenge')}</h3>
+      <p>{challenge?.description ?? t('pages.hub.challenges.challengeFallbackDescription')}</p>
+      <a class="ma-cta" href={challenge?.href ?? moduleUrl}>{t('pages.hub.challenges.openChallengeCta')}</a>
+    </div>
+  </div>
+
+  <div class="ma-card-wrapper">
+    <div class={game ? 'ma-card' : 'ma-card ma-card--disabled'}>
+      <p class="ma-label">{t('pages.hub.labels.cybersecurityGame')}</p>
+      <h3>{game?.title ?? t('pages.hub.games.noGame')}</h3>
+      <p>{game?.description ?? t('pages.hub.games.noGameDescription')}</p>
+      <a
+        class={game ? 'ma-cta' : 'ma-cta ma-cta--disabled'}
+        href={game?.href ?? moduleUrl}
+        aria-disabled={game ? 'false' : 'true'}
+        tabindex={game ? 0 : -1}
+      >
+        {game ? t('pages.hub.games.playGameCta') : t('pages.hub.games.noGame')}
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .module-activities {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    align-items: stretch;
+    margin-bottom: var(--space-l);
+  }
+
+  .ma-card-wrapper {
+    position: relative;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ma-card-wrapper > .ma-card {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .ma-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    border-radius: 1rem;
+    border: 2px solid var(--panel-border);
+    background: var(--panel-surface);
+    padding: 1rem;
+    color: var(--color-neutral-900);
+  }
+
+  .ma-card--disabled {
+    filter: grayscale(1) blur(0.7px);
+    opacity: 0.75;
+    pointer-events: none;
+  }
+
+  .ma-card--disabled .ma-cta {
+    background: var(--color-neutral-300);
+    border-color: var(--color-neutral-300);
+    color: var(--color-neutral-600);
+  }
+
+  .ma-cta--disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .ma-label {
+    margin: 0;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    color: var(--color-neutral-900);
+  }
+
+  .ma-card h3 {
+    margin: 0;
+    font-size: 1.45rem;
+    line-height: 1.2;
+    font-weight: 800;
+    color: var(--color-neutral-900);
+  }
+
+  .ma-card p:not(.ma-label) {
+    margin: 0;
+    color: var(--color-neutral-800);
+  }
+
+  .ma-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    margin-top: auto;
+    padding: 0.45rem 1.1rem;
+    border-radius: 0.5rem;
+    border: 2px solid var(--module-color);
+    background: var(--module-color);
+    font-weight: 800;
+    font-size: 1rem;
+    color: #ffffff;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .ma-cta:hover,
+  .ma-cta:focus-visible {
+    background: transparent;
+    color: var(--module-color);
+  }
+
+  /* Dark mode */
+  :global(html.darkmode) .ma-card {
+    background: var(--dm-surface-2);
+    border-color: var(--panel-border);
+  }
+
+  :global(html.darkmode) .ma-label,
+  :global(html.darkmode) .ma-card h3 {
+    color: var(--dm-fg);
+  }
+
+  :global(html.darkmode) .ma-card p:not(.ma-label) {
+    color: var(--dm-fg-muted);
+  }
+
+  :global(html.darkmode) .ma-card--disabled .ma-cta {
+    background: var(--dm-surface-3);
+    border-color: var(--dm-surface-3);
+    color: var(--dm-fg-muted);
+  }
+
+  @media (max-width: 720px) {
+    .module-activities {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .ma-card {
+      padding: 0.75rem;
+    }
+  }
+</style>

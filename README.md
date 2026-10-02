@@ -48,7 +48,6 @@ Wise Web Wanderers is a free, open cybersecurity education toolkit for **upper e
 - [Who benefits](#-who-benefits)
 - [Partners & funding](#-partners--funding)
 - [Collaboration & feedback](#-collaboration--feedback)
-- [For developers](#-for-developers)
 - [License](#-license)
 
 ---
@@ -62,7 +61,7 @@ Children are online earlier and more often than ever. Schools need practical, ag
 | | |
 |---|---|
 | 🏫 **Built for real classrooms** | Age-appropriate language and scenarios for upper elementary learners. |
-| 🧭 **Complete learning journey** | 7 modules covering digital citizenship, attacker mindset, authentication, privacy, social engineering, malware and digital abuse. |
+| 🧭 **Complete learning journey** | 7 modules covering digital citizenship, attacker mindset, authentication, privacy, social engineering, malware and digital misuse. |
 | 🙌 **Active learning** | Every module has an interactive challenge; five modules also have a game. |
 | 🧑‍🏫 **Teacher-friendly** | Each module comes with a teaching guide, step-by-step activity plans and downloadable packages. Teach the full sequence or pick single parts. |
 | 🎯 **Clear learning goals** | Every module states its aim, learning objectives and "I can…" learning outcomes. |
@@ -75,11 +74,11 @@ Children are online earlier and more often than ever. Schools need practical, ag
 ## 🚀 Quick start for educators
 
 1. **Open the [Learning Hub](https://kidcyproject.github.io/learning-hub/introduction/)** and choose your language in the top navigation.
-2. **Pick a module** (see [the seven modules](#-the-seven-modules)). Beginners usually start with *Digital Citizenship*.
-3. **Download the Teaching Guide** at the top of the module page — it explains every material and how to use it.
+2. **Pick a module.** It is good to start with *Digital Citizenship*.
+3. **Download the Teaching Guide** from the *Guide* section above Part 1 and pick your language — it explains every material and how to use it. The **Introductory Materials** button at the top of the page gives you the shared introductory materials.
 4. **Read the module's aim, objectives and outcomes** so you know what students should be able to do afterwards.
 5. **Choose a part** and open it to see its goal, activity plan, materials and video.
-6. **Click "Download Package"** to get everything for that part in one ZIP — print worksheets and cards in advance.
+6. **Click "Download Package"** and choose a language to get everything for that part in one ZIP — print worksheets and cards in advance.
 7. **Test the video, challenge and game** on the classroom device before the lesson.
 8. **Teach!** Close with the module's interactive challenge (and game, where available) to consolidate learning.
 
@@ -91,6 +90,7 @@ Every module follows the same predictable structure, so once you know one, you k
 
 ```text
 Module  (e.g. Authentication)
+├── 📥 Introductory Materials .... shared by all modules, in every language
 ├── 📘 Teaching Guide ............ context and instructions for every material
 ├── 🎯 Aim · Objectives · Outcomes
 ├── 📦 Part 1 … Part N ........... one lesson unit each
@@ -115,13 +115,13 @@ Teaching Guide  →  Parts (content + activities + video)  →  Interactive Chal
 
 | # | | Module | What students learn | Parts | Challenge | Game |
 |:-:|:-:|---|---|:-:|:-:|:-:|
-| 1 | <img src="public/images/learning-hub/01_digital-citizenship.png" width="56" alt=""> | [**Digital Citizenship**](https://kidcyproject.github.io/learning-hub/digital-citizenship/content/) | What digital citizenship is and how to be safe, savvy and social online through rights, responsibility and respect. | 5 | ✅ | — |
-| 2 | <img src="public/images/learning-hub/02_attacker-perspective.png" width="56" alt=""> | [**Attacker Perspective**](https://kidcyproject.github.io/learning-hub/attacker-perspective/content/) | Who attackers are, why they attack, and how to recognise their techniques. | 3 | ✅ | — |
-| 3 | <img src="public/images/learning-hub/03_authentication.png" width="56" alt=""> | [**Authentication**](https://kidcyproject.github.io/learning-hub/authentication/content/) | Digital identity and assets, strong passwords, two-factor authentication and password managers. | 5 | ✅ | ✅ |
-| 4 | <img src="public/images/learning-hub/04_data-privacy.png" width="56" alt=""> | [**Data Privacy**](https://kidcyproject.github.io/learning-hub/data-privacy/content/) | What personal data is, consent and sharing, and managing a digital footprint. | 4 | ✅ | ✅ |
-| 5 | <img src="public/images/learning-hub/05_social-engineering.png" width="56" alt=""> | [**Social Engineering**](https://kidcyproject.github.io/learning-hub/social-engineering/content/) | Spotting manipulation (urgency, flattery, authority) and using a *Stop, Think, Check, Ask* routine. | 4 | ✅ | ✅ |
-| 6 | <img src="public/images/learning-hub/06_malware.png" width="56" alt=""> | [**Malware**](https://kidcyproject.github.io/learning-hub/malware/content/) | What malware is, its common types, warning signs and protective habits. | 4 | ✅ | ✅ |
-| 7 | <img src="public/images/learning-hub/07_digital-abuse.png" width="56" alt=""> | [**Digital Abuse**](https://kidcyproject.github.io/learning-hub/digital-abuse/content/) | Misinformation, disinformation, cyberbullying, stranger danger, influencers — and how to get help. | 6 | ✅ | ✅ |
+| 1 | <img src="public/images/learning-hub/01_digital-citizenship.webp" width="56" alt=""> | [**Digital Citizenship**](https://kidcyproject.github.io/learning-hub/digital-citizenship/content/) | What digital citizenship is and how to be safe, savvy and social online through rights, responsibility and respect. | 5 | ✅ | — |
+| 2 | <img src="public/images/learning-hub/02_attacker-perspective.webp" width="56" alt=""> | [**Attacker Perspective**](https://kidcyproject.github.io/learning-hub/attacker-perspective/content/) | Who attackers are, why they attack, and how to recognise their techniques. | 3 | ✅ | — |
+| 3 | <img src="public/images/learning-hub/03_authentication.webp" width="56" alt=""> | [**Authentication**](https://kidcyproject.github.io/learning-hub/authentication/content/) | Digital identity and assets, strong passwords, two-factor authentication and password managers. | 5 | ✅ | ✅ |
+| 4 | <img src="public/images/learning-hub/04_data-privacy.webp" width="56" alt=""> | [**Data Privacy**](https://kidcyproject.github.io/learning-hub/data-privacy/content/) | What personal data is, consent and sharing, and managing a digital footprint. | 4 | ✅ | ✅ |
+| 5 | <img src="public/images/learning-hub/05_social-engineering.webp" width="56" alt=""> | [**Social Engineering**](https://kidcyproject.github.io/learning-hub/social-engineering/content/) | Spotting manipulation (urgency, flattery, authority) and using a *Stop, Think, Check, Ask* routine. | 4 | ✅ | ✅ |
+| 6 | <img src="public/images/learning-hub/06_malware.webp" width="56" alt=""> | [**Malware**](https://kidcyproject.github.io/learning-hub/malware/content/) | What malware is, its common types, warning signs and protective habits. | 4 | ✅ | ✅ |
+| 7 | <img src="public/images/learning-hub/07_digital-misuse.webp" width="56" alt=""> | [**Digital Misuse**](https://kidcyproject.github.io/learning-hub/digital-misuse/content/) | Misinformation, disinformation, cyberbullying, stranger danger, influencers — and how to get help. | 6 | ✅ | ✅ |
 
 ---
 
@@ -136,11 +136,11 @@ Click a module to see its parts, videos and materials.
 
 | Part | Title | Video | Materials |
 |:-:|---|---|:-:|
-| 1 | Digital Environments | 🎬 What Is a Digital Environment and Digital Systems? | 1 |
+| 1 | What is a Digital Environment? | 🎬 What is a Digital Environment and Digital Systems? | 1 |
 | 2 | What Does it Mean to be a Digital Citizen? | — | 2 |
-| 3 | How to Stay Safe — Privacy Settings | 🎬 What Are Privacy Settings? | 4 |
-| 4 | How to Act Savvy — Being Wise and Resilient | 🎬 Resilience in Digital Environments | — |
-| 5 | How to Act Responsibly — Respecting Ourselves and Others | — | 3 |
+| 3 | How to Stay Safe in Digital Environments - Privacy Settings | 🎬 What are Privacy Settings? | 4 |
+| 4 | How to Act Savvy in Digital Environments - Being Wise and Resilient | 🎬 Resilience in Digital Environments | — |
+| 5 | How to Act Responsibly in Digital Environments - Respecting Ourselves and Others in Digital Environments | — | 3 |
 
 **Challenge:** *GOOD or BAD Content to Post?* — students sort posts into what is safe and responsible to share.
 
@@ -150,13 +150,13 @@ Click a module to see its parts, videos and materials.
 <details>
 <summary><b>2 · Attacker Perspective</b> — 3 parts · 15 materials · 1 video</summary>
 
-**Aim:** To help learners recognise attacker techniques and understand the motives behind cyber-attacks.
+**Aim:** To provide an overview of the attacker perspective by helping learners recognise attacker techniques and understand the motivations behind cyber-attacks.
 
 | Part | Title | Video | Materials |
 |:-:|---|---|:-:|
-| 1 | Let Us Define the Circle of Trustees | — | 4 |
-| 2 | What Is an Adversary? | 🎬 Who Is Behind Cyber Attacks? | 5 |
-| 3 | What Are the Attacker Techniques? | — | 6 |
+| 1 | Let us Define the Circle of Trusted People | — | 4 |
+| 2 | What is an Attacker? | 🎬 Who is Behind Cyber Attacks? | 5 |
+| 3 | What are the Attacker Techniques? | — | 6 |
 
 **Challenge:** *In Hacker's Mind* — students examine a social media profile as a hacker would, spotting the weak spots.
 
@@ -170,11 +170,11 @@ Click a module to see its parts, videos and materials.
 
 | Part | Title | Video | Materials |
 |:-:|---|---|:-:|
-| 1 | What Is Identity and What Are Digital Assets? | 🎬 What Is Digital Identity? | 4 |
-| 2 | What Is Authentication and Why Is It Important? | 🎬 What Is Authentication? | 3 |
+| 1 | What is Identity and What are Digital Assets? | 🎬 What is Digital Identity? | 4 |
+| 2 | What is Authentication and Why is it Important? | 🎬 What is Authentication? | 3 |
 | 3 | How to Create Strong Usernames and Passwords | 🎬 Strong and Weak Passwords | 5 |
-| 4 | How to Manage Passwords Securely — Using a Password Manager | 🎬 What Is a Password Manager? | 8 |
-| 5 | How to Protect Our Digital Identity — Safe and Responsible Choices | 🎬 Protecting Your Digital Identity | 3 |
+| 4 | How to Manage Passwords Securely - Using a Password Manager | 🎬 What is a Password Manager? | 8 |
+| 5 | How to Protect Our Digital Identity - Making Safe and Responsible Choices | 🎬 Protecting Your Digital Identity | 3 |
 
 **Challenge:** *Password Lab* — build a stronger password one round at a time.
 **Game:** *Master Spell: Unlock the Vault* (Roblox).
@@ -185,47 +185,47 @@ Click a module to see its parts, videos and materials.
 <details>
 <summary><b>4 · Data Privacy</b> — 4 parts · 14 materials · 3 videos</summary>
 
-**Aim:** To help students recognise what counts as personal data, understand why privacy matters, and make safer choices before sharing information online.
+**Aim:** To provide core knowledge of what data privacy is and principles for protecting private data in digital environments.
 
 | Part | Title | Video | Materials |
 |:-:|---|---|:-:|
-| 1 | What Is Private Data? | 🎬 What Is Private Data? | 2 |
+| 1 | What is Private Data? | 🎬 What is Private Data? | 2 |
 | 2 | Data Sharing | — | 3 |
-| 3 | Data Detectives — Digital Footprints | 🎬 What Is a Digital Footprint? | 4 |
-| 4 | Data Detectives — Clean Up Your Digital Footprint | 🎬 Protecting Your Personal Data Online | 5 |
+| 3 | Data Detectives - Digital Footprints | 🎬 What is a Digital Footprint? | 4 |
+| 4 | Data Detectives - Clean Up Your Digital Footprint | 🎬 Protecting Your Private Data Online | 5 |
 
 **Challenge:** *Digital Footprint Sorter* — sort everyday activities by the traces they leave online.
 **Game:** *Secrets of the Pearl & Shell* (Roblox).
 
-**Students will be able to say:** *"I can apply simple privacy rules before sharing or posting."*
+**Students will be able to say:** *"I can demonstrate the principles for protecting data privacy in digital environments in given scenarios and justify why I made those choices."*
 </details>
 
 <details>
 <summary><b>5 · Social Engineering</b> — 4 parts · 14 materials · 2 videos</summary>
 
-**Aim:** To help students recognise manipulation tactics, pause before acting, and choose safer responses when someone uses pressure, urgency, or false trust.
+**Aim:** To provide core knowledge of what social engineering is, with emphasis on the risks it poses and principles for protecting against it.
 
 | Part | Title | Video | Materials |
 |:-:|---|---|:-:|
-| 1 | What Is Social Engineering? | 🎬 What Is Social Engineering? | 5 |
-| 2 | Why Is Social Engineering Used by Attackers? | — | 3 |
+| 1 | What is Social Engineering? | 🎬 What is Social Engineering? | 5 |
+| 2 | Why is Social Engineering Used by Attackers? | — | 3 |
 | 3 | Recognising Social Engineering in Everyday Contexts | 🎬 Types of Social Engineering | 1 |
-| 4 | Protecting Yourself and Others From Social Engineering | — | 5 |
+| 4 | Protecting Yourself and Others from Social Engineering | — | 5 |
 
 **Challenge:** *Phishing Case Files* — become a Message Detective: trust it, or ignore/report it?
 **Game:** *Scam or Safe? Don't Fall for It!* (Roblox).
 
-**Students will be able to say:** *"I can use a pause-and-check routine before acting."*
+**Students will be able to say:** *"I can demonstrate ways to protect against social engineering in given scenarios and justify why I made those choices."*
 </details>
 
 <details>
 <summary><b>6 · Malware</b> — 4 parts · 12 materials · 2 videos</summary>
 
-**Aim:** To help students understand what malware is, how infections happen, and which habits reduce the risk of unsafe downloads, files, and installations.
+**Aim:** To provide core knowledge of what malware is, its risks, and principles for protecting against it.
 
 | Part | Title | Video | Materials |
 |:-:|---|---|:-:|
-| 1 | What Is Malware? | 🎬 What Is Malware? | 3 |
+| 1 | What is Malware? | 🎬 What is Malware? | 3 |
 | 2 | Malware Types | 🎬 Introducing Malware Types | 2 |
 | 3 | Recognising Malware | — | 3 |
 | 4 | Protection Measures Against Malware | — | 4 |
@@ -233,27 +233,27 @@ Click a module to see its parts, videos and materials.
 **Challenge:** *Malware Detective* — inspect files, emails, pop-ups and app permissions across 4 levels.
 **Game:** *Malware Madness Race* (Roblox).
 
-**Students will be able to say:** *"I can recognise warning signs of suspicious downloads."*
+**Students will be able to say:** *"I can demonstrate ways to protect against malware infections in given scenarios and justify why I made those choices."*
 </details>
 
 <details>
-<summary><b>7 · Digital Abuse</b> — 6 parts · 13 materials · 4 videos</summary>
+<summary><b>7 · Digital Misuse</b> — 6 parts · 13 materials · 4 videos</summary>
 
-**Aim:** To help students recognise harmful online behaviour, understand that boundaries matter, and know the steps they can take to get support and stay safe.
+**Aim:** To provide core knowledge of what digital abuse and misuse are and principles for dealing with it.
 
 | Part | Title | Video | Materials |
 |:-:|---|---|:-:|
-| 1 | Misinformation | 🎬 What Is Misinformation? | 2 |
-| 2 | Disinformation | 🎬 What Is Disinformation? | 2 |
-| 3 | Cyber Bullying | 🎬 What Is Cyber Bullying? | 2 |
+| 1 | Misinformation | 🎬 What is Misinformation? | 2 |
+| 2 | Disinformation | 🎬 What is Disinformation? | 2 |
+| 3 | Cyberbullying | 🎬 What is Cyberbullying? | 2 |
 | 4 | Stranger Danger | — | 3 |
 | 5 | Influencers | 🎬 Social Media Influencers | 1 |
-| 6 | How Can We Deal With the Behaviour of Digital Abusers? | — | 3 |
+| 6 | Dealing with Digital Misusers | — | 3 |
 
 **Challenge:** *Real Talk Stories* — make choices, see consequences, learn how to handle cyberbullying and online pressure.
 **Game:** *Kindness Quest: Save the City* (Roblox).
 
-**Students will be able to say:** *"I know trusted adults and support channels to reach out to."*
+**Students will be able to say:** *"I can suggest and discuss ways to deal with digital abuse and misuse in given scenarios."*
 
 > [!IMPORTANT]
 > This module deals with sensitive topics such as bullying and online abuse. Read the teaching guide beforehand, follow your school's safeguarding procedures, and make sure students know who they can talk to.
@@ -273,7 +273,7 @@ Challenges run **directly in the web browser** — no installation or account ne
 | Data Privacy | [Digital Footprint Sorter](https://kidcyproject.github.io/learning-hub/data-privacy/challenge/) | Sort activities by the traces they leave |
 | Social Engineering | [Phishing Case Files](https://kidcyproject.github.io/learning-hub/social-engineering/challenge/) | Decide which messages are safe or phishing |
 | Malware | [Malware Detective](https://kidcyproject.github.io/learning-hub/malware/challenge/) | Act as an analyst across 4 levels |
-| Digital Abuse | [Real Talk Stories](https://kidcyproject.github.io/learning-hub/digital-abuse/challenge/) | Make choices and see their consequences |
+| Digital Misuse | [Real Talk Stories](https://kidcyproject.github.io/learning-hub/digital-misuse/challenge/) | Make choices and see their consequences |
 
 ## 🎮 Cybersecurity games (Roblox)
 
@@ -285,7 +285,7 @@ Five modules include a game that reinforces the module's key ideas through play.
 | Data Privacy | [Secrets of the Pearl & Shell](https://kidcyproject.github.io/learning-hub/data-privacy/game/) | Sort public vs private data, review posts, clean up a digital footprint |
 | Social Engineering | [Scam or Safe? Don't Fall for It!](https://kidcyproject.github.io/learning-hub/social-engineering/game/) | Jump across platforms by spotting phishing correctly |
 | Malware | [Malware Madness Race](https://kidcyproject.github.io/learning-hub/malware/game/) | Race three laps collecting protections and avoiding threats |
-| Digital Abuse | [Kindness Quest: Save the City](https://kidcyproject.github.io/learning-hub/digital-abuse/game/) | Resolve conflicts about cyberbullying and deepfakes |
+| Digital Misuse | [Kindness Quest: Save the City](https://kidcyproject.github.io/learning-hub/digital-misuse/game/) | Resolve conflicts about cyberbullying and deepfakes |
 
 > [!WARNING]
 > **Games require the Roblox app.** Clicking *Play* opens the game in Roblox; if it isn't installed, students are prompted to download it. Before class, check that:
@@ -303,11 +303,14 @@ You can download at whichever level suits you:
 
 | Download | Where to find it | Contains |
 |---|---|---|
-| **Teaching Guide** | Top of each module page | Guidance for every material in the module |
-| **Download All Materials** | Module page | Every part package of the module in one ZIP |
+| **Download Introductory Materials** | Top of each module page | Introductory materials shared by all modules |
+| **Download All Materials** | Top of each module page | Every part package and the teaching guide of the module in one ZIP |
+| **Download Teaching Guide** | *Guide* section, above Part 1 | Guidance for every material in the module |
 | **Download Package** | Each part | Worksheets, cards, images and video for that part |
 | **Single material** | Each part's material list | One worksheet / card set / image |
 | **Video + subtitles** | Under each video | The MP4 and subtitle files (`.vtt`) in all 5 languages |
+
+Every package and translated material opens a **language menu** (EN · CS · NO · LT · DE) — pick the language you teach in and you get a ZIP with only that language's materials (plus language-neutral files such as videos and images).
 
 > [!TIP]
 > Downloaded videos with subtitles let you teach **offline** — handy if your classroom internet is unreliable. Most video players (e.g. VLC) can load `.vtt` subtitle files.
@@ -336,7 +339,7 @@ Each part is a **self-contained lesson unit** with its own activity plan (typica
 
 ```text
 1 Digital Citizenship → 2 Attacker Perspective → 3 Authentication → 4 Data Privacy
-                     → 5 Social Engineering → 6 Malware → 7 Digital Abuse
+                     → 5 Social Engineering → 6 Malware → 7 Digital Misuse
 ```
 
 **Option B — Single module.** Pick one topic that fits your curriculum or a current issue in class (e.g. *Social Engineering* after a phishing incident).
@@ -419,7 +422,7 @@ Wise Web Wanderers is based on the **KidCy Project**, a collaboration between:
 | University of Innsbruck | 🇦🇹 Austria |
 | Vilnius University | 🇱🇹 Lithuania |
 
-<img src="public/images/EN_Co-fundedbytheEU_RGB_POS.png" alt="Co-funded by the European Union" width="220" />
+<img src="public/images/EN_Co-fundedbytheEU_RGB_POS.webp" alt="Co-funded by the European Union" width="220" />
 
 The project is co-funded by the European Union. Views and opinions expressed are those of the authors only and do not necessarily reflect those of the European Union.
 

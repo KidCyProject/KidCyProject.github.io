@@ -140,6 +140,8 @@ export const shared = {
 
         download: 'Atsisiųsti',
         downloadGuide: 'Atsisiųsti mokymo vadovą',
+        downloadIntro: 'Atsisiųsti įvadinę medžiagą',
+        introPackage: 'Įvadinė medžiaga',
         downloadAll: 'Atsisiųsti visą medžiagą',
         downloadPackage: 'Atsisiųsti paketą',
 
@@ -155,6 +157,7 @@ export const shared = {
 
         dividerContent: 'Kas viduje',
         dividerMore: 'Daugiau išteklių',
+        dividerActivities: 'Papildomos veiklos',
 
         moduleContent: 'Modulio turinys',
         moduleContentSubtitle: 'Tyrinėkite kiekvieną šio modulio dalį — veiklas, medžiagą ir vaizdo įrašus, kuriais mokyti.',
@@ -249,7 +252,7 @@ export const shared = {
               title: 'Duomenų detektyvai – skaitmeniniai pėdsakai',
             },
             p4: {
-              title: 'Duomenų detektyvai – išvalykite savo skaitmeninį pėdsaką',
+              title: 'Išvalykite savo skaitmeninį pėdsaką',
             },
           },
         },
@@ -291,7 +294,7 @@ export const shared = {
             },
           },
         },
-        da: {
+        dm: {
           title: 'Skaitmeninis piktnaudžiavimas',
           description:
             'Skaitmeninis piktnaudžiavimas apima žalingą elgesį internete, pvz., grasinimus, priekabiavimą ar nepageidaujamą kontaktą. Šis modulis padeda pedagogams mokyti mokinius atpažinti nesaugų elgesį, nustatyti ribas ir rasti pagalbą.',
@@ -345,7 +348,7 @@ export const shared = {
         mw: {
           description: 'Priimkite protingus sprendimus, kad įrenginiai išliktų sveiki ir greiti.',
         },
-        da: {
+        dm: {
           description:
             'Priimkite sprendimus. Matykite pasekmes. Išmokite, kaip susidoroti su kibernetiniu priekabiavimu, spaudimu internete ir skaitmeniniu piktnaudžiavimu.',
         },
@@ -387,7 +390,7 @@ export const shared = {
           subtitle: 'Ženkite į spartų lenktynių žaidimą, kuriame kenkėjiškos programinės įrangos supratimas suteikia jums pranašumą. Pradėkite tyrinėdami skirtingus daiktus trasoje — pvz., virusus, kirminus, išpirkos reikalaujančias programas ir apsaugines priemones, tokias kaip antivirusinė programinė įranga, ugniasienės ir naujinimai — kiekvienas su savo efektu ir realaus pasaulio reikšme. Tada skriekite per tris ratus, rinkdami daiktus, kurie gali arba sustiprinti jūsų veikimą, arba sulėtinti jus, priklausomai nuo to, ar jie atstovauja grėsmėms, ar apsaugoms. Finišo tiesiojoje peržiūrėkite, ką surinkote, ir sužinokite, kaip kiekvienas elementas susijęs su realiu kibernetiniu saugumu, kartu su praktiniais patarimais, kaip išlikti apsaugotiems.',
           altText: 'Žaidimo miniatiūra',
         },
-        da: {
+        dm: {
           title: 'Gerumo misija: Išgelbėkite miestą',
           description: 'Ženkite į gyvą miestą, kuriame skaitmeniniai konfliktai sukėlė įtampą tarp jo gyventojų.',
           subtitle: 'Ženkite į gyvą miestą, kuriame skaitmeniniai konfliktai sukėlė įtampą tarp jo gyventojų. Prisiimkite problemų sprendėjo vaidmenį, padėdami žmonėms spręsti tokias problemas kaip kibernetinis priekabiavimas, deepfake\'ai ir piktnaudžiavimas internete, priimant apgalvotus sprendimus jų ginčams išspręsti. Su kiekvienu sėkmingai išspręstu konfliktu santykiai gerėja ir miestas tampa svetingesnis. Stebėkite, kaip jūsų veiksmai keičia atmosferą — vedant į džiugią šventę, kur bendruomenė susiburia ir kadaise tolimas maskote tampa vis draugiškesnis.',

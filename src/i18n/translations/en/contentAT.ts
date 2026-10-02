@@ -7,13 +7,14 @@
 // ---------------------------------------------------------------------------
 
 export const contentAT = {
-  aim: 'To provide core knowledge of authentication and identity management principles for protecting personal digital assets.',
+  aim:
+    'To provide core knowledge of authentication and identity management principles for protecting personal digital assets.',
   objectives: [
     'To stress the importance of secure identity management.',
-    'To introduce the concept of authentication and its different types.',
-    'To develop students\' understanding of digital assets and access control awareness.',
-    'To develop students\' knowledge and skills for creating secure usernames and passwords following recommendations and good practices.',
-    'To build students\' skills for managing passwords securely.',
+    'To introduce the concept of authentication and its different authentication factors.',
+    'To develop understanding of digital assets and access control awareness.',
+    'To develop knowledge and skills for creating secure usernames and passwords following recommendations and good practices.',
+    'To build skills for managing passwords securely.',
   ],
   outcomes: [
     'I can identify my personal digital assets and explain the risks they face in both physical and digital environments.',
@@ -23,7 +24,7 @@ export const contentAT = {
   ],
   parts: [
     {
-      goal: 'Help students create strong, memorable secrets and understand why reuse is risky.',
+      goal: 'Help students understand who they are online, what counts as a digital asset, and why these need protection.',
       bundle: {
         filename: 'Authentication Part 1 Package',
       },
@@ -32,8 +33,8 @@ export const contentAT = {
           {
             // ID: 3.1.1
             kind: 'Image',
-            name: 'Online Identity',
-            filename: 'Image - Online Identity',
+            name: 'Digital Identity',
+            filename: 'Image - Digital Identity',
             ariaLabel: 'Download material',
           },
           {
@@ -46,7 +47,7 @@ export const contentAT = {
           {
             // ID: 3.1.4
             kind: 'Worksheet',
-            name: 'What Would Happen If...?',
+            name: 'What Would Happen If…?',
             filename: 'Worksheet - What Would Happen If',
             ariaLabel: 'Download material',
           },
@@ -63,7 +64,7 @@ export const contentAT = {
             title: 'Introduction',
           },
           {
-            title: 'What Is Digital Identity?',
+            title: 'What is Digital Identity?',
           },
           {
             title: 'Understanding Digital Assets',
@@ -74,16 +75,16 @@ export const contentAT = {
         ],
       },
       featuredVideo: {
-        title: 'What Is Digital Identity?',
+        title: 'What is Digital Identity?',
         supportText:
           'Use this video to help students understand that their digital identity is made up of the information and behaviours they share online. Pause to ask which parts of their digital identity they think they can control.',
         downloads: {
           video: {
-            filename: 'What Is Digital Identity',
+            filename: 'What is Digital Identity',
             ariaLabel: 'Download video',
           },
           subtitles: {
-            filename: 'What Is Digital Identity - Subtitles',
+            filename: 'What is Digital Identity - Subtitles',
             ariaLabel: 'Download subtitles',
           },
         },
@@ -91,7 +92,7 @@ export const contentAT = {
     },
     {
       goal:
-        'Help students understand what authentication is, why it is important, and how it helps protect their digital identity and digital assets by controlling who is allowed access.',
+        'Help students understand what authentication is, why it is important, and how it helps protect their digital identity and digital assets by checking who is requesting access.',
       bundle: {
         filename: 'Authentication Part 2 Package',
       },
@@ -107,8 +108,8 @@ export const contentAT = {
           {
             // ID: 3.2.3
             kind: 'Image',
-            name: 'Logging Into a Digital System',
-            filename: 'Image - Logging Into a Digital System',
+            name: 'Logging into a Digital System',
+            filename: 'Image - Logging into a Digital System',
             ariaLabel: 'Download material',
           },
           {
@@ -139,16 +140,16 @@ export const contentAT = {
       },
       featuredVideo: {
         // ID: 3.2.2
-        title: 'What Is Authentication?',
+        title: 'What is Authentication?',
         supportText:
           'Use this video to introduce authentication as the everyday mechanism that guards students\' digital accounts. Pause to ask how they currently prove their identity on the apps they use most.',
         downloads: {
           video: {
-            filename: 'What Is Authentication',
+            filename: 'What is Authentication',
             ariaLabel: 'Download video',
           },
           subtitles: {
-            filename: 'What Is Authentication - Subtitles',
+            filename: 'What is Authentication - Subtitles',
             ariaLabel: 'Download subtitles',
           },
         },
@@ -156,7 +157,7 @@ export const contentAT = {
     },
     {
       goal:
-        'Help students understand what authentication is, why it is important, and how it helps protect their digital identity and digital assets by controlling who is allowed access.',
+        'Help students understand the difference between weak and strong usernames and passwords, recognise common password mistakes, and learn simple rules for creating secure passwords that protect their digital accounts and assets.',
       bundle: {
         filename: 'Authentication Part 3 Package',
        },
@@ -206,7 +207,7 @@ export const contentAT = {
             title: 'Passwords',
           },
           {
-            title: 'Strong vs Weak Passwords',
+            title: 'Strong Versus Weak Passwords',
           },
           {
             title: 'Creating Strong Passwords Safely',
@@ -235,7 +236,7 @@ export const contentAT = {
     },
     {
       goal:
-        'Help students understand I can explain what two-factor authentication is and why managing many passwords is difficult, introduce the concept of a password manager, and explain how password managers help protect digital identities and digital assets when used responsibly with support from a trusted adult.',
+        'Help students understand the two-factor authentication process and learn about difficulties when managing many passwords. Help students understand what a password manager is and explain how password managers help protect digital identities and digital assets when used responsibly with support from a trusted adult.',
       bundle: {
         filename: 'Authentication Part 4 Package',
        },
@@ -303,7 +304,7 @@ export const contentAT = {
             title: 'Introduction',
           },
           {
-            title: 'Passwords',
+            title: 'Password Managers',
           },
           {
             title: 'Password Managers',
@@ -318,16 +319,16 @@ export const contentAT = {
       },
       featuredVideo: {
         // ID: 3.4.5
-        title: 'What Is a Password Manager?',
+        title: 'What is a Password Manager?',
         supportText:
           'Use this video to introduce password managers as a practical solution for creating and storing strong, unique passwords for every account. Pause to ask students if they have heard of or used one before.',
         downloads: {
           video: {
-            filename: 'What Is a Password Manager',
+            filename: 'What is a Password Manager',
             ariaLabel: 'Download video',
           },
           subtitles: {
-            filename: 'What Is a Password Manager - Subtitles',
+            filename: 'What is a Password Manager - Subtitles',
             ariaLabel: 'Download subtitles',
           },
         },
@@ -431,10 +432,10 @@ export const contentAT = {
       imageSrc: '/images/learning-hub/06_malware.webp',
     },
     {
-      moduleId: 'da',
-      brand: 'DA',
-      href: '/learning-hub/digital-abuse/content',
-      imageSrc: '/images/learning-hub/07_digital-abuse.webp',
+      moduleId: 'dm',
+      brand: 'DM',
+      href: '/learning-hub/digital-misuse/content',
+      imageSrc: '/images/learning-hub/07_digital-misuse.webp',
     },
   ],
 }
@@ -443,7 +444,7 @@ export const challengeAT = {
   title: 'Password Lab',
   subtitle:
     'Build a stronger password one round at a time. Each level adds a new ingredient to your password recipe!',
-  howItWorks: 'How It Works',
+  howItWorks: 'How it Works',
   instruction:
     "Each round introduces a new password requirement. Meet all the current round's criteria to advance — and watch your password become harder and harder to crack!",
   tipLabel: 'Tip',

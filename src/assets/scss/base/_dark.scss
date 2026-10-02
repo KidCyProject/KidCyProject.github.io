@@ -790,9 +790,9 @@
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-// DIGITAL ABUSE CHALLENGE  (digital-abuse/challenge.astro)
+// DIGITAL MISUSE CHALLENGE  (digital-misuse/challenge.astro)
 // Story-based adventure: story header/panel, message bubbles, ending cards,
-// action buttons, sidebar story rows, final overlay. Brand color --brand-DA
+// action buttons, sidebar story rows, final overlay. Brand color --brand-DM
 // (red #ef4444). Many elements use hardcoded white/light backgrounds.
 // Note: :global() styles compile without scoping hash; !important still needed
 // because Tailwind utilities can conflict.
@@ -812,7 +812,7 @@
 .darkmode .story-panel {
   background: var(--dm-surface-1) !important;
   border-color: var(--dm-border-sub) !important;
-  border-top-color: var(--brand-DA) !important;
+  border-top-color: var(--brand-DM) !important;
 }
 
 // ── Scrollbar track inside messages-area ──────────────────────────────────────
@@ -831,7 +831,7 @@
 
 // ── Message bubbles (global styles — still need !important vs Tailwind) ────────
 .darkmode .msg-narrator .msg-content {
-  background: color-mix(in oklab, var(--brand-DA) 8%, var(--dm-surface-2)) !important;
+  background: color-mix(in oklab, var(--brand-DM) 8%, var(--dm-surface-2)) !important;
   color: var(--dm-fg) !important;
 }
 
@@ -882,32 +882,32 @@
 
 // ── Choice buttons (global — dynamically created via JS) ──────────────────────
 .darkmode .choice-btn {
-  color: color-mix(in oklab, var(--brand-DA), white 30%) !important;
-  background: color-mix(in oklab, var(--brand-DA) 10%, var(--dm-surface-2)) !important;
-  border-color: color-mix(in oklab, var(--brand-DA) 40%, var(--dm-border)) !important;
+  color: color-mix(in oklab, var(--brand-DM), white 30%) !important;
+  background: color-mix(in oklab, var(--brand-DM) 10%, var(--dm-surface-2)) !important;
+  border-color: color-mix(in oklab, var(--brand-DM) 40%, var(--dm-border)) !important;
 }
 
 .darkmode .choice-btn:hover {
-  background: var(--brand-DA) !important;
-  border-color: var(--brand-DA) !important;
+  background: var(--brand-DM) !important;
+  border-color: var(--brand-DM) !important;
   color: white !important;
 }
 
 // ── Action / nav buttons ──────────────────────────────────────────────────────
 .darkmode .action-buttons .btn-secondary {
   background: var(--dm-surface-2) !important;
-  color: color-mix(in oklab, var(--brand-DA), white 20%) !important;
-  border-color: color-mix(in oklab, var(--brand-DA) 40%, var(--dm-border)) !important;
+  color: color-mix(in oklab, var(--brand-DM), white 20%) !important;
+  border-color: color-mix(in oklab, var(--brand-DM) 40%, var(--dm-border)) !important;
 }
 
 .darkmode .action-buttons .btn-secondary:hover {
-  background: color-mix(in oklab, var(--brand-DA) 10%, var(--dm-surface-2)) !important;
-  border-color: var(--brand-DA) !important;
+  background: color-mix(in oklab, var(--brand-DM) 10%, var(--dm-surface-2)) !important;
+  border-color: var(--brand-DM) !important;
 }
 
 // ── Sidebar: story rows ───────────────────────────────────────────────────────
 .darkmode .s-row-active {
-  background: color-mix(in oklab, var(--brand-DA) 10%, var(--dm-surface-2)) !important;
+  background: color-mix(in oklab, var(--brand-DM) 10%, var(--dm-surface-2)) !important;
 }
 
 .darkmode .s-row:hover {
@@ -951,8 +951,8 @@
 }
 
 .darkmode .final-score-box {
-  background: color-mix(in oklab, var(--brand-DA) 10%, var(--dm-surface-2)) !important;
-  border-color: color-mix(in oklab, var(--brand-DA) 40%, var(--dm-border)) !important;
+  background: color-mix(in oklab, var(--brand-DM) 10%, var(--dm-surface-2)) !important;
+  border-color: color-mix(in oklab, var(--brand-DM) 40%, var(--dm-border)) !important;
 }
 
 .darkmode .final-rank {
@@ -1370,7 +1370,7 @@
 .darkmode .learning-hub-modules .module-panel-dp .parts-badge,
 .darkmode .learning-hub-modules .module-panel-se .parts-badge,
 .darkmode .learning-hub-modules .module-panel-mw .parts-badge,
-.darkmode .learning-hub-modules .module-panel-da .parts-badge {
+.darkmode .learning-hub-modules .module-panel-dm .parts-badge {
   color: #ffffff;
 }
 
@@ -1410,7 +1410,7 @@
 .darkmode .learning-hub-modules .module-panel-dp .activity-cta,
 .darkmode .learning-hub-modules .module-panel-se .activity-cta,
 .darkmode .learning-hub-modules .module-panel-mw .activity-cta,
-.darkmode .learning-hub-modules .module-panel-da .activity-cta {
+.darkmode .learning-hub-modules .module-panel-dm .activity-cta {
   color: #ffffff;
 }
 
@@ -1434,7 +1434,7 @@
 
 // ══════════════════════════════════════════════════════════════════════════════
 // GAME PAGES  (all modules — authentication, data-privacy, social-engineering,
-// malware, digital-abuse)
+// malware, digital-misuse)
 // Each game page has an identical .roblox-embed > .button structure.
 // ══════════════════════════════════════════════════════════════════════════════
 

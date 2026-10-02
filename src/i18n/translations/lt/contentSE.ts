@@ -114,8 +114,8 @@ export const contentSE = {
           {
             // ID: 5.2.2
             kind: 'Scenarijų kortelės',
-            name: 'Emocinės manipuliacijos pavyzdžiai',
-            filename: 'Scenarijų kortelės - Emocinės manipuliacijos pavyzdžiai',
+            name: 'Emocinės manipuliacijos dėlionė',
+            filename: 'Scenarijų kortelės - Emocinės manipuliacijos dėlionė',
             ariaLabel: 'Atsisiųsti medžiagą',
           },
           {
@@ -290,10 +290,10 @@ export const contentSE = {
       imageSrc: '/images/learning-hub/06_malware.webp',
     },
     {
-      moduleId: 'da',
-      brand: 'DA',
-      href: '/learning-hub/digital-abuse/content',
-      imageSrc: '/images/learning-hub/07_digital-abuse.webp',
+      moduleId: 'dm',
+      brand: 'DM',
+      href: '/learning-hub/digital-misuse/content',
+      imageSrc: '/images/learning-hub/07_digital-misuse.webp',
     },
   ],
 }

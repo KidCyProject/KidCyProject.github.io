@@ -7,20 +7,23 @@
 // ---------------------------------------------------------------------------
 
 export const contentSE = {
-  aim: 'To help students recognize manipulation tactics, pause before acting, and choose safer responses when someone uses pressure, urgency, or false trust.',
+  aim:
+    'To provide core knowledge of what social engineering is, with emphasis on the risks it poses and principles for protecting against it.',
   objectives: [
-    'Explain how manipulation can happen online and in person.',
-    'Identify common tactics like urgency, flattery, or authority.',
-    'Practice safe responses and help-seeking behavior.',
+    'To introduce the concept of social engineering, focusing on attacker goals.',
+    'To explain various forms of social engineering and the contexts in which they may occur.',
+    'To develop skills in identifying social engineering techniques and ways to protect against them.',
   ],
   outcomes: [
-    'Recognize pressure tactics used in messages or chats.',
-    'Use a pause-and-check routine before acting.',
-    'Know when and how to report suspicious behavior.',
+    'I can describe what social engineering is and types of social engineering.',
+    'I can explain why social engineering is used by attackers.',
+    'I can give examples of contexts in which social engineering attacks are likely to occur.',
+    'I can recognise socially engineered attacks in given scenarios.',
+    'I can demonstrate ways to protect against social engineering in given scenarios and justify why I made those choices.',
   ],
   parts: [
     {
-      goal: 'Help students understand what social engineering is by first recognising how people can be influenced or manipulated in everyday situations, and then connecting this understanding to digital environments and attacker behaviour.',
+      goal: 'Help students understand what social engineering is and why social engineering is used by attackers.',
       bundle: {
         filename: 'Social Engineering Part 1 Package',
       },
@@ -29,8 +32,8 @@ export const contentSE = {
           {
             // ID: 5.1.2
             kind: 'Image',
-            name: 'Hacking Systems vs. Tricking People',
-            filename: 'Image - Hacking Systems vs. Tricking People',
+            name: 'Hacking Systems Versus Tricking People',
+            filename: 'Image - Hacking Systems Versus Tricking People',
             ariaLabel: 'Download material',
           },
           {
@@ -73,32 +76,29 @@ export const contentSE = {
             title: 'What Do Attackers Want?',
           },
           {
-            title: 'Social Engineering Online and Offline',
-          },
-          {
             title: 'Plenary: Summary and Informal Assessment',
           },
         ],
       },
       featuredVideo: {
         // ID: 5.1.1
-        title: 'What Is Social Engineering?',
+        title: 'What is Social Engineering?',
         supportText:
           'Use this video to introduce social engineering as a technique that exploits human trust rather than technical systems. Pause to ask students if they can recall a situation where someone tried to trick them online.',
         downloads: {
           video: {
-            filename: 'What Is Social Engineering',
+            filename: 'What is Social Engineering',
             ariaLabel: 'Download video',
           },
           subtitles: {
-            filename: 'What Is Social Engineering - Subtitles',
+            filename: 'What is Social Engineering - Subtitles',
             ariaLabel: 'Download subtitles',
           },
         },
       },
     },
     {
-      goal: 'Help students understand why attackers use social engineering by exploring the psychological and emotional levers that make people vulnerable, and practising how to think critically when they feel pressure.',
+      goal: 'Help students understand why social engineering is used by attackers and to recognise contexts in which social engineering attacks are likely to occur, emphasising that the attackers exploit human emotions.',
       bundle: {
         filename: 'Social Engineering Part 2 Package',
       },
@@ -114,8 +114,8 @@ export const contentSE = {
           {
             // ID: 5.2.2
             kind: 'Scenario Cards',
-            name: 'Emotional Manipulation Examples',
-            filename: 'Scenario Cards - Emotional Manipulation Examples',
+            name: 'Emotional Manipulation Puzzle',
+            filename: 'Scenario Cards - Emotional Manipulation Puzzle',
             ariaLabel: 'Download material',
           },
           {
@@ -131,13 +131,10 @@ export const contentSE = {
             title: 'Introduction: People vs Systems',
           },
           {
-            title: 'Emotions Attackers Use',
-          },
-          {
             title: 'Thinking Like an Attacker',
           },
           {
-            title: 'Everyday Contexts Where Social Engineering Works',
+            title: 'Everyday Situations Where Social Engineering Can Happen',
           },
           {
             title: 'Plenary: Summary and Informal Assessment',
@@ -146,7 +143,7 @@ export const contentSE = {
       },
     },
     {
-      goal: 'Help students recognise social engineering attempts by identifying common warning signs and understanding the different contexts in which these attacks may occur, both online and offline.',
+      goal: 'Help students recognise techniques and contexts in which social engineering attacks are likely to occur in given scenarios, both online and offline.',
       bundle: {
         filename: 'Social Engineering Part 3 Package',
       },
@@ -155,8 +152,8 @@ export const contentSE = {
           {
             // ID: 5.3.2
             kind: 'Worksheet',
-            name: 'Dot-to-Dot Activity',
-            filename: 'Worksheet - Dot-to-Dot Activity',
+            name: 'Social Engineering: Dot-to-Dot Challenge',
+            filename: 'Worksheet - Social Engineering Dot-to-Dot Challenge',
             ariaLabel: 'Download material',
           },
         ],
@@ -165,13 +162,10 @@ export const contentSE = {
             title: 'Introduction: Where Can Social Engineering Happen?',
           },
           {
-            title: 'Common Warning Signs',
-          },
-          {
             title: 'Types of Social Engineering',
           },
           {
-            title: 'Practising Recognition',
+            title: 'Practising Recognition of Social Engineering',
           },
           {
             title: 'Plenary: Summary and Informal Assessment',
@@ -196,7 +190,7 @@ export const contentSE = {
       },
     },
     {
-      goal: 'Help students practise verifying information and choosing safe responses, and empower them to support others when they encounter social engineering attempts.',
+      goal: 'Help students learn ways to protect themselves and others against social engineering in given scenarios and to be able to explain why they made those choices.',
       bundle: {
         filename: 'Social Engineering Part 4 Package',
       },
@@ -249,7 +243,7 @@ export const contentSE = {
             title: 'Practising Safe Responses',
           },
           {
-            title: 'Protecting Others',
+            title: 'Protecting Others and Being a Responsible Citizen',
           },
           {
             title: 'Plenary: Summary and Informal Assessment',
@@ -290,10 +284,10 @@ export const contentSE = {
       imageSrc: '/images/learning-hub/06_malware.webp',
     },
     {
-      moduleId: 'da',
-      brand: 'DA',
-      href: '/learning-hub/digital-abuse/content',
-      imageSrc: '/images/learning-hub/07_digital-abuse.webp',
+      moduleId: 'dm',
+      brand: 'DM',
+      href: '/learning-hub/digital-misuse/content',
+      imageSrc: '/images/learning-hub/07_digital-misuse.webp',
     },
   ],
 }
@@ -301,7 +295,7 @@ export const contentSE = {
 export const challengeSE = {
   title: 'Phishing Case Files',
   subtitle: 'Become a Message Detective! Can you spot the scams and phishing tricks? Read each message and decide: Trust It or Ignore / Report.',
-  howItWorks: 'How It Works',
+  howItWorks: 'How it Works',
   instruction: 'Read each message case file and decide if it is trustworthy or should be ignored/reported. Think about urgency, suspicious links, and requests for private information.',
   tip: 'If you are unsure about some message, check the Detective Notes with some tips about how to identify scams.',
   tipLabel: 'Tip',
@@ -317,7 +311,7 @@ export const challengeSE = {
   casesIdentified: 'out of 14 cases correctly identified',
   detectiveRankLabel: 'Detective Rank',
   defaultRank: 'Rookie Detective',
-  defaultRankMessage: 'Keep practicing to level up!',
+  defaultRankMessage: 'Keep practising to level up!',
   performanceSummary: 'Performance Summary',
   playAgain: 'Play Again',
   detectiveNotes: 'Detective Notes',
@@ -337,7 +331,7 @@ export const challengeSE = {
   subjectLabel: 'Subject',
   messageLabel: 'Message',
   rankRookie: '🥉 Rookie Detective',
-  rankRookieMsg: 'You\'re just starting your investigation. Keep practicing to spot the red flags!',
+  rankRookieMsg: 'You\'re just starting your investigation. Keep practising to spot the red flags!',
   rankJunior: '🥈 Junior Detective',
   rankJuniorMsg: 'You\'re getting better at spotting suspicious messages. Well done!',
   rankSenior: '🥇 Senior Detective',

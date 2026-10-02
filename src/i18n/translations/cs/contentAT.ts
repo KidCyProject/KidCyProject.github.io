@@ -7,54 +7,55 @@
 // ---------------------------------------------------------------------------
 
 export const contentAT = {
-  aim: 'Poskytnout základní znalosti principů autentizace a správy identit pro ochranu osobních digitálních aktiv.',
+  aim:
+    'Poskytnout základní znalosti o principech ověřování totožnosti a správy identity pro ochranu osobního digitálního majetku.',
   objectives: [
-    'Zdůraznit důležitost bezpečné správy identit.',
-    'Představit koncept autentizace a její různé typy.',
-    'Rozvíjet porozumění studentů digitálním aktivům a povědomí o řízení přístupu.',
-    'Rozvíjet znalosti a dovednosti studentů pro vytváření bezpečných uživatelských jmen a hesel podle doporučení a osvědčených postupů.',
-    'Budovat dovednosti studentů pro bezpečnou správu hesel.',
+    'Zdůraznit důležitost bezpečné správy identity.',
+    'Představit pojem ověřování totožnosti a jeho jednotlivé faktory.',
+    'Rozvinout porozumění digitálnímu majetku a povědomí o řízení přístupu.',
+    'Rozvinout znalosti a dovednosti pro vytváření bezpečných uživatelských jmen a hesel podle doporučení a osvědčených postupů.',
+    'Vybudovat dovednosti pro bezpečnou správu hesel.',
   ],
   outcomes: [
-    'Dokáži identifikovat svá osobní digitální aktiva a vysvětlit rizika, kterým čelí v fyzickém i digitálním prostředí.',
-    'Dokáži vysvětlit, co je autentizace, proč je důležitá, a vyjmenovat různé typy autentizace.',
-    'Dokáži rozlišit mezi slabými a silnými uživatelskými jmény a hesly.',
-    'Dokáži předvést, jak používat správce hesel k ukládání hesel, a zdůvodnit, proč jsem tyto volby učinil/a.',
+    'Umím určit svůj osobní digitální majetek a vysvětlit, jaká rizika mu hrozí ve fyzickém i v digitálním prostředí.',
+    'Umím vysvětlit, co je ověřování totožnosti, proč je důležité, a vyjmenovat různé typy ověřování.',
+    'Umím rozlišit slabá a silná uživatelská jména a hesla.',
+    'Umím ukázat, jak pomocí správce hesel ukládat hesla, a zdůvodnit svoje rozhodnutí.',
   ],
   parts: [
     {
-      goal: 'Pomoci studentům vytvořit silná, zapamatovatelná tajemství a pochopit, proč je opakované použití riskantní.',
+      goal: 'Pomoct žákům vytvořit si silná hesla, která si zapamatují, a pochopit, proč je riskantní používat jedno heslo víckrát.',
       bundle: {
-        filename: 'Autentizace - balíček - Část 1',
+        filename: 'Ověřování totožnosti - balíček - Část 1',
       },
       included: {
         materials: [
           {
             // ID: 3.1.1
             kind: 'Obrázek',
-            name: 'Online identita',
-            filename: 'Obrázek - Online identita',
+            name: 'Digitální identita',
+            filename: 'Obrázek - Digitální identita',
             ariaLabel: 'Stáhnout materiál',
           },
           {
             // ID: 3.1.3
             kind: 'Obrázky',
-            name: 'Příklady osobních digitálních aktiv',
-            filename: 'Obrázky - Příklady osobních digitálních aktiv',
+            name: 'Příklady osobního digitálního majetku',
+            filename: 'Obrázky - Příklady osobního digitálního majetku',
             ariaLabel: 'Stáhnout materiál',
           },
           {
             // ID: 3.1.4
             kind: 'Pracovní list',
-            name: 'Co by se stalo, kdyby...?',
+            name: 'Co by se stalo, kdyby…?',
             filename: 'Pracovní list - Co by se stalo, kdyby',
             ariaLabel: 'Stáhnout materiál',
           },
           {
             // ID: 3.1.5
             kind: 'Pracovní list',
-            name: 'Moje digitální aktiva',
-            filename: 'Pracovní list - Moje digitální aktiva',
+            name: 'Můj digitální majetek',
+            filename: 'Pracovní list - Můj digitální majetek',
             ariaLabel: 'Stáhnout materiál',
           },
         ],
@@ -66,17 +67,17 @@ export const contentAT = {
             title: 'Co je digitální identita?',
           },
           {
-            title: 'Porozumění digitálním aktivům',
+            title: 'Porozumění digitálnímu majetku',
           },
           {
-            title: 'Plenární zasedání: Shrnutí a neformální hodnocení',
+            title: 'Závěr: shrnutí a neformální hodnocení',
           },
         ],
       },
       featuredVideo: {
         title: 'Co je digitální identita?',
         supportText:
-          'Použijte toto video, aby studenti pochopili, že jejich digitální identita se skládá z informací a chování, které sdílejí online. Zastavte se a zeptejte se, které části digitální identity si myslí, že mohou ovládat.',
+          'Použijte video, aby žáci pochopili, že jejich digitální identitu tvoří informace a chování, které online sdílejí. Zastavte se a zeptejte se, které části své digitální identity můžou podle sebe ovlivnit.',
         downloads: {
           video: {
             filename: 'Co je digitální identita',
@@ -91,17 +92,17 @@ export const contentAT = {
     },
     {
       goal:
-        'Pomoci studentům pochopit, co je autentizace, proč je důležitá a jak pomáhá chránit jejich digitální identitu a digitální aktiva tím, že kontroluje, kdo má povolený přístup.',
+        'Pomoct žákům pochopit, co je ověřování totožnosti, proč je důležité a jak pomáhá chránit jejich digitální identitu a digitální majetek tím, že prověřuje, kdo o přístup žádá.',
       bundle: {
-        filename: 'Autentizace - balíček - Část 2',
+        filename: 'Ověřování totožnosti - balíček - Část 2',
       },
       included: {
         materials: [
           {
             // ID: 3.2.1
             kind: 'Obrázky',
-            name: 'Příklady autentizace z reálného světa',
-            filename: 'Obrázky - Příklady autentizace z reálného světa',
+            name: 'Příklady ověřování totožnosti ze skutečného světa',
+            filename: 'Obrázky - Příklady ověřování totožnosti ze skutečného světa',
             ariaLabel: 'Stáhnout materiál',
           },
           {
@@ -114,8 +115,8 @@ export const contentAT = {
           {
             // ID: 3.2.4
             kind: 'Pracovní list',
-            name: 'Autentizace v každodenním životě',
-            filename: 'Pracovní list - Autentizace v každodenním životě',
+            name: 'Ověřování totožnosti v běžném životě',
+            filename: 'Pracovní list - Ověřování totožnosti v běžném životě',
             ariaLabel: 'Stáhnout materiál',
           },
         ],
@@ -124,31 +125,31 @@ export const contentAT = {
             title: 'Úvod',
           },
           {
-            title: 'Autentizace',
+            title: 'Ověřování totožnosti',
           },
           {
-            title: 'Porozumění typům autentizace',
+            title: 'Porozumění typům ověřování',
           },
           {
-            title: 'Aplikace autentizace na digitální aktiva',
+            title: 'Uplatnění ověřování na digitální majetek',
           },
           {
-            title: 'Plenární zasedání: Shrnutí a neformální hodnocení',
+            title: 'Závěr: shrnutí a neformální hodnocení',
           },
         ],
       },
       featuredVideo: {
         // ID: 3.2.2
-        title: 'Co je autentizace?',
+        title: 'Co je ověřování totožnosti?',
         supportText:
-          'Použijte toto video k představení autentizace jako každodenního mechanismu, který chrání digitální účty studentů. Zastavte se a zeptejte se, jak aktuálně prokazují svou identitu v aplikacích, které nejčastěji používají.',
+          'Použijte video k představení ověřování totožnosti jako každodenního mechanismu, který chrání digitální účty žáků. Zastavte se a zeptejte se, jak dnes prokazují svoji totožnost v aplikacích, které používají nejčastěji.',
         downloads: {
           video: {
-            filename: 'Co je autentizace',
+            filename: 'Co je ověřování totožnosti',
             ariaLabel: 'Stáhnout video',
           },
           subtitles: {
-            filename: 'Co je autentizace - Titulky',
+            filename: 'Co je ověřování totožnosti - Titulky',
             ariaLabel: 'Stáhnout titulky',
           },
         },
@@ -156,9 +157,9 @@ export const contentAT = {
     },
     {
       goal:
-        'Pomoci studentům pochopit, co je autentizace, proč je důležitá a jak pomáhá chránit jejich digitální identitu a digitální aktiva tím, že kontroluje, kdo má povolený přístup.',
+        'Pomoct žákům pochopit rozdíl mezi slabými a silnými uživatelskými jmény a hesly, rozpoznat časté chyby u hesel a naučit se jednoduchá pravidla pro vytváření bezpečných hesel, která chrání jejich digitální účty a majetek.',
       bundle: {
-        filename: 'Autentizace - balíček - Část 3',
+        filename: 'Ověřování totožnosti - balíček - Část 3',
        },
       included: {
         materials: [
@@ -178,23 +179,23 @@ export const contentAT = {
           },
           {
             // ID: 3.3.4
-            kind: 'Karty',
-            name: 'Vytvořit silné heslo',
-            filename: 'Karty - Vytvořit silné heslo',
+            kind: 'Kartičky',
+            name: 'Vytvoř silné heslo',
+            filename: 'Kartičky - Vytvoř silné heslo',
             ariaLabel: 'Stáhnout materiál',
           },
           {
             // ID: 3.3.5
             kind: 'Obrázek',
-            name: 'Zkontrolujte své heslo',
-            filename: 'Obrázek - Zkontrolujte své heslo',
+            name: 'Zkontroluj si heslo',
+            filename: 'Obrázek - Zkontroluj si heslo',
             ariaLabel: 'Stáhnout materiál',
           },
           {
             // ID: 3.3.6
             kind: 'Pracovní list',
-            name: 'Moje pravidla pro silná hesla',
-            filename: 'Pracovní list - Moje pravidla pro silná hesla',
+            name: 'Moje pravidla pro silné heslo',
+            filename: 'Pracovní list - Moje pravidla pro silné heslo',
             ariaLabel: 'Stáhnout materiál',
           },
         ],
@@ -212,7 +213,7 @@ export const contentAT = {
             title: 'Bezpečné vytváření silných hesel',
           },
           {
-            title: 'Plenární zasedání: Shrnutí a neformální hodnocení',
+            title: 'Závěr: shrnutí a neformální hodnocení',
           },
         ],
       },
@@ -220,7 +221,7 @@ export const contentAT = {
         // ID: 3.3.1
         title: 'Silná a slabá hesla',
         supportText:
-          'Použijte toto video, abyste studentům ukázali rozdíl mezi hesly, která chrání účty, a hesly, která je vystavují riziku. Vyzvěte je, aby zamysleli nad tím, zda jejich vlastní hesla splňují kritéria silných hesel.',
+          'Použijte video, abyste žákům ukázali rozdíl mezi hesly, která účty chrání, a hesly, která je vystavují riziku. Vyzvěte je, ať se zamyslí, jestli jejich vlastní hesla kritéria silného hesla splňují.',
         downloads: {
           video: {
             filename: 'Silná a slabá hesla',
@@ -235,17 +236,17 @@ export const contentAT = {
     },
     {
       goal:
-        'Pomoci studentům pochopit, co je dvoufaktorová autentizace a proč je správa mnoha hesel obtížná, představit koncept správce hesel a vysvětlit, jak správci hesel pomáhají chránit digitální identity a digitální aktiva při zodpovědném používání s podporou důvěryhodného dospělého.',
+        'Pomoct žákům pochopit, co je dvoufaktorové ověření a proč je správa mnoha hesel náročná, představit pojem správce hesel a vysvětlit, jak správci hesel pomáhají chránit digitální identitu a digitální majetek, když se používají odpovědně a s podporou dospělého, kterému žáci věří.',
       bundle: {
-        filename: 'Autentizace - balíček - Část 4',
+        filename: 'Ověřování totožnosti - balíček - Část 4',
        },
       included: {
         materials: [
           {
             // ID: 3.4.1
             kind: 'Obrázek',
-            name: 'Dva různé typy autentizace použité společně',
-            filename: 'Obrázek - Dva různé typy autentizace použité společně',
+            name: 'Dva různé typy ověřování použité společně',
+            filename: 'Obrázek - Dva různé typy ověřování použité společně',
             ariaLabel: 'Stáhnout materiál',
           },
           {
@@ -293,8 +294,8 @@ export const contentAT = {
           {
             // ID: 3.4.9
             kind: 'Pracovní list',
-            name: 'Problémy s hesly a řešení',
-            filename: 'Pracovní list - Problémy s hesly a řešení',
+            name: 'Problémy s hesly a jejich řešení',
+            filename: 'Pracovní list - Problémy s hesly a jejich řešení',
             ariaLabel: 'Stáhnout materiál',
           },
         ],
@@ -303,7 +304,7 @@ export const contentAT = {
             title: 'Úvod',
           },
           {
-            title: 'Hesla',
+            title: 'Správci hesel',
           },
           {
             title: 'Správci hesel',
@@ -312,7 +313,7 @@ export const contentAT = {
             title: 'Bezpečné používání správců hesel',
           },
           {
-            title: 'Plenární zasedání: Shrnutí a neformální hodnocení',
+            title: 'Závěr: shrnutí a neformální hodnocení',
           },
         ],
       },
@@ -320,7 +321,7 @@ export const contentAT = {
         // ID: 3.4.5
         title: 'Co je správce hesel?',
         supportText:
-          'Použijte toto video k představení správců hesel jako praktického řešení pro vytváření a ukládání silných, jedinečných hesel pro každý účet. Zastavte se a zeptejte se studentů, zda o správci hesel slyšeli nebo jej již používali.',
+          'Použijte video k představení správců hesel jako praktického řešení, jak vytvářet a ukládat silná a jedinečná hesla ke každému účtu. Zastavte se a zeptejte se žáků, jestli o správci hesel už slyšeli nebo ho někdy používali.',
         downloads: {
           video: {
             filename: 'Co je správce hesel',
@@ -335,31 +336,31 @@ export const contentAT = {
     },
     {
       goal:
-        'Pomoci studentům pochopit, jak jejich volby a chování ovlivňují bezpečnost jejich digitální identity a jak zodpovědné jednání pomáhá chránit jejich digitální aktiva, je samotné a ostatní v digitálním prostředí.',
+        'Pomoct žákům pochopit, jak jejich rozhodnutí a chování ovlivňují bezpečnost jejich digitální identity a jak odpovědné jednání pomáhá chránit jejich digitální majetek, je samotné i ostatní v digitálním prostředí.',
       bundle: {
-        filename: 'Autentizace - balíček - Část 5',
+        filename: 'Ověřování totožnosti - balíček - Část 5',
        },
       included: {
         materials: [
           {
             // ID: 3.5.1
             kind: 'Obrázek',
-            name: 'Bezpečné a nebezpečné online chování',
-            filename: 'Obrázek - Bezpečné a nebezpečné online chování',
+            name: 'Bezpečné a nebezpečné chování online',
+            filename: 'Obrázek - Bezpečné a nebezpečné chování online',
             ariaLabel: 'Stáhnout materiál',
           },
           {
             // ID: 3.5.3
             kind: 'Pracovní list',
-            name: 'Scénáře digitální identity a autentizace',
-            filename: 'Pracovní list - Scénáře digitální identity a autentizace',
+            name: 'Situace k digitální identitě a ověřování totožnosti',
+            filename: 'Pracovní list - Situace k digitální identitě a ověřování totožnosti',
             ariaLabel: 'Stáhnout materiál',
           },
           {
             // ID: 3.5.4
             kind: 'Pracovní list',
-            name: 'Jak chráním svou digitální identitu',
-            filename: 'Pracovní list - Jak chráním svou digitální identitu',
+            name: 'Jak chráním svoji digitální identitu',
+            filename: 'Pracovní list - Jak chráním svoji digitální identitu',
             ariaLabel: 'Stáhnout materiál',
           },
         ],
@@ -371,25 +372,25 @@ export const contentAT = {
             title: 'Ochrana digitální identity',
           },
           {
-            title: 'Digitální identita a autentizace',
+            title: 'Digitální identita a ověřování totožnosti',
           },
           {
-            title: 'Plenární zasedání: Shrnutí a neformální hodnocení',
+            title: 'Závěr: shrnutí a neformální hodnocení',
           },
         ],
       },
       featuredVideo: {
         // ID: 3.5.2
-        title: 'Ochrana vaší digitální identity',
+        title: 'Jak chránit svoji digitální identitu',
         supportText:
-          'Použijte toto video ke spojení strategií, které se studenti naučili pro zachování bezpečnosti své digitální identity. Povzbuďte je, aby identifikovali jeden konkrétní zvyk, který změní nebo zavedou po shlédnutí.',
+          'Použijte video k shrnutí postupů, které se žáci naučili pro ochranu své digitální identity. Vyzvěte je, ať si po zhlédnutí určí jeden konkrétní návyk, který změní nebo si zavedou.',
         downloads: {
           video: {
-            filename: 'Ochrana vaší digitální identity',
+            filename: 'Jak chránit svoji digitální identitu',
             ariaLabel: 'Stáhnout video',
           },
           subtitles: {
-            filename: 'Ochrana vaší digitální identity - Titulky',
+            filename: 'Jak chránit svoji digitální identitu - Titulky',
             ariaLabel: 'Stáhnout titulky',
           },
         },
@@ -431,10 +432,10 @@ export const contentAT = {
       imageSrc: '/images/learning-hub/06_malware.webp',
     },
     {
-      moduleId: 'da',
-      brand: 'DA',
-      href: '/learning-hub/digital-abuse/content',
-      imageSrc: '/images/learning-hub/07_digital-abuse.webp',
+      moduleId: 'dm',
+      brand: 'DM',
+      href: '/learning-hub/digital-misuse/content',
+      imageSrc: '/images/learning-hub/07_digital-misuse.webp',
     },
   ],
 }
@@ -442,14 +443,14 @@ export const contentAT = {
 export const challengeAT = {
   title: 'Laboratoř hesel',
   subtitle:
-    'Budujte silnější heslo jedno kolo za druhým. Každá úroveň přidává novou ingredienci do vašeho receptu na heslo!',
+    'Budujte silnější heslo kolo po kole. Každé kolo přidá do vašeho receptu na heslo novou přísadu!',
   howItWorks: 'Jak to funguje',
   instruction:
-    'Každé kolo zavádí nový požadavek na heslo. Splňte všechna kritéria aktuálního kola, abyste postoupili – a sledujte, jak vaše heslo je stále těžší prolomit!',
+    'Každé kolo přidá nový požadavek na heslo. Splňte všechna kritéria daného kola a postupte dál — a sledujte, jak je vaše heslo čím dál těžší prolomit!',
   tipLabel: 'Tip',
-  tip: 'Zkontrolujte pravý postranní panel, abyste sledovali pokrok v kolech a získali tipy na hesla!',
+  tip: 'Podívejte se do panelu vpravo, kde sledujete postup v kolech a najdete tipy k heslům!',
   yourPassword: 'Vaše heslo',
-  placeholder: 'Zadejte heslo zde...',
+  placeholder: 'Sem napište heslo…',
   passwordInputAriaLabel: 'Zadání hesla',
   showPassword: 'Zobrazit heslo',
   strengthAriaLabel: 'Síla hesla',
@@ -463,11 +464,11 @@ export const challengeAT = {
   strengthWeak: 'Slabé',
   strengthOkay: 'Skoro tam',
   strengthStrong: 'Silné ✓',
-  feedbackDefault: 'Začněte psát a zjistěte sílu svého hesla!',
-  feedbackAllMet: '🎉 Všechny požadavky splněny! Klikněte na Další kolo pro pokračování.',
+  feedbackDefault: 'Začněte psát a uvidíte, jak je vaše heslo silné!',
+  feedbackAllMet: '🎉 Všechny požadavky splněné! Pokračujte tlačítkem Další kolo.',
   almostThereTemplate: 'Skoro tam! Zkuste {hint}.',
   hints: {
-    length: 'prodloužit (10+ znaků)',
+    length: 'prodloužit ho (10+ znaků)',
     number: 'přidat číslo (0-9)',
     symbol: 'přidat symbol jako ! @ # $ %',
     upper: 'přidat VELKÉ písmeno',
@@ -480,56 +481,56 @@ export const challengeAT = {
   tryAgain: 'Zkusit znovu',
   tryAgainAriaLabel: 'Vymazat heslo a začít znovu',
   completionTitle: 'Mistr hesel!',
-  completionText: 'Dokončili jste všechna 4 kola a naučili se vytvářet neprolomitelná hesla!',
+  completionText: 'Dokončili jste všechna 4 kola a naučili se vytvářet hesla, která nejde prolomit!',
   completionRounds: '4 / 4 kola dokončena',
-  completionTips: 'Silná hesla chrání váš digitální život. Používejte tyto dovednosti všude, kde si vytváříte účet!',
+  completionTips: 'Silná hesla chrání váš digitální život. Využijte tyhle dovednosti všude, kde si zakládáte účet!',
   startOver: 'Začít znovu',
   roundProgressTitle: 'Pokrok v kolech',
-  roundProgressDesc: 'Dokončete všechna 4 kola, abyste ovládli hesla',
+  roundProgressDesc: 'Dokončete všechna 4 kola a hesla si osvojíte',
   rounds: [
     {
       icon: '🎮',
       title: 'Vytvořte heslo pro herní účet',
-      description: 'Začněte s dobrou délkou – alespoň 10 znaků!',
+      description: 'Začněte pořádnou délkou — aspoň 10 znaků!',
       label: 'Kolo 1',
       desc: 'Pouze délka'
     },
     {
       icon: '📧',
       title: 'Vytvořte heslo pro e-mail',
-      description: 'Skvělý začátek! Nyní přidejte číslo, aby bylo těžší jej prolomit.',
+      description: 'Skvělý začátek! Teď přidejte číslo, aby se heslo hůř lámalo.',
       label: 'Kolo 2',
       desc: '+ Číslo'
     },
     {
       icon: '📱',
       title: 'Vytvořte heslo pro sociální sítě',
-      description: 'Dobrý pokrok! Nyní přidejte symbol, abyste to pořádně zamíchali.',
+      description: 'Jde vám to! Teď přidejte symbol, ať je v hesle pořádný zmatek.',
       label: 'Kolo 3',
       desc: '+ Symbol'
     },
     {
       icon: '📔',
       title: 'Vytvořte heslo pro tajný deník',
-      description: 'Závěrečné kolo! Přidejte VELKÁ i malá písmena a dokončete celý recept.',
+      description: 'Poslední kolo! Přidejte VELKÁ i malá písmena a dokončete celý recept.',
       label: 'Kolo 4',
       desc: '+ Velká a malá písmena'
     },
   ],
-  dosTitle: '✅ Dělat',
+  dosTitle: '✅ Co dělat',
   dos: [
-    'Kombinujte VELKÁ a malá písmena',
-    'Přidejte čísla uprostřed',
-    'Používejte symboly jako ! @ # $ %',
-    'Délka 12+ znaků',
-    'Používejte náhodné kombinace',
+    'Kombinovat VELKÁ a malá písmena',
+    'Přidat čísla doprostřed',
+    'Používat symboly jako ! @ # $ %',
+    'Mít aspoň 12 znaků',
+    'Volit náhodné kombinace',
   ],
-  dontsTitle: '❌ Nedělat',
+  dontsTitle: '❌ Co nedělat',
   donts: [
-    'Používejte své skutečné jméno nebo datum narození',
-    'Používejte „123456" nebo jednoduché vzory',
-    'Opakujte stejný znak',
-    'Používejte běžná slovníková slova',
-    'Používejte název školy nebo jméno mazlíčka',
+    'Používat svoje skutečné jméno nebo datum narození',
+    'Používat „123456“ nebo jednoduché vzory',
+    'Opakovat pořád stejný znak',
+    'Používat běžná slova ze slovníku',
+    'Používat název školy nebo jméno mazlíčka',
   ],
 }

@@ -7,20 +7,21 @@
 // ---------------------------------------------------------------------------
 
 export const contentMW = {
-  aim: 'Pomoci žákům pochopit, co je malware, jak dochází k infekcím a jaké návyky snižují riziko nebezpečných stahování, souborů a instalací.',
+  aim:
+    'Poskytnout základní znalosti o tom, co je malware, jaká přináší rizika a jaké jsou zásady ochrany před ním.',
   objectives: [
-    'Představit, co je malware a proč je nebezpečný.',
-    'Identifikovat běžné způsoby šíření malwaru.',
-    'Budovat návyky pro bezpečnější stahování a aktualizace.',
+    'Představit, co je malware a jaké jsou jeho typy.',
+    'Vysvětlit, jak se malware chová a podle čeho poznáme, že je zařízení nakažené.',
+    'Rozvinout dovednosti pro ochranu před riziky spojenými s malwarem.',
   ],
   outcomes: [
-    'Vysvětlit rozdíl mezi bezpečnými a nebezpečnými soubory nebo odkazy.',
-    'Rozpoznat varovné signály podezřelých stahování.',
-    'Používat důvěryhodné zdroje a žádat o pomoc, pokud si nejsi jistý/á.',
+    'Umím popsat, co je malware, a rozpoznat ho v zadaných situacích.',
+    'Umím vysvětlit různé typy malwaru, jak se chovají a podle čeho poznám, že je moje zařízení nakažené.',
+    'Umím v zadaných situacích předvést způsoby ochrany před nákazou malwarem a zdůvodnit svoje rozhodnutí.',
   ],
   parts: [
     {
-      goal: 'Pomoci žákům pochopit koncept malwaru.',
+      goal: 'Pomoct žákům pochopit pojem malware.',
       bundle: {
         filename: 'Malware - balíček - Část 1',
       },
@@ -29,8 +30,8 @@ export const contentMW = {
           {
             // ID: 6.1.1
             kind: 'Obrázek',
-            name: 'Škodlivý + software = malware',
-            filename: 'Obrázek - Škodlivý + software = malware',
+            name: 'Malicious + software = malware',
+            filename: 'Obrázek - Malicious + software = malware',
             ariaLabel: 'Stáhnout materiál',
           },
           {
@@ -53,10 +54,10 @@ export const contentMW = {
             title: 'Úvod',
           },
           {
-            title: 'Definice malwaru',
+            title: 'Vymezení malwaru',
           },
           {
-            title: 'Plénum: Shrnutí a neformální hodnocení',
+            title: 'Závěr: shrnutí a neformální hodnocení',
           },
         ],
       },
@@ -64,7 +65,7 @@ export const contentMW = {
         // ID: 6.1.3
         title: 'Co je malware?',
         supportText:
-          'Použijte toto video k představení malwaru jako softwaru navrženého k způsobení škody, čímž dáte žákům základ, než prozkoumají konkrétní typy podrobněji. Pozastavte se a zeptejte se, co již znají nebo slyšeli o počítačových virech.',
+          'Použijte video k představení malwaru jako softwaru, který je vytvořený tak, aby škodil. Dáte tím žákům základ, než se pustí do jednotlivých typů. Zastavte se a zeptejte se, co už o počítačových virech vědí nebo slyšeli.',
         downloads: {
           video: {
             filename: 'Co je malware',
@@ -94,8 +95,8 @@ export const contentMW = {
           {
             // ID: 6.2.3
             kind: 'Schéma',
-            name: 'Hrací deska: Svaž uzly',
-            filename: 'Schéma - Hrací deska Svaž uzly',
+            name: 'Herní plán: Uzly',
+            filename: 'Schéma - Herní plán Uzly',
             ariaLabel: 'Stáhnout materiál',
           },
         ],
@@ -104,31 +105,31 @@ export const contentMW = {
             title: 'Úvod',
           },
           {
-            title: 'Svažte uzly pro typy malwaru',
+            title: 'Typy malwaru',
           },
           {
-            title: 'Plénum: Shrnutí a neformální hodnocení',
+            title: 'Závěr: shrnutí a neformální hodnocení',
           },
         ],
       },
       featuredVideo: {
         // ID: 6.2.1
-        title: 'Představení typů malwaru',
+        title: 'Seznámení s typy malwaru',
         supportText:
-          'Použijte toto video, aby žáci získali jasný přehled o různých kategoriích malwaru a o tom, co každý z nich odlišuje. Pozastavte se pro krátkou diskusi o tom, který typ podle nich představuje největší riziko a proč.',
+          'Použijte video, aby žáci získali jasný přehled o jednotlivých typech malwaru a o tom, čím se každý liší. Zastavte se a krátce proberte, který typ podle nich představuje největší riziko a proč.',
         downloads: {
           video: {
-            filename: 'Představení typů malwaru',
+            filename: 'Seznámení s typy malwaru',
             ariaLabel: 'Stáhnout video',
           },
           subtitles: {
-            filename: 'Představení typů malwaru - Titulky',
+            filename: 'Seznámení s typy malwaru - Titulky',
             ariaLabel: 'Stáhnout titulky' },
         },
       },
     },
     {
-      goal: 'Poskytnout přehled charakteristik malwaru pro jeho rozpoznání a detekci.',
+      goal: 'Poskytnout přehled vlastností malwaru, podle kterých ho lze rozpoznat a odhalit.',
       bundle: {
         filename: 'Malware - balíček - Část 3',
       },
@@ -136,23 +137,23 @@ export const contentMW = {
         materials: [
           {
             // ID: 6.3.1
-            kind: 'Čtení',
-            name: 'Rozpoznávání malwaru',
-            filename: 'Čtení - Rozpoznávání malwaru',
+            kind: 'Text ke čtení',
+            name: 'Jak poznat malware',
+            filename: 'Text ke čtení - Jak poznat malware',
             ariaLabel: 'Stáhnout materiál',
           },
           {
             // ID: 6.3.2
             kind: 'Plakát',
-            name: 'Sedm indikátorů',
-            filename: 'Plakát - Sedm indikátorů',
+            name: 'Sedm příznaků',
+            filename: 'Plakát - Sedm příznaků',
             ariaLabel: 'Stáhnout materiál',
           },
           {
             // ID: 6.3.3
             kind: 'Pracovní list',
-            name: 'Seznam indikátorů',
-            filename: 'Pracovní list - Seznam indikátorů',
+            name: 'Seznam příznaků',
+            filename: 'Pracovní list - Seznam příznaků',
             ariaLabel: 'Stáhnout materiál',
           },
         ],
@@ -161,16 +162,16 @@ export const contentMW = {
             title: 'Úvod',
           },
           {
-            title: 'Vyšetřování malwaru',
+            title: 'Pátrání po malwaru',
           },
           {
-            title: 'Plénum: Shrnutí a neformální hodnocení',
+            title: 'Závěr: shrnutí a neformální hodnocení',
           },
         ],
       },
     },
     {
-      goal: 'Pomoci žákům pochopit ochranná opatření proti malwaru.',
+      goal: 'Pomoct žákům pochopit ochranná opatření proti malwaru.',
       bundle: {
         filename: 'Malware - balíček - Část 4',
       },
@@ -186,15 +187,15 @@ export const contentMW = {
           {
             // ID: 6.4.2
             kind: 'Plakát',
-            name: 'Co dělat a co ne',
-            filename: 'Plakát - Co dělat a co ne',
+            name: 'Co dělat a co nedělat',
+            filename: 'Plakát - Co dělat a co nedělat',
             ariaLabel: 'Stáhnout materiál',
           },
           {
             // ID: 6.4.3
             kind: 'Obrázky',
-            name: 'Asociativní obrázky: Buď ostražitý',
-            filename: 'Obrázky - Asociativní obrázky Buď ostražitý',
+            name: 'Doprovodné obrázky: Dávej pozor',
+            filename: 'Obrázky - Doprovodné obrázky Dávej pozor',
             ariaLabel: 'Stáhnout materiál',
           },
           {
@@ -210,13 +211,13 @@ export const contentMW = {
             title: 'Úvod',
           },
           {
-            title: 'Analýza situace neopatrného chování',
+            title: 'Rozbor situace s neopatrným chováním',
           },
           {
-            title: 'Výuka základních ochranných opatření',
+            title: 'Základní ochranná opatření',
           },
           {
-            title: 'Plénum: Shrnutí a neformální hodnocení',
+            title: 'Závěr: shrnutí a neformální hodnocení',
           },
         ],
       },
@@ -254,23 +255,23 @@ export const contentMW = {
       imageSrc: '/images/learning-hub/05_social-engineering.webp',
     },
     {
-      moduleId: 'da',
-      brand: 'DA',
-      href: '/learning-hub/digital-abuse/content',
-      imageSrc: '/images/learning-hub/07_digital-abuse.webp',
+      moduleId: 'dm',
+      brand: 'DM',
+      href: '/learning-hub/digital-misuse/content',
+      imageSrc: '/images/learning-hub/07_digital-misuse.webp',
     },
   ],
 }
 
 export const challengeMW = {
-  title: 'Detektiv malwaru',
-  subtitle: 'Jsi analytik kybernetické bezpečnosti. Prohledej soubory na svém virtuálním počítači, zkontroluj doručenou poštu, vyřeš podezřelá vyskakovací okna a přezkoumej oprávnění aplikací ve 4 interaktivních úrovních. Dokážeš udržet systém čistý?',
+  title: 'Detektiv na malware',
+  subtitle: 'Jste analytik kyberbezpečnosti. Prohlédněte si soubory na svém virtuálním počítači, projděte doručenou poštu, vyřešte podezřelá vyskakovací okna a zkontrolujte oprávnění aplikací ve 4 interaktivních úrovních. Udržíte systém čistý?',
   howItWorks: 'Jak to funguje',
-  instruction: 'Projdi 4 úrovně na svém virtuálním počítači. Každá úroveň představuje jiný scénář kybernetické bezpečnosti. Pečlivě prověř každý případ a rozhodni, zda je bezpečný nebo představuje hrozbu — pak se pouč z vysvětlení.',
-  tip: 'Malware se často maskuje jako něco neškodného. Hledej podezřelé přípony souborů, špatně napsané domény, zbytečná oprávnění a sliby, které jsou příliš dobré, aby byly pravdivé.',
+  instruction: 'Projděte 4 úrovně na svém virtuálním počítači. Každá úroveň představuje jinou situaci z kyberbezpečnosti. Každý případ si pozorně prohlédněte a rozhodněte, jestli je bezpečný, nebo jde o hrozbu — a pak si přečtěte vysvětlení.',
+  tip: 'Malware se často maskuje jako něco neškodného. Všímejte si podezřelých přípon souborů, překlepů v doménách, zbytečných oprávnění a slibů, které znějí až moc dobře.',
   tipLabel: 'Tip',
-  welcomeTitle: 'Vítej, kybernetický analytiku!',
-  welcomeDescription: 'Tvůj počítač obdržel podezřelé soubory, e-maily a vyskakovací okna. Projdi 4 úrovně, abys identifikoval/a hrozby a ochránil/a systém.',
+  welcomeTitle: 'Vítejte, analytiku!',
+  welcomeDescription: 'Do vašeho počítače dorazily podezřelé soubory, e-maily a vyskakovací okna. Projděte 4 úrovně, odhalte hrozby a ochraňte systém.',
   levels: [
     '💻 Úroveň 1 — Skener souborů',
     '📧 Úroveň 2 — E-mailová schránka',
@@ -290,195 +291,195 @@ export const challengeMW = {
   malwareTypesSubtitle: 'Běžné typy malwaru, na které si dát pozor',
   malwareTypes: [
     '🦠 Virus — připojuje se k souborům a šíří se',
-    '🪱 Červ — sám se replikuje přes sítě',
-    '🐴 Trojan — maskovaný jako užitečný software',
-    '🔐 Ransomware — zamkne soubory, dokud nezaplatíš',
-    '👁️ Spyware — tajně sleduje aktivitu',
-    '📢 Adware — zahlcuje tě reklamami',
+    '🪱 Červ — sám se množí a šíří se sítěmi',
+    '🐴 Trojský kůň — maskuje se jako užitečný program',
+    '🔐 Ransomware — zamkne soubory, dokud nezaplatíte',
+    '👁️ Spyware — tajně sleduje, co děláte',
+    '📢 Adware — zahltí vás reklamami',
   ],
-  securityGuideTitle: 'Bezpečnostní průvodce',
-  securityGuideSubtitle: 'Červené vlajky, na které si dát pozor',
+  securityGuideTitle: 'Bezpečnostní příručka',
+  securityGuideSubtitle: 'Varovné signály, kterých si všímat',
   securityRedFlags: [
     '🚩 .exe, .bat, .vbs z neznámých zdrojů',
     '🚩 Špatně napsané nebo falešné domény odesílatele',
     '🚩 Falešná upozornění na viry v prohlížeči',
     '🚩 Aplikace požadující zbytečná oprávnění',
-    '🚩 Výhry, volné peníze nebo urgentní hrozby',
-    '🚩 Odpočítávací časovače vytvářející paniku',
+    '🚩 Výhry, peníze zdarma nebo naléhavé hrozby',
+    '🚩 Odpočet, který vyvolává paniku',
   ],
-  goldenRule: 'Pokud si nejsi jistý/á, neklikej. Místo toho kontaktuj IT podporu nebo důvěryhodného dospělého.',
+  goldenRule: 'Když máte pochybnosti, neklikejte. Obraťte se radši na IT podporu nebo na dospělého, kterému věříte.',
   levelCompleteTitle: 'Úroveň dokončena!',
-  levelCompleteSubtitle: 'Pokračuj dál!',
+  levelCompleteSubtitle: 'Pokračujte!',
   levelResultLabel: 'Výsledek úrovně',
   correctDecisionsLabel: 'správných rozhodnutí',
   continueButton: 'Pokračovat →',
   resultsTitle: 'Systém zabezpečen! 🛡️',
-  resultsDescription: 'Tvá zpráva o kybernetické bezpečnosti je připravena.',
+  resultsDescription: 'Vaše zpráva o kyberbezpečnosti je připravená.',
   accuracyLabel: 'Přesnost',
   threatsCaughtStat: 'Zachycené hrozby',
-  threatsMissedStat: 'Zmeškané hrozby',
+  threatsMissedStat: 'Přehlédnuté hrozby',
   analystRankLabel: 'Hodnost analytika',
   rankTrainee: '📘 Praktikant',
-  rankTraineeMsg: 'Pořád se uč! Přezkoumej Bezpečnostní průvodce vpravo a zkus to znovu — zlepšíš se!',
-  rankJunior: '🔍 Juniorský analytik',
-  rankJuniorMsg: 'Dobrá snaha! Budování solidních dovedností v detekci malwaru. Praxe dělá mistra.',
-  rankSenior: '🔐 Seniorský analytik',
-  rankSeniorMsg: 'Skvělá práce! Identifikoval/a jsi většinu hrozeb. Stále ostři svůj pohled na jemné varovné signály.',
-  rankElite: '🛡️ Elitní kybernetický analytik',
-  rankEliteMsg: 'Výjimečná práce! Zachytil/a jsi téměř každou hrozbu. Tvé instinkty pro digitální bezpečnost jsou výborné.',
+  rankTraineeMsg: 'Učte se dál! Projděte si Bezpečnostní příručku vpravo a zkuste to znovu — zlepšíte se!',
+  rankJunior: '🔍 Analytik junior',
+  rankJuniorMsg: 'Dobrá snaha! Budujete si solidní schopnost malware odhalit. Cvik dělá mistra.',
+  rankSenior: '🔐 Analytik senior',
+  rankSeniorMsg: 'Skvělá práce! Většinu hrozeb jste odhalili. Trénujte oko dál na jemné varovné signály.',
+  rankElite: '🛡️ Elitní kyberanalytik',
+  rankEliteMsg: 'Vynikající práce! Zachytili jste skoro každou hrozbu. Instinkt pro digitální bezpečnost máte výborný.',
   playAgain: 'Hrát znovu',
   levelMeta: [
-    { title: 'Úroveň 1 ze 4 — Skener souborů', app: '📁 Průzkumník souborů', msg: '🔍 Skenuji soubor…' },
+    { title: 'Úroveň 1 ze 4 — Skener souborů', app: '📁 Průzkumník souborů', msg: '🔍 Kontroluji soubor…' },
     { title: 'Úroveň 2 ze 4 — E-mailová schránka', app: '📧 Pošta', msg: '📧 Čtu e-mail…' },
-    { title: 'Úroveň 3 ze 4 — Vyskakovací okna prohlížeče', app: '🌐 Prohlížeč', msg: '⚠️ Detekováno vyskakovací okno!' },
+    { title: 'Úroveň 3 ze 4 — Vyskakovací okna prohlížeče', app: '🌐 Prohlížeč', msg: '⚠️ Zachyceno vyskakovací okno!' },
     { title: 'Úroveň 4 ze 4 — Oprávnění aplikací', app: '⚙️ Správce aplikací', msg: '⚙️ Kontroluji oprávnění…' },
   ],
   files: [
     {
       icon: '💀', name: 'FreeMinecraft_Crack.exe', type: 'Spustitelný soubor (.exe)',
       source: 'Staženo z: crack-games-free.ru', size: '14.2 MB', date: 'Dnes, 15:41',
-      description: 'Instalátor, který tvrdí, že ti dá zdarma Minecraft. Staženo z neoficiálního ruského webu.',
+      description: 'Instalátor, který slibuje Minecraft zdarma. Stažený z neoficiálního ruského webu.',
       isThreat: true,
-      explanation: 'Cracknuté instalátory her jsou klasickým způsobem distribuce trojanů a ransomwaru. Přípona .exe, podezřelá doména a premisa „bezplatného cracku" jsou závažné varovné signály.',
-      tip: 'Software vždy stahuj pouze z oficiálních, ověřených webových stránek.',
+      explanation: 'Cracknuté instalátory her jsou klasický způsob, jak šířit trojské koně a ransomware. Přípona .exe, podezřelá doména i slib „cracku zdarma“ jsou závažné varovné signály.',
+      tip: 'Software stahujte jen z oficiálních, ověřených stránek.',
     },
     {
       icon: '📄', name: 'History_Essay_Draft.docx', type: 'Dokument Word (.docx)',
       source: 'Vytvořeno lokálně na tomto zařízení', size: '48 KB', date: 'Včera, 19:15',
-      description: 'Dokument Word, který jsi sám/sama vytvořil/a pro hodinu dějepisu.',
+      description: 'Dokument Word, který jste si sami vytvořili do hodiny dějepisu.',
       isThreat: false,
-      explanation: 'Malý dokument Word vytvořený lokálně je bezpečný. Má standardní příponu, malou velikost souboru a lokální původ.',
-      tip: 'Buď opatrný/á s .docx soubory přijatými od cizích lidí — mohou obsahovat škodlivá makra. Ale vlastnoručně vytvořené soubory jsou v pořádku.',
+      explanation: 'Malý dokument Word vytvořený přímo v počítači je bezpečný. Má běžnou příponu, malou velikost a místní původ.',
+      tip: 'U souborů .docx od cizích lidí buďte opatrní — můžou obsahovat škodlivá makra. Vlastní soubory jsou ale v pořádku.',
     },
     {
       icon: '⚡', name: 'speedup_your_pc.bat', type: 'Dávkový skript (.bat)',
       source: 'Přijato přes Discord DM od: xX_h4ck3r_Xx', size: '3.1 KB', date: 'Dnes, 11:02',
-      description: 'Dávkový skript zaslaný přes Discord neznámým uživatelem, který tvrdí, že zrychlí tvůj počítač.',
+      description: 'Dávkový skript poslaný přes Discord neznámým uživatelem, který slibuje zrychlení počítače.',
       isThreat: true,
-      explanation: 'Soubory .bat mohou spustit libovolný systémový příkaz — včetně instalace malwaru, otevírání zadních vrátek nebo mazání souborů. Nikdy nespouštěj skripty od cizích lidí.',
-      tip: 'Nikdy nespouštěj skripty .bat nebo .vbs od lidí, které neznáš a plně jim nedůvěřuješ, i když tvrdí, že jsou neškodné.',
+      explanation: 'Soubory .bat můžou spustit jakýkoli systémový příkaz — včetně instalace malwaru, otevření zadních vrátek nebo mazání souborů. Skripty od cizích lidí nikdy nespouštějte.',
+      tip: 'Skripty .bat nebo .vbs nikdy nespouštějte od lidí, které neznáte a plně jim nevěříte, i když tvrdí, že jsou neškodné.',
     },
     {
       icon: '🎵', name: 'Summer_Playlist.mp3', type: 'Zvukový soubor (.mp3)',
       source: 'Uloženo z desktopové aplikace Spotify', size: '8.7 MB', date: 'Před 3 dny',
-      description: 'Hudební soubor uložený prostřednictvím oficiální aplikace Spotify.',
+      description: 'Hudební soubor uložený přes oficiální aplikaci Spotify.',
       isThreat: false,
-      explanation: 'Toto je standardní zvukový soubor z důvěryhodného zdroje. Soubory .mp3 nejsou spustitelné a nepředstavují žádné reálné riziko, pokud pocházejí z legitimních aplikací.',
-      tip: 'Standardní mediální soubory (.mp3, .jpg, .mp4) jsou obecně bezpečné. Dávej pozor pouze na soubory, které maskují svou příponu, např. „song.mp3.exe".',
+      explanation: 'Běžný zvukový soubor z důvěryhodného zdroje. Soubory .mp3 nejde spustit a z legitimních aplikací žádné skutečné riziko nepředstavují.',
+      tip: 'Běžné mediální soubory (.mp3, .jpg, .mp4) jsou většinou bezpečné. Pozor dávejte jen na soubory, které svoji příponu maskují, třeba „song.mp3.exe“.',
     },
     {
       icon: '🔧', name: 'RegFix_Pro_Setup.exe', type: 'Spustitelný soubor (.exe)',
       source: 'Dodáno vyskakovací reklamou prohlížeče', size: '2.1 MB', date: 'Dnes, 14:18',
-      description: 'Nástroj pro opravu registru, který byl nabídnut vyskakovací reklamou tvrdící, že je tvůj počítač poškozený.',
+      description: '„Nástroj na opravu registru“, který nabídla vyskakovací reklama tvrdící, že máte poškozený počítač.',
       isThreat: true,
-      explanation: 'Falešné nástroje pro opravu počítače dodávané prostřednictvím vyskakovacích reklam jsou běžným prostředkem pro adware a spyware. Skutečné systémové nástroje se tímto způsobem neinzerují.',
-      tip: 'Legitimní antivirový nebo opravný software se nikdy nedistribuuje prostřednictvím náhodných vyskakovacích reklam prohlížeče.',
+      explanation: 'Falešné „nástroje na opravu počítače“ z vyskakovacích reklam jsou běžný způsob, jak se šíří adware a spyware. Skutečné systémové nástroje se takhle neinzerují.',
+      tip: 'Skutečný antivirový nebo opravný program se nikdy nešíří přes náhodné vyskakovací reklamy v prohlížeči.',
     },
     {
       icon: '📸', name: 'Birthday_Party_2024.jpg', type: 'Obrázkový soubor (.jpg)',
-      source: 'Přijato přes WhatsApp od: Babičky', size: '2.9 MB', date: 'Minulý týden',
-      description: 'Fotka z tvé narozeninové párty zaslaná babičkou.',
+      source: 'Přijato přes WhatsApp od: babičky', size: '2.9 MB', date: 'Minulý týden',
+      description: 'Fotka z vaší narozeninové oslavy, kterou poslala babička.',
       isThreat: false,
-      explanation: 'Fotka .jpg od známého rodinného příslušníka je bezpečná. Standardní obrázky od důvěryhodných kontaktů nejsou malware.',
-      tip: 'Dávej pozor na obrázkové soubory s dvojitými příponami jako „photo.jpg.exe" — ty skrývají skutečný, nebezpečný typ souboru.',
+      explanation: 'Fotka .jpg od někoho z rodiny, koho znáte, je bezpečná. Běžné obrázky od důvěryhodných kontaktů malware nejsou.',
+      tip: 'Pozor na obrázky s dvojitou příponou, jako „photo.jpg.exe“ — ty skutečný, nebezpečný typ souboru skrývají.',
     },
     {
       icon: '💎', name: 'FREE_ROBUX_GENERATOR.vbs', type: 'Skript VBScript (.vbs)',
       source: 'Odkaz z komentáře na YouTube', size: '1.8 KB', date: 'Dnes, 9:55',
-      description: 'Skript z komentáře na YouTube, který tvrdí, že vygeneruje neomezené Robuxy pro Roblox.',
+      description: 'Skript z komentáře na YouTube, který slibuje neomezené Robuxy do Robloxu.',
       isThreat: true,
-      explanation: 'Generátory „bezplatných Robuxů" neexistují — jsou to 100% podvody. Skripty .vbs mohou spouštět mocné systémové příkazy. Toto je klasická technika distribuce malwaru.',
-      tip: 'Generátory herní měny zdarma jsou vždy podvody. Existují pouze proto, aby ukradly účty, nainstalovaly malware nebo obojí.',
+      explanation: 'Generátory „Robuxů zdarma“ neexistují — jsou to stoprocentně podvody. Skripty .vbs umí spouštět mocné systémové příkazy. Tohle je učebnicový způsob, jak se šíří malware.',
+      tip: 'Generátory herní měny zdarma jsou vždycky podvod. Existují jen proto, aby kradly účty, instalovaly malware, nebo obojí.',
     },
     {
       icon: '📊', name: 'Science_Project_Data.xlsx', type: 'Tabulka Excel (.xlsx)',
       source: 'E-mail od: johnson.s@westridge-school.edu', size: '156 KB', date: 'Včera, 10:33',
-      description: 'Soubor Excel s daty vědeckého projektu zaslaný ověřeným školním učitelem.',
+      description: 'Soubor Excel s daty ke školnímu projektu, který poslal ověřený učitel.',
       isThreat: false,
-      explanation: 'Tato tabulka pochází od ověřeného školního učitele používajícího oficiální školní doménu. Typ souboru je vhodný a velikost souboru je přiměřená.',
-      tip: 'Kancelářské soubory od neznámých odesílatelů mohou obsahovat škodlivá makra. Před otevřením příloh vždy ověř odesílatele.',
+      explanation: 'Tahle tabulka je od ověřeného učitele z oficiální školní domény. Typ souboru odpovídá a velikost je přiměřená.',
+      tip: 'Kancelářské soubory od neznámých odesílatelů můžou obsahovat škodlivá makra. Před otevřením přílohy si odesílatele vždycky ověřte.',
     },
   ],
   emails: [
     {
       fromName: 'Tým IT bezpečnosti', fromAddr: 'security-alert@school-itsupport.xyz', avatarLetter: '🔐',
-      subject: 'NALÉHAVÉ: Váš školní účet byl hacknut — resetujte heslo OKAMŽITĚ',
-      body: `Milý studente,
+      subject: 'NALÉHAVÉ: Váš školní účet byl napaden — heslo si resetujte OKAMŽITĚ',
+      body: `Milý žáku,
 
-Naše systémy detekovaly neoprávněný přístup k vašemu školnímu účtu z neznámého místa.
+naše systémy zaznamenaly neoprávněný přístup k vašemu školnímu účtu z neznámého místa.
 
-Musíte okamžitě resetovat heslo spuštěním přiloženého nástroje. Pokud nezakročíte do 30 minut, dojde k trvalému uzamčení účtu.
+Heslo si musíte OKAMŽITĚ resetovat spuštěním přiloženého nástroje. Pokud do 30 minut nezareagujete, dojde k trvalému uzamčení účtu.
 
-— IT bezpečnostní oddělení`,
+— Oddělení IT bezpečnosti`,
       attachment: 'PasswordReset_Tool.exe',
       isThreat: true,
-      explanation: 'Několik varovných signálů: podezřelá doména „.xyz" (nikoli skutečná doména vaší školy), extrémní naléhavost a příloha .exe. Skutečná IT oddělení nikdy neposílají nástroje pro reset hesla jako spustitelné soubory — odkazují na správnou přihlašovací stránku.',
-      tip: 'Pokud dostanete bezpečnostní upozornění, kontaktujte IT přímo pomocí telefonního čísla, které již znáte — nikdy nedůvěřujte kontaktním informacím z podezřelého e-mailu samotného.',
+      explanation: 'Hned několik varovných signálů: podezřelá doména „.xyz“ (ne skutečná doména vaší školy), extrémní tlak na čas a příloha .exe. Skutečná IT oddělení nástroje na reset hesla jako spustitelné soubory neposílají — odkážou vás na pořádnou přihlašovací stránku.',
+      tip: 'Když vám přijde bezpečnostní upozornění, ozvěte se IT přímo na číslo, které už znáte — kontaktům z podezřelého e-mailu nikdy nevěřte.',
     },
     {
       fromName: 'Ms. Johnson', fromAddr: 'johnson.s@westridge-school.edu', avatarLetter: 'J',
-      subject: 'Vědecký veletrh — přiložen projektový brief',
+      subject: 'Přírodovědná soutěž — zadání projektu v příloze',
       body: `Ahoj třído,
 
-v příloze najdete oficiální projektový brief pro nadcházející vědecký veletrh. Zahrnuje požadované sekce, pokyny pro formátování a termín odevzdání.
+v příloze najdete oficiální zadání projektu k nadcházející přírodovědné soutěži. Najdete v něm požadované části, pokyny k úpravě a termín odevzdání.
 
-Přineste dokončený plakát a zprávu do místnosti 14 do pátku.
+Hotový plakát a zprávu přineste do učebny 14 do pátku.
 
-V případě dotazů se ozvěte!
+Kdyby cokoli, ozvěte se!
 
-Ms. Johnson
-Přírodovědné oddělení, škola Westridge`,
+paní učitelka Johnsonová
+Přírodovědná sekce, škola Westridge`,
       attachment: 'Science_Fair_Project_Brief.docx',
       isThreat: false,
-      explanation: 'Toto je legitimní školní e-mail. Odesílatel používá ověřenou školní doménu .edu, příloha je standardní dokument Word relevantní k účelu e-mailu a nejsou vyžadovány žádné osobní informace ani urgentní hrozby.',
-      tip: 'Soubor .docx od známého učitele na oficiální školní doméně je bezpečný. Vždy ověřte celou adresu odesílatele před otevřením jakékoli přílohy.',
+      explanation: 'Běžný školní e-mail. Odesílatel používá ověřenou školní doménu .edu, příloha je běžný dokument Word odpovídající obsahu e-mailu a nikdo po vás nechce osobní údaje ani vám nevyhrožuje.',
+      tip: 'Soubor .docx od učitele, kterého znáte, z oficiální školní domény je bezpečný. Před otevřením jakékoli přílohy si vždycky ověřte celou adresu odesílatele.',
     },
     {
-      fromName: 'Lucas (herní kamarád)', fromAddr: 'lucas.gamer99@gmail.com', avatarLetter: 'L',
-      subject: 'kámo spusť tohle, dá ti to nekonečné mince ve hře!!',
-      body: `hej!!
+      fromName: 'Lukáš (kamarád ze hry)', fromAddr: 'lucas.gamer99@gmail.com', avatarLetter: 'L',
+      subject: 'kámo spusť tohle, dá ti to nekonečný mince ve hře!!',
+      body: `čau!!
 
-našel jsem tenhle skvělý skript online, který ti dá neomezené mince v Clash Royale. prostě spusť soubor .bat a automaticky opatchuje hru lol
+našel jsem na netu tenhle šílenej skript, dá ti neomezený mince v Clash Royale. prostě spusť ten .bat a automaticky ti to hru upraví lol
 
-můj brácha to zkusil a fungovalo to. ale nikomu to neříkej
+brácha to zkoušel a fungovalo to. ale nikomu to neříkej
 
-– Lucas`,
+– Lukáš`,
       attachment: 'coin_hack_v3_FINAL.bat',
       isThreat: true,
-      explanation: 'I zprávy od skutečných přátel mohou šířit malware — Lucasův účet může být kompromitován nebo nemusí vědět, že soubor je nebezpečný. Skript .bat, který tvrdí, že „hackuje" hru, je klasická metoda doručení trojana. Jeho spuštění může dát útočníkovi plnou kontrolu nad tvým systémem.',
-      tip: 'Nikdy nespouštěj skripty .bat nebo .vbs od nikoho, včetně přátel. „Cheat" skripty pro online hry jsou téměř vždy malware v přestrojení.',
+      explanation: 'I zprávy od skutečných kamarádů můžou šířit malware — Lukášův účet může být napadený, nebo sám nemusí vědět, že je soubor nebezpečný. Skript .bat, který slibuje, že hru „zhackuje“, je klasický způsob, jak se doručuje trojský kůň. Když ho spustíte, útočník může získat plnou kontrolu nad vaším systémem.',
+      tip: 'Skripty .bat ani .vbs nespouštějte od nikoho, ani od kamarádů. „Cheat“ skripty do online her jsou skoro vždycky přestrojený malware.',
     },
     {
       fromName: 'Školní knihovna', fromAddr: 'library@westridge-school.edu', avatarLetter: '📚',
-      subject: 'Letní čtenářský program — tvůj seznam četby',
+      subject: 'Letní čtenářský program — váš seznam četby',
       body: `Ahoj,
 
-děkujeme za registraci do našeho Letního čtenářského programu! V příloze najdeš svůj personalizovaný seznam četby podle věkové skupiny a zájmů.
+děkujeme za přihlášení do našeho Letního čtenářského programu! V příloze najdete seznam četby sestavený podle vašeho věku a zájmů.
 
-Libovolný z těchto titulů si můžeš půjčit ve školní knihovně nebo je vyžádat prostřednictvím studentského portálu.
+Kterýkoli z těchto titulů si můžete půjčit ve školní knihovně nebo si o něj napsat přes žákovský portál.
 
 Příjemné čtení!
 
 Tým školní knihovny Westridge`,
       attachment: 'Summer_Reading_List_2024.pdf',
       isThreat: false,
-      explanation: 'Legitimní e-mail od školní knihovny používající oficiální doménu .edu. Příloha .pdf je seznam četby — zcela vhodný pro kontext. Nejsou vyžadovány žádné osobní informace a žádné odkazy nejsou podezřelé.',
-      tip: 'Soubory PDF od důvěryhodných, známých odesílatelů jsou obecně bezpečné. Buďte opatrnější s PDF soubory od neznámých odesílatelů, protože mohou někdy obsahovat vložené skripty.',
+      explanation: 'Běžný e-mail ze školní knihovny z oficiální domény .edu. Příloha .pdf je seznam četby — přesně to, co k e-mailu patří. Nikdo po vás nechce osobní údaje a žádný odkaz není podezřelý.',
+      tip: 'Soubory PDF od známých, důvěryhodných odesílatelů jsou většinou bezpečné. U PDF od neznámých odesílatelů buďte opatrnější — někdy můžou obsahovat vložené skripty.',
     },
     {
       fromName: 'CENTRUM UPOZORNĚNÍ NA VÝHRU', fromAddr: 'winner@free-prize-claim-2024.net', avatarLetter: '🏆',
-      subject: 'BYLI JSTE VYBRÁNI — NÁROKUJTE SI iPHONE 15 TEĎ!!!',
+      subject: 'BYLI JSTE VYBRÁNI — VYZVEDNĚTE SI iPHONE 15 HNED!!!',
       body: `GRATULUJEME!!!
 
-Byli jste náhodně vybráni jako náš šťastný výherce! Chcete-li si nárokovat iPhone 15 Pro Max, vyplňte a vraťte přiložený formulář žádosti s vašimi osobními údaji a poplatkem za dopravu 4,99 $.
+Byli jste náhodně vybráni jako náš šťastný výherce! Pro vyzvednutí iPhonu 15 Pro Max vyplňte a odešlete přiložený formulář se svými osobními údaji a poplatkem za dopravu 129 Kč.
 
 Odpovězte do 12 HODIN, jinak výhra propadne!
 
-[NÁROKOVAT VÝHRU →]`,
+[VYZVEDNOUT VÝHRU →]`,
       attachment: 'WINNER_ClaimForm_URGENT.html',
       isThreat: true,
-      explanation: 'Klasický podvod o výhře s přílohou .html — jeho otevřením se načte falešná webová stránka navržená k odcizení vašich osobních údajů a platebních informací. Varovné signály: výhra, do které jste se nepřihlásili, extrémní naléhavost, podezřelá doména odesílatele a nadměrná velká písmena.',
-      tip: 'E-mailové přílohy .html, které otevírají „formuláře", jsou běžným způsobem, jak vytvořit přesvědčivé falešné přihlašovací nebo platební stránky lokálně na vašem zařízení, čímž obcházejí webové filtry.',
+      explanation: 'Klasický podvod s výhrou a přílohou .html — po otevření se načte falešná stránka, která má ukrást vaše osobní a platební údaje. Varovné signály: výhra v soutěži, do které jste se nepřihlásili, extrémní tlak na čas, podezřelá doména odesílatele a spousta velkých písmen.',
+      tip: 'E-mailové přílohy .html, které otevírají „formuláře“, jsou běžný způsob, jak přesvědčivou falešnou přihlašovací nebo platební stránku načíst rovnou ve vašem zařízení a obejít tak webové filtry.',
     },
   ],
   popups: [
@@ -486,56 +487,56 @@ Odpovězte do 12 HODIN, jinak výhra propadne!
       browserUrl: 'https://free-movies-unlimited.pirate',
       appName: 'BEZPEČNOSTNÍ UPOZORNĚNÍ',
       icon: '🚨',
-      message: '⚠️ DETEKOVÁN VIRUS! Váš počítač je infikován 47 viry! Okamžitě zavolejte na 1-800-FIX-NOW, jinak bude váš systém trvale poškozen!',
-      subtext: 'Windows Defender detekoval kritické hrozby. Jednejte nyní!',
+      message: '⚠️ NALEZEN VIRUS! Váš počítač je nakažený 47 viry! Okamžitě volejte 1-800-FIX-NOW, jinak se váš systém trvale poškodí!',
+      subtext: 'Windows Defender zjistil kritické hrozby. Jednejte hned!',
       primaryBtnText: '📞 Zavolat a opravit',
       isThreat: true,
-      explanation: 'Toto je „scareware" — falešné upozornění na virus navržené k přimění k zavolání na podvodné telefonní číslo nebo instalaci falešného antivirového softwaru. Skutečné bezpečnostní nástroje nikdy nezobrazují upozornění ve vyskakovacích oknech webového prohlížeče.',
-      tip: 'Podezřelá vyskakovací okna prohlížeče zavírej pomocí tlačítka X. Nikdy nevolej na telefonní čísla zobrazená ve vyskakovacích oknech prohlížeče — to jsou vždy podvodné linky.',
+      explanation: 'Tohle je „scareware“ — falešné upozornění na virus, které vás má přimět zavolat na podvodné číslo nebo si nainstalovat falešný antivirus. Skutečné bezpečnostní nástroje upozornění ve vyskakovacím okně prohlížeče nikdy nezobrazují.',
+      tip: 'Podezřelá vyskakovací okna zavírejte křížkem. Na telefonní čísla z vyskakovacích oken nikdy nevolejte — vždycky jde o podvodné linky.',
     },
     {
       browserUrl: 'https://school-portal.edu',
       appName: 'Školní portál',
       icon: '🍪',
-      message: 'Tento web používá cookies k zapamatování vašeho přihlášení a zlepšení vašeho zážitku.',
-      subtext: 'Používáme pouze nezbytné cookies. Žádné osobní údaje nejsou sdíleny s třetími stranami.',
+      message: 'Tento web používá cookies, aby si zapamatoval vaše přihlášení a web se vám lépe používal.',
+      subtext: 'Používáme jen nezbytné cookies. Žádné osobní údaje nepředáváme třetím stranám.',
       primaryBtnText: '✓ Přijmout cookies',
       isThreat: false,
-      explanation: 'Legitimní oznámení o souhlasu s cookies ze školního portálu. Je transparentní ohledně používání cookies a nevyžaduje nic neobvyklého. Přijmutí nezbytných cookies na důvěryhodném webu je v pořádku.',
-      tip: 'Bannery se souhlasem s cookies na důvěryhodných, známých webech jsou v mnoha zemích vyžadovány zákonem a jsou zcela normální.',
+      explanation: 'Běžné oznámení o souhlasu s cookies ze školního portálu. Otevřeně říká, k čemu cookies slouží, a nechce nic neobvyklého. Přijmout nezbytné cookies na důvěryhodném webu je v pořádku.',
+      tip: 'Lišty se souhlasem s cookies na známých, důvěryhodných webech vyžaduje v mnoha zemích zákon a jsou úplně běžné.',
     },
     {
       browserUrl: 'https://gaming-news-blog.com',
       appName: 'Gratulujeme!!!',
       icon: '🎉',
-      message: 'JSTE 1 000 000. NÁVŠTĚVNÍK! Vyhráli jste BEZPLATNOU PlayStation 5! Klikněte níže a okamžitě si nárokujte výhru!',
-      subtext: '⏱️ Nabídka vyprší za: 00:59 — Nárokujte si ji dříve, než čas vyprší!',
-      primaryBtnText: '🎮 Nárokovat BEZPLATNOU PS5!',
+      message: 'JSTE 1 000 000. NÁVŠTĚVNÍK! Vyhráli jste PlayStation 5 ZDARMA! Klikněte níže a hned si výhru vyzvedněte!',
+      subtext: '⏱️ Nabídka vyprší za: 00:59 — vyzvedněte si ji, než vyprší čas!',
+      primaryBtnText: '🎮 Získat PS5 ZDARMA!',
       isThreat: true,
-      explanation: 'Falešné vyskakovací okno s výhrou — žádný web náhodně neuděluje návštěvníkům PlayStation 5. Kliknutí na tlačítko vede na podvodný web, který žádá o osobní informace nebo platbu. Odpočítávání je taktika nátlaku.',
-      tip: 'Odpočítávání ve vyskakovacích oknech existuje proto, aby tě zastavilo v přemýšlení. Skutečné výhry se nikdy nedistribuují prostřednictvím náhodných vyskakovacích oken prohlížeče.',
+      explanation: 'Falešné vyskakovací okno s výhrou — žádný web návštěvníkům náhodně nerozdává PlayStation 5. Kliknutí vede na podvodnou stránku, která chce osobní údaje nebo platbu. Odpočet je nátlaková taktika.',
+      tip: 'Odpočet ve vyskakovacím okně tam je proto, aby vám zabránil přemýšlet. Skutečné výhry se přes náhodná vyskakovací okna nikdy nerozdávají.',
     },
     {
       browserUrl: 'https://youtube.com',
       appName: 'YouTube',
       icon: '🔔',
-      message: 'Povolit YouTube zasílat upozornění na nová videa z kanálů, které odebíráš?',
-      subtext: 'Toto lze změnit později v nastavení prohlížeče.',
+      message: 'Povolit YouTube posílat upozornění na nová videa z kanálů, které odebíráte?',
+      subtext: 'Později to můžete změnit v nastavení prohlížeče.',
       primaryBtnText: 'Povolit oznámení',
       isThreat: false,
-      explanation: 'Ačkoli YouTube samotný je legitimní, blokování oznámení prohlížeče je bezpečnější a čistší výchozí nastavení — i u důvěryhodných webů. Jakmile jsou udělena, oprávnění k oznámením mohou být zneužita nebo se stát spamem.',
-      tip: 'Pečlivě zvažuj, než povolíš oznámení prohlížeče. Většina webů nepotřebuje toto oprávnění k řádnému fungování.',
+      explanation: 'I když je YouTube samo o sobě v pořádku, bezpečnější a čistší je oznámení v prohlížeči zakázat — i u důvěryhodných webů. Jednou udělené oprávnění k oznámením se dá zneužít nebo z něj může být spam.',
+      tip: 'Než povolíte oznámení v prohlížeči, dobře si to rozmyslete. Většina webů to oprávnění ke svému fungování nepotřebuje.',
     },
     {
       browserUrl: 'https://download-cracked-software.cc',
       appName: 'Správce stahování',
       icon: '⬇️',
-      message: 'Soubor připraven: „Adobe_Photoshop_FULL_CRACK_2024.exe" (87 MB). Naše AI ověřila tento soubor jako BEZPEČNÝ.',
-      subtext: 'Napájeno VirusSafe™ — prohledáno a schváleno. Kliknutím stáhni okamžitě.',
+      message: 'Soubor připraven: „Adobe_Photoshop_FULL_CRACK_2024.exe“ (87 MB). Naše AI soubor ověřila jako BEZPEČNÝ.',
+      subtext: 'Používá VirusSafe™ — zkontrolováno a schváleno. Klikněte a stáhněte ihned.',
       primaryBtnText: '✓ Stáhnout nyní',
       isThreat: true,
-      explanation: 'Několik varovných signálů: podezřelá doména „.cc", cracknutý (pirátský) software, který je téměř vždy v balíčku s malwarem, a falešný vlastnoručně prohlášený odznak „BEZPEČNÉ". Označení „VirusSafe™" je vymyšleno, aby tě zmanipulovalo.',
-      tip: 'Cracknutý nebo pirátský software téměř vždy obsahuje skrytý malware. Software stahuj pouze z oficiálního webu vydavatele.',
+      explanation: 'Hned několik varovných signálů: podezřelá doména „.cc“, cracknutý (pirátský) software, který skoro vždycky obsahuje malware, a falešný odznak „BEZPEČNÉ“, který si web udělil sám. Značka „VirusSafe™“ je vymyšlená, aby vámi zmanipulovala.',
+      tip: 'Cracknutý nebo pirátský software skoro vždycky obsahuje skrytý malware. Programy stahujte jen z oficiálního webu jejich vydavatele.',
     },
   ],
   permissions: [
@@ -548,106 +549,106 @@ Odpovězte do 12 HODIN, jinak výhra propadne!
         {
           icon: '📷',
           name: 'Fotoaparát',
-          reason: 'Pro aktivaci blesku LED',
+          reason: 'Pro rozsvícení LED blesku',
           suspicious: false
         },
         {
           icon: '📍',
           name: 'Přesná poloha (GPS)',
-          reason: 'Bez udaného důvodu',
+          reason: 'Důvod neuveden',
           suspicious: true
         },
         {
           icon: '📞',
           name: 'Čtení protokolu hovorů',
-          reason: 'Bez udaného důvodu',
+          reason: 'Důvod neuveden',
           suspicious: true
         },
         {
           icon: '💾',
           name: 'Přístup ke všem souborům',
-          reason: 'Bez udaného důvodu',
+          reason: 'Důvod neuveden',
           suspicious: true
         },
       ],
       isThreat: true,
-      explanation: 'Aplikace svítilny potřebuje pouze přístup k fotoaparátu pro LED. Poloha, protokoly hovorů a úplný přístup k souborům jsou zcela zbytečné — to jsou znaky spywaru, který tiše shromažďuje tvá data.',
-      tip: 'Vždy si polož otázku: „Proč tato aplikace potřebuje toto oprávnění?" Svítilna nemá žádné legitimní využití pro tvůj GPS nebo kontakty.',
+      explanation: 'Aplikace svítilny potřebuje k rozsvícení LED jen přístup k fotoaparátu. Poloha, protokoly hovorů a přístup ke všem souborům jsou úplně zbytečné — to jsou typické znaky spywaru, který tiše sbírá vaše data.',
+      tip: 'Vždycky se ptejte: „Proč tahle aplikace potřebuje tohle oprávnění?“ Svítilna nemá k vaší GPS ani kontaktům jediný rozumný důvod.',
     },
     {
       appIcon: '📷',
       appName: 'School Photo Editor',
       source: 'Vydavatel: Creative Tools Ltd · ⭐ 4,7 · 2M+ stažení',
-      description: 'Úprava a vylepšení fotografií pro školní projekty.',
+      description: 'Úprava a vylepšování fotek na školní projekty.',
       permissions: [
         {
           icon: '📷',
           name: 'Fotoaparát',
-          reason: 'Pro pořizování nových fotografií k úpravě',
+          reason: 'Na pořizování nových fotek k úpravě',
           suspicious: false
         },
         {
           icon: '🖼️',
           name: 'Přístup k fotografiím',
-          reason: 'Pro otevření stávajících fotografií',
+          reason: 'Na otevření vašich stávajících fotek',
           suspicious: false
         },
         {
           icon: '💾',
           name: 'Uložit do úložiště',
-          reason: 'Pro uložení upravených fotografií',
+          reason: 'Na uložení upravených fotek',
           suspicious: false
         },
       ],
       isThreat: false,
-      explanation: 'Všechna tři oprávnění mají jasné, logické důvody přímo související s úpravou fotografií. Přístup k fotoaparátu, přístup ke knihovně fotografií a ukládání souborů jsou přesně to, co editor fotografií potřebuje — nic víc.',
-      tip: 'Když každé požadované oprávnění má jasný účel spojený s hlavní funkcí aplikace, je to znak poctivého, dobře navrženého softwaru.',
+      explanation: 'Všechna tři oprávnění mají jasný, logický důvod přímo spojený s úpravou fotek. Přístup k fotoaparátu, ke knihovně fotek a ukládání souborů je přesně to, co editor fotek potřebuje — nic víc.',
+      tip: 'Když má každé požadované oprávnění jasný účel spojený s hlavní funkcí aplikace, je to znak poctivého a dobře navrženého programu.',
     },
     {
       appIcon: '🎮',
       appName: 'SuperRun Adventure',
       source: 'Vydavatel: FastGame Studio · ⭐ 4,1 · 800 tisíc stažení',
-      description: 'Rychlá plošinová hra s bočním pohledem.',
+      description: 'Rychlá plošinovka s bočním pohledem.',
       permissions: [
         {
           icon: '🔊',
           name: 'Přehrávání zvuku',
-          reason: 'Pro zvukové efekty ve hře',
+          reason: 'Na zvukové efekty ve hře',
           suspicious: false
         },
         {
           icon: '📳',
           name: 'Vibrace',
-          reason: 'Pro haptickou zpětnou vazbu při hraní',
+          reason: 'Na vibrace při hraní',
           suspicious: false
         },
         {
           icon: '📍',
           name: 'Přesná poloha GPS',
-          reason: 'Bez udaného důvodu',
+          reason: 'Důvod neuveden',
           suspicious: true
         },
         {
           icon: '📱',
           name: 'Čtení ID zařízení a informací',
-          reason: 'Bez udaného důvodu',
+          reason: 'Důvod neuveden',
           suspicious: true
         },
       ],
       isThreat: true,
-      explanation: 'Zvuk a vibrace jsou normální pro hru. Ale GPS a ID zařízení nemají žádné legitimní využití v plošinovce — používají se k sledování a identifikaci tebe pro reklamní datové makléře nebo k vytvoření profilu.',
-      tip: 'I aplikace s dobrým hodnocením mohou požadovat zbytečná oprávnění. Vždy odmítni oprávnění, která nemají jasnou vazbu na účel aplikace.',
+      explanation: 'Zvuk a vibrace jsou u hry normální. GPS a ID zařízení ale v plošinovce žádný rozumný důvod nemají — slouží k tomu, aby vás sledovaly a identifikovaly pro reklamní překupníky dat nebo si o vás vytvořily profil.',
+      tip: 'I aplikace s dobrým hodnocením můžou chtít zbytečná oprávnění. Oprávnění, která s účelem aplikace jasně nesouvisí, vždycky odmítněte.',
     },
     {
       appIcon: '📚',
       appName: 'CsHub Learning',
       source: 'Vydavatel: CsHub Education · ⭐ 4,9 · 50 tisíc stažení',
-      description: 'Interaktivní výuka kybernetické bezpečnosti pro studenty.',
+      description: 'Interaktivní výuka kyberbezpečnosti pro žáky.',
       permissions: [
         {
           icon: '🌐',
           name: 'Přístup k internetu',
-          reason: 'Pro načítání lekcí a kvízů',
+          reason: 'Na načítání lekcí a kvízů',
           suspicious: false
         },
         {
