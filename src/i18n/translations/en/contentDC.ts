@@ -12,7 +12,7 @@ export const contentDC = {
   objectives: [
     'To stress the importance of digital citizenship.',
     'To introduce the concept of digital citizenship and its principles of rights, responsibilities and respect in digital environments.',
-    'To develop understanding of how to apply these principles of rights, responsibilities and respect in digital environments - to be safe, savvy, and social.',
+    'To develop understanding of how to apply these principles of rights, responsibilities and respect in digital environments – to be safe, savvy, and social.',
   ],
   outcomes: [
     'I can explain what digital citizenship is and why it is important.',
@@ -42,7 +42,7 @@ export const contentDC = {
             title: 'What is a Digital Environment?',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },
@@ -96,7 +96,7 @@ export const contentDC = {
             title: 'Rights, Respect and Responsibilities in Digital Environments',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },
@@ -149,7 +149,7 @@ export const contentDC = {
             title: 'Privacy Settings',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },
@@ -187,7 +187,7 @@ export const contentDC = {
             title: 'Understanding How to Develop Resilience',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },
@@ -252,7 +252,7 @@ export const contentDC = {
             title: 'Curating a Positive Digital Footprint',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },

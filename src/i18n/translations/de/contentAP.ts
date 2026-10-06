@@ -9,8 +9,8 @@
 export const contentAP = {
   aim: 'Einen Überblick über die Angreiferperspektive zu geben, indem Lernenden geholfen wird, Angreifertechniken zu erkennen und die Motive hinter Cyberangriffen zu verstehen.',
   objectives: [
-    'Das Verständnis der Schülerinnen und Schüler für Angreifermotivationen zu entwickeln, einschließlich psychologischer, sozialer und wirtschaftlicher Faktoren.',
-    'Die Fähigkeiten der Schülerinnen und Schüler im Erkennen gängiger Angreifertechniken aufzubauen.',
+    'Das Verständnis für die Motive von Angreifern zu entwickeln, einschließlich psychologischer, sozialer und wirtschaftlicher Faktoren.',
+    'Fähigkeiten im Erkennen gängiger Angreifertechniken aufzubauen.',
   ],
   outcomes: [
     'Ich verstehe die Motive von Angreifern und kann Beispiele zu psychologischen, sozialen und wirtschaftlichen Faktoren nennen.',
@@ -62,7 +62,7 @@ export const contentAP = {
             title: 'Den Kreis der Vertrauenspersonen definieren',
           },
           {
-            title: 'Plenarsitzung: Zusammenfassung und informelle Beurteilung',
+            title: 'Plenarsitzung – Zusammenfassung und informelle Beurteilung',
           },
         ],
       },
@@ -121,7 +121,7 @@ export const contentAP = {
             title: 'Die Motivation des Angreifers verstehen',
           },
           {
-            title: 'Plenarsitzung: Zusammenfassung und informelle Beurteilung',
+            title: 'Plenarsitzung – Zusammenfassung und informelle Beurteilung',
           },
         ],
       },
@@ -203,7 +203,7 @@ export const contentAP = {
             title: 'Angriffspfade verstehen',
           },
           {
-            title: 'Plenarsitzung: Zusammenfassung und informelle Beurteilung',
+            title: 'Plenarsitzung – Zusammenfassung und informelle Beurteilung',
           },
         ],
       },

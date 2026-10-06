@@ -124,6 +124,10 @@ const currentLocale = getCurrentLocale(Astro.currentLocale)
         min-block-size: 100dvh;
         display: grid;
         grid-template-rows: auto 1fr auto;
+        /* minmax(0, …) stops wide content (e.g. the non-wrapping Aim / Objectives /
+           Outcomes tab bar, which scrolls on its own) from stretching the whole
+           page beyond the viewport on phones. */
+        grid-template-columns: minmax(0, 1fr);
         overflow-x: clip;
         background-color: var(--background-color);
       }

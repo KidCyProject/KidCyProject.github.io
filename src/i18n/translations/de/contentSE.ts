@@ -7,16 +7,18 @@
 // ---------------------------------------------------------------------------
 
 export const contentSE = {
-  aim: 'Den Lernenden helfen, Manipulationstaktiken zu erkennen, vor dem Handeln innezuhalten und sicherere Reaktionen zu wählen, wenn jemand Druck, Dringlichkeit oder falsches Vertrauen einsetzt.',
+  aim: 'Grundlegende Kenntnisse darüber zu vermitteln, was Social Engineering ist, mit Schwerpunkt auf den damit verbundenen Risiken und den Prinzipien zum Schutz davor.',
   objectives: [
-    'Erklären, wie Manipulation online und persönlich vorkommen kann.',
-    'Häufige Taktiken wie Dringlichkeit, Schmeichelei oder Autorität identifizieren.',
-    'Sichere Reaktionen und hilfesuchendes Verhalten üben.',
+    'Das Konzept des Social Engineering einzuführen, mit Fokus auf die Ziele von Angreifern.',
+    'Verschiedene Formen des Social Engineering und die Situationen zu erklären, in denen sie auftreten können.',
+    'Fähigkeiten zu entwickeln, Social-Engineering-Techniken zu erkennen und sich davor zu schützen.',
   ],
   outcomes: [
-    'Drucktaktiken in Nachrichten oder Chats erkennen.',
-    'Eine Innehalten-und-prüfen-Routine anwenden, bevor man handelt.',
-    'Wissen, wann und wie man verdächtiges Verhalten meldet.',
+    'Ich kann beschreiben, was Social Engineering ist und welche Arten es gibt.',
+    'Ich kann erklären, warum Angreifer Social Engineering einsetzen.',
+    'Ich kann Beispiele für Situationen nennen, in denen Social-Engineering-Angriffe wahrscheinlich vorkommen.',
+    'Ich kann Social-Engineering-Angriffe in gegebenen Szenarien erkennen.',
+    'Ich kann in gegebenen Szenarien demonstrieren, wie man sich vor Social Engineering schützt, und begründen, warum ich diese Entscheidungen getroffen habe.',
   ],
   parts: [
     {
@@ -64,7 +66,7 @@ export const contentSE = {
         ],
         activityPlan: [
           {
-            title: 'Einführung: Einfluss und Überzeugung im Alltag',
+            title: 'Einführung',
           },
           {
             title: 'Einführung des Konzepts Social Engineering',
@@ -73,10 +75,7 @@ export const contentSE = {
             title: 'Was wollen Angreifer?',
           },
           {
-            title: 'Social Engineering online und offline',
-          },
-          {
-            title: 'Plenarsitzung: Zusammenfassung und informelle Beurteilung',
+            title: 'Plenarsitzung – Zusammenfassung und informelle Beurteilung',
           },
         ],
       },
@@ -128,19 +127,16 @@ export const contentSE = {
         ],
         activityPlan: [
           {
-            title: 'Einführung: Menschen vs. Systeme',
-          },
-          {
-            title: 'Emotionen, die Angreifer nutzen',
+            title: 'Einführung',
           },
           {
             title: 'Wie ein Angreifer denken',
           },
           {
-            title: 'Alltägliche Kontexte, in denen Social Engineering funktioniert',
+            title: 'Alltagssituationen, in denen Social Engineering vorkommen kann',
           },
           {
-            title: 'Plenarsitzung: Zusammenfassung und informelle Beurteilung',
+            title: 'Plenarsitzung – Zusammenfassung und informelle Beurteilung',
           },
         ],
       },
@@ -162,19 +158,16 @@ export const contentSE = {
         ],
         activityPlan: [
           {
-            title: 'Einführung: Wo kann Social Engineering passieren?',
-          },
-          {
-            title: 'Häufige Warnsignale',
+            title: 'Einführung',
           },
           {
             title: 'Arten von Social Engineering',
           },
           {
-            title: 'Erkennen üben',
+            title: 'Social Engineering erkennen üben',
           },
           {
-            title: 'Plenarsitzung: Zusammenfassung und informelle Beurteilung',
+            title: 'Plenarsitzung – Zusammenfassung und informelle Beurteilung',
           },
         ],
       },
@@ -240,7 +233,7 @@ export const contentSE = {
         ],
         activityPlan: [
           {
-            title: 'Einführung: Von der Erkennung zur Reaktion',
+            title: 'Einführung',
           },
           {
             title: 'Ein einfaches Modell für sichere Entscheidungen',
@@ -249,10 +242,10 @@ export const contentSE = {
             title: 'Sichere Reaktionen üben',
           },
           {
-            title: 'Andere schützen',
+            title: 'Andere schützen und als verantwortungsvolle Bürger handeln',
           },
           {
-            title: 'Plenarsitzung: Zusammenfassung und informelle Beurteilung',
+            title: 'Plenarsitzung – Zusammenfassung und informelle Beurteilung',
           },
         ],
       },

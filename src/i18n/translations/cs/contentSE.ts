@@ -8,22 +8,22 @@
 
 export const contentSE = {
   aim:
-    'Poskytnout základní znalosti o tom, co je sociální inženýrství, s důrazem na rizika, která přináší, a na zásady ochrany před ním.',
+    'Poskytnout základní znalosti o tom, co je sociální inženýrství, s důrazem na rizika, která přináší, a na zásady ochrany před ním.',
   objectives: [
     'Představit pojem sociální inženýrství se zaměřením na cíle útočníků.',
-    'Vysvětlit různé podoby sociálního inženýrství a situace, ve kterých se můžou objevit.',
-    'Rozvinout dovednost rozpoznávat techniky sociálního inženýrství a způsoby ochrany před nimi.',
+    'Vysvětlit různé podoby sociálního inženýrství a situace, ve kterých se můžou objevit.',
+    'Rozvinout dovednost rozpoznávat techniky sociálního inženýrství a způsoby ochrany před nimi.',
   ],
   outcomes: [
-    'Umím popsat, co je sociální inženýrství a jaké jsou jeho typy.',
+    'Umím popsat, co je sociální inženýrství a jaké jsou jeho typy.',
     'Umím vysvětlit, proč útočníci sociální inženýrství používají.',
-    'Umím uvést příklady situací, ve kterých k útokům sociálního inženýrství pravděpodobně dojde.',
-    'Umím v zadaných situacích rozpoznat útoky pomocí sociálního inženýrství.',
-    'Umím v zadaných situacích předvést způsoby ochrany před sociálním inženýrstvím a zdůvodnit svoje rozhodnutí.',
+    'Umím uvést příklady situací, ve kterých k útokům sociálního inženýrství pravděpodobně dojde.',
+    'Umím v zadaných situacích rozpoznat útoky pomocí sociálního inženýrství.',
+    'Umím v zadaných situacích předvést způsoby ochrany před sociálním inženýrstvím a zdůvodnit svoje rozhodnutí.',
   ],
   parts: [
     {
-      goal: 'Pomoct žákům pochopit, co je sociální inženýrství: nejdřív rozpoznat, jak se dá člověk ovlivnit nebo zmanipulovat v běžných situacích, a potom to propojit s digitálním prostředím a s jednáním útočníků.',
+      goal: 'Pomoct žákům pochopit, co je sociální inženýrství: nejdřív rozpoznat, jak se dá člověk ovlivnit nebo zmanipulovat v běžných situacích, a potom to propojit s digitálním prostředím a s jednáním útočníků.',
       bundle: {
         filename: 'Sociální inženýrství - balíček - Část 1',
       },
@@ -38,9 +38,9 @@ export const contentSE = {
           },
           {
             // ID: 5.1.3
-            kind: 'Obrázek',
+            kind: 'Obrázky',
             name: 'Cíle útočníka',
-            filename: 'Obrázek - Cíle útočníka',
+            filename: 'Obrázky - Cíle útočníka',
             ariaLabel: 'Stáhnout materiál',
           },
           {
@@ -52,7 +52,7 @@ export const contentSE = {
           },
           {
             // ID: 5.1.5
-            kind: 'Kartičky s řešením',
+            kind: 'Kartičky s řešením',
             name: 'Co útočník chce?',
             filename: 'Kartičky s řešením - Co útočník chce',
             ariaLabel: 'Stáhnout materiál',
@@ -67,7 +67,7 @@ export const contentSE = {
         ],
         activityPlan: [
           {
-            title: 'Úvod: ovlivňování a přesvědčování v běžném životě',
+            title: 'Úvod',
           },
           {
             title: 'Představení pojmu sociální inženýrství',
@@ -76,7 +76,7 @@ export const contentSE = {
             title: 'Co útočníci chtějí?',
           },
           {
-            title: 'Závěr: shrnutí a neformální hodnocení',
+            title: 'Závěr – shrnutí a neformální hodnocení',
           },
         ],
       },
@@ -84,7 +84,7 @@ export const contentSE = {
         // ID: 5.1.1
         title: 'Co je sociální inženýrství?',
         supportText:
-          'Použijte video k představení sociálního inženýrství jako techniky, která zneužívá lidskou důvěru, ne technické systémy. Zastavte se a zeptejte se žáků, jestli si vzpomenou na situaci, kdy je někdo online zkoušel napálit.',
+          'Použijte video k představení sociálního inženýrství jako techniky, která zneužívá lidskou důvěru, ne technické systémy. Zastavte se a zeptejte se žáků, jestli si vzpomenou na situaci, kdy je někdo online zkoušel napálit.',
         downloads: {
           video: {
             filename: 'Co je sociální inženýrství',
@@ -98,7 +98,7 @@ export const contentSE = {
       },
     },
     {
-      goal: 'Pomoct žákům pochopit, proč útočníci sociální inženýrství používají: prozkoumat psychologické a citové páky, které lidi činí zranitelnými, a nacvičit si kritické myšlení ve chvíli, kdy na ně někdo tlačí.',
+      goal: 'Pomoct žákům pochopit, proč útočníci sociální inženýrství používají: prozkoumat psychologické a citové páky, které lidi činí zranitelnými, a nacvičit si kritické myšlení ve chvíli, kdy na ně někdo tlačí.',
       bundle: {
         filename: 'Sociální inženýrství - balíček - Část 2',
       },
@@ -128,22 +128,22 @@ export const contentSE = {
         ],
         activityPlan: [
           {
-            title: 'Úvod: lidé versus systémy',
+            title: 'Úvod',
           },
           {
             title: 'Myslet jako útočník',
           },
           {
-            title: 'Běžné situace, kdy k sociálnímu inženýrství může dojít',
+            title: 'Běžné situace, kdy k sociálnímu inženýrství může dojít',
           },
           {
-            title: 'Závěr: shrnutí a neformální hodnocení',
+            title: 'Závěr – shrnutí a neformální hodnocení',
           },
         ],
       },
     },
     {
-      goal: 'Pomoct žákům rozpoznat pokusy o sociální inženýrství – naučit je všímat si běžných varovných signálů a chápat, v jakých situacích k těmto útokům může dojít, online i offline.',
+      goal: 'Pomoct žákům rozpoznat pokusy o sociální inženýrství – naučit je všímat si běžných varovných signálů a chápat, v jakých situacích k těmto útokům může dojít, online i offline.',
       bundle: {
         filename: 'Sociální inženýrství - balíček - Část 3',
       },
@@ -152,14 +152,14 @@ export const contentSE = {
           {
             // ID: 5.3.2
             kind: 'Pracovní list',
-            name: 'Spojovačka',
-            filename: 'Pracovní list - Spojovačka',
+            name: 'Sociální inženýrství: Spojovačka',
+            filename: 'Pracovní list - Sociální inženýrství - Spojovačka',
             ariaLabel: 'Stáhnout materiál',
           },
         ],
         activityPlan: [
           {
-            title: 'Úvod: kde k sociálnímu inženýrství může dojít?',
+            title: 'Úvod',
           },
           {
             title: 'Typy sociálního inženýrství',
@@ -168,7 +168,7 @@ export const contentSE = {
             title: 'Nácvik rozpoznávání sociálního inženýrství',
           },
           {
-            title: 'Závěr: shrnutí a neformální hodnocení',
+            title: 'Závěr – shrnutí a neformální hodnocení',
           },
         ],
       },
@@ -176,7 +176,7 @@ export const contentSE = {
         // ID: 5.3.1
         title: 'Typy sociálního inženýrství',
         supportText:
-          'Použijte video, aby žáci rozpoznali různé podoby sociálního inženýrství – od phishingových e-mailů po vydávání se za někoho po telefonu. Zastavte se a proberte, který typ by se podle nich odhaloval nejhůř a proč.',
+          'Použijte video, aby žáci rozpoznali různé podoby sociálního inženýrství – od phishingových e-mailů po vydávání se za někoho po telefonu. Zastavte se a proberte, který typ by se podle nich odhaloval nejhůř a proč.',
         downloads: {
           video: {
             filename: 'Typy sociálního inženýrství',
@@ -190,7 +190,7 @@ export const contentSE = {
       },
     },
     {
-      goal: 'Pomoct žákům nacvičit si ověřování informací a volbu bezpečných reakcí a povzbudit je, aby při setkání se sociálním inženýrstvím podpořili i druhé.',
+      goal: 'Pomoct žákům nacvičit si ověřování informací a volbu bezpečných reakcí a povzbudit je, aby při setkání se sociálním inženýrstvím podpořili i druhé.',
       bundle: {
         filename: 'Sociální inženýrství - balíček - Část 4',
       },
@@ -227,14 +227,14 @@ export const contentSE = {
           {
             // ID: 5.4.5
             kind: 'Pracovní list',
-            name: 'Jak chráním sebe i druhé',
+            name: 'Jak chráním sebe i druhé',
             filename: 'Pracovní list - Jak chráním sebe i druhé',
             ariaLabel: 'Stáhnout materiál',
           },
         ],
         activityPlan: [
           {
-            title: 'Úvod: od rozpoznání k reakci',
+            title: 'Úvod',
           },
           {
             title: 'Jednoduchý model pro bezpečné rozhodování',
@@ -243,10 +243,10 @@ export const contentSE = {
             title: 'Nácvik bezpečných reakcí',
           },
           {
-            title: 'Ochrana druhých',
+            title: 'Ochrana druhých a odpovědné občanství',
           },
           {
-            title: 'Závěr: shrnutí a neformální hodnocení',
+            title: 'Závěr – shrnutí a neformální hodnocení',
           },
         ],
       },
@@ -293,14 +293,14 @@ export const contentSE = {
 }
 
 export const challengeSE = {
-  title: 'Spisy o phishingu',
-  subtitle: 'Staňte se detektivem zpráv! Poznáte podvody a phishingové triky? Přečtěte si každou zprávu a rozhodněte: Důvěřovat, nebo Ignorovat / Nahlásit.',
+  title: 'Spisy o phishingu',
+  subtitle: 'Staňte se detektivem zpráv! Poznáte podvody a phishingové triky? Přečtěte si každou zprávu a rozhodněte: Důvěřovat, nebo Ignorovat / Nahlásit.',
   howItWorks: 'Jak to funguje',
-  instruction: 'Přečtěte si každý spis se zprávou a rozhodněte, jestli je důvěryhodná, nebo jestli ji ignorovat a nahlásit. Všímejte si tlaku na čas, podezřelých odkazů a žádostí o soukromé údaje.',
-  tip: 'Když si u nějaké zprávy nejste jistí, podívejte se do Zápisků detektiva, kde najdete tipy, jak podvod poznat.',
+  instruction: 'Přečtěte si každý spis se zprávou a rozhodněte, jestli je důvěryhodná, nebo jestli ji ignorovat a nahlásit. Všímejte si tlaku na čas, podezřelých odkazů a žádostí o soukromé údaje.',
+  tip: 'Když si u nějaké zprávy nejste jistí, podívejte se do Zápisků detektiva, kde najdete tipy, jak podvod poznat.',
   tipLabel: 'Tip',
   startTitle: 'Vítejte, detektive!',
-  startDescription: 'Čeká vás 14 podezřelých zpráv. Vaším úkolem je u každé rozhodnout, jestli je důvěryhodná, nebo jestli ji ignorovat a nahlásit. Hodně štěstí!',
+  startDescription: 'Čeká vás 14 podezřelých zpráv. Vaším úkolem je u každé rozhodnout, jestli je důvěryhodná, nebo jestli ji ignorovat a nahlásit. Hodně štěstí!',
   startButton: 'Zahájit vyšetřování',
   caseProgress: 'Průběh vyšetřování',
   trustButton: '👍 Důvěřovat',
@@ -311,16 +311,16 @@ export const challengeSE = {
   casesIdentified: 'ze 14 případů určeno správně',
   detectiveRankLabel: 'Hodnost detektiva',
   defaultRank: 'Detektiv začátečník',
-  defaultRankMessage: 'Trénujte dál a posuňte se výš!',
+  defaultRankMessage: 'Trénujte dál a posuňte se výš!',
   performanceSummary: 'Přehled výkonu',
   playAgain: 'Hrát znovu',
   detectiveNotes: 'Zápisky detektiva',
-  detectiveTipsTitle: 'Tipy, jak zůstat online v bezpečí',
+  detectiveTipsTitle: 'Tipy, jak zůstat online v bezpečí',
   redFlags: [
-    '🚩 Žádá o hesla',
+    '🚩 Žádá o hesla',
     '🚩 Falešné e-mailové adresy',
     '🚩 Výhry, které znějí až moc dobře',
-    '🚩 Tlak na čas a výhrůžky',
+    '🚩 Tlak na čas a výhrůžky',
     '🚩 Podezřelé stahování',
     '🚩 Citová manipulace',
   ],
@@ -331,11 +331,11 @@ export const challengeSE = {
   subjectLabel: 'Předmět',
   messageLabel: 'Zpráva',
   rankRookie: '🥉 Detektiv začátečník',
-  rankRookieMsg: 'S vyšetřováním teprve začínáte. Trénujte dál a naučíte se varovné signály poznat!',
+  rankRookieMsg: 'S vyšetřováním teprve začínáte. Trénujte dál a naučíte se varovné signály poznat!',
   rankJunior: '🥈 Detektiv junior',
-  rankJuniorMsg: 'V rozpoznávání podezřelých zpráv se lepšíte. Dobrá práce!',
+  rankJuniorMsg: 'V rozpoznávání podezřelých zpráv se lepšíte. Dobrá práce!',
   rankSenior: '🥇 Detektiv senior',
-  rankSeniorMsg: 'V odhalování phishingu a podvodů jste skvělí. Pěkná práce!',
+  rankSeniorMsg: 'V odhalování phishingu a podvodů jste skvělí. Pěkná práce!',
   rankMaster: '👑 Mistr detektiv',
   rankMasterMsg: 'Jste expert na phishing! Zachytili jste skoro všechny triky. Vynikající!',
   correctLabel: 'Správně',
@@ -346,10 +346,10 @@ export const challengeSE = {
       type: 'email',
       from: 'Prize Center <winner@free-prizes.net>',
       subject: 'Vyhráli jste 25 000 Kč!',
-      message: 'Gratulujeme! Byli jste vybráni jako náš šťastný výherce! Klikněte sem a vyzvedněte si výhru 25 000 Kč. Stačí zadat bankovní údaje vašich rodičů.',
+      message: 'Gratulujeme! Byli jste vybráni jako náš šťastný výherce! Klikněte sem a vyzvedněte si výhru 25 000 Kč. Stačí zadat bankovní údaje vašich rodičů.',
       correct: 'ignore-report',
-      explanation: 'Klasický podvod! Skutečné výhry po vás bankovní údaje nechtějí. I e-mailová adresa vypadá falešně.',
-      tactic: 'Lákadlo a tlak na čas',
+      explanation: 'Klasický podvod! Skutečné výhry po vás bankovní údaje nechtějí. I e-mailová adresa vypadá falešně.',
+      tactic: 'Lákadlo a tlak na čas',
     },
     {
       id: 2,
@@ -357,7 +357,7 @@ export const challengeSE = {
       from: 'BestFriend_2024',
       message: 'Hele! Mrkni na tuhle super stránku, co jsem našel: www.free-vbucks-4real.com — dají se tam získat V-Bucks zadarmo!',
       correct: 'ignore-report',
-      explanation: 'I když to vypadá, že je to od kamaráda, jeho účet mohl někdo napadnout. Stránky s V-Bucks zdarma jsou vždycky podvod.',
+      explanation: 'I když to vypadá, že je to od kamaráda, jeho účet mohl někdo napadnout. Stránky s V-Bucks zdarma jsou vždycky podvod.',
       tactic: 'Zneužití důvěry',
     },
     {
@@ -365,16 +365,16 @@ export const challengeSE = {
       type: 'email',
       from: 'School Admin <admin@your-school.edu>',
       subject: 'Připomínka domácího úkolu',
-      message: 'Jen připomínám, že váš projekt z přírodovědy máte odevzdat příští pátek. Podrobnosti najdete na třídním portálu.',
+      message: 'Jen připomínám, že váš projekt z přírodovědy máte odevzdat příští pátek. Podrobnosti najdete na třídním portálu.',
       correct: 'trust',
-      explanation: 'Běžný školní e-mail. Přišel ze skutečné školní domény, nechce osobní údaje a neobsahuje podezřelé odkazy.',
-      tactic: 'Žádný — je v pořádku',
+      explanation: 'Běžný školní e-mail. Přišel ze skutečné školní domény, nechce osobní údaje a neobsahuje podezřelé odkazy.',
+      tactic: 'Žádný — je v pořádku',
     },
     {
       id: 4,
       type: 'chat',
       from: 'CoolGamer99',
-      message: 'Jsem herní vývojář! Pošli mi svoje přihlašovací údaje a přidám ti na účet 1 000 mincí zdarma!',
+      message: 'Jsem herní vývojář! Pošli mi svoje přihlašovací údaje a přidám ti na účet 1 000 mincí zdarma!',
       correct: 'ignore-report',
       explanation: 'Skuteční herní vývojáři vaše heslo nikdy nechtějí. Tenhle člověk se vám snaží ukrást účet!',
       tactic: 'Vydávání se za autoritu',
@@ -386,8 +386,8 @@ export const challengeSE = {
       subject: 'NALÉHAVÉ: Váš účet bude smazán!',
       message: 'Váš účet bude do 24 hodin trvale smazán, pokud si HNED neověříte heslo!',
       correct: 'ignore-report',
-      explanation: 'Všimněte si falešné domény „g00gle“ (s nulami). Skutečné firmy vám smazáním účtu e-mailem nevyhrožují a hesla po vás nechtějí.',
-      tactic: 'Strach a tlak na čas',
+      explanation: 'Všimněte si falešné domény „g00gle“ (s nulami). Skutečné firmy vám smazáním účtu e-mailem nevyhrožují a hesla po vás nechtějí.',
+      tactic: 'Strach a tlak na čas',
     },
     {
       id: 6,
@@ -395,15 +395,15 @@ export const challengeSE = {
       from: 'Máma 💕',
       message: 'Ahoj miláčku, můžeš cestou domů koupit mléko? Mám tě ráda!',
       correct: 'trust',
-      explanation: 'Běžná zpráva od někoho z rodiny. Žádné podezřelé odkazy ani žádosti o osobní údaje.',
-      tactic: 'Žádný — je v pořádku',
+      explanation: 'Běžná zpráva od někoho z rodiny. Žádné podezřelé odkazy ani žádosti o osobní údaje.',
+      tactic: 'Žádný — je v pořádku',
     },
     {
       id: 7,
       type: 'email',
       from: 'Charity Helper <donate@kids-help-now.org>',
-      subject: 'Pomozte dětem v nouzi!',
-      message: 'Přispějte hned! Děti trpí! Pošlete číslo kreditní karty svých rodičů a pomozte okamžitě!',
+      subject: 'Pomozte dětem v nouzi!',
+      message: 'Přispějte hned! Děti trpí! Pošlete číslo kreditní karty svých rodičů a pomozte okamžitě!',
       correct: 'ignore-report',
       explanation: 'Skutečné charity čísla karet e-mailem nikdy nechtějí. Tohle na vás zkouší emoce.',
       tactic: 'Citová manipulace',
@@ -412,7 +412,7 @@ export const challengeSE = {
       id: 8,
       type: 'chat',
       from: 'Neznámý uživatel',
-      message: 'Ahoj! Jsem u vás ve škole nový. Jakou máte adresu, abych se mohl zastavit?',
+      message: 'Ahoj! Jsem u vás ve škole nový. Jakou máte adresu, abych se mohl zastavit?',
       correct: 'ignore-report',
       explanation: 'Adresu cizím lidem online nikdy neprozrazujte, ani když tvrdí, že vás znají. Skutečný nový spolužák by se zeptal ve škole.',
       tactic: 'Pretexting',
@@ -422,28 +422,28 @@ export const challengeSE = {
       type: 'email',
       from: 'Cloud Drive Alerts <alerts@cloud-drive-help.com>',
       subject: 'Sdílený dokument je uzamčený',
-      message: 'Někdo se pokusil otevřít váš soubor. Hned si ověřte přihlášení, ať si udržíte přístup ke svým dokumentům v cloudu.',
+      message: 'Někdo se pokusil otevřít váš soubor. Hned si ověřte přihlášení, ať si udržíte přístup ke svým dokumentům v cloudu.',
       correct: 'ignore-report',
-      explanation: 'Tahle zpráva vyvolává paniku a tlačí vás k přihlášení přes podezřelý odkaz. Místo toho si otevřete rovnou tu pravou aplikaci.',
-      tactic: 'Strach a tlak na čas',
+      explanation: 'Tahle zpráva vyvolává paniku a tlačí vás k přihlášení přes podezřelý odkaz. Místo toho si otevřete rovnou tu pravou aplikaci.',
+      tactic: 'Strach a tlak na čas',
     },
     {
       id: 10,
       type: 'chat',
       from: 'Školní kancelář',
-      message: 'Připomínka: zítra se škola zavírá už ve 13:00 kvůli školení zaměstnanců. Oznámení najdete v rodičovském portálu.',
+      message: 'Připomínka: zítra se škola zavírá už ve 13:00 kvůli školení zaměstnanců. Oznámení najdete v rodičovském portálu.',
       correct: 'trust',
-      explanation: 'Běžná zpráva ze školy — nechce hesla, peníze ani soukromé údaje o účtu.',
-      tactic: 'Žádný — je v pořádku',
+      explanation: 'Běžná zpráva ze školy — nechce hesla, peníze ani soukromé údaje o účtu.',
+      tactic: 'Žádný — je v pořádku',
     },
     {
       id: 11,
       type: 'email',
       from: 'App Store Security <security@app-store-verify.net>',
-      subject: 'Problém s platbou: potvrďte kartu hned',
-      message: 'Váš poslední nákup se nezdařil. Do 10 minut potvrďte celé číslo karty a CVV, jinak vám pozastavíme účet.',
+      subject: 'Problém s platbou: potvrďte kartu hned',
+      message: 'Váš poslední nákup se nezdařil. Do 10 minut potvrďte celé číslo karty a CVV, jinak vám pozastavíme účet.',
       correct: 'ignore-report',
-      explanation: 'Skutečné obchody s aplikacemi po vás celé číslo karty ani CVV e-mailem nikdy nechtějí. Tlak na čas je běžný trik podvodníků.',
+      explanation: 'Skutečné obchody s aplikacemi po vás celé číslo karty ani CVV e-mailem nikdy nechtějí. Tlak na čas je běžný trik podvodníků.',
       tactic: 'Krádež peněz',
     },
     {
@@ -451,29 +451,29 @@ export const challengeSE = {
       type: 'email',
       from: 'School Library <library@your-school.edu>',
       subject: 'Zítra schůzka čtenářského kroužku',
-      message: 'Připomínka: Čtenářský kroužek se schází zítra o polední přestávce v učebně 12. Pokud můžete, vezměte si rozečtenou knihu.',
+      message: 'Připomínka: Čtenářský kroužek se schází zítra o polední přestávce v učebně 12. Pokud můžete, vezměte si rozečtenou knihu.',
       correct: 'trust',
-      explanation: 'Běžná školní připomínka z důvěryhodné domény, bez žádosti o hesla nebo soukromé údaje k účtu.',
-      tactic: 'Žádný — je v pořádku',
+      explanation: 'Běžná školní připomínka z důvěryhodné domény, bez žádosti o hesla nebo soukromé údaje k účtu.',
+      tactic: 'Žádný — je v pořádku',
     },
     {
       id: 13,
       type: 'chat',
       from: 'Coach Rivera',
-      message: 'Trénink dneska kvůli počasí začíná o 15 minut později. Vezměte si láhev na pití.',
+      message: 'Trénink dneska kvůli počasí začíná o 15 minut později. Vezměte si láhev na pití.',
       correct: 'trust',
-      explanation: 'Běžná zpráva o změně rozvrhu — nechce citlivé údaje ani žádnou podezřelou akci.',
-      tactic: 'Žádný — je v pořádku',
+      explanation: 'Běžná zpráva o změně rozvrhu — nechce citlivé údaje ani žádnou podezřelou akci.',
+      tactic: 'Žádný — je v pořádku',
     },
     {
       id: 14,
       type: 'email',
       from: 'Student Portal <noreply@districtschools.org>',
       subject: 'Zveřejněny nové známky',
-      message: 'V žákovském portálu jsou nové známky. Otevřete si portál přes záložku, kterou používáte běžně, a prohlédněte si je.',
+      message: 'V žákovském portálu jsou nové známky. Otevřete si portál přes záložku, kterou používáte běžně, a prohlédněte si je.',
       correct: 'trust',
-      explanation: 'Tahle zpráva vás posílá na váš běžný školní portál a nechce po vás ve zprávě hesla, platby ani soukromé údaje.',
-      tactic: 'Žádný — je v pořádku',
+      explanation: 'Tahle zpráva vás posílá na váš běžný školní portál a nechce po vás ve zprávě hesla, platby ani soukromé údaje.',
+      tactic: 'Žádný — je v pořádku',
     },
   ],
 }

@@ -2,6 +2,7 @@
 import DefaultLayout from '@layouts/DefaultLayout.astro'
 import PageHeader from '@components/PageHeader.astro'
 import { useTranslations } from 'src/i18n/index'
+import { toJsonScript } from '../../../utils/jsonScript'
 
 const { t, v } = useTranslations(Astro.currentLocale)
 const { v: vEn } = useTranslations('en')
@@ -75,7 +76,7 @@ const redFlags = v<string[]>('challengeSE.redFlags') ?? vEn<string[]>('challenge
   <script
     type="application/json"
     id="se-challenge-data"
-    set:html={JSON.stringify({ scenarios, labels })}
+    set:html={toJsonScript({ scenarios, labels })}
   />
 
   <section class="my-12">

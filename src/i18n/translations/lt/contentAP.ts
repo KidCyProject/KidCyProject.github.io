@@ -9,8 +9,8 @@
 export const contentAP = {
   aim: 'Suteikti apžvalgą apie užpuoliko perspektyvą, padedant besimokantiesiems atpažinti užpuolikų technikas ir suprasti kibernetinių atakų motyvus.',
   objectives: [
-    'Ugdyti mokinių supratimą apie užpuolikų motyvacijas, įskaitant psichologinius, socialinius ir ekonominius veiksnius.',
-    'Stiprinti mokinių įgūdžius atpažįstant įprastas užpuolikų technikas.',
+    'Ugdyti supratimą apie užpuolikų motyvus, įskaitant psichologinius, socialinius ir ekonominius veiksnius.',
+    'Stiprinti įgūdžius atpažinti įprastas užpuolikų technikas.',
   ],
   outcomes: [
     'Suprantu užpuolikų motyvus ir galiu pateikti pavyzdžių, susijusių su psichologiniais, socialiniais ir ekonominiais veiksniais.',
@@ -62,7 +62,7 @@ export const contentAP = {
             title: 'Apibrėžti patikimų asmenų ratą',
           },
           {
-            title: 'Plenarinis posėdis: Apibendrinimas ir neoficialus vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },
@@ -121,7 +121,7 @@ export const contentAP = {
             title: 'Suprasti užpuoliko motyvaciją',
           },
           {
-            title: 'Plenarinis posėdis: Apibendrinimas ir neoficialus vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },
@@ -203,7 +203,7 @@ export const contentAP = {
             title: 'Suprasti atakos kelius',
           },
           {
-            title: 'Plenarinis posėdis: Apibendrinimas ir neoficialus vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },

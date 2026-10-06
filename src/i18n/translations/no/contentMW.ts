@@ -7,16 +7,16 @@
 // ---------------------------------------------------------------------------
 
 export const contentMW = {
-  aim: 'Å hjelpe elever med å forstå hva skadevare er, hvordan infeksjoner skjer, og hvilke vaner som reduserer risikoen for usikre nedlastinger, filer og installasjoner.',
+  aim: 'Å gi grunnleggende kunnskap om hva skadelig programvare er, hvilke risikoer den medfører, og prinsipper for å beskytte seg mot den.',
   objectives: [
-    'Introdusere hva skadevare er og hvorfor det er farlig.',
-    'Identifisere vanlige måter skadevare spres på.',
-    'Bygge vaner for tryggere nedlastinger og oppdateringer.',
+    'Å introdusere hva skadelig programvare er og ulike typer skadelig programvare.',
+    'Å forklare hvordan skadelig programvare oppfører seg, og tegn på at en enhet er infisert.',
+    'Å utvikle ferdigheter i å beskytte seg mot risikoer knyttet til skadelig programvare.',
   ],
   outcomes: [
-    'Forklare forskjellen mellom trygge og utrygge filer eller lenker.',
-    'Gjenkjenne advarselsignaler ved mistenkelige nedlastinger.',
-    'Bruke pålitelige kilder og be om hjelp når man er usikker.',
+    'Jeg kan beskrive hva skadelig programvare er og gjenkjenne det i gitte scenarioer.',
+    'Jeg kan forklare ulike typer skadelig programvare, hvordan de oppfører seg, og tegn på at enheten min er infisert.',
+    'Jeg kan demonstrere måter å beskytte meg mot infeksjon med skadelig programvare på i gitte scenarioer og begrunne valgene mine.',
   ],
   parts: [
     {
@@ -56,7 +56,7 @@ export const contentMW = {
             title: 'Definere skadevare',
           },
           {
-            title: 'Avslutning: oppsummering og uformell vurdering',
+            title: 'Plenum – Oppsummering og uformell vurdering',
           },
         ],
       },
@@ -104,10 +104,10 @@ export const contentMW = {
             title: 'Introduksjon',
           },
           {
-            title: 'Knytte knutene for typer skadevare',
+            title: 'Typer skadevare',
           },
           {
-            title: 'Avslutning: oppsummering og uformell vurdering',
+            title: 'Plenum – Oppsummering og uformell vurdering',
           },
         ],
       },
@@ -165,7 +165,7 @@ export const contentMW = {
             title: 'Undersøke skadevare',
           },
           {
-            title: 'Avslutning: oppsummering og uformell vurdering',
+            title: 'Plenum – Oppsummering og uformell vurdering',
           },
         ],
       },
@@ -211,13 +211,13 @@ export const contentMW = {
             title: 'Introduksjon',
           },
           {
-            title: 'Analysere situasjonen med uforsiktig atferd',
+            title: 'Analysere omstendighetene rundt en skadevareinfeksjon',
           },
           {
             title: 'Lære grunnleggende beskyttelsestiltak',
           },
           {
-            title: 'Avslutning: oppsummering og uformell vurdering',
+            title: 'Plenum – Oppsummering og uformell vurdering',
           },
         ],
       },

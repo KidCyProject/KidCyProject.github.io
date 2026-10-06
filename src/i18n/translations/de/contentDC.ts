@@ -11,7 +11,7 @@ export const contentDC = {
   objectives: [
     'Die Bedeutung der digitalen Staatsbürgerschaft zu betonen.',
     'Das Konzept der digitalen Staatsbürgerschaft und ihre Prinzipien von Rechten, Verantwortung und Respekt in digitalen Umgebungen einzuführen.',
-    'Das Verständnis der Schülerinnen und Schüler dafür zu entwickeln, wie diese Prinzipien von Rechten, Verantwortung und Respekt in digitalen Umgebungen angewendet werden können — um sicher, klug und sozial zu sein.',
+    'Das Verständnis dafür zu entwickeln, wie diese Prinzipien von Rechten, Verantwortung und Respekt in digitalen Umgebungen angewendet werden können – um sicher, klug und sozial zu sein.',
   ],
   outcomes: [
     'Ich kann erklären, was digitale Staatsbürgerschaft ist und warum sie wichtig ist.',
@@ -243,6 +243,9 @@ export const contentDC = {
           },
           {
             title: 'Verantwortungsvolles Handeln in digitalen Umgebungen',
+          },
+          {
+            title: 'Respektvolles Handeln in digitalen Umgebungen',
           },
           {
             title: 'Einen positiven digitalen Fußabdruck gestalten',

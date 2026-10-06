@@ -11,7 +11,7 @@ export const contentDC = {
   objectives: [
     'Pabrėžti skaitmeninio pilietiškumo svarbą.',
     'Pristatyti skaitmeninio pilietiškumo koncepciją ir jos teisių, atsakomybės ir pagarbos principus skaitmeninėje aplinkoje.',
-    'Ugdyti mokinių supratimą, kaip taikyti šiuos teisių, atsakomybės ir pagarbos principus skaitmeninėje aplinkoje – būti saugiems, protingiems ir socialiai aktyviems.',
+    'Ugdyti supratimą, kaip taikyti šiuos teisių, atsakomybės ir pagarbos principus skaitmeninėje aplinkoje – būti saugiems, protingiems ir socialiai aktyviems.',
   ],
   outcomes: [
     'Galiu paaiškinti, kas yra skaitmeninis pilietiškumas ir kodėl jis svarbus.',
@@ -41,7 +41,7 @@ export const contentDC = {
             title: 'Kas yra skaitmeninė aplinka?',
           },
           {
-            title: 'Plenarinis posėdis – Apibendrinimas ir neoficialus vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },
@@ -95,7 +95,7 @@ export const contentDC = {
             title: 'Teisės, pagarba ir atsakomybės skaitmeninėje aplinkoje',
           },
           {
-            title: 'Plenarinis posėdis – Apibendrinimas ir neoficialus vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },
@@ -148,7 +148,7 @@ export const contentDC = {
             title: 'Privatumo nustatymai',
           },
           {
-            title: 'Plenarinis posėdis – Apibendrinimas ir neoficialus vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },
@@ -186,7 +186,7 @@ export const contentDC = {
             title: 'Supratimas, kaip ugdyti atsparumą',
           },
           {
-            title: 'Plenarinis posėdis – Apibendrinimas ir neoficialus vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },
@@ -245,10 +245,13 @@ export const contentDC = {
             title: 'Atsakingas elgesys skaitmeninėje aplinkoje',
           },
           {
+            title: 'Pagarbus elgesys skaitmeninėje aplinkoje',
+          },
+          {
             title: 'Teigiamo skaitmeninio pėdsako kūrimas',
           },
           {
-            title: 'Plenarinis posėdis – Apibendrinimas ir neoficialus vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },

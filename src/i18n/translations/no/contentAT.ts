@@ -10,10 +10,10 @@ export const contentAT = {
   aim: 'Å gi grunnleggende kunnskap om autentisering og prinsipper for identitetsstyring for å beskytte personlige digitale eiendeler.',
   objectives: [
     'Å understreke viktigheten av sikker identitetsstyring.',
-    'Å introdusere konseptet autentisering og dens ulike typer.',
-    'Å utvikle elevenes forståelse av digitale eiendeler og bevissthet om tilgangskontroll.',
-    'Å utvikle elevenes kunnskap og ferdigheter for å opprette sikre brukernavn og passord i tråd med anbefalinger og god praksis.',
-    'Å bygge elevenes ferdigheter for sikker håndtering av passord.',
+    'Å introdusere konseptet autentisering og ulike autentiseringsfaktorer.',
+    'Å utvikle forståelse av digitale eiendeler og bevissthet om tilgangskontroll.',
+    'Å utvikle kunnskap og ferdigheter for å opprette sikre brukernavn og passord i tråd med anbefalinger og god praksis.',
+    'Å bygge ferdigheter for sikker håndtering av passord.',
   ],
   outcomes: [
     'Jeg kan identifisere mine personlige digitale eiendeler og forklare risikoene de møter i både fysiske og digitale miljøer.',
@@ -69,7 +69,7 @@ export const contentAT = {
             title: 'Forstå digitale eiendeler',
           },
           {
-            title: 'Plenum: Oppsummering og uformell vurdering',
+            title: 'Plenum – Oppsummering og uformell vurdering',
           },
         ],
       },
@@ -133,7 +133,7 @@ export const contentAT = {
             title: 'Anvende autentisering på digitale eiendeler',
           },
           {
-            title: 'Plenum: Oppsummering og uformell vurdering',
+            title: 'Plenum – Oppsummering og uformell vurdering',
           },
         ],
       },
@@ -212,7 +212,7 @@ export const contentAT = {
             title: 'Lage sterke passord på en trygg måte',
           },
           {
-            title: 'Plenum: Oppsummering og uformell vurdering',
+            title: 'Plenum – Oppsummering og uformell vurdering',
           },
         ],
       },
@@ -303,7 +303,7 @@ export const contentAT = {
             title: 'Introduksjon',
           },
           {
-            title: 'Passord',
+            title: 'Passordbehandlere',
           },
           {
             title: 'Passordbehandlere',
@@ -312,7 +312,7 @@ export const contentAT = {
             title: 'Bruke passordbehandlere på en trygg måte',
           },
           {
-            title: 'Plenum: Oppsummering og uformell vurdering',
+            title: 'Plenum – Oppsummering og uformell vurdering',
           },
         ],
       },
@@ -374,7 +374,7 @@ export const contentAT = {
             title: 'Digital identitet og autentisering',
           },
           {
-            title: 'Plenum: Oppsummering og uformell vurdering',
+            title: 'Plenum – Oppsummering og uformell vurdering',
           },
         ],
       },

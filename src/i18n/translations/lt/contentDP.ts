@@ -7,16 +7,20 @@
 // ---------------------------------------------------------------------------
 
 export const contentDP = {
-  aim: 'Padėti mokiniams atpažinti, kas laikoma asmens duomenimis, suprasti, kodėl privatumas yra svarbus, ir priimti saugesnius sprendimus prieš dalinantis informacija internete.',
+  aim: 'Suteikti pagrindinių žinių apie tai, kas yra duomenų privatumas, ir apie privačių duomenų apsaugos skaitmeninėje aplinkoje principus.',
   objectives: [
-    'Apibrėžti asmens duomenis ir identifikuoti, kas yra jautru.',
-    'Skatinti apgalvotą dalijimąsi ir sutikimu pagrįstus sprendimus.',
-    'Ugdyti informuotumą apie privatumo nustatymus ir saugius numatytuosius parametrus.',
+    'Pristatyti, kokių tipų duomenys yra susiję su dalijimusi turiniu skaitmeninėje aplinkoje.',
+    'Pabrėžti duomenų privatumo svarbą skaitmeninėje aplinkoje.',
+    'Pristatyti duomenų privatumo apsaugos skaitmeninėje aplinkoje principus.',
+    'Ugdyti supratimą, kaip naudojami skaitmeniniai duomenys ir kaip prireikus juos galima ištrinti.',
   ],
   outcomes: [
-    'Atpažinti dažniausiai pasitaikančius asmeninės informacijos tipus.',
-    'Paaiškinti, kaip duomenys gali keliauti ir būti saugomi internete.',
-    'Taikyti paprastas privatumo taisykles prieš dalinantis ar skelbiant.',
+    'Galiu apibūdinti, kokių tipų duomenys yra susiję su dalijimusi turiniu skaitmeninėje aplinkoje.',
+    'Galiu paaiškinti duomenų privatumo svarbą skaitmeninėje aplinkoje.',
+    'Galiu pateiktuose scenarijuose parodyti, kaip taikyti duomenų privatumo apsaugos skaitmeninėje aplinkoje principus, ir pagrįsti savo pasirinkimus.',
+    'Galiu pateiktuose scenarijuose atpažinti dalijimosi duomenimis įpročius, kurie lemia privatumo pažeidimus.',
+    'Galiu paaiškinti, kaip naudojami skaitmeniniai duomenys ir kaip prireikus juos galima ištrinti.',
+    'Galiu pateiktuose scenarijuose atpažinti privačių duomenų pavyzdžius.',
   ],
   parts: [
     {
@@ -49,7 +53,7 @@ export const contentDP = {
             title: 'Kas yra asmens duomenys?',
           },
           {
-            title: 'Plenarinis susirinkimas: Apibendrinimas ir neformalus vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },
@@ -104,13 +108,10 @@ export const contentDP = {
             title: 'Įvadas',
           },
           {
-            title: 'Kaip dalinami duomenys?',
+            title: 'Dalijimosi duomenimis scenarijai',
           },
           {
-            title: 'Sutikimas ir leidimai',
-          },
-          {
-            title: 'Plenarinis susirinkimas - Apibendrinimas ir neformalus vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },
@@ -159,10 +160,10 @@ export const contentDP = {
             title: 'Kas yra skaitmeninis pėdsakas?',
           },
           {
-            title: 'Jūsų internetinių pėdsakų žemėlapis',
+            title: 'Skaitmeniniai pėdsakai',
           },
           {
-            title: 'Plenarinis susirinkimas - Apibendrinimas ir neformalus vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },
@@ -198,7 +199,14 @@ export const contentDP = {
             ariaLabel: 'Atsisiųsti medžiagą',
           },
           {
-            // ID: 4.4.2
+            // ID: 4.4.2a
+            kind: 'Darbalapas',
+            name: 'Pataisyk šį profilį!',
+            filename: 'Darbalapas - Pataisyk šį profilį',
+            ariaLabel: 'Atsisiųsti medžiagą',
+          },
+          {
+            // ID: 4.4.2b
             kind: 'Darbalapas',
             name: 'Pataisyk šį profilį!',
             filename: 'Darbalapas - Pataisyk šį profilį',
@@ -231,13 +239,10 @@ export const contentDP = {
             title: 'Įvadas',
           },
           {
-            title: 'Jūsų skaitmeninio pėdsako peržiūra',
+            title: 'Privačių duomenų apsauga internete',
           },
           {
-            title: 'Privatumo nustatymų valdymas',
-          },
-          {
-            title: 'Plenarinis susirinkimas - Apibendrinimas ir neformalus vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },

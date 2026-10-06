@@ -7,16 +7,18 @@
 // ---------------------------------------------------------------------------
 
 export const contentSE = {
-  aim: 'Padėti mokiniams atpažinti manipuliavimo taktikas, sustoti prieš veiksmą ir pasirinkti saugesnius atsakymus, kai kažkas naudoja spaudimą, skubumą ar melagingą pasitikėjimą.',
+  aim: 'Suteikti pagrindinių žinių apie tai, kas yra socialinė inžinerija, ypač pabrėžiant jos keliamas rizikas ir apsaugos nuo jos principus.',
   objectives: [
-    'Paaiškinti, kaip manipuliavimas gali vykti internete ir asmeniškai.',
-    'Identifikuoti dažniausias taktikas, tokias kaip skubumas, meilikavimas ar autoritetas.',
-    'Praktikuoti saugius atsakymus ir pagalbos ieškojimo elgesį.',
+    'Pristatyti socialinės inžinerijos sąvoką, daugiausia dėmesio skiriant užpuolikų tikslams.',
+    'Paaiškinti įvairias socialinės inžinerijos formas ir situacijas, kuriose jos gali pasitaikyti.',
+    'Ugdyti įgūdžius atpažinti socialinės inžinerijos technikas ir būdus apsisaugoti nuo jų.',
   ],
   outcomes: [
-    'Atpažinti spaudimo taktikas naudojamas žinutėse ar pokalbiuose.',
-    'Naudoti sustojimo ir patikrinimo rutiną prieš veikiant.',
-    'Žinoti, kada ir kaip pranešti apie įtartiną elgesį.',
+    'Galiu apibūdinti, kas yra socialinė inžinerija ir kokie yra jos tipai.',
+    'Galiu paaiškinti, kodėl užpuolikai naudoja socialinę inžineriją.',
+    'Galiu pateikti pavyzdžių situacijų, kuriose tikėtinos socialinės inžinerijos atakos.',
+    'Galiu atpažinti socialinės inžinerijos atakas pateiktuose scenarijuose.',
+    'Galiu pateiktuose scenarijuose parodyti, kaip apsisaugoti nuo socialinės inžinerijos, ir pagrįsti savo pasirinkimus.',
   ],
   parts: [
     {
@@ -64,7 +66,7 @@ export const contentSE = {
         ],
         activityPlan: [
           {
-            title: 'Įvadas: Įtaka ir įtikinėjimas kasdieniniame gyvenime',
+            title: 'Įvadas',
           },
           {
             title: 'Socialinės inžinerijos koncepto pristatymas',
@@ -73,10 +75,7 @@ export const contentSE = {
             title: 'Ko nori užpuolikai?',
           },
           {
-            title: 'Socialinė inžinerija internete ir ne',
-          },
-          {
-            title: 'Plenarinis susirinkimas: Apibendrinimas ir neformalus vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },
@@ -128,19 +127,16 @@ export const contentSE = {
         ],
         activityPlan: [
           {
-            title: 'Įvadas: Žmonės vs. sistemos',
-          },
-          {
-            title: 'Emocijos, kurias naudoja užpuolikai',
+            title: 'Įvadas',
           },
           {
             title: 'Mąstyti kaip užpuolikas',
           },
           {
-            title: 'Kasdieniai kontekstai, kuriuose veikia socialinė inžinerija',
+            title: 'Kasdienės situacijos, kuriose gali pasitaikyti socialinė inžinerija',
           },
           {
-            title: 'Plenarinis susirinkimas: Apibendrinimas ir neformalus vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },
@@ -162,19 +158,16 @@ export const contentSE = {
         ],
         activityPlan: [
           {
-            title: 'Įvadas: Kur gali vykti socialinė inžinerija?',
-          },
-          {
-            title: 'Dažni įspėjimo ženklai',
+            title: 'Įvadas',
           },
           {
             title: 'Socialinės inžinerijos tipai',
           },
           {
-            title: 'Atpažinimo praktika',
+            title: 'Socialinės inžinerijos atpažinimo praktika',
           },
           {
-            title: 'Plenarinis susirinkimas: Apibendrinimas ir neformalus vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },
@@ -240,7 +233,7 @@ export const contentSE = {
         ],
         activityPlan: [
           {
-            title: 'Įvadas: Nuo atpažinimo iki reagavimo',
+            title: 'Įvadas',
           },
           {
             title: 'Paprastas saugių sprendimų modelis',
@@ -249,10 +242,10 @@ export const contentSE = {
             title: 'Saugių atsakymų praktika',
           },
           {
-            title: 'Kitų apsauga',
+            title: 'Kitų apsauga ir atsakingas pilietiškumas',
           },
           {
-            title: 'Plenarinis susirinkimas: Apibendrinimas ir neformalus vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },

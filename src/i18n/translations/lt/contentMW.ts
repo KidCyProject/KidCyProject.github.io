@@ -7,16 +7,16 @@
 // ---------------------------------------------------------------------------
 
 export const contentMW = {
-  aim: 'Padėti mokiniams suprasti, kas yra kenkėjiška programa, kaip vyksta užkrėtimai ir kokios įpročiai mažina nesaugių atsisiuntimų, failų ir diegimų riziką.',
+  aim: 'Suteikti pagrindinių žinių apie tai, kas yra kenkėjiška programinė įranga, kokias rizikas ji kelia ir kokie yra apsaugos nuo jos principai.',
   objectives: [
-    'Pristatyti, kas yra kenkėjiška programa ir kodėl ji pavojinga.',
-    'Nustatyti įprastus kenkėjiškų programų plitimo būdus.',
-    'Ugdyti įpročius saugesniam atsisiuntimui ir atnaujinimams.',
+    'Pristatyti, kas yra kenkėjiška programinė įranga ir kokie yra jos tipai.',
+    'Paaiškinti, kaip veikia kenkėjiška programinė įranga ir kokie požymiai rodo, kad įrenginys užkrėstas.',
+    'Ugdyti įgūdžius apsisaugoti nuo su kenkėjiška programine įranga susijusių rizikų.',
   ],
   outcomes: [
-    'Paaiškinti skirtumą tarp saugių ir nesaugių failų ar nuorodų.',
-    'Atpažinti įtartinų atsisiuntimų įspėjamuosius ženklus.',
-    'Naudotis patikimais šaltiniais ir prašyti pagalbos, kai neaišku.',
+    'Galiu apibūdinti, kas yra kenkėjiška programinė įranga, ir atpažinti ją pateiktuose scenarijuose.',
+    'Galiu paaiškinti skirtingus kenkėjiškos programinės įrangos tipus, kaip jie veikia ir kokie požymiai rodo, kad mano įrenginys užkrėstas.',
+    'Galiu pateiktuose scenarijuose parodyti, kaip apsisaugoti nuo kenkėjiškos programinės įrangos užkrėtimo, ir pagrįsti savo pasirinkimus.',
   ],
   parts: [
     {
@@ -56,7 +56,7 @@ export const contentMW = {
             title: 'Kenkėjiškos programos apibrėžimas',
           },
           {
-            title: 'Apibendrinimas: santrauka ir neoficialus vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },
@@ -104,10 +104,10 @@ export const contentMW = {
             title: 'Įvadas',
           },
           {
-            title: 'Mazgų rišimas kenkėjiškų programų tipams',
+            title: 'Kenkėjiškų programų tipai',
           },
           {
-            title: 'Apibendrinimas: santrauka ir neoficialus vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },
@@ -165,7 +165,7 @@ export const contentMW = {
             title: 'Kenkėjiškų programų tyrimas',
           },
           {
-            title: 'Apibendrinimas: santrauka ir neoficialus vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },
@@ -211,13 +211,13 @@ export const contentMW = {
             title: 'Įvadas',
           },
           {
-            title: 'Neatsargaus elgesio situacijos analizė',
+            title: 'Kenkėjiškų programų užkrėtimo aplinkybių analizė',
           },
           {
             title: 'Pagrindinių apsaugos priemonių mokymasis',
           },
           {
-            title: 'Apibendrinimas: santrauka ir neoficialus vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },

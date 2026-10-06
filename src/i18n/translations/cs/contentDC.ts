@@ -8,19 +8,19 @@
 
 export const contentDC = {
   aim:
-    'Poskytnout porozumění tomu, co je digitální občanství a jak se řídit jeho základními principy.',
+    'Poskytnout porozumění tomu, co je digitální občanství a jak se řídit jeho základními principy.',
   objectives: [
     'Zdůraznit důležitost digitálního občanství.',
-    'Představit pojem digitální občanství a jeho principy práv, povinností a respektu v digitálním prostředí.',
-    'Rozvinout porozumění tomu, jak tyto principy práv, povinností a respektu v digitálním prostředí uplatňovat – abychom byli v bezpečí, jednali s rozvahou a chovali se ohleduplně.',
+    'Představit pojem digitální občanství a jeho principy práv, povinností a respektu v digitálním prostředí.',
+    'Rozvinout porozumění tomu, jak tyto principy práv, povinností a respektu v digitálním prostředí uplatňovat, abychom byli v bezpečí, jednali s rozvahou a chovali se ohleduplně.',
   ],
   outcomes: [
-    'Umím vysvětlit, co je digitální občanství a proč je důležité.',
-    'Umím mluvit o principech práv, povinností a respektu v digitálním prostředí, včetně toho, jak zůstat v bezpečí, jednat s rozvahou a chovat se ohleduplně k druhým.',
+    'Umím vysvětlit, co je digitální občanství a proč je důležité.',
+    'Umím mluvit o principech práv, povinností a respektu v digitálním prostředí, včetně toho, jak zůstat v bezpečí, jednat s rozvahou a chovat se ohleduplně k druhým.',
   ],
   parts: [
     {
-      goal: 'Pomoct žákům pochopit, co je digitální prostředí a jaké má pozitivní stránky.',
+      goal: 'Pomoct žákům pochopit, co je digitální prostředí a jaké má pozitivní stránky.',
       bundle: {
         filename: 'Digitální občanství - balíček - Část 1',
       },
@@ -29,7 +29,7 @@ export const contentDC = {
           {
             // ID: 1.1.1
             kind: 'Kartičky se situacemi',
-            name: 'Fyzický a digitální svět',
+            name: 'Fyzický a digitální svět',
             filename: 'Kartičky se situacemi - Fyzický a digitální svět',
             ariaLabel: 'Stáhnout materiál',
           },
@@ -42,15 +42,15 @@ export const contentDC = {
             title: 'Co je digitální prostředí?',
           },
           {
-            title: 'Závěr: shrnutí a neformální hodnocení',
+            title: 'Závěr – shrnutí a neformální hodnocení',
           },
         ],
       },
       featuredVideo: {
         // ID: 1.1.2
-        title: 'Co je digitální prostředí a co jsou digitální systémy?',
+        title: 'Co je digitální prostředí a co jsou digitální systémy?',
         supportText:
-          'Použijte video k rozproudění diskuse o online prostředích, která žáci už používají – od vzdělávacích platforem po hry a aplikace na zprávy. Zastavte se a nechte je krátce zamyslet nad tím, kde online tráví čas.',
+          'Použijte video k rozproudění diskuse o online prostředích, která žáci už používají – od vzdělávacích platforem po hry a aplikace na zprávy. Zastavte se a nechte je krátce zamyslet nad tím, kde online tráví čas.',
         downloads: {
           video: {
             filename: 'Co je digitální prostředí a co jsou digitální systémy',
@@ -64,7 +64,7 @@ export const contentDC = {
       },
     },
     {
-      goal: 'Pomoct žákům pochopit, co je digitální občanství a proč je důležité.',
+      goal: 'Pomoct žákům pochopit, co je digitální občanství a proč je důležité.',
       bundle: {
         filename: 'Digitální občanství - balíček - Část 2',
       },
@@ -80,7 +80,7 @@ export const contentDC = {
           {
             // ID: 1.2.2
             kind: 'Pracovní list',
-            name: 'Práva, povinnosti a respekt',
+            name: 'Práva, povinnosti a respekt',
             filename: 'Pracovní list - Práva, povinnosti a respekt',
             ariaLabel: 'Stáhnout materiál',
           },
@@ -93,17 +93,17 @@ export const contentDC = {
             title: 'Digitální občanství',
           },
           {
-            title: 'Práva, respekt a povinnosti v digitálním prostředí',
+            title: 'Práva, respekt a povinnosti v digitálním prostředí',
           },
           {
-            title: 'Závěr: shrnutí a neformální hodnocení',
+            title: 'Závěr – shrnutí a neformální hodnocení',
           },
         ],
       },
     },
     {
       goal:
-        'Pomoct žákům vědět, jak být v digitálním prostředí v bezpečí díky kritickému myšlení a odpovědnému zacházení s nastavením soukromí.',
+        'Pomoct žákům vědět, jak být v digitálním prostředí v bezpečí díky kritickému myšlení a odpovědnému zacházení s nastavením soukromí.',
       bundle: {
         filename: 'Digitální občanství - balíček - Část 3',
       },
@@ -133,7 +133,7 @@ export const contentDC = {
           {
             // ID: 1.3.5
             kind: 'Obrázek',
-            name: 'Nastavení soukromí v aplikaci',
+            name: 'Nastavení soukromí v aplikaci',
             filename: 'Obrázek - Nastavení soukromí v aplikaci',
             ariaLabel: 'Stáhnout materiál',
           },
@@ -143,13 +143,13 @@ export const contentDC = {
             title: 'Úvod',
           },
           {
-            title: 'Jak spolu souvisí fyzické a digitální prostředí',
+            title: 'Jak spolu souvisí fyzické a digitální prostředí',
           },
           {
             title: 'Nastavení soukromí',
           },
           {
-            title: 'Závěr: shrnutí a neformální hodnocení',
+            title: 'Závěr – shrnutí a neformální hodnocení',
           },
         ],
       },
@@ -157,7 +157,7 @@ export const contentDC = {
         // ID: 1.3.3
         title: 'Co je nastavení soukromí?',
         supportText:
-          'Použijte video k představení nastavení soukromí jako praktického nástroje, který můžou žáci ovládat v aplikacích a zařízeních, která už mají. Zastavte se a zeptejte se, které nastavení si někdy prohlíželi nebo měnili.',
+          'Použijte video k představení nastavení soukromí jako praktického nástroje, který můžou žáci ovládat v aplikacích a zařízeních, která už mají. Zastavte se a zeptejte se, které nastavení si někdy prohlíželi nebo měnili.',
         downloads: {
           video: {
             filename: 'Co je nastavení soukromí',
@@ -171,7 +171,7 @@ export const contentDC = {
       },
     },
     {
-      goal: 'Pomoct žákům pochopit, jak jim moudrost a odolnost pomáhají jednat v digitálním prostředí s rozvahou.',
+      goal: 'Pomoct žákům pochopit, jak jim moudrost a odolnost pomáhají jednat v digitálním prostředí s rozvahou.',
       bundle: {
         filename: 'Digitální občanství - balíček - Část 4',
       },
@@ -181,21 +181,21 @@ export const contentDC = {
             title: 'Úvod',
           },
           {
-            title: 'Náročné situace v digitálním prostředí',
+            title: 'Náročné situace v digitálním prostředí',
           },
           {
             title: 'Jak rozvíjet odolnost',
           },
           {
-            title: 'Závěr: shrnutí a neformální hodnocení',
+            title: 'Závěr – shrnutí a neformální hodnocení',
           },
         ],
       },
       featuredVideo: {
         // ID: 1.4.1
-        title: 'Odolnost v digitálním prostředí',
+        title: 'Odolnost v digitálním prostředí',
         supportText:
-          'Použijte video k tomu, abyste s žáky prozkoumali, jak se dá vzpamatovat a přizpůsobit, když se online něco pokazí – od potíží s účtem po nevyžádaný kontakt. Zastavte se a zeptejte se, na koho se v takových situacích obracejí o pomoc.',
+          'Použijte video k tomu, abyste s žáky prozkoumali, jak se dá vzpamatovat a přizpůsobit, když se online něco pokazí – od potíží s účtem po nevyžádaný kontakt. Zastavte se a zeptejte se, na koho se v takových situacích obracejí o pomoc.',
         downloads: {
           video: {
             filename: 'Odolnost v digitálním prostředí',
@@ -210,7 +210,7 @@ export const contentDC = {
     },
     {
       goal:
-        'Pomoct žákům pochopit, jak se chovat odpovědně a s respektem k sobě i k druhým, když spolu jednají v digitálním prostředí.',
+        'Pomoct žákům pochopit, jak se chovat odpovědně a s respektem k sobě i k druhým, když spolu jednají v digitálním prostředí.',
       bundle: {
         filename: 'Digitální občanství - balíček - Část 5',
       },
@@ -226,7 +226,7 @@ export const contentDC = {
           {
             // ID: 1.5.2
             kind: 'Kartičky se situacemi',
-            name: 'Co zveřejnit a co ne',
+            name: 'Co zveřejnit a co ne',
             filename: 'Kartičky se situacemi - Co zveřejnit a co ne',
             ariaLabel: 'Stáhnout materiál',
           },
@@ -243,16 +243,16 @@ export const contentDC = {
             title: 'Úvod',
           },
           {
-            title: 'Odpovědné chování v digitálním prostředí',
+            title: 'Odpovědné chování v digitálním prostředí',
           },
           {
-            title: 'Chování s respektem v digitálním prostředí',
+            title: 'Chování s respektem v digitálním prostředí',
           },
           {
             title: 'Jak si budovat pozitivní digitální stopu',
           },
           {
-            title: 'Závěr: shrnutí a neformální hodnocení',
+            title: 'Závěr – shrnutí a neformální hodnocení',
           },
         ],
       },
@@ -302,12 +302,12 @@ export const challengeDC = {
   title: 'DOBRÝ nebo ŠPATNÝ obsah ke sdílení?',
   subtitle: 'Přetáhněte každý příspěvek do správné kategorie. Naučte se, co je bezpečné sdílet online!',
   howItWorks: 'Jak to funguje',
-  instruction: 'Přetáhněte každou kartu s příspěvkem do zóny, kam patří. Na mobilu kartu vyberte klepnutím a potom klepněte na zónu.',
+  instruction: 'Přetáhněte každou kartu s příspěvkem do zóny, kam patří. Na mobilu kartu vyberte klepnutím a potom klepněte na zónu.',
   tip: 'Zamyslete se, jestli by informace mohla prozradit, kdo jste, nebo vás ohrozit, kdyby ji viděl cizí člověk.',
   tipLabel: 'Tip',
   tryAgain: 'Zkusit znovu',
   correctCountLabel: 'Správně',
-  postsToSort: 'Příspěvky k roztřídění',
+  postsToSort: 'Příspěvky k roztřídění',
   safeToShare: 'Bezpečné ke sdílení',
   dragSafeHere: 'Přetáhněte bezpečné příspěvky sem',
   doNotShare: 'Nesdílet',
@@ -328,14 +328,14 @@ export const challengeDC = {
     { text: 'Fotbal mě strašně baví!',
       category: 'safe',
       emoji: '⚽',
-      explanation: 'Psát o svých koníčcích je úplně v pořádku a je to skvělý způsob, jak najít lidi s podobnými zájmy!'
+      explanation: 'Psát o svých koníčcích je úplně v pořádku a je to skvělý způsob, jak najít lidi s podobnými zájmy!'
     },
     { text: 'Moje heslo je Fluffy123',
       category: 'unsafe',
       emoji: '🔑',
-      explanation: 'Nikdy nesdílejte hesla s nikým online — ani se svými nejlepšími přáteli!'
+      explanation: 'Nikdy nesdílejte hesla s nikým online — ani se svými nejlepšími přáteli!'
     },
-    { text: 'Mám jedničku z testu z přírodovědy!',
+    { text: 'Mám jedničku z testu z přírodovědy!',
       category: 'safe',
       emoji: '🎉',
       explanation: 'Pochlubit se úspěchem je bezpečné — jen tak dál!'
@@ -353,7 +353,7 @@ export const challengeDC = {
     { text: 'Naše školní představení je příští pátek!',
       category: 'safe',
       emoji: '🎭',
-      explanation: 'O školních akcích se s kamarády psát dá!'
+      explanation: 'O školních akcích se s kamarády psát dá!'
     },
     { text: 'Podívejte se na můj nový obrázek!',
       category: 'safe',
@@ -363,17 +363,17 @@ export const challengeDC = {
     { text: 'Číslo od kreditky naší mámy je...',
       category: 'unsafe',
       emoji: '💳',
-      explanation: 'Údaje o penězích, třeba čísla platebních karet, musí vždycky zůstat soukromé!'
+      explanation: 'Údaje o penězích, třeba čísla platebních karet, musí vždycky zůstat soukromé!'
     },
     { text: 'Můj oblíbený film je Toy Story!',
       category: 'safe',
       emoji: '🎬',
-      explanation: 'Mluvit o filmech, které máte rádi, je úplně bezpečné a zábavné!'
+      explanation: 'Mluvit o filmech, které máte rádi, je úplně bezpečné a zábavné!'
     },
     { text: 'Celým jménem se jmenuju Emily Rose Johnson',
       category: 'unsafe',
       emoji: '📛',
-      explanation: 'Když online prozradíte celé svoje jméno, cizí lidé vás podle něj můžou najít a sledovat.'
+      explanation: 'Když online prozradíte celé svoje jméno, cizí lidé vás podle něj můžou najít a sledovat.'
     },
     { text: 'Konečně umím jezdit na kole!',
       category: 'safe',
@@ -388,12 +388,12 @@ export const challengeDC = {
     { text: 'Máme nové štěně, jmenuje se Max!',
       category: 'safe',
       emoji: '🐶',
-      explanation: 'O mazlíčcích se psát dá — je to bezpečné a všechny to baví!'
+      explanation: 'O mazlíčcích se psát dá — je to bezpečné a všechny to baví!'
     },
-    { text: 'Chodím domů přes park o půl čtvrté',
+    { text: 'Chodím domů přes park o půl čtvrté',
       category: 'unsafe',
       emoji: '🚶',
-      explanation: 'Když prozradíte, kudy a kdy chodíte, cizí lidé přesně vědí, kde vás najít.'
+      explanation: 'Když prozradíte, kudy a kdy chodíte, cizí lidé přesně vědí, kde vás najít.'
     },
   ],
 }

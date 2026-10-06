@@ -57,7 +57,7 @@ export const contentMW = {
             title: 'Defining Malware',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },
@@ -108,7 +108,7 @@ export const contentMW = {
             title: 'Malware Types',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },
@@ -165,7 +165,7 @@ export const contentMW = {
             title: 'Investigating Malware',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },
@@ -217,7 +217,7 @@ export const contentMW = {
             title: 'Learning Basic Protection Measures',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },

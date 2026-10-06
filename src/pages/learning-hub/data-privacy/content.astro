@@ -2,6 +2,7 @@
 import DefaultLayout from '@layouts/DefaultLayout.astro'
 import PageHeader from '@components/PageHeader.astro'
 import ModuleActivities from '@components/ModuleActivities.astro'
+import ModuleRowList from '@components/ModuleRowList.astro'
 import { Icon } from 'astro-icon/components'
 import { localizePath } from 'src/i18n/i18n'
 import { getModule, introMaterials } from 'src/data/modules'
@@ -315,61 +316,65 @@ const moduleImages = {
                             id={`materials-${part.anchorId}`}
                             hidden={firstPanel !== 'materials'}
                           >
-                            <ul class="dp-step-list">
-                              {partMaterials.map((item: MergedMaterial, i: number) => (
-                                <li class="dp-step-item dp-step-item--material">
-                                  <span class="dp-step-num dp-material-id">{item.id ?? String(i + 1).padStart(2, '0')}</span>
-                                  <p class="dp-step-title"><b>{String(item.kind ?? '')} –</b> {String(item.name ?? '')}</p>
-                                  {item.languages?.length ? (
-                                    <div class="dp-material-download">
-                                      <button
-                                        type="button"
-                                        class="dp-item-download dp-download-trigger"
-                                        aria-expanded="false"
-                                        aria-controls={`material-${part.anchorId}-${i}`}
-                                        aria-label={`${t('pages.hub.contentPage.download')}: ${String(item.kind ?? '')} – ${String(item.name ?? '')}`}
-                                        data-download-trigger
-                                      >
-                                        <Icon name="lucide:download" />
-                                        <span>{t('pages.hub.contentPage.download')}</span>
-                                        <Icon name="lucide:chevron-down" />
-                                      </button>
-                                      <ul
-                                        class="dp-download-menu"
-                                        id={`material-${part.anchorId}-${i}`}
-                                        aria-label={String(item.ariaLabel ?? t('pages.hub.contentPage.download'))}
-                                        data-download-menu
-                                        hidden
-                                      >
-                                        {item.languages.map((file) => (
-                                          <li>
-                                            <a
-                                              class="dp-download-option"
-                                              href={file.href}
-                                              download={item.filename ? `${item.filename} (${file.lang.toUpperCase()}).${file.href.split('.').pop()}` : file.href.split('/').pop()}
-                                              hreflang={file.lang}
-                                            >
-                                              <span class="dp-download-code" aria-hidden="true">{file.lang.toUpperCase()}</span>
-                                              <span lang={file.lang}>{MATERIAL_LANGUAGE_LABELS[file.lang]}</span>
-                                            </a>
-                                          </li>
-                                        ))}
-                                      </ul>
-                                    </div>
-                                  ) : (
-                                    <a
-                                      class="dp-item-download"
-                                      href={String(item.href ?? '')}
-                                      download={String(item.filename ?? '')}
-                                      aria-label={String(item.ariaLabel ?? '')}
+                            <ModuleRowList
+                              accent="var(--brand-DP)"
+                              rows={partMaterials.map((item: MergedMaterial, i: number) => ({
+                                num: item.id ?? String(i + 1).padStart(2, '0'),
+                                label: String(item.kind ?? ''),
+                                title: String(item.name ?? ''),
+                              }))}
+                            >
+                              {(i: number) => {
+                                const item = partMaterials[i]
+                                return item.languages?.length ? (
+                                  <div class="dp-material-download">
+                                    <button
+                                      type="button"
+                                      class="dp-item-download dp-download-trigger"
+                                      aria-expanded="false"
+                                      aria-controls={`material-${part.anchorId}-${i}`}
+                                      aria-label={`${t('pages.hub.contentPage.download')}: ${String(item.kind ?? '')} – ${String(item.name ?? '')}`}
+                                      data-download-trigger
                                     >
                                       <Icon name="lucide:download" />
                                       <span>{t('pages.hub.contentPage.download')}</span>
-                                    </a>
-                                  )}
-                                </li>
-                              ))}
-                            </ul>
+                                      <Icon name="lucide:chevron-down" />
+                                    </button>
+                                    <ul
+                                      class="dp-download-menu"
+                                      id={`material-${part.anchorId}-${i}`}
+                                      aria-label={String(item.ariaLabel ?? t('pages.hub.contentPage.download'))}
+                                      data-download-menu
+                                      hidden
+                                    >
+                                      {item.languages.map((file) => (
+                                        <li>
+                                          <a
+                                            class="dp-download-option"
+                                            href={file.href}
+                                            download={item.filename ? `${item.filename} (${file.lang.toUpperCase()}).${file.href.split('.').pop()}` : file.href.split('/').pop()}
+                                            hreflang={file.lang}
+                                          >
+                                            <span class="dp-download-code" aria-hidden="true">{file.lang.toUpperCase()}</span>
+                                            <span lang={file.lang}>{MATERIAL_LANGUAGE_LABELS[file.lang]}</span>
+                                          </a>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                ) : (
+                                  <a
+                                    class="dp-item-download"
+                                    href={String(item.href ?? '')}
+                                    download={String(item.filename ?? '')}
+                                    aria-label={String(item.ariaLabel ?? '')}
+                                  >
+                                    <Icon name="lucide:download" />
+                                    <span>{t('pages.hub.contentPage.download')}</span>
+                                  </a>
+                                )
+                              }}
+                            </ModuleRowList>
                           </div>
                         ) : null}
 
@@ -380,14 +385,14 @@ const moduleImages = {
                             id={`activity-${part.anchorId}`}
                             hidden={firstPanel !== 'activity'}
                           >
-                            <ul class="dp-step-list">
-                              {partActivity.map((step: MergedActivityStep) => (
-                                <li class="dp-step-item dp-step-item--plain">
-                                  <span class="dp-step-num">{String(step.stepNumber ?? 0).padStart(2, '0')}</span>
-                                  <p class="dp-step-title"><b>{t('pages.hub.labels.step')} {String(step.stepNumber ?? '')} –</b> {String(step.title ?? '')}</p>
-                                </li>
-                              ))}
-                            </ul>
+                            <ModuleRowList
+                              accent="var(--brand-DP)"
+                              rows={partActivity.map((step: MergedActivityStep) => ({
+                                num: String(step.stepNumber ?? 0).padStart(2, '0'),
+                                label: `${t('pages.hub.labels.step')} ${String(step.stepNumber ?? '')}`,
+                                title: String(step.title ?? ''),
+                              }))}
+                            />
                           </div>
                         ) : null}
 
@@ -1006,7 +1011,8 @@ const moduleImages = {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-xl);
+    /* row gap: text → button when the button wraps below or the card stacks */
+    gap: var(--space-m) var(--space-xl);
     padding: var(--space-m) var(--space-l);
     border-radius: 1.25rem;
     background: color-mix(in oklab, var(--brand-DP), white 88%);
@@ -1029,6 +1035,26 @@ const moduleImages = {
     text-decoration-color: var(--brand-DP);
     text-underline-offset: 0.35rem;
     text-decoration-thickness: 0.15rem;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  /* Same spacing below the heading as the part cards (heading → meta row). */
+  .dp-teaching-guide .dp-package-banner__copy {
+    gap: var(--space-s);
+  }
+
+  /* Side by side on wider screens. When the text (often one long word in the
+     heading) and the button don't both fit, the button wraps below the text
+     instead of being pushed out of the card. */
+  @media (min-width: 701px) {
+    .dp-teaching-guide {
+      flex-wrap: wrap;
+    }
+
+    .dp-teaching-guide .dp-package-banner__copy {
+      flex: 1 1 20rem;
+    }
   }
 
   /* ── Package Banner ───────────────────────────────────────────────────────── */
@@ -1340,7 +1366,14 @@ const moduleImages = {
       font-size: 0.9rem;
       display: flex;
       gap: var(--space-s);
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
+    }
+
+    /* Icon, label and chevron stay on one line; a long label wraps inside itself. */
+    .dp-package-btn > span {
+      min-width: 0;
+      overflow-wrap: break-word;
+      hyphens: auto;
     }
 
     .dp-video-preview__actions {
@@ -1353,6 +1386,8 @@ const moduleImages = {
 
     .dp-video-action-wrap .dp-item-download {
       display: flex;
+      width: 100%;
+      box-sizing: border-box;
       gap: var(--space-s);
       flex-wrap: wrap;
       justify-content: center;
@@ -1941,22 +1976,5 @@ const moduleImages = {
 
   :global(html.darkmode) .dp-rm-stat {
     color: var(--dm-fg-muted);
-  }
-
-  /* Materials list: show the material ID (e.g. 1.2.1, matching the resources
-     overview sheet) instead of a running number, so the first column is wider. */
-  .dp-step-item.dp-step-item--material {
-    grid-template-columns: 4rem minmax(0, 1fr) auto;
-  }
-
-  .dp-material-id {
-    font-size: var(--font-size-0);
-    white-space: nowrap;
-  }
-
-  @media (max-width: 480px) {
-    .dp-step-item.dp-step-item--material {
-      grid-template-columns: 3.5rem 1fr;
-    }
   }
 </style>

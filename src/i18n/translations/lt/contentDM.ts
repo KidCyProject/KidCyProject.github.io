@@ -7,21 +7,21 @@
 // ---------------------------------------------------------------------------
 
 export const contentDM = {
-  aim: 'Padėti mokiniams atpažinti žalingą elgesį internete, suprasti, kad ribos yra svarbios, ir žinoti, kokių veiksmų jie gali imtis, kad gautų paramą ir liktų saugūs.',
+  aim: 'Suteikti pagrindinių žinių apie tai, kas yra skaitmeninė prievarta ir piktnaudžiavimas, ir apie principus, kaip su tuo susidoroti.',
   objectives: [
-    'Apibūdinti skaitmeninį smurtą tinkamais amžiui, palaikomais terminais.',
-    'Atpažinti įspėjamuosius ženklus ir nesveikąjį elgesį internete.',
-    'Praktikuoti saugų pagalbos ieškojimą ir pranešimo veiksmus.',
+    'Pristatyti skaitmeninės prievartos ir piktnaudžiavimo skaitmeninėje aplinkoje sąvoką.',
+    'Paaiškinti skaitmeninės prievartos ir piktnaudžiavimo motyvus.',
+    'Ugdyti sąmoningumą apie skaitmeninės prievartos ir piktnaudžiavimo atvejus, smurtautojų naudojamas technikas ir principus, kaip su tuo susidoroti.',
   ],
   outcomes: [
-    'Identifikuoti elgesio būdus, kurie pažeidžia ribas arba sukelia žalą.',
-    'Naudoti paprastus saugumo veiksmus, tokius kaip blokavimas arba pranešimas.',
-    'Žinoti patikimus suaugusiuosius ir palaikymo kanalus, su kuriais galima susisiekti.',
+    'Galiu apibrėžti skaitmeninę prievartą ir piktnaudžiavimą, apibūdinti pavyzdžius, susijusius su klaidinformacija, dezinformacija, kibernetiniu patyčiavimusi, nesaugiu bendravimu su nepažįstamaisiais ir žalingu influencerių elgesiu, ir paaiškinti galimus šių pavyzdžių motyvus.',
+    'Galiu pateiktuose scenarijuose atpažinti technikas, kurias naudoja smurtautojai ir piktnaudžiautojai.',
+    'Galiu pateiktuose scenarijuose pasiūlyti ir aptarti būdus, kaip susidoroti su skaitmenine prievarta ir piktnaudžiavimu.',
   ],
   parts: [
     {
-      title: 'Dezinformacija',
-      goal: 'Padėti mokiniams suprasti, kas yra dezinformacija, kas motyvuoja žmones tai daryti ir kaip ją atpažinti.',
+      title: 'Klaidinformacija',
+      goal: 'Padėti mokiniams suprasti, kas yra klaidinformacija, kas motyvuoja žmones tai daryti ir kaip ją atpažinti.',
       bundle: {
         filename: 'Skaitmeninis piktnaudžiavimas - paketas - 1 dalis',
       },
@@ -47,10 +47,10 @@ export const contentDM = {
             title: 'Įvadas',
           },
           {
-            title: 'Kas yra klaidinga informacija?',
+            title: 'Klaidinformacijos atpažinimas',
           },
           {
-            title: 'Plenarinis susirinkimas: Apibendrinimas ir neformalus vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },
@@ -58,7 +58,7 @@ export const contentDM = {
         // ID: 7.1.1
         title: 'Kas yra klaidinga informacija?',
         supportText:
-          'Naudokite šį vaizdo įrašą, kad supažindintumėte su dezinformacija kaip klaidingais ar netiksliais turinio fragmentais, kurie gali plisti internete be žalingos intencijos. Sustokite ir paklauskite mokinių, ar jie kada nors pasidalino kuo nors, kas vėliau pasirodė esąs netiesa.',
+          'Naudokite šį vaizdo įrašą, kad supažindintumėte su klaidinformacija kaip klaidingais ar netiksliais turinio fragmentais, kurie gali plisti internete be žalingos intencijos. Sustokite ir paklauskite mokinių, ar jie kada nors pasidalino kuo nors, kas vėliau pasirodė esąs netiesa.',
         downloads: {
           video: {
             filename: 'Kas yra klaidinga informacija',
@@ -72,8 +72,8 @@ export const contentDM = {
       },
     },
     {
-      title: 'Klaidinformacija',
-      goal: 'Padėti mokiniams suprasti, kas yra klaidinformacija, motyvacijas už jos ir kaip ją atpažinti.',
+      title: 'Dezinformacija',
+      goal: 'Padėti mokiniams suprasti, kas yra dezinformacija, motyvacijas už jos ir kaip ją atpažinti.',
       bundle: {
         filename: 'Skaitmeninis piktnaudžiavimas - paketas - 2 dalis',
       },
@@ -99,13 +99,10 @@ export const contentDM = {
             title: 'Įvadas',
           },
           {
-            title: 'Kas yra dezinformacija?',
+            title: 'Dezinformacijos supratimas',
           },
           {
-            title: 'Algoritmai',
-          },
-          {
-            title: 'Plenarinis susirinkimas: Apibendrinimas ir neformalus vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },
@@ -113,7 +110,7 @@ export const contentDM = {
         // ID: 7.2.1
         title: 'Kas yra dezinformacija?',
         supportText:
-          'Naudokite šį vaizdo įrašą, kad padėtumėte mokiniams atskirti klaidinformaciją — tyčia apgaulingą turinį — nuo dezinformacijos. Sustokite aptarti, kaip intencija keičia tai, kaip mes vertiname ir reaguojame į melagingą informaciją.',
+          'Naudokite šį vaizdo įrašą, kad padėtumėte mokiniams atskirti dezinformaciją — tyčia apgaulingą turinį — nuo klaidinformacijos. Sustokite aptarti, kaip intencija keičia tai, kaip mes vertiname ir reaguojame į melagingą informaciją.',
         downloads: {
           video: {
             filename: 'Kas yra dezinformacija',
@@ -154,10 +151,10 @@ export const contentDM = {
             title: 'Įvadas',
           },
           {
-            title: 'Kas yra kibernetinis patyčiavimasis?',
+            title: 'Blogos manieros ir kibernetinės patyčios',
           },
           {
-            title: 'Plenarinis susirinkimas: Apibendrinimas ir neformalus vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },
@@ -213,7 +210,10 @@ export const contentDM = {
             title: 'Įvadas',
           },
           {
-            title: 'Plenarinis susirinkimas: Apibendrinimas ir neformalus vertinimas',
+            title: 'Nepažįstamųjų keliamo pavojaus supratimas',
+          },
+          {
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },
@@ -239,10 +239,10 @@ export const contentDM = {
             title: 'Įvadas',
           },
           {
-            title: 'Socialinių medijų influenceriai',
+            title: 'Kas yra influenceris?',
           },
           {
-            title: 'Plenarinis susirinkimas: Apibendrinimas ir neformalus vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },
@@ -298,7 +298,13 @@ export const contentDM = {
             title: 'Įvadas',
           },
           {
-            title: 'Plenarinis susirinkimas: Apibendrinimas ir neformalus vertinimas',
+            title: 'Atsparumas skaitmeninei prievartai ir piktnaudžiavimui',
+          },
+          {
+            title: 'Skaitmeninės prievartos ir piktnaudžiavimo atpažinimas ir susidorojimas su jais',
+          },
+          {
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },

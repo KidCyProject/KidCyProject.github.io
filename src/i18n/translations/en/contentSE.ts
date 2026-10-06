@@ -67,7 +67,7 @@ export const contentSE = {
         ],
         activityPlan: [
           {
-            title: 'Introduction: Influence and Persuasion in Everyday Life',
+            title: 'Introduction',
           },
           {
             title: 'Introducing the Concept of Social Engineering',
@@ -76,7 +76,7 @@ export const contentSE = {
             title: 'What Do Attackers Want?',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },
@@ -128,7 +128,7 @@ export const contentSE = {
         ],
         activityPlan: [
           {
-            title: 'Introduction: People vs Systems',
+            title: 'Introduction',
           },
           {
             title: 'Thinking Like an Attacker',
@@ -137,7 +137,7 @@ export const contentSE = {
             title: 'Everyday Situations Where Social Engineering Can Happen',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },
@@ -159,7 +159,7 @@ export const contentSE = {
         ],
         activityPlan: [
           {
-            title: 'Introduction: Where Can Social Engineering Happen?',
+            title: 'Introduction',
           },
           {
             title: 'Types of Social Engineering',
@@ -168,7 +168,7 @@ export const contentSE = {
             title: 'Practising Recognition of Social Engineering',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },
@@ -234,7 +234,7 @@ export const contentSE = {
         ],
         activityPlan: [
           {
-            title: 'Introduction: From Recognising to Responding',
+            title: 'Introduction',
           },
           {
             title: 'A Simple Model for Safe Decisions',
@@ -246,7 +246,7 @@ export const contentSE = {
             title: 'Protecting Others and Being a Responsible Citizen',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },

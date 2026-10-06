@@ -7,16 +7,20 @@
 // ---------------------------------------------------------------------------
 
 export const contentDP = {
-  aim: 'Å hjelpe elever med å gjenkjenne hva som teller som personopplysninger, forstå hvorfor personvern er viktig, og ta tryggere valg før de deler informasjon på nett.',
+  aim: 'Å gi grunnleggende kunnskap om hva personvern er, og om prinsipper for å beskytte private data i digitale miljøer.',
   objectives: [
-    'Definere personopplysninger og identifisere hva som er sensitivt.',
-    'Oppmuntre til gjennomtenkt deling og samtykkebaserte valg.',
-    'Bygge bevissthet om personverninnstillinger og trygge standarder.',
+    'Å introdusere hvilke typer data som er involvert når man deler innhold i digitale miljøer.',
+    'Å understreke viktigheten av personvern i digitale miljøer.',
+    'Å introdusere prinsippene for å beskytte personvernet i digitale miljøer.',
+    'Å utvikle forståelse av hvordan digitale data brukes, og hvordan de kan slettes ved behov.',
   ],
   outcomes: [
-    'Gjenkjenne vanlige typer personlig informasjon.',
-    'Forklare hvordan data kan overføres og lagres på nett.',
-    'Anvende enkle personvernregler før deling eller posting.',
+    'Jeg kan beskrive hvilke typer data som er involvert når man deler innhold i digitale miljøer.',
+    'Jeg kan forklare hvorfor personvern er viktig i digitale miljøer.',
+    'Jeg kan demonstrere prinsippene for å beskytte personvernet i digitale miljøer i gitte scenarioer og begrunne valgene mine.',
+    'Jeg kan gjenkjenne mønstre for datadeling som fører til brudd på personvernet i gitte scenarioer.',
+    'Jeg kan forklare hvordan digitale data brukes, og hvordan de kan slettes ved behov.',
+    'Jeg kan gjenkjenne eksempler på private data i gitte scenarioer.',
   ],
   parts: [
     {
@@ -49,7 +53,7 @@ export const contentDP = {
             title: 'Hva er personopplysninger?',
           },
           {
-            title: 'Plenum: Oppsummering og uformell vurdering',
+            title: 'Plenum – Oppsummering og uformell vurdering',
           },
         ],
       },
@@ -104,13 +108,10 @@ export const contentDP = {
             title: 'Introduksjon',
           },
           {
-            title: 'Hvordan deles data?',
+            title: 'Scenarioer for datadeling',
           },
           {
-            title: 'Samtykke og tillatelser',
-          },
-          {
-            title: 'Plenum - Oppsummering og uformell vurdering',
+            title: 'Plenum – Oppsummering og uformell vurdering',
           },
         ],
       },
@@ -159,10 +160,10 @@ export const contentDP = {
             title: 'Hva er et digitalt fotavtrykk?',
           },
           {
-            title: 'Kartlegge dine nettspor',
+            title: 'Digitale spor',
           },
           {
-            title: 'Plenum - Oppsummering og uformell vurdering',
+            title: 'Plenum – Oppsummering og uformell vurdering',
           },
         ],
       },
@@ -198,7 +199,14 @@ export const contentDP = {
             ariaLabel: 'Last ned materiell',
           },
           {
-            // ID: 4.4.2
+            // ID: 4.4.2a
+            kind: 'Arbeidsark',
+            name: 'Fiks denne profilen!',
+            filename: 'Arbeidsark - Fiks denne profilen',
+            ariaLabel: 'Last ned materiell',
+          },
+          {
+            // ID: 4.4.2b
             kind: 'Arbeidsark',
             name: 'Fiks denne profilen!',
             filename: 'Arbeidsark - Fiks denne profilen',
@@ -231,13 +239,10 @@ export const contentDP = {
             title: 'Introduksjon',
           },
           {
-            title: 'Gjennomgå det digitale fotavtrykket ditt',
+            title: 'Beskytte private data på nett',
           },
           {
-            title: 'Administrere personverninnstillinger',
-          },
-          {
-            title: 'Plenum - Oppsummering og uformell vurdering',
+            title: 'Plenum – Oppsummering og uformell vurdering',
           },
         ],
       },

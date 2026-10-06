@@ -10,10 +10,10 @@ export const contentAT = {
   aim: 'Suteikti pagrindinių žinių apie autentifikacijos ir tapatybės valdymo principus, skirtus asmeniniam skaitmeniniam turtui apsaugoti.',
   objectives: [
     'Pabrėžti saugaus tapatybės valdymo svarbą.',
-    'Pristatyti autentifikacijos sąvoką ir jos skirtingus tipus.',
-    'Ugdyti mokinių supratimą apie skaitmeninius išteklius ir prieigos kontrolės sąmoningumą.',
-    'Ugdyti mokinių žinias ir įgūdžius kuriant saugius vartotojo vardus ir slaptažodžius pagal rekomendacijas ir gerąją praktiką.',
-    'Ugdyti mokinių įgūdžius saugiai tvarkyti slaptažodžius.',
+    'Pristatyti autentifikacijos sąvoką ir skirtingus autentifikacijos veiksnius.',
+    'Ugdyti supratimą apie skaitmeninius išteklius ir prieigos kontrolės sąmoningumą.',
+    'Ugdyti žinias ir įgūdžius kuriant saugius vartotojo vardus ir slaptažodžius pagal rekomendacijas ir gerąją praktiką.',
+    'Ugdyti įgūdžius saugiai tvarkyti slaptažodžius.',
   ],
   outcomes: [
     'Galiu identifikuoti savo asmeninius skaitmeninius išteklius ir paaiškinti rizikas, su kuriomis jie susiduria tiek fizinėje, tiek skaitmeninėje aplinkoje.',
@@ -69,7 +69,7 @@ export const contentAT = {
             title: 'Skaitmeninių išteklių supratimas',
           },
           {
-            title: 'Plenarinis: Apibendrinimas ir neformali vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },
@@ -133,7 +133,7 @@ export const contentAT = {
             title: 'Autentifikacijos taikymas skaitmeniniams ištekliams',
           },
           {
-            title: 'Plenarinis: Apibendrinimas ir neformali vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },
@@ -212,7 +212,7 @@ export const contentAT = {
             title: 'Saugus stiprių slaptažodžių kūrimas',
           },
           {
-            title: 'Plenarinis: Apibendrinimas ir neformali vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },
@@ -303,7 +303,7 @@ export const contentAT = {
             title: 'Įvadas',
           },
           {
-            title: 'Slaptažodžiai',
+            title: 'Slaptažodžių tvarkyklės',
           },
           {
             title: 'Slaptažodžių tvarkyklės',
@@ -312,7 +312,7 @@ export const contentAT = {
             title: 'Saugus slaptažodžių tvarkyklių taikymas',
           },
           {
-            title: 'Plenarinis: Apibendrinimas ir neformali vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },
@@ -374,7 +374,7 @@ export const contentAT = {
             title: 'Skaitmeninė tapatybė ir autentifikacija',
           },
           {
-            title: 'Plenarinis: Apibendrinimas ir neformali vertinimas',
+            title: 'Apibendrinimas – santrauka ir neoficialus vertinimas',
           },
         ],
       },

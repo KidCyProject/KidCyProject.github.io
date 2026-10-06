@@ -7,16 +7,20 @@
 // ---------------------------------------------------------------------------
 
 export const contentDP = {
-  aim: 'Den Lernenden helfen zu erkennen, was als personenbezogene Daten gilt, zu verstehen, warum Datenschutz wichtig ist, und vor dem Teilen von Informationen online sicherere Entscheidungen zu treffen.',
+  aim: 'Grundlegende Kenntnisse darüber zu vermitteln, was Datenschutz ist und nach welchen Prinzipien private Daten in digitalen Umgebungen geschützt werden.',
   objectives: [
-    'Personenbezogene Daten definieren und identifizieren, was sensibel ist.',
-    'Überlegtes Teilen und zustimmungsbasierte Entscheidungen fördern.',
-    'Bewusstsein für Datenschutzeinstellungen und sichere Standardwerte aufbauen.',
+    'Einzuführen, welche Arten von Daten beim Teilen von Inhalten in digitalen Umgebungen eine Rolle spielen.',
+    'Die Bedeutung des Datenschutzes in digitalen Umgebungen zu betonen.',
+    'Die Prinzipien des Datenschutzes in digitalen Umgebungen einzuführen.',
+    'Das Verständnis dafür zu entwickeln, wie digitale Daten verwendet werden und wie sie bei Bedarf gelöscht werden können.',
   ],
   outcomes: [
-    'Gängige Arten personenbezogener Informationen erkennen.',
-    'Erklären, wie Daten online übertragen und gespeichert werden können.',
-    'Einfache Datenschutzregeln anwenden, bevor man teilt oder postet.',
+    'Ich kann beschreiben, welche Arten von Daten beim Teilen von Inhalten in digitalen Umgebungen eine Rolle spielen.',
+    'Ich kann erklären, warum Datenschutz in digitalen Umgebungen wichtig ist.',
+    'Ich kann die Prinzipien des Datenschutzes in digitalen Umgebungen in gegebenen Szenarien demonstrieren und begründen, warum ich diese Entscheidungen getroffen habe.',
+    'Ich kann in gegebenen Szenarien Muster beim Teilen von Daten erkennen, die zu Verletzungen der Privatsphäre führen.',
+    'Ich kann erklären, wie digitale Daten verwendet werden und wie sie bei Bedarf gelöscht werden können.',
+    'Ich kann in gegebenen Szenarien Beispiele für private Daten erkennen.',
   ],
   parts: [
     {
@@ -49,7 +53,7 @@ export const contentDP = {
             title: 'Was sind personenbezogene Daten?',
           },
           {
-            title: 'Plenarsitzung: Zusammenfassung und informelle Beurteilung',
+            title: 'Plenarsitzung – Zusammenfassung und informelle Beurteilung',
           },
         ],
       },
@@ -104,13 +108,10 @@ export const contentDP = {
             title: 'Einführung',
           },
           {
-            title: 'Wie werden Daten geteilt?',
+            title: 'Szenarien zum Teilen von Daten',
           },
           {
-            title: 'Zustimmung und Berechtigungen',
-          },
-          {
-            title: 'Plenarsitzung - Zusammenfassung und informelle Beurteilung',
+            title: 'Plenarsitzung – Zusammenfassung und informelle Beurteilung',
           },
         ],
       },
@@ -159,10 +160,10 @@ export const contentDP = {
             title: 'Was ist ein digitaler Fußabdruck?',
           },
           {
-            title: 'Ihre Online-Spuren kartieren',
+            title: 'Digitale Spuren',
           },
           {
-            title: 'Plenarsitzung - Zusammenfassung und informelle Beurteilung',
+            title: 'Plenarsitzung – Zusammenfassung und informelle Beurteilung',
           },
         ],
       },
@@ -198,7 +199,14 @@ export const contentDP = {
             ariaLabel: 'Material herunterladen',
           },
           {
-            // ID: 4.4.2
+            // ID: 4.4.2a
+            kind: 'Arbeitsblatt',
+            name: 'Korrigiere dieses Profil!',
+            filename: 'Arbeitsblatt - Korrigiere dieses Profil',
+            ariaLabel: 'Material herunterladen',
+          },
+          {
+            // ID: 4.4.2b
             kind: 'Arbeitsblatt',
             name: 'Korrigiere dieses Profil!',
             filename: 'Arbeitsblatt - Korrigiere dieses Profil',
@@ -231,13 +239,10 @@ export const contentDP = {
             title: 'Einführung',
           },
           {
-            title: 'Ihren digitalen Fußabdruck überprüfen',
+            title: 'Private Daten online schützen',
           },
           {
-            title: 'Datenschutzeinstellungen verwalten',
-          },
-          {
-            title: 'Plenarsitzung - Zusammenfassung und informelle Beurteilung',
+            title: 'Plenarsitzung – Zusammenfassung und informelle Beurteilung',
           },
         ],
       },

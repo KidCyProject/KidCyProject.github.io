@@ -7,16 +7,16 @@
 // ---------------------------------------------------------------------------
 
 export const contentMW = {
-  aim: 'Den Lernenden helfen zu verstehen, was Malware ist, wie Infektionen entstehen und welche Gewohnheiten das Risiko unsicherer Downloads, Dateien und Installationen verringern.',
+  aim: 'Grundlegende Kenntnisse darüber zu vermitteln, was Malware ist, welche Risiken sie birgt und nach welchen Prinzipien man sich davor schützt.',
   objectives: [
-    'Einführung in das Konzept Malware und warum es gefährlich ist.',
-    'Gängige Verbreitungswege von Malware identifizieren.',
-    'Gewohnheiten für sicherere Downloads und Updates entwickeln.',
+    'Einzuführen, was Malware ist und welche Arten von Malware es gibt.',
+    'Zu erklären, wie sich Malware verhält und woran man erkennt, dass ein Gerät infiziert wurde.',
+    'Fähigkeiten zu entwickeln, um sich vor Risiken durch Malware zu schützen.',
   ],
   outcomes: [
-    'Den Unterschied zwischen sicheren und unsicheren Dateien oder Links erklären.',
-    'Warnsignale bei verdächtigen Downloads erkennen.',
-    'Vertrauenswürdige Quellen nutzen und bei Unsicherheit um Hilfe bitten.',
+    'Ich kann beschreiben, was Malware ist, und sie in gegebenen Szenarien erkennen.',
+    'Ich kann verschiedene Arten von Malware, ihr Verhalten und Anzeichen dafür erklären, dass mein Gerät infiziert wurde.',
+    'Ich kann in gegebenen Szenarien demonstrieren, wie man sich vor einer Infektion mit Malware schützt, und begründen, warum ich diese Entscheidungen getroffen habe.',
   ],
   parts: [
     {
@@ -56,7 +56,7 @@ export const contentMW = {
             title: 'Malware definieren',
           },
           {
-            title: 'Abschlussrunde: Zusammenfassung und informelle Bewertung',
+            title: 'Plenarsitzung – Zusammenfassung und informelle Beurteilung',
           },
         ],
       },
@@ -104,10 +104,10 @@ export const contentMW = {
             title: 'Einführung',
           },
           {
-            title: 'Knoten für Malware-Typen knüpfen',
+            title: 'Malware-Typen',
           },
           {
-            title: 'Abschlussrunde: Zusammenfassung und informelle Bewertung',
+            title: 'Plenarsitzung – Zusammenfassung und informelle Beurteilung',
           },
         ],
       },
@@ -165,7 +165,7 @@ export const contentMW = {
             title: 'Malware untersuchen',
           },
           {
-            title: 'Abschlussrunde: Zusammenfassung und informelle Bewertung',
+            title: 'Plenarsitzung – Zusammenfassung und informelle Beurteilung',
           },
         ],
       },
@@ -211,13 +211,13 @@ export const contentMW = {
             title: 'Einführung',
           },
           {
-            title: 'Die Situation unvorsichtigen Verhaltens analysieren',
+            title: 'Die Umstände einer Malware-Infektion analysieren',
           },
           {
             title: 'Grundlegende Schutzmaßnahmen erlernen',
           },
           {
-            title: 'Abschlussrunde: Zusammenfassung und informelle Bewertung',
+            title: 'Plenarsitzung – Zusammenfassung und informelle Beurteilung',
           },
         ],
       },

@@ -9,8 +9,8 @@
 export const contentAP = {
   aim: 'Å gi en oversikt over angriperperspektivet ved å hjelpe elever å gjenkjenne angriperteknikker og forstå motivene bak cyberangrep.',
   objectives: [
-    'Å utvikle elevenes forståelse av angripermotivasjoner, inkludert psykologiske, sosiale og økonomiske faktorer.',
-    'Å bygge elevenes ferdigheter i å gjenkjenne vanlige angriperteknikker.',
+    'Å utvikle forståelse av angriperes motiver, inkludert psykologiske, sosiale og økonomiske faktorer.',
+    'Å bygge ferdigheter i å gjenkjenne vanlige angriperteknikker.',
   ],
   outcomes: [
     'Jeg forstår angriperes motiver og kan gi eksempler knyttet til psykologiske, sosiale og økonomiske faktorer.',
@@ -62,7 +62,7 @@ export const contentAP = {
             title: 'Definer kretsen av betrodde personer',
           },
           {
-            title: 'Plenum: Oppsummering og uformell vurdering',
+            title: 'Plenum – Oppsummering og uformell vurdering',
           },
         ],
       },
@@ -121,7 +121,7 @@ export const contentAP = {
             title: 'Forstå angriperens motivasjon',
           },
           {
-            title: 'Plenum: Oppsummering og uformell vurdering',
+            title: 'Plenum – Oppsummering og uformell vurdering',
           },
         ],
       },
@@ -203,7 +203,7 @@ export const contentAP = {
             title: 'Forstå angrepsveier',
           },
           {
-            title: 'Plenum: Oppsummering og uformell vurdering',
+            title: 'Plenum – Oppsummering og uformell vurdering',
           },
         ],
       },

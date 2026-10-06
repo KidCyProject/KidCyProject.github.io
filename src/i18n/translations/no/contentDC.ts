@@ -11,7 +11,7 @@ export const contentDC = {
   objectives: [
     'Å understreke viktigheten av digitalt medborgerskap.',
     'Å introdusere konseptet digitalt medborgerskap og dets prinsipper om rettigheter, ansvar og respekt i digitale miljøer.',
-    'Å utvikle elevenes forståelse av hvordan man anvender disse prinsippene om rettigheter, ansvar og respekt i digitale miljøer – å være trygg, klok og sosial.',
+    'Å utvikle forståelse av hvordan man anvender disse prinsippene om rettigheter, ansvar og respekt i digitale miljøer – å være trygg, klok og sosial.',
   ],
   outcomes: [
     'Jeg kan forklare hva digitalt medborgerskap er og hvorfor det er viktig.',
@@ -243,6 +243,9 @@ export const contentDC = {
           },
           {
             title: 'Handle ansvarlig i digitale miljøer',
+          },
+          {
+            title: 'Handle respektfullt i digitale miljøer',
           },
           {
             title: 'Skape et positivt digitalt fotavtrykk',

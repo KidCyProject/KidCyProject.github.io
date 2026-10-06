@@ -7,16 +7,18 @@
 // ---------------------------------------------------------------------------
 
 export const contentSE = {
-  aim: 'Å hjelpe elever med å gjenkjenne manipulasjonstaktikker, stanse opp før de handler, og velge tryggere svar når noen bruker press, hastverk eller falsk tillit.',
+  aim: 'Å gi grunnleggende kunnskap om hva sosial manipulasjon er, med vekt på risikoene det medfører og prinsipper for å beskytte seg mot det.',
   objectives: [
-    'Forklare hvordan manipulasjon kan skje online og ansikt til ansikt.',
-    'Identifisere vanlige taktikker som hastverk, smiger eller autoritet.',
-    'Øve på trygge svar og hjelpsøkende atferd.',
+    'Å introdusere begrepet sosial manipulasjon, med fokus på angripernes mål.',
+    'Å forklare ulike former for sosial manipulasjon og situasjonene der de kan forekomme.',
+    'Å utvikle ferdigheter i å gjenkjenne teknikker for sosial manipulasjon og måter å beskytte seg mot dem på.',
   ],
   outcomes: [
-    'Gjenkjenne pressetaktikker brukt i meldinger eller chatter.',
-    'Bruke en stopp-og-sjekk-rutine før man handler.',
-    'Vite når og hvordan man melder fra om mistenkelig atferd.',
+    'Jeg kan beskrive hva sosial manipulasjon er og hvilke typer som finnes.',
+    'Jeg kan forklare hvorfor angripere bruker sosial manipulasjon.',
+    'Jeg kan gi eksempler på situasjoner der angrep med sosial manipulasjon sannsynligvis vil forekomme.',
+    'Jeg kan gjenkjenne angrep med sosial manipulasjon i gitte scenarioer.',
+    'Jeg kan demonstrere måter å beskytte seg mot sosial manipulasjon på i gitte scenarioer og begrunne valgene mine.',
   ],
   parts: [
     {
@@ -64,7 +66,7 @@ export const contentSE = {
         ],
         activityPlan: [
           {
-            title: 'Introduksjon: Påvirkning og overtalelse i hverdagen',
+            title: 'Introduksjon',
           },
           {
             title: 'Introduksjon til konseptet sosial manipulasjon',
@@ -73,10 +75,7 @@ export const contentSE = {
             title: 'Hva vil angripere ha?',
           },
           {
-            title: 'Sosial manipulasjon online og offline',
-          },
-          {
-            title: 'Plenum: Oppsummering og uformell vurdering',
+            title: 'Plenum – Oppsummering og uformell vurdering',
           },
         ],
       },
@@ -128,19 +127,16 @@ export const contentSE = {
         ],
         activityPlan: [
           {
-            title: 'Introduksjon: Mennesker vs. systemer',
-          },
-          {
-            title: 'Følelser angripere bruker',
+            title: 'Introduksjon',
           },
           {
             title: 'Tenke som en angriper',
           },
           {
-            title: 'Hverdagskontekster der sosial manipulasjon virker',
+            title: 'Hverdagssituasjoner der sosial manipulasjon kan skje',
           },
           {
-            title: 'Plenum: Oppsummering og uformell vurdering',
+            title: 'Plenum – Oppsummering og uformell vurdering',
           },
         ],
       },
@@ -162,19 +158,16 @@ export const contentSE = {
         ],
         activityPlan: [
           {
-            title: 'Introduksjon: Hvor kan sosial manipulasjon skje?',
-          },
-          {
-            title: 'Vanlige advarselstegn',
+            title: 'Introduksjon',
           },
           {
             title: 'Typer sosial manipulasjon',
           },
           {
-            title: 'Øve på gjenkjenning',
+            title: 'Øve på å gjenkjenne sosial manipulasjon',
           },
           {
-            title: 'Plenum: Oppsummering og uformell vurdering',
+            title: 'Plenum – Oppsummering og uformell vurdering',
           },
         ],
       },
@@ -240,7 +233,7 @@ export const contentSE = {
         ],
         activityPlan: [
           {
-            title: 'Introduksjon: Fra gjenkjenning til respons',
+            title: 'Introduksjon',
           },
           {
             title: 'En enkel modell for trygge beslutninger',
@@ -249,10 +242,10 @@ export const contentSE = {
             title: 'Øve på trygge svar',
           },
           {
-            title: 'Beskytte andre',
+            title: 'Beskytte andre og være en ansvarlig borger',
           },
           {
-            title: 'Plenum: Oppsummering og uformell vurdering',
+            title: 'Plenum – Oppsummering og uformell vurdering',
           },
         ],
       },

@@ -70,7 +70,7 @@ export const contentAT = {
             title: 'Understanding Digital Assets',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },
@@ -134,7 +134,7 @@ export const contentAT = {
             title: 'Applying Authentication to Digital Assets',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },
@@ -213,7 +213,7 @@ export const contentAT = {
             title: 'Creating Strong Passwords Safely',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },
@@ -313,7 +313,7 @@ export const contentAT = {
             title: 'Applying Password Managers Safely',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },
@@ -375,7 +375,7 @@ export const contentAT = {
             title: 'Digital Identity and Authentication',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },

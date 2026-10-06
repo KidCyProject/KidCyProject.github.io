@@ -7,16 +7,16 @@
 // ---------------------------------------------------------------------------
 
 export const contentDM = {
-  aim: 'Den Lernenden helfen, schädliches Online-Verhalten zu erkennen, zu verstehen, dass Grenzen wichtig sind, und zu wissen, welche Schritte sie unternehmen können, um Unterstützung zu erhalten und sicher zu bleiben.',
+  aim: 'Grundlegende Kenntnisse darüber zu vermitteln, was digitale Übergriffe und digitaler Missbrauch sind und nach welchen Prinzipien man damit umgeht.',
   objectives: [
-    'Digitalen Missbrauch in altersgerechten, unterstützenden Begriffen definieren.',
-    'Warnsignale und ungesundes Online-Verhalten erkennen.',
-    'Sichere Hilfesuche und Meldeschritte praktizieren.',
+    'Das Konzept digitaler Übergriffe und digitalen Missbrauchs in digitalen Umgebungen einzuführen.',
+    'Die Motive hinter digitalen Übergriffen und digitalem Missbrauch zu erklären.',
+    'Das Bewusstsein für Fälle digitaler Übergriffe und digitalen Missbrauchs, für die Techniken der Täterinnen und Täter und für Prinzipien im Umgang damit zu stärken.',
   ],
   outcomes: [
-    'Verhaltensweisen identifizieren, die Grenzen überschreiten oder Schaden anrichten.',
-    'Einfache Sicherheitsmaßnahmen wie Blockieren oder Melden anwenden.',
-    'Vertrauenspersonen und Unterstützungskanäle kennen, an die man sich wenden kann.',
+    'Ich kann digitale Übergriffe und digitalen Missbrauch definieren, Beispiele zu Fehlinformation, Desinformation, Cybermobbing, unsicheren Kontakten mit Fremden und schädlichem Verhalten von Influencern beschreiben und mögliche Motive hinter diesen Beispielen erklären.',
+    'Ich kann in gegebenen Szenarien Techniken erkennen, die Täterinnen und Täter einsetzen.',
+    'Ich kann in gegebenen Szenarien Wege vorschlagen und diskutieren, wie man mit digitalen Übergriffen und digitalem Missbrauch umgeht.',
   ],
   parts: [
     {
@@ -47,10 +47,10 @@ export const contentDM = {
             title: 'Einführung',
           },
           {
-            title: 'Was ist Fehlinformation?',
+            title: 'Fehlinformationen erkennen',
           },
           {
-            title: 'Plenarsitzung: Zusammenfassung und informelle Beurteilung',
+            title: 'Plenarsitzung – Zusammenfassung und informelle Beurteilung',
           },
         ],
       },
@@ -99,13 +99,10 @@ export const contentDM = {
             title: 'Einführung',
           },
           {
-            title: 'Was ist Desinformation?',
+            title: 'Desinformation verstehen',
           },
           {
-            title: 'Algorithmen',
-          },
-          {
-            title: 'Plenarsitzung: Zusammenfassung und informelle Beurteilung',
+            title: 'Plenarsitzung – Zusammenfassung und informelle Beurteilung',
           },
         ],
       },
@@ -154,10 +151,10 @@ export const contentDM = {
             title: 'Einführung',
           },
           {
-            title: 'Was ist Cybermobbing?',
+            title: 'Schlechtes Benehmen und Cybermobbing',
           },
           {
-            title: 'Plenarsitzung: Zusammenfassung und informelle Beurteilung',
+            title: 'Plenarsitzung – Zusammenfassung und informelle Beurteilung',
           },
         ],
       },
@@ -213,7 +210,10 @@ export const contentDM = {
             title: 'Einführung',
           },
           {
-            title: 'Plenarsitzung: Zusammenfassung und informelle Beurteilung',
+            title: 'Gefahren durch Fremde verstehen',
+          },
+          {
+            title: 'Plenarsitzung – Zusammenfassung und informelle Beurteilung',
           },
         ],
       },
@@ -239,10 +239,10 @@ export const contentDM = {
             title: 'Einführung',
           },
           {
-            title: 'Social-Media-Influencer',
+            title: 'Wer ist ein Influencer?',
           },
           {
-            title: 'Plenarsitzung: Zusammenfassung und informelle Beurteilung',
+            title: 'Plenarsitzung – Zusammenfassung und informelle Beurteilung',
           },
         ],
       },
@@ -298,7 +298,13 @@ export const contentDM = {
             title: 'Einführung',
           },
           {
-            title: 'Plenarsitzung: Zusammenfassung und informelle Beurteilung',
+            title: 'Resilienz gegenüber digitalen Übergriffen und digitalem Missbrauch',
+          },
+          {
+            title: 'Digitale Übergriffe und digitalen Missbrauch erkennen und damit umgehen',
+          },
+          {
+            title: 'Plenarsitzung – Zusammenfassung und informelle Beurteilung',
           },
         ],
       },

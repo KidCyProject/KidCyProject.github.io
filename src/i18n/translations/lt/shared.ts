@@ -300,10 +300,10 @@ export const shared = {
             'Skaitmeninis piktnaudžiavimas apima žalingą elgesį internete, pvz., grasinimus, priekabiavimą ar nepageidaujamą kontaktą. Šis modulis padeda pedagogams mokyti mokinius atpažinti nesaugų elgesį, nustatyti ribas ir rasti pagalbą.',
           parts: {
             p1: {
-              title: 'Dezinformacija',
+              title: 'Klaidinformacija',
             },
             p2: {
-              title: 'Klaidinga informacija',
+              title: 'Dezinformacija',
             },
             p3: {
               title: 'Kibernetinis patyčias',

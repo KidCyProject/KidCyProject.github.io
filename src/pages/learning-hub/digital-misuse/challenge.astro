@@ -2,6 +2,7 @@
 import DefaultLayout from '@layouts/DefaultLayout.astro'
 import PageHeader from '@components/PageHeader.astro'
 import { useTranslations } from 'src/i18n/index'
+import { toJsonScript } from '../../../utils/jsonScript'
 
 const { t, v } = useTranslations(Astro.currentLocale)
 const { v: vEn } = useTranslations('en')
@@ -228,7 +229,7 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
   <script
     type="application/json"
     id="dm-challenge-data"
-    set:html={JSON.stringify({ stories, labels })}
+    set:html={toJsonScript({ stories, labels })}
   />
 
   <section class="my-12">

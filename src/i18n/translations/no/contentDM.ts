@@ -7,16 +7,16 @@
 // ---------------------------------------------------------------------------
 
 export const contentDM = {
-  aim: 'Å hjelpe elever med å gjenkjenne skadelig nettadferd, forstå at grenser er viktige, og vite hvilke steg de kan ta for å få støtte og holde seg trygge.',
+  aim: 'Å gi grunnleggende kunnskap om hva digitale overgrep og misbruk er, og prinsipper for hvordan man håndterer det.',
   objectives: [
-    'Definere digitalt overgrep i aldersvennlige, støttende termer.',
-    'Gjenkjenne advarseltegn og usunne nettadferdsmønstre.',
-    'Øve på trygge måter å søke hjelp og rapportere på.',
+    'Å introdusere begrepet digitale overgrep og misbruk i digitale miljøer.',
+    'Å forklare motivene bak digitale overgrep og misbruk.',
+    'Å bygge bevissthet om tilfeller av digitale overgrep og misbruk, teknikker som brukes av overgripere, og prinsipper for hvordan man håndterer det.',
   ],
   outcomes: [
-    'Identifisere atferd som krysser grenser eller forårsaker skade.',
-    'Bruke enkle sikkerhetstiltak som blokkering eller rapportering.',
-    'Kjenne til betrodde voksne og støttekanaler å oppsøke.',
+    'Jeg kan definere digitale overgrep og misbruk, beskrive eksempler som handler om feilinformasjon, desinformasjon, nettmobbing, utrygg kontakt med fremmede og skadelig atferd fra influencere, og forklare mulige motiver bak disse eksemplene.',
+    'Jeg kan gjenkjenne teknikker som brukes av overgripere og misbrukere i gitte scenarioer.',
+    'Jeg kan foreslå og diskutere måter å håndtere digitale overgrep og misbruk på i gitte scenarioer.',
   ],
   parts: [
     {
@@ -47,10 +47,10 @@ export const contentDM = {
             title: 'Introduksjon',
           },
           {
-            title: 'Hva er feilinformasjon?',
+            title: 'Gjenkjenne feilinformasjon',
           },
           {
-            title: 'Plenum: Oppsummering og uformell vurdering',
+            title: 'Plenum – Oppsummering og uformell vurdering',
           },
         ],
       },
@@ -99,13 +99,10 @@ export const contentDM = {
             title: 'Introduksjon',
           },
           {
-            title: 'Hva er desinformasjon?',
+            title: 'Forstå desinformasjon',
           },
           {
-            title: 'Algoritmer',
-          },
-          {
-            title: 'Plenum: Oppsummering og uformell vurdering',
+            title: 'Plenum – Oppsummering og uformell vurdering',
           },
         ],
       },
@@ -154,10 +151,10 @@ export const contentDM = {
             title: 'Introduksjon',
           },
           {
-            title: 'Hva er nettmobbing?',
+            title: 'Dårlig oppførsel og nettmobbing',
           },
           {
-            title: 'Plenum: Oppsummering og uformell vurdering',
+            title: 'Plenum – Oppsummering og uformell vurdering',
           },
         ],
       },
@@ -213,7 +210,10 @@ export const contentDM = {
             title: 'Introduksjon',
           },
           {
-            title: 'Plenum: Oppsummering og uformell vurdering',
+            title: 'Forstå farer fra fremmede',
+          },
+          {
+            title: 'Plenum – Oppsummering og uformell vurdering',
           },
         ],
       },
@@ -239,10 +239,10 @@ export const contentDM = {
             title: 'Introduksjon',
           },
           {
-            title: 'Influencere på sosiale medier',
+            title: 'Hvem er en influencer?',
           },
           {
-            title: 'Plenum: Oppsummering og uformell vurdering',
+            title: 'Plenum – Oppsummering og uformell vurdering',
           },
         ],
       },
@@ -298,7 +298,13 @@ export const contentDM = {
             title: 'Introduksjon',
           },
           {
-            title: 'Plenum: Oppsummering og uformell vurdering',
+            title: 'Motstandskraft mot digitale overgrep og misbruk',
+          },
+          {
+            title: 'Gjenkjenne og håndtere digitale overgrep og misbruk',
+          },
+          {
+            title: 'Plenum – Oppsummering og uformell vurdering',
           },
         ],
       },

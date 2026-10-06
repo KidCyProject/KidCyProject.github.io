@@ -8,19 +8,19 @@
 
 export const contentAP = {
   aim:
-    'Poskytnout přehled o pohledu útočníka – pomoct žákům rozpoznat techniky útočníků a pochopit motivace, které za kybernetickými útoky stojí.',
+    'Poskytnout přehled o pohledu útočníka – pomoct žákům rozpoznat techniky útočníků a pochopit motivace, které za kybernetickými útoky stojí.',
   objectives: [
-    'Rozvinout porozumění motivacím útočníků, včetně psychologických, sociálních a ekonomických faktorů.',
+    'Rozvinout porozumění motivacím útočníků, včetně psychologických, sociálních a ekonomických faktorů.',
     'Vybudovat dovednost rozpoznávat běžné techniky útočníků.',
   ],
   outcomes: [
-    'Rozumím motivacím útočníků a umím uvést příklady spojené s psychologickými, sociálními a ekonomickými faktory.',
-    'Umím v zadaných situacích rozpoznat techniky útočníků.',
+    'Rozumím motivacím útočníků a umím uvést příklady spojené s psychologickými, sociálními a ekonomickými faktory.',
+    'Umím v zadaných situacích rozpoznat techniky útočníků.',
   ],
   parts: [
     {
       goal:
-        'Pomoct žákům pochopit pojem důvěryhodný člověk a rozvinout dovednost vymezit si okruh lidí, kterým věří.',
+        'Pomoct žákům pochopit pojem důvěryhodný člověk a rozvinout dovednost vymezit si okruh lidí, kterým věří.',
       bundle: {
         filename: 'Pohled útočníka - balíček - Část 1',
       },
@@ -44,14 +44,14 @@ export const contentAP = {
             // ID: 2.1.3
             kind: 'Obrázek',
             name: 'Situace: Nález peněz',
-            filename: 'Obrázek - Situace Nález peněz',
+            filename: 'Obrázek - Situace - Nález peněz',
             ariaLabel: 'Stáhnout materiál',
           },
           {
             // ID: 2.1.4
             kind: 'Obrázek',
             name: 'Situace: Viděl jsem fotku',
-            filename: 'Obrázek - Situace Viděl jsem fotku',
+            filename: 'Obrázek - Situace - Viděl jsem fotku',
             ariaLabel: 'Stáhnout materiál',
           },
         ],
@@ -63,13 +63,13 @@ export const contentAP = {
             title: 'Vymezit okruh lidí, kterým věříme',
           },
           {
-            title: 'Závěr: shrnutí a neformální hodnocení',
+            title: 'Závěr – shrnutí a neformální hodnocení',
           },
         ],
       },
     },
     {
-      goal: 'Představit pojem útočník a motivace z pohledu útočníka.',
+      goal: 'Představit pojem útočník a motivace z pohledu útočníka.',
       bundle: {
         filename: 'Pohled útočníka - balíček - Část 2',
       },
@@ -99,8 +99,8 @@ export const contentAP = {
           {
             // ID: 2.2.5
             kind: 'Obrázek',
-            name: 'Pohled do pohádky: motivace a prostředky útočníka',
-            filename: 'Obrázek - Pohled do pohádky motivace a prostředky útočníka',
+            name: 'Pohled do pohádky: motivace a prostředky útočníka',
+            filename: 'Obrázek - Pohled do pohádky - motivace a prostředky útočníka',
             ariaLabel: 'Stáhnout materiál',
           },
           {
@@ -116,13 +116,13 @@ export const contentAP = {
             title: 'Úvod',
           },
           {
-            title: 'Vymezení kybernetického útočníka',
+            title: 'Poznáváme kybernetického útočníka',
           },
           {
             title: 'Pochopit motivaci útočníka',
           },
           {
-            title: 'Závěr: shrnutí a neformální hodnocení',
+            title: 'Závěr – shrnutí a neformální hodnocení',
           },
         ],
       },
@@ -130,7 +130,7 @@ export const contentAP = {
         // ID: 2.2.3
         title: 'Kdo stojí za kybernetickými útoky?',
         supportText:
-          'Použijte video, aby si žáci dokázali představit skutečné lidi a motivace, které za kybernetickými útoky stojí, a dostali se za stereotyp osamělého hackera. Zastavte se a zeptejte se, kdo za tím podle nich je a proč.',
+          'Použijte video, aby si žáci dokázali představit skutečné lidi a motivace, které za kybernetickými útoky stojí, a dostali se za stereotyp osamělého hackera. Zastavte se a zeptejte se, kdo za tím podle nich je a proč.',
         downloads: {
           video: {
             filename: 'Kdo stojí za kybernetickými útoky',
@@ -144,7 +144,7 @@ export const contentAP = {
       },
     },
     {
-      goal: 'Představit základní techniky (taktiky), které jsou pro děti relevantní a které útočníci používají k dosažení svých cílů.',
+      goal: 'Představit základní techniky (taktiky), které jsou pro děti relevantní a které útočníci používají k dosažení svých cílů.',
       bundle: {
         filename: 'Pohled útočníka - balíček - Část 3',
       },
@@ -153,14 +153,14 @@ export const contentAP = {
           {
             // ID: 2.3.1
             kind: 'Text ke čtení',
-            name: 'Smishing a vydávání se za někoho',
+            name: 'Smishing a vydávání se za někoho',
             filename: 'Text ke čtení - Smishing a vydávání se za někoho',
             ariaLabel: 'Stáhnout materiál',
           },
           {
             // ID: 2.3.2
             kind: 'Text ke čtení',
-            name: 'Vishing, podvod a vydávání se za někoho',
+            name: 'Vishing, podvod a vydávání se za někoho',
             filename: 'Text ke čtení - Vishing, podvod a vydávání se za někoho',
             ariaLabel: 'Stáhnout materiál',
           },
@@ -181,7 +181,7 @@ export const contentAP = {
           {
             // ID: 2.3.5
             kind: 'Kartičky',
-            name: 'Útočníci a jejich plány',
+            name: 'Útočníci a jejich plány',
             filename: 'Kartičky - Útočníci a jejich plány',
             ariaLabel: 'Stáhnout materiál',
           },
@@ -189,7 +189,7 @@ export const contentAP = {
             // ID: 2.3.6
             kind: 'Pracovní list',
             name: 'Hlavolam: Sešlost útočníků',
-            filename: 'Pracovní list - Hlavolam Sešlost útočníků',
+            filename: 'Pracovní list - Hlavolam - Sešlost útočníků',
             ariaLabel: 'Stáhnout materiál',
           },
         ],
@@ -204,7 +204,7 @@ export const contentAP = {
             title: 'Porozumět průběhu útoku',
           },
           {
-            title: 'Závěr: shrnutí a neformální hodnocení',
+            title: 'Závěr – shrnutí a neformální hodnocení',
           },
         ],
       },
@@ -212,7 +212,7 @@ export const contentAP = {
   ],
   otherModulesDivider: 'Prozkoumejte další témata',
   otherModulesTitle: 'Další moduly',
-  otherModulesSubtitle: 'Procházejte příbuzné moduly a pokračujte v učení.',
+  otherModulesSubtitle: 'Procházejte příbuzné moduly a pokračujte v učení.',
   relatedModuleCards: [
     {
       moduleId: 'dc',
@@ -254,16 +254,16 @@ export const contentAP = {
 }
 
 export const challengeAP = {
-  title: 'V mysli hackera',
+  title: 'V mysli hackera',
   subtitle:
-    'Jste etický hacker a prohlížíte si profil na sociální síti. Klikněte na všechno, co vypadá jako bezpečnostní slabina — ale hlídejte si životy!',
+    'Jste etický hacker a prohlížíte si profil na sociální síti. Klikněte na všechno, co vypadá jako bezpečnostní slabina — ale hlídejte si životy!',
   howItWorks: 'Jak to funguje',
   instruction:
     'Prohlédněte si tenhle profil na sociální síti očima hackera, který hledá slabá místa. Kliknout se dá skoro na všechno na obrazovce — přemýšlejte pořádně, protože kliknutí na něco, co skutečná zranitelnost není, vás stojí jeden život!',
   tipLabel: 'Tip',
   tip: 'Mezi spoustou nevinně vypadajících prvků se skrývají přesně 4 skutečné zranitelnosti. Ne všechno, na co se dá kliknout, je bezpečnostní slabina!',
   livesTitle: 'Životy',
-  livesDesc: '3 špatná kliknutí a je konec',
+  livesDesc: '3 špatná kliknutí a je konec',
   vulnerabilitiesFoundTitle: '🔍 Nalezené zranitelnosti',
   vulnerabilitiesEmpty: 'Zatím žádné…',
   vulnerabilitiesCount: '/ 4',
@@ -271,7 +271,7 @@ export const challengeAP = {
   attackerTargets: [
     '🚩 Slabá nebo odhalená hesla',
     '🚩 HTTP místo HTTPS',
-    '🚩 Sdílení polohy v reálném čase',
+    '🚩 Sdílení polohy v reálném čase',
     '🚩 Celé datum narození veřejně viditelné',
     '🚩 Odhalené odpovědi na bezpečnostní otázky',
   ],
@@ -280,17 +280,17 @@ export const challengeAP = {
     handle: '@martin123',
     statusActiveNow: 'Nyní aktivní',
     bioText: '16 · Hráč 🎮 · Manga fanoušek',
-    aboutTitle: 'O mně',
+    aboutTitle: 'O mně',
     statsFriendsLabel: 'Přátelé',
     statsFollowingLabel: 'Sledování',
     bornText: 'Datum narození: 14. června 2008',
     emailText: 'martin.novak@seznam.cz',
     petNameText: 'Jméno mazlíčka: Pepe',
     post1Time: '📍 Nákupní centrum Hladovka · Právě teď',
-    post1Body: 'Zrovna si dávám skvělý burger. Je někdo poblíž? Přijďte za mnou ke stánkům s jídlem! 😄',
+    post1Body: 'Zrovna si dávám skvělý burger. Je někdo poblíž? Přijďte za mnou ke stánkům s jídlem! 😄',
     post1Badge: '🛍️ Nákupní centrum Hladovka — přihlášeno',
     post2Time: 'Před 2 hodinami',
-    post2Body: 'Zrovna jsem doma ze školy! Dáváme si s rodinou pizzu 🍕 Nejlepší večer!',
+    post2Body: 'Zrovna jsem doma ze školy! Dáváme si s rodinou pizzu 🍕 Nejlepší večer!',
     actionLike: 'To se mi líbí',
     actionComment: 'Komentář',
     actionShare: 'Sdílet',
@@ -312,61 +312,61 @@ export const challengeAP = {
     {
       id: 'http',
       label: 'Nešifrované připojení (HTTP)',
-      explain: 'Tahle stránka používá HTTP místo HTTPS. Všechno, co sem napíšete — včetně hesel — putuje úplně nešifrovaně a může to zachytit kdokoli ve stejné síti.'
+      explain: 'Tahle stránka používá HTTP místo HTTPS. Všechno, co sem napíšete — včetně hesel — putuje úplně nešifrovaně a může to zachytit kdokoli ve stejné síti.'
     },
     { id: 'avatar',
       label: 'Profilový obrázek',
-      explain: 'Profilové fotky jsou běžnou součástí sociálních sítí. Samy o sobě bezpečnostní riziko nejsou!'
+      explain: 'Profilové fotky jsou běžnou součástí sociálních sítí. Samy o sobě bezpečnostní riziko nejsou!'
     },
     {
       id: 'username',
       label: 'Zobrazované jméno / uživatelské jméno',
-      explain: 'Zobrazovat jméno a @přezdívku je na sociálních sítích úplně normální. Zranitelnost to není.'
+      explain: 'Zobrazovat jméno a @přezdívku je na sociálních sítích úplně normální. Zranitelnost to není.'
     },
     {
       id: 'online',
       label: 'Stav aktivity',
-      explain: 'Zobrazovat, kdy jste online, je běžná funkce. Ze strany soukromí to stojí za zamyšlení, ale o kritickou bezpečnostní zranitelnost nejde.'
+      explain: 'Zobrazovat, kdy jste online, je běžná funkce. Ze strany soukromí to stojí za zamyšlení, ale o kritickou bezpečnostní zranitelnost nejde.'
     },
     {
       id: 'bio',
       label: 'Bio / Zájmy',
-      explain: 'Uvádět obecné koníčky, jako je hraní her nebo anime, je v pořádku. Citlivé údaje o účtu to neprozradí.'
+      explain: 'Uvádět obecné koníčky, jako je hraní her nebo anime, je v pořádku. Citlivé údaje o účtu to neprozradí.'
     },
     {
       id: 'followers',
       label: 'Počet sledujících / přátel',
-      explain: 'Počty přátel a sledujících jsou běžnou funkcí sociálních sítí. Bezpečnostní zranitelnost to není!'
+      explain: 'Počty přátel a sledujících jsou běžnou funkcí sociálních sítí. Bezpečnostní zranitelnost to není!'
     },
     {
       id: 'birthday',
       label: 'Odhalené celé datum narození',
-      explain: "Prozradit celé datum narození je nebezpečné! Útočníci narozeniny využívají k hádání hesel (třeba „martin2008“), k odpovědím na bezpečnostní otázky a k obcházení obnovy účtu."
+      explain: "Prozradit celé datum narození je nebezpečné! Útočníci narozeniny využívají k hádání hesel (třeba „martin2008“), k odpovědím na bezpečnostní otázky a k obcházení obnovy účtu."
     },
     {
       id: 'email',
-      label: 'E-mail v profilu',
-      explain: 'Zobrazený e-mail může přilákat spam, ale ve srovnání s odhaleným heslem nebo odpovědí na bezpečnostní otázku jde o menší problém.'
+      label: 'E-mail v profilu',
+      explain: 'Zobrazený e-mail může přilákat spam, ale ve srovnání s odhaleným heslem nebo odpovědí na bezpečnostní otázku jde o menší problém.'
     },
     {
       id: 'petname',
       label: 'Odhalené jméno mazlíčka',
-      explain: 'Odhalené jméno mazlíčka můžou útočníci využít k uhodnutí odpovědí na bezpečnostní otázky nebo k přesvědčivějším útokům sociálního inženýrství.'
+      explain: 'Odhalené jméno mazlíčka můžou útočníci využít k uhodnutí odpovědí na bezpečnostní otázky nebo k přesvědčivějším útokům sociálního inženýrství.'
     },
     {
       id: 'location',
-      label: 'Vysílání polohy v reálném čase',
-      explain: 'Tenhle příspěvek prozrazuje, kde přesně Martin právě je! Kdokoli — včetně cizích lidí a útočníků — vidí, kde se v tuhle chvíli nachází. Sdílet polohu v reálném čase je vážné bezpečnostní riziko.'
+      label: 'Vysílání polohy v reálném čase',
+      explain: 'Tenhle příspěvek prozrazuje, kde přesně Martin právě je! Kdokoli — včetně cizích lidí a útočníků — vidí, kde se v tuhle chvíli nachází. Sdílet polohu v reálném čase je vážné bezpečnostní riziko.'
     },
     {
       id: 'post2',
       label: 'Obecný příspěvek',
-      explain: 'Psát o běžných věcech, jako je pizza k večeři, je úplně v pořádku. Žádné citlivé bezpečnostní údaje to neprozradí!'
+      explain: 'Psát o běžných věcech, jako je pizza k večeři, je úplně v pořádku. Žádné citlivé bezpečnostní údaje to neprozradí!'
     },
     {
       id: 'like1',
       label: 'Tlačítko To se mi líbí',
-      explain: 'Dávat příspěvkům lajk je úplně normální a neškodná věc!'
+      explain: 'Dávat příspěvkům lajk je úplně normální a neškodná věc!'
     },
     {
       id: 'comment1',
@@ -381,7 +381,7 @@ export const challengeAP = {
     {
       id: 'like2',
       label: 'Tlačítko To se mi líbí',
-      explain: 'Dávat příspěvkům lajk je úplně normální a neškodné!'
+      explain: 'Dávat příspěvkům lajk je úplně normální a neškodné!'
     },
     {
       id: 'comment2',

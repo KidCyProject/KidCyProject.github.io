@@ -51,7 +51,7 @@ export const contentDM = {
             title: 'Identifying Misinformation',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },
@@ -103,7 +103,7 @@ export const contentDM = {
             title: 'Understanding Disinformation',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },
@@ -155,7 +155,7 @@ export const contentDM = {
             title: 'Bad Manners and Cyberbullying',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },
@@ -214,7 +214,7 @@ export const contentDM = {
             title: 'Understanding Stranger Danger',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },
@@ -243,7 +243,7 @@ export const contentDM = {
             title: 'Who is an Influencer?',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },
@@ -305,7 +305,7 @@ export const contentDM = {
             title: 'Recognising and Dealing with Digital Misuse and Abuse',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },

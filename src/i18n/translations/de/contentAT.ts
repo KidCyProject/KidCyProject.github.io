@@ -10,10 +10,10 @@ export const contentAT = {
   aim: 'Grundlegende Kenntnisse der Authentifizierungs- und Identitätsverwaltungsprinzipien zum Schutz persönlicher digitaler Assets zu vermitteln.',
   objectives: [
     'Die Bedeutung sicherer Identitätsverwaltung zu betonen.',
-    'Das Konzept der Authentifizierung und ihre verschiedenen Typen einzuführen.',
-    'Das Verständnis der Schülerinnen und Schüler für digitale Assets und das Bewusstsein für Zugangskontrolle zu entwickeln.',
-    'Die Kenntnisse und Fähigkeiten der Schülerinnen und Schüler zur Erstellung sicherer Benutzernamen und Passwörter gemäß Empfehlungen und bewährten Praktiken zu entwickeln.',
-    'Die Fähigkeiten der Schülerinnen und Schüler zur sicheren Verwaltung von Passwörtern aufzubauen.',
+    'Das Konzept der Authentifizierung und ihre verschiedenen Authentifizierungsfaktoren einzuführen.',
+    'Das Verständnis für digitale Assets und das Bewusstsein für Zugangskontrolle zu entwickeln.',
+    'Kenntnisse und Fähigkeiten zur Erstellung sicherer Benutzernamen und Passwörter gemäß Empfehlungen und bewährten Praktiken zu entwickeln.',
+    'Fähigkeiten zur sicheren Verwaltung von Passwörtern aufzubauen.',
   ],
   outcomes: [
     'Ich kann meine persönlichen digitalen Assets identifizieren und die Risiken erklären, denen sie in physischen und digitalen Umgebungen ausgesetzt sind.',
@@ -69,7 +69,7 @@ export const contentAT = {
             title: 'Digitale Assets verstehen',
           },
           {
-            title: 'Plenarsitzung: Zusammenfassung und informelle Beurteilung',
+            title: 'Plenarsitzung – Zusammenfassung und informelle Beurteilung',
           },
         ],
       },
@@ -133,7 +133,7 @@ export const contentAT = {
             title: 'Authentifizierung auf digitale Assets anwenden',
           },
           {
-            title: 'Plenarsitzung: Zusammenfassung und informelle Beurteilung',
+            title: 'Plenarsitzung – Zusammenfassung und informelle Beurteilung',
           },
         ],
       },
@@ -212,7 +212,7 @@ export const contentAT = {
             title: 'Starke Passwörter sicher erstellen',
           },
           {
-            title: 'Plenarsitzung: Zusammenfassung und informelle Beurteilung',
+            title: 'Plenarsitzung – Zusammenfassung und informelle Beurteilung',
           },
         ],
       },
@@ -303,7 +303,7 @@ export const contentAT = {
             title: 'Einführung',
           },
           {
-            title: 'Passwörter',
+            title: 'Passwort-Manager',
           },
           {
             title: 'Passwort-Manager',
@@ -312,7 +312,7 @@ export const contentAT = {
             title: 'Passwort-Manager sicher anwenden',
           },
           {
-            title: 'Plenarsitzung: Zusammenfassung und informelle Beurteilung',
+            title: 'Plenarsitzung – Zusammenfassung und informelle Beurteilung',
           },
         ],
       },
@@ -374,7 +374,7 @@ export const contentAT = {
             title: 'Digitale Identität und Authentifizierung',
           },
           {
-            title: 'Plenarsitzung: Zusammenfassung und informelle Beurteilung',
+            title: 'Plenarsitzung – Zusammenfassung und informelle Beurteilung',
           },
         ],
       },

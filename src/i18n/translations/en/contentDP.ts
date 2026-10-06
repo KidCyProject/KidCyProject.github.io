@@ -54,7 +54,7 @@ export const contentDP = {
             title: 'What is Private Data?',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },
@@ -112,7 +112,7 @@ export const contentDP = {
             title: 'Data Sharing Scenarios',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },
@@ -164,7 +164,7 @@ export const contentDP = {
             title: 'Digital Traces',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },
@@ -200,7 +200,14 @@ export const contentDP = {
             ariaLabel: 'Download material',
           },
           {
-            // ID: 4.4.2
+            // ID: 4.4.2a
+            kind: 'Worksheet',
+            name: 'Fix This Profile!',
+            filename: 'Worksheet - Fix This Profile',
+            ariaLabel: 'Download material',
+          },
+          {
+            // ID: 4.4.2b
             kind: 'Worksheet',
             name: 'Fix This Profile!',
             filename: 'Worksheet - Fix This Profile',
@@ -236,7 +243,7 @@ export const contentDP = {
             title: 'Protecting Your Private Data Online',
           },
           {
-            title: 'Plenary: Summary and Informal Assessment',
+            title: 'Plenary – Summary and Informal Assessment',
           },
         ],
       },
