@@ -188,7 +188,7 @@ export const contentAP = {
             // ID: 2.3.6
             kind: 'Arbeidsark',
             name: 'Gåte: Angripernes fest',
-            filename: 'Arbeidsark - Gåte Angripernes fest',
+            filename: 'Arbeidsark - Gåte - Angripernes fest',
             ariaLabel: 'Last ned materiell',
           },
         ],

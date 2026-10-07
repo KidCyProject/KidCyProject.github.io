@@ -260,10 +260,16 @@ export function mergeParts(
     }
 
     const materials: MergedMaterial[] | undefined = translationMaterials.length > 0
-      ? translationMaterials.map((m, j) => ({
-          ...assetMaterials[j],
-          ...m,
-        } as MergedMaterial))
+      ? translationMaterials.map((m, j) => {
+          const id = assetMaterials[j]?.id
+          // Download filenames carry the material ID: "1.1.1 - Kind - Name"
+          const filename = id && m.filename ? `${id} - ${m.filename}` : m.filename
+          return {
+            ...assetMaterials[j],
+            ...m,
+            filename,
+          } as MergedMaterial
+        })
       : undefined
 
     // ── Activity plan ─────────────────────────────────────────────────────────
