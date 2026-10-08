@@ -23,6 +23,7 @@ const { t } = useTranslations(Astro.currentLocale)
   <div class="container">
     <div class="grid grid-cols-1 items-center lg:grid-cols-[4fr_3fr]">
       <div class="flex flex-col items-center gap-4 md:items-start">
+        <p class="hero-eyebrow">{t('layout.hero.eyebrow')}</p>
         <h1 class="hero-title text-center md:text-left" style="z-index: 3; letter-spacing: -0.05em;">
           <slot><span style="color: var(--link-color);">W</span>ise <span style="color: var(--link-color);">W</span>eb <br/><span style="color: var(--link-color);">W</span>anderers</slot>
         </h1>
@@ -39,9 +40,15 @@ const { t } = useTranslations(Astro.currentLocale)
         {t('layout.hero.moreInfo')}
       </a>
     </div>
+        <ul class="hero-chips" role="list">
+          <li>{t('layout.hero.chipFree')}</li>
+          <li>{t('layout.hero.chipLanguages')}</li>
+          <li>{t('layout.hero.chipOffline')}</li>
+          <li>{t('layout.hero.chipEU')}</li>
+        </ul>
       </div>
       <div style="z-index: 5;">
-        <img class="hidden xl:block floating-image" src="/images/index/robot-intro.webp" alt="" decoding="async" loading="eager" style="scale:1.2"/>
+        <img class="hidden lg:block floating-image" src="/images/index/robot-intro.webp" alt="" decoding="async" loading="eager"/>
       </div>
     </div>
   </div>
@@ -58,7 +65,7 @@ const { t } = useTranslations(Astro.currentLocale)
   }
 
   .floating-image {
-    scale: 0.87;
+    scale: 0.95;
     transform-origin: 55% 60%;
     will-change: transform;
     animation: wander-float 13s ease-in-out infinite;
@@ -68,6 +75,51 @@ const { t } = useTranslations(Astro.currentLocale)
   .button {
     border-radius: 10px;
     color: var(--button-text-color);
+  }
+
+  @media (min-width: 1280px) {
+    .floating-image {
+      scale: 1.05;
+    }
+  }
+
+  .hero-eyebrow {
+    font-size: 0.875rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--link-color);
+    margin-bottom: -0.5rem;
+    text-align: center;
+  }
+
+  .hero-chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0.25rem 0 0;
+  }
+
+  .hero-chips li {
+    font-size: 0.875rem;
+    font-weight: 700;
+    padding: 0.2rem 0.75rem;
+    border-radius: 9999px;
+    background: rgba(37, 99, 235, 0.1);
+    color: light-dark(#1e3a8a, var(--dm-fg));
+  }
+
+  @media (min-width: 768px) {
+    .hero-eyebrow {
+      text-align: left;
+    }
+
+    .hero-chips {
+      justify-content: flex-start;
+    }
   }
 
   .hero-badge {

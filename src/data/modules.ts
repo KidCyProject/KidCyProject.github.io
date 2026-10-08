@@ -1,4 +1,4 @@
-import { getModuleMaterialCount, getModuleVideoCount } from './moduleParts'
+import { getModuleMaterialCount, getModuleVideoCount, modulePartsData } from './moduleParts'
 import type { LanguagePackage } from './moduleParts'
 
 const challengePages = import.meta.glob('../pages/learning-hub/*/challenge.astro')
@@ -225,6 +225,9 @@ export const modules: ModuleData[] = [
 export const moduleCount = modules.length
 export const challengeCount = modules.filter(m => m.challenges > 0).length
 export const gameCount = modules.filter(m => m.games > 0).length
+export const partCount = modules.reduce((sum, m) => sum + (modulePartsData[m.id]?.length ?? 0), 0)
+export const materialCount = modules.reduce((sum, m) => sum + m.materials, 0)
+export const videoCount = modules.reduce((sum, m) => sum + m.videos, 0)
 
 export function getModule(id: ModuleId): ModuleData | undefined {
   return modules.find(m => m.id === id)

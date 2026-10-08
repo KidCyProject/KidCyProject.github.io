@@ -12,7 +12,7 @@
 
 [![Learning Modules](https://img.shields.io/badge/Learning_Modules-7-16A34A)](#-the-seven-modules)
 [![Lesson Parts](https://img.shields.io/badge/Lesson_Parts-31-0EA5E9)](#-module-catalogue)
-[![Classroom Materials](https://img.shields.io/badge/Classroom_Materials-101-F59E0B)](#-module-catalogue)
+[![Classroom Materials](https://img.shields.io/badge/Classroom_Materials-102-F59E0B)](#-module-catalogue)
 [![Videos](https://img.shields.io/badge/Videos-20-EF4444)](#-module-catalogue)
 [![Challenges](https://img.shields.io/badge/Interactive_Challenges-7-8850DF)](#-interactive-challenges)
 [![Games](https://img.shields.io/badge/Roblox_Games-5-D946EF)](#-cybersecurity-games-roblox)
@@ -183,7 +183,7 @@ Click a module to see its parts, videos and materials.
 </details>
 
 <details>
-<summary><b>4 · Data Privacy</b> — 4 parts · 14 materials · 3 videos</summary>
+<summary><b>4 · Data Privacy</b> — 4 parts · 15 materials · 3 videos</summary>
 
 **Aim:** To provide core knowledge of what data privacy is and principles for protecting private data in digital environments.
 
@@ -192,7 +192,7 @@ Click a module to see its parts, videos and materials.
 | 1 | What is Private Data? | 🎬 What is Private Data? | 2 |
 | 2 | Data Sharing | — | 3 |
 | 3 | Data Detectives - Digital Footprints | 🎬 What is a Digital Footprint? | 4 |
-| 4 | Data Detectives - Clean Up Your Digital Footprint | 🎬 Protecting Your Private Data Online | 5 |
+| 4 | Data Detectives - Clean Up Your Digital Footprint | 🎬 Protecting Your Private Data Online | 6 |
 
 **Challenge:** *Digital Footprint Sorter* — sort everyday activities by the traces they leave online.
 **Game:** *Secrets of the Pearl & Shell* (Roblox).
