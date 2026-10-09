@@ -99,6 +99,18 @@ Counts are **derived automatically** from `modulePartsData` at build time — do
 
 **Editors do not touch this file for text** — all displayed text comes from translation files.
 
+### Game files, guides and videos — `src/data/games.ts`
+
+Everything under the Play button of a `game.astro` page is rendered by `GameSupport.astro` (two columns, one on narrow screens): `GameDownload.astro` (left) and `GameResources.astro` (right).
+
+| What | Where | Notes |
+|------|-------|-------|
+| Roblox place files | `public/materials/games-hub/experiences/` | `home.rbxl` = hub, plus `auth`, `data`, `social`, `malware`, `abuse`. Translations are inside each place → one file per game. Mapped to modules in `games.ts`. |
+| Video walkthroughs | `public/materials/games-hub/videos/` | `Roblox-Home.mp4` (hub) and `<module slug>/Roblox-<Game>-<Intro\|MG<n>\|Hints\|Finale>.mp4`. Discovered from disk on every render — dropping a file in is enough. Keep them ~720p H.264 (GitHub: 100 MB/file, Pages: ~1 GB site). |
+| Guides | `public/materials/introduction/<lang>/Roblox_<Developer\|Teacher\|Student>_Guide[_<LANG>].<pdf\|docx>` | English has no suffix. Only existing files are offered (language dropdown, or a plain button for one language; "Coming soon" when none). |
+
+`scripts/generate-zips.sh` skips `games-hub`. Guides placed in `introduction/<lang>/` also end up in the introductory-materials zip (that is how the script treats every file in that folder).
+
 ### Merge function — `mergeParts(moduleId, translationParts)`
 
 Called in each `content.astro` page. Combines `modulePartsData[moduleId]` (structural) with the locale's `contentXX.parts` array (text). Returns `MergedPart[]` ready for rendering.
@@ -122,7 +134,7 @@ Every learning module has pages at `src/pages/learning-hub/<slug>/`:
 |------|---------|
 | `content.astro` | Main module page: aim/objectives/outcomes tabs, expandable parts with materials/video/activity-plan tabs, related modules list |
 | `challenge.astro` | Interactive challenge embed |
-| `game.astro` | Roblox game link + instructions (optional — not all modules have this) |
+| `game.astro` | Roblox game link + instructions + `.rbxl` download block (`GameDownload.astro`) (optional — not all modules have this) |
 
 All content pages follow the same structure:
 1. `useTranslations(Astro.currentLocale)` to get `t` and `v`.

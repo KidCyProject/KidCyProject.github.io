@@ -1,0 +1,165 @@
+---
+import { Icon } from 'astro-icon/components'
+import { useTranslations } from 'src/i18n/index'
+import { moduleGames, hubGame, formatFileSize } from 'src/data/games'
+import type { ModuleId } from 'src/data/modules'
+
+/**
+ * GameDownload Component
+ *
+ * "Download for editing" block shown on every game page: the module's .rbxl
+ * place file plus the shared Games Hub (home.rbxl). Opens in Roblox Studio.
+ *
+ * Accessibility:
+ * - Decorative icons are aria-hidden; link names include the file type and size
+ * - Steps are an ordered list; the place-ID warning is a labelled note
+ */
+interface Props {
+  /** Module whose game file is offered. */
+  moduleId: ModuleId
+  /** CSS colour of the module brand, e.g. `var(--brand-MW)`. */
+  color: string
+}
+
+const { moduleId, color } = Astro.props
+const locale = Astro.currentLocale
+const { t, v } = useTranslations(locale)
+
+const INSTALL_GUIDE_URL = 'https://create.roblox.com/docs/tutorials/curriculums/studio/install-studio'
+const PUBLISHING_GUIDE_URL = 'https://create.roblox.com/docs/production/publishing/publish-games-and-places'
+
+// Steps that end with a "more information here" link (same order as `steps` in the translations).
+const stepLinks = [
+  { url: INSTALL_GUIDE_URL, label: t('pages.hub.games.download.installGuideLabel') },
+  undefined,
+  { url: PUBLISHING_GUIDE_URL, label: t('pages.hub.games.download.publishGuideLabel') },
+]
+
+const game = moduleGames[moduleId]
+const steps = v<string[]>('pages.hub.games.download.steps') ?? []
+
+const label = (key: string, file: { bytes: number }) => {
+  const size = formatFileSize(file.bytes, locale)
+  return `${t(key)} (.rbxl${size ? `, ${size}` : ''})`
+}
+---
+
+{
+  game && (
+    <section class="game-download" style={`--game-color: ${color}`} aria-labelledby={`game-download-${moduleId}`}>
+      <h2 id={`game-download-${moduleId}`} class="mb-2">
+        {t('pages.hub.games.download.heading')}
+      </h2>
+      <p>{t('pages.hub.games.download.description')}</p>
+
+      <div class="game-download__actions">
+        <a href={game.href} download={game.filename} class="button has-icon game-download__button">
+          <Icon name="lucide:download" />
+          <span>{label('pages.hub.games.download.button', game)}</span>
+        </a>
+        <a href={hubGame.href} download={hubGame.filename} class="button has-icon is-outline game-download__button game-download__button--hub">
+          <Icon name="lucide:download" />
+          <span>{label('pages.hub.games.download.hubButton', hubGame)}</span>
+        </a>
+      </div>
+
+      <h3 class="game-download__steps-title">{t('pages.hub.games.download.stepsTitle')}</h3>
+      <ol class="game-download__steps">
+        {steps.map((step, i) => {
+          const link = stepLinks[i]
+          return (
+            <li>
+              {step}
+              {link && (
+                <>
+                  {' '}
+                  {t('pages.hub.games.download.moreInfoText')}{' '}
+                  <a href={link.url} target="_blank" rel="noopener noreferrer" aria-label={link.label}>{t('pages.hub.games.download.moreInfoLinkText')}</a>.
+                </>
+              )}
+            </li>
+          )
+        })}
+      </ol>
+
+      <div class="game-download__note" role="note">
+        <strong>{t('pages.hub.games.download.noteLabel')}</strong>
+        <span>{t('pages.hub.games.download.note')}</span>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .game-download {
+    padding: 1.5rem 1.75rem;
+    border-radius: 0.9rem;
+    border: 1px solid color-mix(in oklab, var(--game-color), white 50%);
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--game-color), white 92%),
+      color-mix(in oklab, var(--game-color), white 97%)
+    );
+  }
+
+  .game-download h2 {
+    font-size: clamp(1.5rem, 2.4vw, 1.9rem);
+    line-height: 1.15;
+  }
+
+  .game-download__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 1.25rem 0 1.5rem;
+  }
+
+  .game-download__button {
+    background: var(--game-color);
+    border-color: var(--game-color);
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .game-download__button:hover {
+    background: #fff;
+    color: var(--game-color);
+    transition: all 0.5s ease;
+  }
+
+  .game-download__button--hub {
+    background: transparent;
+    color: var(--game-color);
+  }
+
+  .game-download__button--hub:hover {
+    background: var(--game-color);
+    color: #fff;
+  }
+
+  .game-download__steps-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .game-download__steps {
+    margin: 0 0 1.25rem;
+    padding-left: 1.5rem;
+    list-style: decimal;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .game-download__note {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.75rem 1rem;
+    border-left: 4px solid var(--game-color);
+    border-radius: 0.25rem;
+    background: color-mix(in oklab, var(--game-color), white 90%);
+    font-size: 0.95rem;
+    color: color-mix(in oklab, var(--game-color), black 45%);
+  }
+</style>

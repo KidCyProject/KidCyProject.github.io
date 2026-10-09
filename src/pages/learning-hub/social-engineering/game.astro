@@ -1,6 +1,7 @@
 ---
 import DefaultLayout from '@layouts/DefaultLayout.astro'
 import PageHeader from '@components/PageHeader.astro'
+import GameSupport from '@components/GameSupport.astro'
 import { useTranslations } from 'src/i18n/index'
 
 const { t } = useTranslations(Astro.currentLocale)
@@ -53,6 +54,7 @@ const { t } = useTranslations(Astro.currentLocale)
 
 
     </div>
+    <GameSupport moduleId="se" color="var(--brand-SE)" />
     </div>
   </section>
 

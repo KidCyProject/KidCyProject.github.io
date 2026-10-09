@@ -1446,3 +1446,31 @@
   color: var(--dm-fg) !important;
 }
 
+// ── Game download block (components/GameDownload.astro) ───────────────────────
+// Light mode mixes the module colour with white; swap for dark surfaces.
+.darkmode .game-download {
+  background: var(--dm-surface-1) !important;
+  border-color: var(--dm-border-sub) !important;
+  color: var(--dm-fg-muted) !important;
+}
+
+.darkmode .game-download__note {
+  background: var(--dm-surface-2) !important;
+  color: var(--dm-fg-muted) !important;
+}
+
+.darkmode .game-download__button:hover {
+  background: var(--dm-surface-3) !important;
+  color: var(--dm-fg) !important;
+}
+
+.darkmode .game-download__button--hub {
+  background: transparent !important;
+  color: var(--game-color) !important;
+}
+
+.darkmode .game-download__button--hub:hover {
+  background: var(--game-color) !important;
+  color: #fff !important;
+}
+

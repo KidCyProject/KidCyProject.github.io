@@ -13,9 +13,9 @@ export const shared = {
       learningHub: 'Vzdělávací centrum',
     },
     hero: {
-      eyebrow: 'Lekce kybernetické bezpečnosti pro druhý stupeň ZŠ',
+      eyebrow: 'Lekce kybernetické bezpečnosti pro ZŠ',
       subtitle:
-        'Hotové lekce, výzvy a hry připravené k výuce. Nepotřebujete znalosti IT. První hodinu si připravíte asi za 15 minut.',
+        'Hotové lekce, výzvy a hry připravené k výuce. Nepotřebujete znalosti IT. První hodinu si připravíte za 15 minut.',
       chipFree: 'Zdarma',
       chipLanguages: '5 jazyků',
       chipOffline: 'Funguje offline',
@@ -67,7 +67,7 @@ export const shared = {
       quickStep4: 'Učte a zakončete interaktivní výzvou',
       languagesEyebrow: 'Jazyky',
       languagesTitle: 'Učte ve svém jazyce',
-      languagesText: 'Balíčky si stáhnete jako ZIP v jednom jazyce. Videa s titulky uložte a učte i offline.',
+      languagesText: 'Balíčky si stáhnete jako ZIP v jednom jazyce. Videa s titulky uložte a učte i offline.',
       missionEyebrow: 'Naše poslání',
       missionTitle: 'Každá třída, každé dítě',
       missionText: 'Vzniklo ve spolupráci evropských univerzit a odborníků z praxe, aby učitelé bez odborné přípravy mohli s jistotou učit o bezpečí online.',
@@ -149,6 +149,14 @@ export const shared = {
       title: 'Vzdělávací centrum',
       subtitle:
         'Toto je centrální prostor pro všechny moduly, školicí materiály a další vzdělávací zdroje. Najdete zde hodiny připravené k použití, praktické aktivity a pokyny na podporu výuky kyberbezpečnosti v různém školním prostředí. Všechny materiály jsou přehledně uspořádané, přizpůsobivé a vytvořené tak, aby pedagogům pomohly sebejistě dětem představit témata digitální bezpečnosti. Ať už hledáte ucelené moduly, nebo jednotlivé výukové materiály, vzdělávací centrum vám poskytne všechno na jednom místě.',
+
+      // Czech has three count forms (1 / 2–4 / 5+), so "5 částí" can't be built from labels.*
+      counts: {
+        part: { one: 'část', few: 'části', many: 'částí' },
+        material: { one: 'materiál', few: 'materiály', many: 'materiálů' },
+        video: { one: 'video', few: 'videa', many: 'videí' },
+        step: { one: 'krok', few: 'kroky', many: 'kroků' },
+      },
 
       labels: {
         showDetails: 'Zobrazit části a aktivity',
@@ -402,6 +410,50 @@ export const shared = {
           'Chcete-li si hru zahrát, musíte mít na svém zařízení nainstalovanou aplikaci Roblox. Po kliknutí na tlačítko Hrát se hra otevře v aplikaci Roblox. Pokud ještě nemáte Roblox nainstalován, budete vyzváni ke stažení a instalaci.',
         tip: 'Pro nejlepší zážitek se ujistěte, že máte na svém zařízení nainstalovanou aplikaci Roblox, než kliknete na tlačítko Hrát.',
         playGame: 'Hrát',
+
+        download: {
+          heading: 'Stáhněte si soubory hry',
+          description:
+            'Chcete hru upravit pro svou třídu nebo ji dál vylepšovat? Stáhněte si soubor místa pro Roblox a otevřete jej v aplikaci Roblox Studio. Každá hra je samostatný soubor a Herní centrum umožňuje hráčům připojit se k ostatním hrám.',
+          button: 'Stáhnout tuto hru',
+          hubButton: 'Stáhnout Herní centrum',
+          stepsTitle: 'Jak soubor otevřít',
+          steps: [
+            'Nainstalujte si Roblox Studio (zdarma) a přihlaste se svým Roblox účtem.',
+            'Dvakrát klikněte na stažený soubor .rbxl, nebo ve Studiu zvolte File > Open from File.',
+            'Hru upravte a pak ji přes File > Publish to Roblox uložte jako vlastní kopii.',
+          ],
+          moreInfoText: 'Další informace najdete',
+          moreInfoLinkText: 'zde',
+          installGuideLabel: 'Průvodce instalací Roblox Studia (otevře se v nové záložce)',
+          publishGuideLabel: 'Průvodce publikováním v Robloxu (otevře se v nové záložce)',
+          noteLabel: 'Dobré vědět:',
+          note:
+            'Vaše zveřejněná kopie dostane nové ID místa. Herní centrum přesouvá hráče pomocí ID původních her, proto po zveřejnění nahraďte ID v centru ID svých vlastních kopií.',
+        },
+
+        resources: {
+          heading: 'Příručky a videonávody',
+          description:
+            'Příručky pro vývojáře, učitele a žáky a videonávody k této hře, které si můžete stáhnout a promítat offline.',
+          guidesTitle: 'Příručky',
+          guides: {
+            developer: { title: 'Příručka pro vývojáře', description: 'Pro ty, kdo chtějí hry upravovat a rozšiřovat.' },
+            teacher: { title: 'Příručka pro učitele', description: 'Pro učitele, kteří hry využívají ve výuce.' },
+            student: { title: 'Příručka pro žáky', description: 'Pro žáky, kteří hry hrají.' },
+          },
+          comingSoon: 'Připravujeme',
+          download: 'Stáhnout',
+          videosTitle: 'Videonávody',
+          videosDescription: 'Podívejte se, jak hra funguje, než ji začnete hrát, nebo ji ukažte třídě.',
+          videoKinds: {
+            intro: 'Úvod',
+            minigame: 'Minihra',
+            hints: 'Nápovědy',
+            finale: 'Finále',
+            hub: 'Videonávod k Hernímu centru',
+          },
+        },
 
         at: {
           title: 'Mistrovské kouzlo: Odemkněte trezor',

@@ -12,7 +12,7 @@ import type { LanguagePackage, TranslationPart, TeachingGuide, RelatedModuleCard
 import { useTranslations } from 'src/i18n/index'
 
 const locale = Astro.currentLocale
-const { t, v } = useTranslations(locale)
+const { t, v, formatCount } = useTranslations(locale)
 
 const objectives = v<ReadonlyArray<string>>('contentDC.objectives') ?? []
 const outcomes = v<ReadonlyArray<string>>('contentDC.outcomes') ?? []
@@ -38,9 +38,6 @@ const parts = mergeParts('dc', v<ReadonlyArray<TranslationPart>>('contentDC.part
 const relatedModuleCards = (v<ReadonlyArray<RelatedModuleCard>>('contentDC.relatedModuleCards') ?? []).map(card => { const mod = getModule(card.moduleId); if (!mod) return card; return { ...card, parts: modulePartsData[mod.id].length, materials: mod.materials, videos: mod.videos, challenges: mod.challenges, games: mod.games } })
 
 const hasCount = (value: unknown): value is number => typeof value === 'number' && value > 0
-
-const formatCount = (count: number, singularKey: string, pluralKey: string) =>
-  `${count} ${t(count === 1 ? singularKey : pluralKey)}`
 
 const getPartTitle = (part: MergedPart) => part.titleKey ? t(part.titleKey) : ''
 
@@ -208,13 +205,13 @@ const moduleImages = {
                       <h3>{title}</h3>
                       <div class="dc-module__meta">
                         {hasCount(meta.steps) ? (
-                          <span class="dc-meta-item"><Icon name="lucide:list-checks" /> {formatCount(meta.steps, 'pages.hub.labels.step', 'pages.hub.labels.steps')}</span>
+                          <span class="dc-meta-item"><Icon name="lucide:list-checks" /> {formatCount(meta.steps, 'step')}</span>
                         ) : null}
                         {hasCount(meta.materials) ? (
-                          <span class="dc-meta-item"><Icon name="lucide:file-text" /> {formatCount(meta.materials, 'pages.hub.labels.material', 'pages.hub.labels.materials')}</span>
+                          <span class="dc-meta-item"><Icon name="lucide:file-text" /> {formatCount(meta.materials, 'material')}</span>
                         ) : null}
                         {hasCount(meta.videos) ? (
-                          <span class="dc-meta-item"><Icon name="lucide:play-circle" /> {formatCount(meta.videos, 'pages.hub.labels.video', 'pages.hub.labels.videos')}</span>
+                          <span class="dc-meta-item"><Icon name="lucide:play-circle" /> {formatCount(meta.videos, 'video')}</span>
                         ) : null}
                       </div>
                       <p class="dc-goal"><b>{t('pages.hub.labels.goal')}</b> {String(part.goal ?? '')}</p>

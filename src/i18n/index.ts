@@ -58,5 +58,24 @@ export function useTranslations(currentLocale: string | undefined) {
     return t(key).replace(/\n/g, '<br>')
   }
 
-  return { t, tHtml, v, locale, translations }
+  /**
+   * "5 Parts", "2 části", "1 materiál" — a number plus the correctly inflected noun.
+   *
+   * Languages with more than one plural form (Czech: 1 / 2–4 / 5+, Lithuanian: 1 / 2–9 / 10+)
+   * list their forms in `pages.hub.counts.<noun>` as `{ one, few, many }`; `many` is the
+   * form for every whole number that is neither `one` nor `few`. The form is picked with
+   * the locale's own plural rules. Everything else falls back to `pages.hub.labels.<noun>`
+   * (singular) and `pages.hub.labels.<noun>s` (plural).
+   */
+  function formatCount(count: number, noun: 'part' | 'material' | 'video' | 'step'): string {
+    const forms = v<Partial<Record<'one' | 'few' | 'many', string>>>(`pages.hub.counts.${noun}`)
+    if (forms) {
+      const category = new Intl.PluralRules(locale).select(count)
+      const form = category === 'one' ? forms.one : category === 'few' ? forms.few : forms.many
+      if (form) return `${count} ${form}`
+    }
+    return `${count} ${t(`pages.hub.labels.${count === 1 ? noun : `${noun}s`}`)}`
+  }
+
+  return { t, tHtml, v, locale, translations, formatCount }
 }

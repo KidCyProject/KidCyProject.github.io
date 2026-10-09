@@ -37,9 +37,9 @@ export const shared = {
       statModulesLabel: 'Mokymosi\nmoduliai',
       statChallengesLabel: 'Interaktyvūs\niššūkiai',
       statGamesLabel: 'Kibernetinio\nsaugumo žaidimai',
-      statPartsLabel: 'Pamokų\ndalys',
-      statMaterialsLabel: 'Pamokų\nmedžiaga',
-      statVideosLabel: 'Vaizdo\nįrašai',
+      statPartsLabel: 'Pamokų\ndalis',
+      statMaterialsLabel: 'Pamokų\nmedžiagos',
+      statVideosLabel: 'Vaizdo\nįrašų',
 
       journeyEyebrow: 'Kelionė',
       journeyTitle: 'Septyni moduliai, jūsų mokymosi kelias',
@@ -149,6 +149,14 @@ export const shared = {
       title: 'Mokymosi centras',
       subtitle:
         'Tai yra centrinis erdvė visiems projekto moduliams, mokymo medžiagai ir švietimo ištekliams. Čia rasite paruoštas naudoti pamokas, praktines veiklas ir gaires, skirtas kibernetinio saugumo ugdymui įvairiose klasės aplinkose. Visa medžiaga yra struktūruota, pritaikoma ir sukurta taip, kad padėtų pedagogams užtikrintai supažindinti vaikus su skaitmeninio saugumo temomis. Nesvarbu, ar ieškote pilnų modulių, ar atskirų mokymo išteklių, Mokymosi centras suteikia viską, ko reikia, vienoje vietoje.',
+
+      // Lithuanian has three count forms (1, 21… / 2–9, 22… / 10–20, 30…), so "10 dalių" can't be built from labels.*
+      counts: {
+        part: { one: 'dalis', few: 'dalys', many: 'dalių' },
+        material: { one: 'medžiaga', few: 'medžiagos', many: 'medžiagų' },
+        video: { one: 'vaizdo įrašas', few: 'vaizdo įrašai', many: 'vaizdo įrašų' },
+        step: { one: 'žingsnis', few: 'žingsniai', many: 'žingsnių' },
+      },
 
       labels: {
         showDetails: 'Rodyti dalis ir veiklas',
@@ -402,6 +410,50 @@ export const shared = {
           'Norėdami žaisti žaidimą, turite turėti savo įrenginyje įdiegtą Roblox programėlę. Paspaudus mygtuką Žaisti, žaidimas atsidarys Roblox programoje. Jei dar neturite įdiegto Roblox, būsite paraginti jį atsisiųsti ir įdiegti.',
         tip: 'Geresniam patyrimui prieš paspausdami mygtuką Žaisti įsitikinkite, kad jūsų įrenginyje įdiegta Roblox programėlė.',
         playGame: 'Žaisti',
+
+        download: {
+          heading: 'Atsisiųskite žaidimo failus',
+          description:
+            'Norite pritaikyti žaidimą savo klasei arba jį tobulinti? Atsisiųskite „Roblox“ vietos failą ir atidarykite jį „Roblox Studio“. Kiekvienas žaidimas yra atskiras failas, o žaidimų centras leidžia žaidėjams prisijungti prie kitų žaidimų.',
+          button: 'Atsisiųsti šį žaidimą',
+          hubButton: 'Atsisiųsti žaidimų centrą',
+          stepsTitle: 'Kaip atidaryti failą',
+          steps: [
+            'Įdiekite „Roblox Studio“ (nemokamai) ir prisijunkite su savo „Roblox“ paskyra.',
+            'Dukart spustelėkite atsisiųstą .rbxl failą arba „Studio“ pasirinkite File > Open from File.',
+            'Redaguokite žaidimą, tada per File > Publish to Roblox išsaugokite savo kopiją.',
+          ],
+          moreInfoText: 'Daugiau informacijos rasite',
+          moreInfoLinkText: 'čia',
+          installGuideLabel: '„Roblox Studio“ diegimo vadovas (atsidaro naujame skirtuke)',
+          publishGuideLabel: '„Roblox“ publikavimo vadovas (atsidaro naujame skirtuke)',
+          noteLabel: 'Verta žinoti:',
+          note:
+            'Jūsų paskelbta kopija gauna naują vietos ID. Žaidimų centras perkelia žaidėjus naudodamas originalių žaidimų ID, todėl paskelbę pakeiskite centre esančius ID savo kopijų ID.',
+        },
+
+        resources: {
+          heading: 'Vadovai ir vaizdo pamokos',
+          description:
+            'Vadovai kūrėjams, mokytojams ir mokiniams bei šio žaidimo vaizdo pamokos, kurias galite atsisiųsti ir rodyti neprisijungę prie interneto.',
+          guidesTitle: 'Vadovai',
+          guides: {
+            developer: { title: 'Kūrėjo vadovas', description: 'Tiems, kas nori redaguoti ir plėsti žaidimus.' },
+            teacher: { title: 'Mokytojo vadovas', description: 'Mokytojams, kurie naudoja žaidimus per pamokas.' },
+            student: { title: 'Mokinio vadovas', description: 'Mokiniams, kurie žaidžia žaidimus.' },
+          },
+          comingSoon: 'Netrukus',
+          download: 'Atsisiųsti',
+          videosTitle: 'Vaizdo pamokos',
+          videosDescription: 'Pažiūrėkite, kaip veikia žaidimas, prieš jį žaisdami, arba parodykite jį klasei.',
+          videoKinds: {
+            intro: 'Įžanga',
+            minigame: 'Minižaidimas',
+            hints: 'Užuominos',
+            finale: 'Finalas',
+            hub: 'Žaidimų centro vaizdo pamoka',
+          },
+        },
 
         at: {
           title: 'Meistro burtažodis: Atidaryk saugyklą',

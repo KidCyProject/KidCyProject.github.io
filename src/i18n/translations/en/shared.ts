@@ -404,6 +404,50 @@ export const shared = {
         tip: 'For the best experience, make sure you have the Roblox app installed on your device before clicking the Play button.',
         playGame: 'Play',
 
+        download: {
+          heading: 'Download the game files',
+          description:
+            'Want to adapt the game for your class or keep improving it? Download the Roblox place file and open it in Roblox Studio. Each game is a standalone file, and the Games Hub lets players join the other games.',
+          button: 'Download this game',
+          hubButton: 'Download the Games Hub',
+          stepsTitle: 'How to open the file',
+          steps: [
+            'Install Roblox Studio (free) and sign in with your Roblox account.',
+            'Double-click the downloaded .rbxl file, or choose File > Open from File in Studio.',
+            'Edit the game, then use File > Publish to Roblox to save your own copy.',
+          ],
+          moreInfoText: 'More information can be found',
+          moreInfoLinkText: 'here',
+          installGuideLabel: 'Roblox Studio Installation Guide (opens in a new tab)',
+          publishGuideLabel: 'Roblox Publishing Guide (opens in a new tab)',
+          noteLabel: 'Good to know:',
+          note:
+            'Your published copy gets a new place ID. The Games Hub teleports players using the IDs of the original games, so after publishing, replace those IDs in the hub with the IDs of your own copies.',
+        },
+
+        resources: {
+          heading: 'Guides and video walkthroughs',
+          description:
+            'Guides for developers, teachers and students, plus video walkthroughs of this game that you can download and show offline.',
+          guidesTitle: 'Guides',
+          guides: {
+            developer: { title: 'Developer Guide', description: 'For people who want to edit and extend the games.' },
+            teacher: { title: 'Teacher Guide', description: 'For teachers who run the games in class.' },
+            student: { title: 'Student Guide', description: 'For students who play the games.' },
+          },
+          comingSoon: 'Coming soon',
+          download: 'Download',
+          videosTitle: 'Video walkthroughs',
+          videosDescription: 'Watch how the game works before you play, or show it to the class.',
+          videoKinds: {
+            intro: 'Intro',
+            minigame: 'Minigame',
+            hints: 'Hints',
+            finale: 'Finale',
+            hub: 'Games Hub walkthrough',
+          },
+        },
+
         at: {
           title: 'Master Spell: Unlock the Vault',
           description: 'Step into a fantasy world where your knowledge of authentication becomes the key to progress.',

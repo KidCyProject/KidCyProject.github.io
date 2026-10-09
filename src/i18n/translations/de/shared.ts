@@ -403,6 +403,50 @@ export const shared = {
         tip: 'Für das beste Erlebnis stellen Sie sicher, dass Sie die Roblox-App auf Ihrem Gerät installiert haben, bevor Sie auf die Schaltfläche „Spielen" klicken.',
         playGame: 'Spielen',
 
+        download: {
+          heading: 'Spieldateien herunterladen',
+          description:
+            'Möchten Sie das Spiel für Ihre Klasse anpassen oder weiterentwickeln? Laden Sie die Roblox-Place-Datei herunter und öffnen Sie sie in Roblox Studio. Jedes Spiel ist eine eigenständige Datei, und über den Spiele-Hub können Spielende den anderen Spielen beitreten.',
+          button: 'Dieses Spiel herunterladen',
+          hubButton: 'Spiele-Hub herunterladen',
+          stepsTitle: 'So öffnen Sie die Datei',
+          steps: [
+            'Installieren Sie Roblox Studio (kostenlos) und melden Sie sich mit Ihrem Roblox-Konto an.',
+            'Doppelklicken Sie auf die heruntergeladene .rbxl-Datei oder wählen Sie in Studio „File > Open from File".',
+            'Bearbeiten Sie das Spiel und speichern Sie Ihre eigene Kopie über „File > Publish to Roblox".',
+          ],
+          moreInfoText: 'Weitere Informationen finden Sie',
+          moreInfoLinkText: 'hier',
+          installGuideLabel: 'Roblox-Studio-Installationsanleitung (öffnet sich in einem neuen Tab)',
+          publishGuideLabel: 'Roblox-Veröffentlichungsanleitung (öffnet sich in einem neuen Tab)',
+          noteLabel: 'Gut zu wissen:',
+          note:
+            'Ihre veröffentlichte Kopie erhält eine neue Place-ID. Der Spiele-Hub teleportiert Spielende mit den IDs der Originalspiele. Ersetzen Sie diese IDs im Hub nach dem Veröffentlichen durch die IDs Ihrer eigenen Kopien.',
+        },
+
+        resources: {
+          heading: 'Anleitungen und Video-Tutorials',
+          description:
+            'Anleitungen für Entwickelnde, Lehrkräfte und Lernende sowie Video-Tutorials zu diesem Spiel, die Sie herunterladen und offline zeigen können.',
+          guidesTitle: 'Anleitungen',
+          guides: {
+            developer: { title: 'Entwickleranleitung', description: 'Für alle, die die Spiele bearbeiten und erweitern möchten.' },
+            teacher: { title: 'Lehrkräfteanleitung', description: 'Für Lehrkräfte, die die Spiele im Unterricht einsetzen.' },
+            student: { title: 'Schüleranleitung', description: 'Für Schülerinnen und Schüler, die die Spiele spielen.' },
+          },
+          comingSoon: 'Demnächst verfügbar',
+          download: 'Herunterladen',
+          videosTitle: 'Video-Tutorials',
+          videosDescription: 'Sehen Sie sich an, wie das Spiel funktioniert, bevor Sie es spielen, oder zeigen Sie es der Klasse.',
+          videoKinds: {
+            intro: 'Einführung',
+            minigame: 'Minispiel',
+            hints: 'Hinweise',
+            finale: 'Finale',
+            hub: 'Video-Tutorial zum Spiele-Hub',
+          },
+        },
+
         at: {
           title: 'Meisterzauber: Öffne den Tresor',
           description: 'Treten Sie in eine Fantasiewelt ein, in der Ihr Wissen über Authentifizierung zum Schlüssel des Fortschritts wird.',

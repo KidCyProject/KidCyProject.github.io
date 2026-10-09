@@ -403,6 +403,50 @@ export const shared = {
         tip: 'For den beste opplevelsen, sørg for at du har Roblox-appen installert på enheten din før du klikker på Spill-knappen.',
         playGame: 'Spill',
 
+        download: {
+          heading: 'Last ned spillfilene',
+          description:
+            'Vil du tilpasse spillet til klassen din eller utvikle det videre? Last ned Roblox-place-filen og åpne den i Roblox Studio. Hvert spill er en egen fil, og Spillhuben lar spillerne bli med i de andre spillene.',
+          button: 'Last ned dette spillet',
+          hubButton: 'Last ned Spillhuben',
+          stepsTitle: 'Slik åpner du filen',
+          steps: [
+            'Installer Roblox Studio (gratis) og logg inn med Roblox-kontoen din.',
+            'Dobbeltklikk på den nedlastede .rbxl-filen, eller velg File > Open from File i Studio.',
+            'Rediger spillet og bruk File > Publish to Roblox for å lagre din egen kopi.',
+          ],
+          moreInfoText: 'Mer informasjon finner du',
+          moreInfoLinkText: 'her',
+          installGuideLabel: 'Installasjonsveiledning for Roblox Studio (åpnes i en ny fane)',
+          publishGuideLabel: 'Publiseringsveiledning for Roblox (åpnes i en ny fane)',
+          noteLabel: 'Greit å vite:',
+          note:
+            'Den publiserte kopien din får en ny place-ID. Spillhuben sender spillerne videre med ID-ene til de opprinnelige spillene, så etter publisering må du bytte ut disse ID-ene i huben med ID-ene til dine egne kopier.',
+        },
+
+        resources: {
+          heading: 'Veiledninger og videogjennomganger',
+          description:
+            'Veiledninger for utviklere, lærere og elever, pluss videogjennomganger av dette spillet som du kan laste ned og vise uten nett.',
+          guidesTitle: 'Veiledninger',
+          guides: {
+            developer: { title: 'Utviklerveiledning', description: 'For deg som vil redigere og utvide spillene.' },
+            teacher: { title: 'Lærerveiledning', description: 'For lærere som bruker spillene i undervisningen.' },
+            student: { title: 'Elevveiledning', description: 'For elever som spiller spillene.' },
+          },
+          comingSoon: 'Kommer snart',
+          download: 'Last ned',
+          videosTitle: 'Videogjennomganger',
+          videosDescription: 'Se hvordan spillet fungerer før du spiller, eller vis det for klassen.',
+          videoKinds: {
+            intro: 'Introduksjon',
+            minigame: 'Minispill',
+            hints: 'Hint',
+            finale: 'Finale',
+            hub: 'Videogjennomgang av Spillhuben',
+          },
+        },
+
         at: {
           title: 'Mesterstaveord: Lås opp hvelvet',
           description: 'Tred inn i en fantasiverden der din kunnskap om autentisering blir nøkkelen til fremgang.',

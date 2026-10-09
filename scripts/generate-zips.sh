@@ -38,6 +38,9 @@ for module_dir in "$MATERIALS"/*/; do
   module_dir="${module_dir%/}"
   module=$(basename "$module_dir")
 
+  # games-hub holds the downloadable Roblox place files (.rbxl) — not a module, nothing to zip
+  [ "$module" = "games-hub" ] && continue
+
   if [ "$module" = "introduction" ]; then
     for lang in "${LANGS[@]}"; do
       echo "Zipping introduction ($lang)"

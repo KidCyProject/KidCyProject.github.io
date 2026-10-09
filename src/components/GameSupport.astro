@@ -1,0 +1,41 @@
+---
+import GameDownload from '@components/GameDownload.astro'
+import GameResources from '@components/GameResources.astro'
+import type { ModuleId } from 'src/data/modules'
+
+/**
+ * GameSupport Component
+ *
+ * Two-column area under the Play button of every game page:
+ * left — download the .rbxl files (GameDownload), right — guides and video
+ * walkthroughs (GameResources). Stacks to one column on narrow screens.
+ */
+interface Props {
+  moduleId: ModuleId
+  /** CSS colour of the module brand, e.g. `var(--brand-MW)`. */
+  color: string
+}
+
+const { moduleId, color } = Astro.props
+---
+
+<div class="game-support">
+  <GameDownload moduleId={moduleId} color={color} />
+  <GameResources moduleId={moduleId} color={color} />
+</div>
+
+<style>
+  .game-support {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+    align-items: stretch;
+  }
+
+  @media (min-width: 62rem) {
+    .game-support {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

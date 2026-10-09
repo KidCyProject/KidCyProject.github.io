@@ -62,7 +62,7 @@ Children are online earlier and more often than ever. Schools need practical, ag
 |---|---|
 | 🏫 **Built for real classrooms** | Age-appropriate language and scenarios for upper elementary learners. |
 | 🧭 **Complete learning journey** | 7 modules covering digital citizenship, attacker mindset, authentication, privacy, social engineering, malware and digital misuse. |
-| 🙌 **Active learning** | Every module has an interactive challenge; five modules also have a game. |
+| 🙌 **Active learning** | Every module has an interactive challenge; five modules also have a Roblox game that you can download, edit and make your own. |
 | 🧑‍🏫 **Teacher-friendly** | Each module comes with a teaching guide, step-by-step activity plans and downloadable packages. Teach the full sequence or pick single parts. |
 | 🎯 **Clear learning goals** | Every module states its aim, learning objectives and "I can…" learning outcomes. |
 | 🌍 **Internationally grounded** | Developed by European universities and cybersecurity practitioners; aligned with the European Digital Competence Framework (DigComp). |
@@ -100,6 +100,9 @@ Module  (e.g. Authentication)
 │     └── 🎬 Video (most parts) .. with downloadable subtitles in 5 languages
 ├── 🕹️ Interactive Challenge ..... browser-based, no install needed
 └── 🎮 Game (5 modules) .......... played in the Roblox app
+      ├── 🧩 Game file (.rbxl) ... download and edit in Roblox Studio (+ the Games Hub)
+      ├── 📘 Guides .............. developer, teacher and student guide
+      └── 🎬 Video walkthroughs .. downloadable demos of the game
 ```
 
 **Recommended classroom flow:**
@@ -295,6 +298,33 @@ Five modules include a game that reinforces the module's key ideas through play.
 >
 > If Roblox isn't an option, the **interactive challenges cover every module** and need only a browser.
 
+### Download, edit and publish the games
+
+Every game page has two columns under the *Play* button:
+
+| Left column — **Download the game files** | Right column — **Guides and video walkthroughs** |
+|---|---|
+| The game's Roblox place file (`.rbxl`) and the **Games Hub** (`home.rbxl`), with the file size shown on each button. | The **Developer Guide**, **Teacher Guide** and **Student Guide**, plus the video walkthroughs of that game (Intro, Minigames, Hints, Finale) and of the Games Hub. |
+| Three short steps: install Roblox Studio, open the `.rbxl` file, then *File → Publish to Roblox* to save your own copy. | Each guide opens a language menu once it is available in several languages; until a guide is published the page shows *Coming soon*. |
+| Links to Roblox's [Installation Guide](https://create.roblox.com/docs/tutorials/curriculums/studio/install-studio) and [Publishing Guide](https://create.roblox.com/docs/production/publishing/publish-games-and-places). | Videos are MP4 files (720p), so you can download them and show them without internet access. |
+
+- **Games Hub.** `home.rbxl` is a hub place that lets players join the other games. The same hub file is offered on every game page.
+- **Translations are built into each game**, so there is one file per game — not one per language.
+- **Your published copy gets a new place ID.** The Games Hub sends players to the *original* games, so after publishing your own copies, replace those IDs in the hub with the IDs of your copies.
+- Downloaded game files, guides and videos are **not** part of the *Download All Materials* ZIPs — download them from the game page.
+
+<details>
+<summary><b>For maintainers — where the files live</b></summary>
+
+| What | Where |
+|---|---|
+| Game files | `public/materials/games-hub/experiences/` — `home.rbxl` (hub), `auth.rbxl`, `data.rbxl`, `social.rbxl`, `malware.rbxl`, `abuse.rbxl` |
+| Video walkthroughs | `public/materials/games-hub/videos/` — `Roblox-Home.mp4` and `<module>/Roblox-<Game>-<Intro│MG<n>│Hints│Finale>.mp4`; new files appear on the page automatically |
+| Guides | `public/materials/introduction/<lang>/Roblox_<Developer│Teacher│Student>_Guide.pdf` (or `.docx`); non-English files end in `_CS`, `_NO`, `_LT` or `_DE`. Only files that exist are shown. |
+
+Keep videos around 720p H.264: GitHub rejects files over 100 MB and GitHub Pages sites are limited to about 1 GB. See [CODEBASE_GUIDE.md](CODEBASE_GUIDE.md) for how the pages read these files.
+</details>
+
 ---
 
 ## 📦 Downloading materials
@@ -309,6 +339,9 @@ You can download at whichever level suits you:
 | **Download Package** | Each part | Worksheets, cards, images and video for that part |
 | **Single material** | Each part's material list | One worksheet / card set / image |
 | **Video + subtitles** | Under each video | The MP4 and subtitle files (`.vtt`) in all 5 languages |
+| **Game file (.rbxl)** | Game page, left column | The game's Roblox place file and the Games Hub, ready to open in Roblox Studio |
+| **Game guides** | Game page, right column | Developer, Teacher and Student Guide (language menu) |
+| **Game video walkthroughs** | Game page, right column | MP4 demos of each part of the game and of the Games Hub |
 
 Every package and translated material opens a **language menu** (EN · CS · NO · LT · DE) — pick the language you teach in and you get a ZIP with only that language's materials (plus language-neutral files such as videos and images).
 
@@ -327,7 +360,7 @@ The entire platform — lessons, materials, challenges and video subtitles — i
 |:-:|:-:|:-:|:-:|:-:|
 | [kidcyproject.github.io](https://kidcyproject.github.io/) | [/cs/](https://kidcyproject.github.io/cs/) | [/de/](https://kidcyproject.github.io/de/) | [/lt/](https://kidcyproject.github.io/lt/) | [/no/](https://kidcyproject.github.io/no/) |
 
-Switch languages at any time with the language switcher in the navigation. Videos have English narration with subtitles in all five languages.
+Switch languages at any time with the language switcher in the navigation. Videos have English narration with subtitles in all five languages. The Roblox games contain their translations inside the game itself.
 
 ---
 
@@ -363,6 +396,7 @@ Each part is a **self-contained lesson unit** with its own activity plan (typica
 - 💻 Computers or tablets with a modern web browser — for challenges (individually or in pairs)
 - 🖨️ Printer — for worksheets and cards
 - 🎮 Roblox app — only for the five games
+- 🛠️ Roblox Studio (free) — only if you want to open and edit a downloaded game file
 
 **After the lesson**
 - [ ] Use the plenary and the challenge results for informal assessment against the "I can…" outcomes
@@ -397,9 +431,15 @@ Yes. Everything is free and released under the MIT License, so you may use, adap
 </details>
 
 <details>
+<summary><b>Can I edit the Roblox games or make my own copy?</b></summary>
+
+Yes. Download the game's `.rbxl` file from its game page and open it in Roblox Studio (free). Publish your copy with *File → Publish to Roblox*. If you want players to move between your copies, also update the place IDs in the Games Hub (`home.rbxl`). See the [Installation Guide](https://create.roblox.com/docs/tutorials/curriculums/studio/install-studio) and [Publishing Guide](https://create.roblox.com/docs/production/publishing/publish-games-and-places) from Roblox.
+</details>
+
+<details>
 <summary><b>Can I use the materials without an internet connection?</b></summary>
 
-Yes — download the part packages and videos (with subtitles) in advance. Challenges and games need an internet connection.
+Yes — download the part packages and videos (with subtitles) in advance, and the game walkthrough videos from the game pages. Challenges and games need an internet connection.
 </details>
 
 ---

@@ -16,7 +16,7 @@ import {
 import { modulePartsData } from '../data/moduleParts'
 
 const locale = Astro.currentLocale
-const { t, tHtml } = useTranslations(locale)
+const { t, tHtml, formatCount } = useTranslations(locale)
 
 const hub = localizePath(locale, '/learning-hub/introduction/')
 const about = localizePath(locale, '/about')
@@ -32,9 +32,6 @@ const badgeColors: Record<string, string> = {
   dm: '#B91C1C',
 }
 
-const countLabel = (n: number, one: string, many: string) =>
-  `${n} ${t(`pages.hub.labels.${n === 1 ? one : many}`)}`
-
 // Illustration files are numbered in module order: 01_digital-citizenship.webp … 07_digital-misuse.webp
 const tiles = modules.map((m, i) => ({
   num: i + 1,
@@ -44,9 +41,9 @@ const tiles = modules.map((m, i) => ({
   badge: badgeColors[m.id],
   image: `/images/learning-hub/0${i + 1}_${m.slug}.webp`,
   meta: [
-    countLabel(modulePartsData[m.id]?.length ?? 0, 'part', 'parts'),
-    countLabel(m.materials, 'material', 'materials'),
-    countLabel(m.videos, 'video', 'videos'),
+    formatCount(modulePartsData[m.id]?.length ?? 0, 'part'),
+    formatCount(m.materials, 'material'),
+    formatCount(m.videos, 'video'),
   ],
 }))
 
@@ -264,8 +261,15 @@ const languages = ['English', 'Čeština', 'Deutsch', 'Lietuvių', 'Norsk']
     padding-block: 3.5rem;
   }
 
+  /* Same soft fade as the page headers (see .bg-module in PageHeader.astro) */
   .home-section--alt {
-    background: light-dark(#f1f5f9, var(--dm-surface-1));
+    background: linear-gradient(155deg, color-mix(in oklab, #2563eb 10%, #ffffff) 20%, var(--background-color) 60%);
+    border-block: 1px solid color-mix(in oklab, #2563eb 40%, #ffffff);
+  }
+
+  :global(html.darkmode) .home-section--alt {
+    background: linear-gradient(155deg, color-mix(in oklab, #2563eb 22%, var(--dm-surface-2)) 0%, var(--dm-surface-1) 65%);
+    border-color: color-mix(in oklab, #2563eb 40%, var(--dm-border-sub));
   }
 
   .eyebrow {
