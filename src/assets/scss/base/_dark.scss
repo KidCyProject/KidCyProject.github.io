@@ -470,14 +470,14 @@
   background: #1e1a08 !important;
 
   .round-row-label { color: #fcd34d !important; }
-  .round-row-desc  { color: #b45309 !important; }
+  .round-row-desc  { color: #fbbf24 !important; }
 }
 
 .darkmode .round-row.completed-row {
   background: #052820 !important;
 
   .round-row-label { color: #6ee7b7 !important; }
-  .round-row-desc  { color: #059669 !important; }
+  .round-row-desc  { color: #6ee7b7 !important; }
 }
 
 .darkmode .round-row-label {
@@ -573,6 +573,12 @@
   border-color: #640c0c !important;
 }
 
+.darkmode .sort-game__feedback--info {
+  color: #bfdbfe !important;
+  background-color: #0f1f3a !important;
+  border-color: #1e3a8a !important;
+}
+
 // ── Post cards ────────────────────────────────────────────────────────────────
 .darkmode .post-card {
   background-color: var(--dm-surface-1) !important;
@@ -606,14 +612,6 @@
   color: var(--dm-fg-muted) !important;
 }
 
-// ── Inline explanation ────────────────────────────────────────────────────────
-.darkmode .post-card__explanation {
-  background-color: var(--dm-surface-2) !important;
-  color: var(--dm-fg-muted) !important;
-  border-color: var(--dm-border) !important;
-  border-left-color: var(--dm-border-sub) !important;
-}
-
 // ── Drop zones ────────────────────────────────────────────────────────────────
 .darkmode .drop-zone {
   background-color: var(--dm-surface-2) !important;
@@ -624,32 +622,89 @@
   background-color: var(--dm-surface-3) !important;
 }
 
-.darkmode .drop-zone--safe {
+.darkmode .drop-zone--good {
   border-color: #059669 !important;
   background-color: #052820 !important;
 }
 
-.darkmode .drop-zone--safe.drop-zone--active {
+.darkmode .drop-zone--good.drop-zone--active {
   background-color: #064e35 !important;
   box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25) !important;
 }
 
-.darkmode .drop-zone--unsafe {
+.darkmode .drop-zone--private {
+  border-color: #b45309 !important;
+  background-color: #2a1a05 !important;
+}
+
+.darkmode .drop-zone--private.drop-zone--active {
+  background-color: #422006 !important;
+  box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.25) !important;
+}
+
+.darkmode .drop-zone--unkind {
   border-color: #991b1b !important;
   background-color: #2a0f0f !important;
 }
 
-.darkmode .drop-zone--unsafe.drop-zone--active {
+.darkmode .drop-zone--unkind.drop-zone--active {
   background-color: #450a0a !important;
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25) !important;
 }
 
-.darkmode .drop-zone--safe .drop-zone__title {
+.darkmode .drop-zone--ask {
+  border-color: #4f46e5 !important;
+  background-color: #15173a !important;
+}
+
+.darkmode .drop-zone--ask.drop-zone--active {
+  background-color: #1e1b4b !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25) !important;
+}
+
+.darkmode .drop-zone--good .drop-zone__title {
   color: #6ee7b7 !important;
 }
 
-.darkmode .drop-zone--unsafe .drop-zone__title {
+.darkmode .drop-zone--private .drop-zone__title {
+  color: #fcd34d !important;
+}
+
+.darkmode .drop-zone--unkind .drop-zone__title {
   color: #fca5a5 !important;
+}
+
+.darkmode .drop-zone--ask .drop-zone__title {
+  color: #a5b4fc !important;
+}
+
+.darkmode .drop-zone__hint {
+  color: var(--dm-fg-muted) !important;
+}
+
+// "Where does it go?" buttons under the selected card
+.darkmode .zone-choice--good {
+  color: #6ee7b7 !important;
+  background-color: #052820 !important;
+  border-color: #059669 !important;
+}
+
+.darkmode .zone-choice--private {
+  color: #fcd34d !important;
+  background-color: #2a1a05 !important;
+  border-color: #b45309 !important;
+}
+
+.darkmode .zone-choice--unkind {
+  color: #fca5a5 !important;
+  background-color: #2a0f0f !important;
+  border-color: #991b1b !important;
+}
+
+.darkmode .zone-choice--ask {
+  color: #a5b4fc !important;
+  background-color: #15173a !important;
+  border-color: #4f46e5 !important;
 }
 
 .darkmode .drop-zone__empty {
@@ -667,6 +722,15 @@
 }
 
 .darkmode .sort-game__win-inner p {
+  color: #a7f3d0 !important;
+}
+
+.darkmode .sort-game__review {
+  background: rgba(0, 0, 0, 0.25) !important;
+}
+
+.darkmode .sort-game__review-title,
+.darkmode .sort-game__review-item {
   color: #a7f3d0 !important;
 }
 
@@ -700,6 +764,12 @@
   border-color: #640c0c !important;
 }
 
+.darkmode .fp-game__feedback--info {
+  color: #bfdbfe !important;
+  background-color: #0f1f3a !important;
+  border-color: #1e3a8a !important;
+}
+
 // ── Activity cards ────────────────────────────────────────────────────────────
 .darkmode .activity-card {
   background-color: var(--dm-surface-1) !important;
@@ -728,13 +798,6 @@
   color: var(--dm-fg-muted) !important;
 }
 
-.darkmode .activity-card__explanation {
-  background-color: var(--dm-surface-2) !important;
-  color: var(--dm-fg-muted) !important;
-  border-color: var(--dm-border) !important;
-  border-left-color: var(--dm-border-sub) !important;
-}
-
 // ── Drop zones ────────────────────────────────────────────────────────────────
 .darkmode .fp-game__zones .drop-zone {
   // No !important — specificity 0,3,0 still beats scoped CSS (0,2,0), but
@@ -744,32 +807,118 @@
   border-color: var(--dm-border);
 }
 
-.darkmode .drop-zone--footprint {
-  border-color: #059669 !important;
-  background-color: #052820 !important;
+.darkmode .drop-zone--purpose {
+  border-color: #0f766e !important;
+  background-color: #04282a !important;
 }
 
-.darkmode .drop-zone--footprint.drop-zone--active {
-  background-color: #064e35 !important;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25) !important;
+.darkmode .drop-zone--purpose.drop-zone--active {
+  background-color: #064e4a !important;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.25) !important;
 }
 
-.darkmode .drop-zone--no-footprint {
-  border-color: #991b1b !important;
-  background-color: #2a0f0f !important;
+.darkmode .drop-zone--background {
+  border-color: #4f46e5 !important;
+  background-color: #15173a !important;
 }
 
-.darkmode .drop-zone--no-footprint.drop-zone--active {
-  background-color: #450a0a !important;
-  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25) !important;
+.darkmode .drop-zone--background.drop-zone--active {
+  background-color: #1e1b4b !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25) !important;
 }
 
-.darkmode .drop-zone--footprint .drop-zone__title {
-  color: #6ee7b7 !important;
+.darkmode .drop-zone--none {
+  border-color: #6b7280 !important;
+  background-color: #1f2937 !important;
 }
 
-.darkmode .drop-zone--no-footprint .drop-zone__title {
+.darkmode .drop-zone--none.drop-zone--active {
+  background-color: #374151 !important;
+  box-shadow: 0 0 0 3px rgba(156, 163, 175, 0.25) !important;
+}
+
+.darkmode .drop-zone--purpose .drop-zone__title {
+  color: #5eead4 !important;
+}
+
+.darkmode .drop-zone--background .drop-zone__title {
+  color: #a5b4fc !important;
+}
+
+.darkmode .drop-zone--none .drop-zone__title {
+  color: #e5e7eb !important;
+}
+
+// "Where does it go?" buttons under the selected card
+.darkmode .zone-choice--purpose {
+  color: #5eead4 !important;
+  background-color: #04282a !important;
+  border-color: #0f766e !important;
+}
+
+.darkmode .zone-choice--background {
+  color: #a5b4fc !important;
+  background-color: #15173a !important;
+  border-color: #4f46e5 !important;
+}
+
+.darkmode .zone-choice--none {
+  color: #e5e7eb !important;
+  background-color: #1f2937 !important;
+  border-color: #6b7280 !important;
+}
+
+// ── Between the steps + step 2 (clean up a profile) ───────────────────────────
+.darkmode .fp-game__between {
+  background: linear-gradient(135deg, #04282a, #064e4a) !important;
+  border-color: #0f766e !important;
+}
+
+.darkmode .fp-game__between h2,
+.darkmode .fp-game__between-summary {
+  color: #5eead4 !important;
+}
+
+.darkmode .cleanup-card {
+  background-color: var(--dm-surface-1) !important;
+  border-color: var(--dm-border) !important;
+}
+
+.darkmode .cleanup-card__icon {
+  background-color: #064e4a !important;
+}
+
+.darkmode .cleanup-card__label,
+.darkmode .cleanup-card__visible {
+  color: var(--dm-fg-muted) !important;
+}
+
+.darkmode .cleanup-card__value {
+  color: var(--dm-fg) !important;
+}
+
+.darkmode .cleanup-action--delete {
   color: #fca5a5 !important;
+  background-color: #2a0f0f !important;
+  border-color: #991b1b !important;
+}
+
+.darkmode .cleanup-action--hide {
+  color: #fcd34d !important;
+  background-color: #2a1a05 !important;
+  border-color: #b45309 !important;
+}
+
+.darkmode .cleanup-action--change {
+  color: #93c5fd !important;
+  background-color: #0f1f3a !important;
+  border-color: #1d4ed8 !important;
+}
+
+.darkmode .cleanup-action--keep {
+  color: #6ee7b7 !important;
+  background-color: #052820 !important;
+  border-color: #059669 !important;
 }
 
 // ── Win panel ─────────────────────────────────────────────────────────────────
@@ -786,6 +935,15 @@
 }
 
 .darkmode .fp-game__win-inner p {
+  color: color-mix(in oklab, var(--brand-DP), white 50%) !important;
+}
+
+.darkmode .fp-game__review {
+  background: rgba(0, 0, 0, 0.25) !important;
+}
+
+.darkmode .fp-game__review-title,
+.darkmode .fp-game__review-item {
   color: color-mix(in oklab, var(--brand-DP), white 50%) !important;
 }
 
@@ -1218,7 +1376,7 @@
 
 .darkmode .post-place-badge {
   background: var(--dm-surface-3) !important;
-  color: var(--dm-fg-muted) !important;
+  color: var(--dm-fg) !important;
 }
 
 // ── Post action bars (Like / Comment / Share — white bg) ─────────────────────
@@ -1412,6 +1570,18 @@
 .darkmode .learning-hub-modules .module-panel-mw .activity-cta,
 .darkmode .learning-hub-modules .module-panel-dm .activity-cta {
   color: #ffffff;
+}
+
+// Reversed ("My progress") button: outline, light label on the dark panel; filled on hover
+.darkmode .learning-hub-modules .module-panel .activity-cta.activity-cta--outline {
+  background: transparent;
+  color: var(--dm-fg);
+
+  &:hover,
+  &:focus-visible {
+    background: var(--module-color);
+    color: #ffffff;
+  }
 }
 
 // ── Toggle button (expand/collapse) ───────────────────────────────────────────

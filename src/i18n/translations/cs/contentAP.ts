@@ -256,10 +256,10 @@ export const contentAP = {
 export const challengeAP = {
   title: 'V mysli hackera',
   subtitle:
-    'Jste etický hacker a prohlížíte si profil na sociální síti. Klikněte na všechno, co vypadá jako bezpečnostní slabina — ale hlídejte si životy!',
+    'Jste etický hacker. Najděte slabá místa na profilu sociální sítě, naplánujte útok tak, jak by to udělal útočník, a zjistěte, jak ho zastavit!',
   howItWorks: 'Jak to funguje',
   instruction:
-    'Prohlédněte si tenhle profil na sociální síti očima hackera, který hledá slabá místa. Kliknout se dá skoro na všechno na obrazovce — přemýšlejte pořádně, protože kliknutí na něco, co skutečná zranitelnost není, vás stojí jeden život!',
+    'Prohlédněte si tenhle profil na sociální síti očima hackera, který hledá slabá místa. Kliknout se dá skoro na všechno na obrazovce — přemýšlejte pořádně, protože kliknutí na něco, co skutečná zranitelnost není, vás stojí jeden život! Potom naplánujete útok tak, jak by to udělal útočník, a zjistíte, jak ho zastavit.',
   tipLabel: 'Tip',
   tip: 'Mezi spoustou nevinně vypadajících prvků se skrývají přesně 4 skutečné zranitelnosti. Ne všechno, na co se dá kliknout, je bezpečnostní slabina!',
   livesTitle: 'Životy',
@@ -269,7 +269,6 @@ export const challengeAP = {
   vulnerabilitiesCount: '/ 4',
   attackerTargetsTitle: '🎯 Na co útočníci cílí',
   attackerTargets: [
-    '🚩 Slabá nebo odhalená hesla',
     '🚩 HTTP místo HTTPS',
     '🚩 Sdílení polohy v reálném čase',
     '🚩 Celé datum narození veřejně viditelné',
@@ -308,11 +307,167 @@ export const challengeAP = {
   attackerVoiceAlreadyTagged: 'Už označeno: {label}.',
   attackerVoiceCorrect: '🔓 Nalezena zranitelnost: {label}! {explain}',
   attackerVoiceWrong: 'Není to zranitelnost — {explain}',
+  part1Label: 'Část 1 ze 3: Prohlédněte profil',
+  part2Label: 'Část 2 ze 3: Naplánujte útok',
+  part3Label: 'Část 3 ze 3: Proč a jak to zastavit',
+  continueButton: 'Pokračovat: naplánovat útok →',
+  planTitle: 'Plán útočníka',
+  planIntro: 'Malá stopa sama o sobě nebezpečná není. Útočníci skládají stopy do plánu. U každé stopy vyberte cíl, kterému pomáhá.',
+  planTrayTitle: 'Stopy z profilu',
+  planChooseLabel: 'Kterému cíli tato stopa pomáhá?',
+  planVoiceCorrect: '🧩 Dobrá shoda! {explain}',
+  planVoiceWrong: '🤔 Tenhle cíl ne. {explain}',
+  planSummaryTitle: 'Malé stopy se sčítají',
+  planSummaryText: 'Datum narození, jméno mazlíčka a nezabezpečená stránka mohou otevřít účet. Poloha naživo a příspěvek o škole mohou prozradit, kde někdo je. Útočníci takové stopy sbírají jednu po druhé.',
+  planScoreTemplate: '{n} z {total} stop napoprvé',
+  toQuizButton: 'Pokračovat: proč a jak to zastavit →',
+  goals: {
+    account: { icon: '🔑', title: 'Vloupat se do účtu', hint: 'Převzít profil nebo herní účet' },
+    person: { icon: '🧭', title: 'Najít člověka v reálném životě', hint: 'Vědět, kde dotyčný je a kdy' },
+    none: { icon: '🚫', title: 'K ničemu', hint: 'Útočníkovi to moc nepomůže' },
+  },
+  clues: [
+    {
+      id: 'birthday',
+      icon: '🎂',
+      text: 'Celé datum narození na profilu',
+      explanation: 'Lidé často používají datum narození v heslech a bezpečnostních odpovědích. Útočník to zkusí jako první.',
+    },
+    {
+      id: 'pet',
+      icon: '🐱',
+      text: 'Jméno mazlíčka na profilu',
+      explanation: 'Jména mazlíčků jsou oblíbená hesla a bezpečnostní odpovědi. Útočník může jméno zkusit, aby se dostal do účtu.',
+    },
+    {
+      id: 'http',
+      icon: '🔓',
+      text: 'Stránka používá http:// a ne https://',
+      explanation: 'Na stránce s http:// mohou ostatní ve stejné síti přečíst, co píšete. I heslo.',
+    },
+    {
+      id: 'location',
+      icon: '📍',
+      text: 'Poloha naživo v příspěvku',
+      explanation: 'Poloha naživo ukazuje přesně, kde někdo právě je. Cizí člověk by ji mohl zneužít, aby dotyčného našel.',
+    },
+    {
+      id: 'routine',
+      icon: '🏫',
+      text: 'Příspěvek: „Zrovna jsem doma ze školy!“',
+      explanation: 'Cizímu člověku to prozradí, kdy bývá dotyčný kde. Drobné údaje jako tenhle se mohou složit v plán.',
+    },
+    {
+      id: 'avatar',
+      icon: '👤',
+      text: 'Profilový obrázek',
+      explanation: 'Profilový obrázek je normální. Útočníkovi nepomůže ani se vloupat do účtu, ani najít člověka.',
+    },
+    {
+      id: 'bio',
+      icon: '🎮',
+      text: 'Bio: hráč a fanoušek mangy',
+      explanation: 'Koníčky nejsou tajemství. Samy o sobě útočníkovi moc nepomůžou.',
+    },
+    {
+      id: 'friends',
+      icon: '👥',
+      text: 'Počet přátel a sledujících',
+      explanation: 'Počet je jen číslo. Útočník s ním nic nezmůže.',
+    },
+  ],
+  quizTitle: 'Proč a jak to zastavit',
+  quizProgressTemplate: 'Otázka {n} z {total}',
+  motiveLabel: 'Proč by to útočník dělal?',
+  defendLabel: 'Co pomůže nejvíc?',
+  quizVoiceCorrect: '✅ {explain}',
+  quizVoiceWrong: '❌ Ne tak docela. {explain}',
+  nextButton: 'Další →',
+  resultsButton: 'Zobrazit výsledek →',
+  motivationsTitle: 'Proč lidé útočí',
+  motivationsSubtitle: 'Osm motivací',
+  motivations: {
+    financial: { name: 'Finanční zisk', desc: 'Prodávat ukradená data nebo chtít výkupné' },
+    reputation: { name: 'Pověst', desc: 'Chtít se předvést a získat uznání' },
+    revenge: { name: 'Pomsta', desc: 'Chtít se někomu pomstít' },
+    espionage: { name: 'Špionáž', desc: 'Získat tajné informace pro stát nebo firmu' },
+    error: { name: 'Prostě chyba', desc: 'Nehoda, která způsobí problém' },
+    experiment: { name: 'Experimentování', desc: 'Zkoušet věci pro zábavu' },
+    fear: { name: 'Strach', desc: 'Udělat něco špatného kvůli tlaku nebo vyhrožování' },
+    beliefs: { name: 'Přesvědčení', desc: 'Bojovat za věc, v kterou člověk věří' },
+  },
+  motiveCases: [
+    {
+      id: 1,
+      text: 'Starší žák se nabourá do účtu mladšího dítěte a píše tam hlouposti, aby všichni viděli, jak je chytrý.',
+      explanation: 'Chce být obdivovaný. Touze po uznání a předvádění se říká motivace „pověst“.',
+    },
+    {
+      id: 2,
+      text: 'Cizí člověk se nabourá do stovek účtů a prodává přihlašovací údaje na webu.',
+      explanation: 'Cizí člověk chce peníze. Prodávat ukradená data je „finanční zisk“.',
+    },
+    {
+      id: 3,
+      text: 'Žák se nabourá do účtu spolužáka, protože na něj byl spolužák minulý měsíc zlý.',
+      explanation: 'Žák se chce někomu pomstít. Této motivaci se říká „pomsta“.',
+    },
+    {
+      id: 4,
+      text: 'Dítě si stáhne hackerský nástroj a zkouší ho na školním počítači, jen aby vidělo, co se stane.',
+      explanation: 'Nikoho nechce zranit. Jen si zkouší, co to udělá. Tomu se říká „experimentování“, i tak ale může způsobit skutečnou škodu.',
+    },
+    {
+      id: 5,
+      text: 'Starší kluk řekne mladšímu: „Sežeň mi heslo svého kamaráda, nebo všem prozradím tvoje tajemství.“ Proč to mladší kluk udělá?',
+      explanation: 'Mladší kluk se bojí, co starší udělá. Udělat něco špatného kvůli tlaku nebo vyhrožování je „strach“.',
+    },
+  ],
+  defendCases: [
+    {
+      id: 1,
+      text: 'Útočník chce uhodnout heslo. Jaký zvyk mu to nejvíc ztíží?',
+      options: [
+        'Dlouhé heslo z náhodných slov, které s vámi nemá nic společného',
+        'Jméno mazlíčka a rok narození',
+        'Stejné krátké heslo všude',
+      ],
+      explanation: 'Dlouhé heslo z náhodných slov se hádá těžko. Datum narození a jména mazlíčků útočník zkouší jako první a jedno heslo všude ohrožuje všechny účty.',
+    },
+    {
+      id: 2,
+      text: 'Stránka začíná na http://, nemá zámeček, a přesto chce, abyste napsali heslo. Co uděláte?',
+      options: [
+        'Nenapíšete ho. Hledáte stránku, která začíná na https:// a má zámeček',
+        'Napíšete ho rychle, než si toho někdo všimne',
+        'Napíšete kratší heslo, aby bylo méně k přečtení',
+      ],
+      explanation: 'Na stránce s http:// mohou ostatní v síti přečíst, co píšete. Heslo zadávejte jen na stránkách s https://.',
+    },
+    {
+      id: 3,
+      text: 'Kamarád chce, abyste zveřejnili, kde právě jste, ať se všichni přidají. Co je nejbezpečnější?',
+      options: [
+        'Vypnout polohu naživo a fotku sdílet později, až budete pryč',
+        'Zveřejnit ji jen na 5 minut',
+        'Zveřejnit ji tak, aby ji viděl každý, i cizí lidé',
+      ],
+      explanation: 'Poloha naživo prozradí cizím lidem, kde právě jste. Fotky sdílejte později a jen s lidmi, které znáte.',
+    },
+  ],
+  finalTitle: 'Myšlení útočníka odemčeno!',
+  finalPart1Template: 'Část 1: nalezeno {n} z {total} slabých míst',
+  finalPart2Template: 'Část 2: {n} z {total} stop napoprvé',
+  finalPart3Template: 'Část 3: {n} z {total} otázek napoprvé',
+  finalScoreTemplate: 'Celkem {n} z {total} bodů',
+  rankGreat: 'Přemýšlíte jako útočník a jednáte jako obránce. Skvělá práce!',
+  rankGood: 'Dobrá práce! Zopakujte si části, které se vám zdály těžké.',
+  rankPractise: 'Cvičte dál. Všímejte si malých stop a ptejte se: jak by je někdo mohl složit dohromady?',
   hotspots: [
     {
       id: 'http',
       label: 'Nešifrované připojení (HTTP)',
-      explain: 'Tahle stránka používá HTTP místo HTTPS. Všechno, co sem napíšete — včetně hesel — putuje úplně nešifrovaně a může to zachytit kdokoli ve stejné síti.'
+      explain: 'Tahle stránka používá HTTP, ne HTTPS. Co sem napíšete, i hesla, není zašifrované. Přečíst to může kdokoli ve stejné síti.'
     },
     { id: 'avatar',
       label: 'Profilový obrázek',
@@ -321,12 +476,12 @@ export const challengeAP = {
     {
       id: 'username',
       label: 'Zobrazované jméno / uživatelské jméno',
-      explain: 'Zobrazovat jméno a @přezdívku je na sociálních sítích úplně normální. Zranitelnost to není.'
+      explain: 'Zobrazit jméno a @přezdívku je na sociálních sítích normální. Zranitelnost to není.'
     },
     {
       id: 'online',
       label: 'Stav aktivity',
-      explain: 'Zobrazovat, kdy jste online, je běžná funkce. Ze strany soukromí to stojí za zamyšlení, ale o kritickou bezpečnostní zranitelnost nejde.'
+      explain: 'Zobrazit, kdy jste online, je běžná funkce. Je to malá věc pro soukromí, ale skutečná zranitelnost to není.'
     },
     {
       id: 'bio',
@@ -336,42 +491,42 @@ export const challengeAP = {
     {
       id: 'followers',
       label: 'Počet sledujících / přátel',
-      explain: 'Počty přátel a sledujících jsou běžnou funkcí sociálních sítí. Bezpečnostní zranitelnost to není!'
+      explain: 'Počty přátel a sledujících jsou běžná funkce. Zranitelnost to není!'
     },
     {
       id: 'birthday',
       label: 'Odhalené celé datum narození',
-      explain: "Prozradit celé datum narození je nebezpečné! Útočníci narozeniny využívají k hádání hesel (třeba „martin2008“), k odpovědím na bezpečnostní otázky a k obcházení obnovy účtu."
+      explain: 'Zveřejnit celé datum narození je nebezpečné! Útočníci ho používají k hádání hesel (třeba „martin2008“), k odpovědím na bezpečnostní otázky a k průniku do účtů.'
     },
     {
       id: 'email',
       label: 'E-mail v profilu',
-      explain: 'Zobrazený e-mail může přilákat spam, ale ve srovnání s odhaleným heslem nebo odpovědí na bezpečnostní otázku jde o menší problém.'
+      explain: 'Veřejný e-mail může přilákat spam, ale je to menší problém než odhalené heslo nebo odpověď na bezpečnostní otázku.'
     },
     {
       id: 'petname',
       label: 'Odhalené jméno mazlíčka',
-      explain: 'Odhalené jméno mazlíčka můžou útočníci využít k uhodnutí odpovědí na bezpečnostní otázky nebo k přesvědčivějším útokům sociálního inženýrství.'
+      explain: 'Jméno mazlíčka bývá odpovědí na bezpečnostní otázku. Útočníci ho mohou využít k průniku do účtu nebo k vašemu oklamání.'
     },
     {
       id: 'location',
       label: 'Vysílání polohy v reálném čase',
-      explain: 'Tenhle příspěvek prozrazuje, kde přesně Martin právě je! Kdokoli — včetně cizích lidí a útočníků — vidí, kde se v tuhle chvíli nachází. Sdílet polohu v reálném čase je vážné bezpečnostní riziko.'
+      explain: 'Tenhle příspěvek prozrazuje, kde přesně Martin právě je! Vidí to kdokoli, i cizí lidé a útočníci. Sdílení polohy naživo je vážné bezpečnostní riziko.'
     },
     {
       id: 'post2',
       label: 'Obecný příspěvek',
-      explain: 'Psát o běžných věcech, jako je pizza k večeři, je úplně v pořádku. Žádné citlivé bezpečnostní údaje to neprozradí!'
+      explain: 'Psát o běžných věcech, třeba o pizze, je v pořádku. Nic citlivého to neprozradí!'
     },
     {
       id: 'like1',
       label: 'Tlačítko To se mi líbí',
-      explain: 'Dávat příspěvkům lajk je úplně normální a neškodná věc!'
+      explain: 'Dávat příspěvkům lajk je normální a neškodné!'
     },
     {
       id: 'comment1',
       label: 'Tlačítko Komentář',
-      explain: 'Možnost komentovat je běžná funkce sociálních sítí. Zranitelnost to není!'
+      explain: 'Komentáře jsou běžná funkce. Zranitelnost to není!'
     },
     {
       id: 'share1',
@@ -381,7 +536,7 @@ export const challengeAP = {
     {
       id: 'like2',
       label: 'Tlačítko To se mi líbí',
-      explain: 'Dávat příspěvkům lajk je úplně normální a neškodné!'
+      explain: 'Dávat příspěvkům lajk je normální a neškodné!'
     },
     {
       id: 'comment2',

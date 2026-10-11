@@ -1,0 +1,93 @@
+/**
+ * Page sections — shared by the home and About pages.
+ *
+ * A page is a stack of <section class="page-section"> blocks; every other one
+ * gets `--alt`, which fades from a soft blue tint like the page headers do
+ * (see .bg-module in PageHeader.astro).
+ */
+.page-section {
+  padding-block: 3.5rem;
+}
+
+.page-section--alt {
+  background: linear-gradient(155deg, color-mix(in oklab, #2563eb 10%, #ffffff) 20%, var(--background-color) 60%);
+  border-block: 1px solid color-mix(in oklab, #2563eb 40%, #ffffff);
+}
+
+.darkmode .page-section--alt {
+  background: linear-gradient(155deg, color-mix(in oklab, #2563eb 22%, var(--dm-surface-2)) 0%, var(--dm-surface-1) 65%);
+  border-color: color-mix(in oklab, #2563eb 40%, var(--dm-border-sub));
+}
+
+.eyebrow {
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--link-color);
+  margin-bottom: 0.35rem;
+}
+
+.section-title {
+  font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.75rem);
+  font-weight: 900;
+  line-height: 1.15;
+  text-decoration: underline;
+  text-decoration-color: #2563eb;
+  margin-bottom: 0.75rem;
+}
+
+.section-sub {
+  font-size: 1.125rem;
+  color: light-dark(#475569, var(--dm-fg-muted));
+  margin-bottom: 1rem;
+}
+
+/* Native <details> "Read more": the summary swaps between .rm-closed and .rm-open text. */
+.read-more {
+  margin-bottom: 1.5rem;
+
+  summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--link-color);
+    list-style: none;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &::after {
+      content: '';
+      width: 0.5rem;
+      height: 0.5rem;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      transform: rotate(45deg) translateY(-2px);
+      transition: transform 0.2s ease;
+    }
+  }
+
+  &[open] summary::after {
+    transform: rotate(-135deg) translateY(-2px);
+  }
+
+  &:not([open]) .rm-open,
+  &[open] .rm-closed {
+    display: none;
+  }
+
+  p {
+    margin-top: 0.75rem;
+    font-size: 1.0625rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .read-more summary::after {
+    transition: none;
+  }
+}

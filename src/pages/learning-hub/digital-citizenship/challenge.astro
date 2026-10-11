@@ -1,39 +1,40 @@
 ---
 import DefaultLayout from '@layouts/DefaultLayout.astro'
 import PageHeader from '@components/PageHeader.astro'
+import ChallengeIntro from '@components/ChallengeIntro.astro'
+import ChallengeProgress from '@components/ChallengeProgress.astro'
+import HintPanel from '@components/HintPanel.astro'
 import { useTranslations } from 'src/i18n/index'
+import { toJsonScript } from '../../../utils/jsonScript'
+import { DC_ZONES } from '../../../data/dcPosts'
 
 const { t, v } = useTranslations(Astro.currentLocale)
 const { v: vEn } = useTranslations('en')
 
-type ChallengePost = {
-  id: number
-  text: string
-  category: 'safe' | 'unsafe'
-  emoji: string
-  explanation: string
+type ZoneText = { icon: string; title: string; hint: string }
+type PostText = { id: number; text: string; emoji: string; explanation: string }
+type StopQuestion = { icon: string; text: string }
+
+const zonesEn = vEn<Record<string, ZoneText>>('challengeDC.zones') ?? {}
+const zonesLocal = v<Record<string, ZoneText>>('challengeDC.zones') ?? {}
+const zoneTexts = Object.fromEntries(DC_ZONES.map((zone) => [zone, { ...zonesEn[zone], ...zonesLocal[zone] }])) as Record<string, ZoneText>
+
+// Post texts by id: the page language, with English filling any gap
+const postsEn = vEn<ReadonlyArray<PostText>>('challengeDC.posts') ?? []
+const postsLocal = v<ReadonlyArray<PostText>>('challengeDC.posts') ?? []
+const posts: ReadonlyArray<PostText> = postsEn.map((en) => ({ ...en, ...postsLocal.find((post) => post.id === en.id) }))
+
+const stopQuestions = v<ReadonlyArray<StopQuestion>>('challengeDC.stopQuestions') ?? vEn<ReadonlyArray<StopQuestion>>('challengeDC.stopQuestions') ?? []
+
+const labels = {
+  scoreLabel: t('challengeDC.correctCountLabel'),
+  tryOtherZone: t('challengeDC.tryOtherZone'),
+  correctInTemplate: t('challengeDC.correctInTemplate'),
+  winSummaryTemplate: t('challengeDC.winSummaryTemplate'),
+  winGreat: t('challengeDC.winGreat'),
+  winGood: t('challengeDC.winGood'),
+  winPractise: t('challengeDC.winPractise'),
 }
-
-const rawPosts = v<ReadonlyArray<Record<string, unknown>>>('challengeDC.posts') ?? []
-const enPosts = vEn<ReadonlyArray<Record<string, unknown>>>('challengeDC.posts') ?? []
-
-const postCount = Math.max(rawPosts.length, enPosts.length)
-const posts: ReadonlyArray<ChallengePost> = Array.from({ length: postCount }, (_, idx) => {
-  const raw = rawPosts[idx] ?? {}
-  const fallback = enPosts[idx] ?? {}
-  const categoryCandidate = (raw.category ?? fallback.category) as string
-  const category = categoryCandidate === 'safe' || categoryCandidate === 'unsafe' ? categoryCandidate : 'unsafe'
-
-  return {
-    id: idx + 1,
-    text: String(raw.text ?? fallback.text ?? ''),
-    category,
-    emoji: String(raw.emoji ?? fallback.emoji ?? ''),
-    explanation: String(raw.explanation ?? fallback.explanation ?? ''),
-  }
-})
-
-const totalPosts = posts.length
 ---
 
 <DefaultLayout title={t('challengeDC.title')}>
@@ -44,44 +45,41 @@ const totalPosts = posts.length
     underlineColor="var(--brand-DC)"
   />
 
+  <ChallengeProgress />
+
+  <script type="application/json" id="dc-challenge-data" set:html={toJsonScript({ posts, zones: zoneTexts, labels })} />
+
   <section class="my-12">
     <div class="container mb-12">
-      <div class="mb-10 flex flex-col gap-6">
-        <h2 class="mb-2">{t('challengeDC.howItWorks')}</h2>
-        <p>
-          {t('challengeDC.instruction')}
-        </p>
-        <div class="tip-card">
-          <div class="tip-card__lead">
-            <span class="tip-card__icon" aria-hidden="true">💬</span>
-            <strong class="tip-card__label">{t('challengeDC.tipLabel')}</strong>
-          </div>
-          <div class="tip-card__body">{t('challengeDC.tip')}</div>
-        </div>
-      </div>
+      <ChallengeIntro ns="challengeDC" brand="DC" />
     </div>
   </section>
 
-  <section
-    class="sort-game"
-    data-sort-game
-    data-total-posts={totalPosts}
-    data-score-label={t('challengeDC.correctCountLabel')}
-    data-feedback-correct={t('challengeDC.correct')}
-    data-feedback-wrong={t('challengeDC.tryOtherZone')}
-    data-drag-safe-here={t('challengeDC.dragSafeHere')}
-    data-drag-unsafe-here={t('challengeDC.dragUnsafeHere')}
-  >
+  <section class="sort-game" data-sort-game>
     <div class="container">
+
+      <!-- Three questions to ask before every post (collapsed on phones) -->
+      <HintPanel class="mb-6" title={t('challengeDC.stopTitle')} subtitle={t('challengeDC.stopSubtitle')}>
+        {stopQuestions.map((question) => (
+          <div class="flex gap-2 text-sm">
+            <span class="shrink-0" aria-hidden="true">{question.icon}</span>
+            <div>{question.text}</div>
+          </div>
+        ))}
+        <p class="mt-3 text-xs font-semibold text-slate-700">{t('challengeDC.stopNote')}</p>
+      </HintPanel>
 
       <!-- Toolbar with score and restart -->
       <div class="sort-game__toolbar">
-        <div class="sort-game__score" data-score aria-live="polite">0 / {totalPosts} {t('challengeDC.correctCountLabel')}</div>
+        <div class="sort-game__score" data-score aria-live="polite"></div>
         <button class="button sort-game__restart" type="button" data-restart>{t('challengeDC.tryAgain')}</button>
       </div>
 
-      <!-- Feedback message -->
-      <div class="sort-game__feedback" data-feedback aria-live="polite"></div>
+      <!-- Feedback: stays in view while scrolling, so the explanation is never left behind -->
+      <div class="sort-game__feedback" data-feedback role="status" aria-live="polite" hidden>
+        <p class="sort-game__feedback-title" data-feedback-title></p>
+        <p class="sort-game__feedback-text" data-feedback-text></p>
+      </div>
 
       <!-- Game board -->
       <div class="sort-game__board">
@@ -89,72 +87,72 @@ const totalPosts = posts.length
         <!-- Card tray (source) -->
         <div class="sort-game__tray" data-tray>
           <h3 class="sort-game__tray-label">{t('challengeDC.postsToSort')}</h3>
-          <div class="sort-game__cards-container" data-cards-tray>
-            {posts.map((post) => (
-              <div class="post-card-wrapper">
-                <div
-                  class="post-card"
-                  data-post-id={post.id}
-                  data-category={post.category}
-                  data-explanation={post.explanation}
-                  draggable="true"
-                  tabindex="0"
-                >
-                  <div class="post-card__emoji">{post.emoji}</div>
-                  <div class="post-card__text">{post.text}</div>
-                  <div class="post-card__check" aria-hidden="true">✓</div>
-                </div>
-                <div class="post-card__explanation" data-card-explanation={post.id} aria-live="polite"></div>
-              </div>
-            ))}
-          </div>
+          <div class="sort-game__cards-container" data-cards-tray></div>
         </div>
 
         <!-- Drop zones -->
         <div class="sort-game__zones">
-
-          <!-- Safe to Share (Green) -->
-          <div
-            class="drop-zone drop-zone--safe"
-            data-zone="safe"
-            role="region"
-            aria-label={t('challengeDC.safeZoneAriaLabel')}
-          >
-            <div class="drop-zone__header">
-              <h3 class="drop-zone__title">{t('challengeDC.safeToShare')}</h3>
-              <span class="drop-zone__icon">✅</span>
+          {DC_ZONES.map((zone) => (
+            <div
+              class={`drop-zone drop-zone--${zone}`}
+              data-zone={zone}
+              role="region"
+              aria-label={t('challengeDC.zoneAriaTemplate').replace('{zone}', zoneTexts[zone]?.title ?? zone)}
+            >
+              <div class="drop-zone__header">
+                <div>
+                  <h3 class="drop-zone__title">{zoneTexts[zone]?.title}</h3>
+                  <p class="drop-zone__hint">{zoneTexts[zone]?.hint}</p>
+                </div>
+                <span class="drop-zone__icon" aria-hidden="true">{zoneTexts[zone]?.icon}</span>
+              </div>
+              <div class="drop-zone__content" data-zone-content>
+                <p class="drop-zone__empty">{t('challengeDC.dragHere')}</p>
+              </div>
             </div>
-            <div class="drop-zone__content" data-zone-content>
-              <p class="drop-zone__empty">{t('challengeDC.dragSafeHere')}</p>
-            </div>
-          </div>
-
-          <!-- Do NOT Share (Red) -->
-          <div
-            class="drop-zone drop-zone--unsafe"
-            data-zone="unsafe"
-            role="region"
-            aria-label={t('challengeDC.unsafeZoneAriaLabel')}
-          >
-            <div class="drop-zone__header">
-              <h3 class="drop-zone__title">{t('challengeDC.doNotShare')}</h3>
-              <span class="drop-zone__icon">🚫</span>
-            </div>
-            <div class="drop-zone__content" data-zone-content>
-              <p class="drop-zone__empty">{t('challengeDC.dragUnsafeHere')}</p>
-            </div>
-          </div>
-
+          ))}
         </div>
 
       </div>
 
+      <!-- Templates cloned by the script. Cloning keeps the scoped-style attributes, so the cards look the same as server-rendered ones -->
+      <template data-card-template>
+        <div class="post-card-wrapper">
+          <div class="post-card" draggable="true" tabindex="0" role="button" aria-pressed="false">
+            <div class="post-card__emoji" aria-hidden="true"></div>
+            <div class="post-card__text"></div>
+            <div class="post-card__check" aria-hidden="true">✓</div>
+          </div>
+          <div class="post-card__choices" role="group" aria-label={t('challengeDC.chooseZoneLabel')} hidden>
+            {DC_ZONES.map((zone) => (
+              <button type="button" class={`zone-choice zone-choice--${zone}`} data-choose={zone}>
+                {zoneTexts[zone]?.icon} {zoneTexts[zone]?.title}
+              </button>
+            ))}
+          </div>
+        </div>
+      </template>
+      <template data-empty-template>
+        <p class="drop-zone__empty">{t('challengeDC.dragHere')}</p>
+      </template>
+      <template data-review-template>
+        <li class="sort-game__review-item">
+          <span data-review-text></span>
+          <span class="sort-game__review-zone" data-review-zone></span>
+        </li>
+      </template>
+
       <!-- Win celebration -->
       <div class="sort-game__win" data-win hidden>
         <div class="sort-game__win-inner">
-          <span class="sort-game__win-icon">🎉</span>
-          <h2>{t('challengeDC.winTitle')}</h2>
-          <p>{t('challengeDC.winMessage')}</p>
+          <span class="sort-game__win-icon" aria-hidden="true">🎉</span>
+          <h2 id="win-title" tabindex="-1">{t('challengeDC.winTitle')}</h2>
+          <p class="sort-game__win-summary" data-win-summary></p>
+          <p data-win-message></p>
+          <div class="sort-game__review" data-review hidden>
+            <h3 class="sort-game__review-title">{t('challengeDC.reviewTitle')}</h3>
+            <ul class="sort-game__review-list" data-review-list></ul>
+          </div>
           <button class="button" type="button" data-restart>{t('challengeDC.playAgain')}</button>
         </div>
       </div>
@@ -163,120 +161,121 @@ const totalPosts = posts.length
   </section>
 
 <script>
+  import { DC_POSTS, DC_ZONES, dealPosts, rankFor } from '../../../data/dcPosts'
+  import { recordResult } from '../../../utils/challengeProgress'
+  import type { DcPostRule, DcZone } from '../../../data/dcPosts'
+
   const initializeSortGame = () => {
     document.querySelectorAll('[data-sort-game]').forEach((root) => {
       if (!(root instanceof HTMLElement)) return
       if (root.dataset.bound === 'true') return
       root.dataset.bound = 'true'
 
-      const totalPosts = Number.parseInt(root.dataset.totalPosts ?? '', 10) || 0
-      const scoreLabel = root.dataset.scoreLabel ?? ''
-      const feedbackCorrect = root.dataset.feedbackCorrect ?? ''
-      const feedbackWrong = root.dataset.feedbackWrong ?? ''
-      const dragSafeHere = root.dataset.dragSafeHere ?? ''
-      const dragUnsafeHere = root.dataset.dragUnsafeHere ?? ''
+      const dataEl = document.getElementById('dc-challenge-data')
+      if (!dataEl) return
+      const { posts, zones: zoneTexts, labels } = JSON.parse(dataEl.textContent ?? '{}') as {
+        posts: { id: number; text: string; emoji: string; explanation: string }[]
+        zones: Record<string, { icon: string; title: string; hint: string }>
+        labels: Record<string, string>
+      }
+      const postById = new Map(posts.map((post) => [post.id, post]))
+      const ruleById = new Map<number, DcPostRule>(DC_POSTS.map((rule) => [rule.id, rule]))
+      const fmt = (template: string, vars: Record<string, string | number>) =>
+        String(template ?? '').replace(/\{(\w+)\}/g, (_m, key) => String(vars[key] ?? ''))
+      const zoneLabel = (zone: string) => `${zoneTexts[zone]?.icon ?? ''} ${zoneTexts[zone]?.title ?? zone}`.trim()
 
       const scoreEl = root.querySelector('[data-score]')
       const feedbackEl = root.querySelector<HTMLElement>('[data-feedback]')
+      const feedbackTitle = root.querySelector<HTMLElement>('[data-feedback-title]')
+      const feedbackText = root.querySelector<HTMLElement>('[data-feedback-text]')
       const winPanel = root.querySelector<HTMLElement>('[data-win]')
-      const cardsTray = root.querySelector('[data-cards-tray]')
+      const winSummary = root.querySelector<HTMLElement>('[data-win-summary]')
+      const winMessage = root.querySelector<HTMLElement>('[data-win-message]')
+      const reviewBox = root.querySelector<HTMLElement>('[data-review]')
+      const reviewList = root.querySelector<HTMLElement>('[data-review-list]')
+      const cardsTray = root.querySelector<HTMLElement>('[data-cards-tray]')
       const zones = root.querySelectorAll<HTMLElement>('[data-zone]')
       const restartBtns = root.querySelectorAll('[data-restart]')
+      const cardTemplate = root.querySelector<HTMLTemplateElement>('template[data-card-template]')
+      const emptyTemplate = root.querySelector<HTMLTemplateElement>('template[data-empty-template]')
+      const reviewTemplate = root.querySelector<HTMLTemplateElement>('template[data-review-template]')
 
-      if (!scoreEl || !feedbackEl || !winPanel || !cardsTray || zones.length === 0) return
+      if (!scoreEl || !feedbackEl || !feedbackTitle || !feedbackText || !winPanel || !winSummary || !winMessage ||
+          !reviewBox || !reviewList || !cardsTray || !cardTemplate || !emptyTemplate || !reviewTemplate || zones.length === 0) return
 
-      let score = 0
+      let deck: DcPostRule[] = []
+      let placedCount = 0
+      let firstTry = 0
+      let missed = new Set<number>()
       let selectedCard: HTMLElement | null = null
       let draggedCard: HTMLElement | null = null
       let busy = false
 
-      // ── Initialize zone maps ──────────────────────────────────────────────
       const zoneMap = new Map<string, HTMLElement>()
-      zones.forEach((zone) => {
-        zoneMap.set(zone.dataset.zone || '', zone)
-      })
+      zones.forEach((zone) => zoneMap.set(zone.dataset.zone || '', zone))
 
-      // ── Get all cards ─────────────────────────────────────────────────────
       const getCards = () => Array.from(root.querySelectorAll<HTMLElement>('[data-post-id]'))
-
-      // ── Get wrapper for a card ────────────────────────────────────────────
       const getWrapper = (card: HTMLElement) => card.closest('.post-card-wrapper') as HTMLElement | null
+      const getChoices = (card: HTMLElement) => getWrapper(card)?.querySelector<HTMLElement>('.post-card__choices') ?? null
 
-      // ── Update score display ──────────────────────────────────────────────
       const updateScore = () => {
-        const correctCount = getCards().filter((c) => c.dataset.placed === 'true').length
-        const total = totalPosts || getCards().length
-        scoreEl.textContent = `${correctCount} / ${total} ${scoreLabel}`.trim()
+        scoreEl.textContent = `${placedCount} / ${deck.length} ${labels.scoreLabel}`.trim()
       }
 
-      // ── Show feedback ─────────────────────────────────────────────────────
-      let feedbackTimer: ReturnType<typeof setTimeout>
-      const showFeedback = (message: string, type: 'correct' | 'wrong') => {
-        clearTimeout(feedbackTimer)
-        feedbackEl.textContent = message
+      // ── Feedback: explanation of the last card, always in view ────────────
+      const showFeedback = (type: 'correct' | 'wrong' | 'info', title: string, text: string) => {
+        feedbackTitle.textContent = title
+        feedbackText.textContent = text
         feedbackEl.className = `sort-game__feedback sort-game__feedback--${type}`
-        feedbackEl.style.display = 'block'
-        feedbackTimer = setTimeout(() => {
-          feedbackEl.textContent = ''
-          feedbackEl.style.display = 'none'
-        }, 3000)
+        feedbackEl.hidden = false
+      }
+      const hideFeedback = () => {
+        feedbackEl.hidden = true
+        feedbackTitle.textContent = ''
+        feedbackText.textContent = ''
       }
 
-      // ── Show explanation below a specific card ────────────────────────────
-      const showCardExplanation = (card: HTMLElement, text: string) => {
-        // Hide all other explanations first
-        hideAllExplanations()
-
-        const postId = card.dataset.postId
-        const explanationEl = root.querySelector(`[data-card-explanation="${postId}"]`) as HTMLElement | null
-        if (!explanationEl) return
-
-        explanationEl.textContent = text
-        explanationEl.className = 'post-card__explanation'
-        explanationEl.style.display = 'block'
-
-        // Scroll the explanation into view
-        explanationEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+      // ── Build one card (with its "where does it go?" buttons) from the template ──
+      const buildCard = (rule: DcPostRule): HTMLElement => {
+        const post = postById.get(rule.id)
+        const wrapper = cardTemplate.content.firstElementChild!.cloneNode(true) as HTMLElement
+        const card = wrapper.querySelector<HTMLElement>('.post-card')!
+        card.dataset.postId = String(rule.id)
+        wrapper.querySelector('.post-card__emoji')!.textContent = post?.emoji ?? ''
+        wrapper.querySelector('.post-card__text')!.textContent = post?.text ?? ''
+        return wrapper
       }
 
-      const hideAllExplanations = () => {
-        root.querySelectorAll('[data-card-explanation]').forEach((el) => {
-          if (el instanceof HTMLElement) {
-            el.style.display = 'none'
-            el.textContent = ''
-          }
-        })
-      }
-
-      // ── Deselect card (mobile) ────────────────────────────────────────────
+      // ── Selection (tap, click or keyboard) ────────────────────────────────
       const deselectCard = () => {
         if (selectedCard) {
           selectedCard.classList.remove('post-card--selected')
+          selectedCard.setAttribute('aria-pressed', 'false')
+          const choices = getChoices(selectedCard)
+          if (choices) choices.hidden = true
         }
         selectedCard = null
       }
 
-      // ── Handle card click (mobile select only) ────────────────────────────
       const handleCardClick = (card: HTMLElement) => {
-        if (card.dataset.placed === 'true' || busy) return
-
-        if (selectedCard === card) {
-          deselectCard()
-          hideAllExplanations()
+        if (busy) return
+        if (card.dataset.placed === 'true') {
+          // A placed card can be tapped to read its explanation again
+          const post = postById.get(Number(card.dataset.postId))
+          const rule = ruleById.get(Number(card.dataset.postId))
+          if (post && rule) showFeedback('info', zoneLabel(rule.zone), post.explanation)
           return
         }
-
+        if (selectedCard === card) {
+          deselectCard()
+          return
+        }
         deselectCard()
         selectedCard = card
         card.classList.add('post-card--selected')
-        // Explanations appear only after correct placement into a drop zone.
-        hideAllExplanations()
-      }
-
-      // ── Handle zone click (mobile drop) ───────────────────────────────────
-      const handleZoneClick = (zone: HTMLElement) => {
-        if (!selectedCard || busy || selectedCard.dataset.placed === 'true') return
-        performDrop(selectedCard, zone)
+        card.setAttribute('aria-pressed', 'true')
+        const choices = getChoices(card)
+        if (choices) choices.hidden = false
       }
 
       // ── Move card + wrapper into a drop zone ─────────────────────────────
@@ -284,45 +283,49 @@ const totalPosts = posts.length
         const wrapper = getWrapper(card)
         const content = zone.querySelector('[data-zone-content]')
         if (!content || !wrapper) return
-
-        const empty = content.querySelector('.drop-zone__empty')
-        if (empty) empty.remove()
-
+        content.querySelector('.drop-zone__empty')?.remove()
         content.appendChild(wrapper)
       }
 
+      const focusNextCard = () => {
+        getCards().find((card) => card.dataset.placed !== 'true')?.focus()
+      }
+
       // ── Perform drop logic ────────────────────────────────────────────────
-      const performDrop = (card: HTMLElement, zone: HTMLElement) => {
-        if (card.dataset.placed === 'true') return
+      const performDrop = (card: HTMLElement, zone: HTMLElement, options: { focusNext?: boolean } = {}) => {
+        if (card.dataset.placed === 'true' || busy) return
+        const id = Number(card.dataset.postId)
+        const rule = ruleById.get(id)
+        const post = postById.get(id)
+        if (!rule || !post) return
 
         busy = true
-        const cardCategory = card.dataset.category || ''
-        const zoneType = zone.dataset.zone || ''
-        const explanation = card.dataset.explanation || ''
+        const chosen = zone.dataset.zone as DcZone
 
-        if (cardCategory === zoneType) {
-          // Correct placement
+        if (rule.zone === chosen) {
           card.dataset.placed = 'true'
           card.classList.add('post-card--placed')
-          card.classList.remove('post-card--selected')
-
+          card.draggable = false
+          card.tabIndex = -1
+          card.setAttribute('aria-pressed', 'false')
+          deselectCard()
           moveCardToZone(card, zone)
 
-          score++
+          placedCount++
+          if (!missed.has(id)) firstTry++
           updateScore()
-          showFeedback(feedbackCorrect, 'correct')
-          showCardExplanation(card, explanation)
-          deselectCard()
+          showFeedback('correct', fmt(labels.correctInTemplate, { zone: zoneLabel(chosen) }), post.explanation)
+          if (options.focusNext) focusNextCard()
 
           setTimeout(() => {
             busy = false
             checkWin()
           }, 600)
         } else {
-          // Wrong placement
+          // Wrong zone: counts against the first-try score, and the explanation says why
+          missed.add(id)
           card.classList.add('post-card--wrong')
-          showFeedback(feedbackWrong, 'wrong')
-          hideAllExplanations()
+          showFeedback('wrong', labels.tryOtherZone, post.explanation)
 
           setTimeout(() => {
             card.classList.remove('post-card--wrong')
@@ -331,21 +334,43 @@ const totalPosts = posts.length
         }
       }
 
-      // ── Check win condition ───────────────────────────────────────────────
+      // ── Mouse: a card is selected, then a zone is clicked ─────────────────
+      const handleZoneClick = (zone: HTMLElement) => {
+        if (!selectedCard || busy || selectedCard.dataset.placed === 'true') return
+        performDrop(selectedCard, zone)
+      }
+
+      // ── Win ───────────────────────────────────────────────────────────────
       const checkWin = () => {
-        const allCorrect = getCards().every((c) => c.dataset.placed === 'true')
-        if (allCorrect) {
-          setTimeout(() => {
-            winPanel.hidden = false
-            winPanel.scrollIntoView({ behavior: 'smooth', block: 'center' })
-          }, 400)
-        }
+        if (getCards().length === 0 || !getCards().every((card) => card.dataset.placed === 'true')) return
+
+        recordResult('dc', firstTry, deck.length)
+        winSummary.textContent = fmt(labels.winSummaryTemplate, { n: firstTry, total: deck.length })
+        const rank = rankFor(firstTry, deck.length)
+        winMessage.textContent = rank === 'great' ? labels.winGreat : rank === 'good' ? labels.winGood : labels.winPractise
+
+        reviewList.replaceChildren()
+        const missedRules = deck.filter((rule) => missed.has(rule.id))
+        missedRules.forEach((rule) => {
+          const post = postById.get(rule.id)
+          const item = reviewTemplate.content.firstElementChild!.cloneNode(true) as HTMLElement
+          item.querySelector('[data-review-text]')!.textContent = `${post?.emoji ?? ''} ${post?.text ?? ''}`.trim()
+          item.querySelector('[data-review-zone]')!.textContent = `→ ${zoneLabel(rule.zone)}`
+          reviewList.append(item)
+        })
+        reviewBox.hidden = missedRules.length === 0
+
+        setTimeout(() => {
+          winPanel.hidden = false
+          winPanel.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          winPanel.querySelector<HTMLElement>('#win-title')?.focus({ preventScroll: true })
+        }, 400)
       }
 
       // ── Drag event handlers ───────────────────────────────────────────────
       const handleDragStart = (e: DragEvent) => {
         if (!(e.target instanceof HTMLElement)) return
-        const card = e.target.closest('[data-post-id]') as HTMLElement
+        const card = e.target.closest('[data-post-id]') as HTMLElement | null
         if (!card || card.dataset.placed === 'true') {
           e.preventDefault()
           return
@@ -360,98 +385,62 @@ const totalPosts = posts.length
 
       const handleDragEnd = (e: DragEvent) => {
         if (!(e.target instanceof HTMLElement)) return
-        const card = e.target.closest('[data-post-id]') as HTMLElement
-        if (card) {
-          card.classList.remove('post-card--dragging')
-        }
+        e.target.closest('[data-post-id]')?.classList.remove('post-card--dragging')
+        zones.forEach((zone) => zone.classList.remove('drop-zone--active'))
       }
 
       const handleDragOver = (e: DragEvent) => {
         e.preventDefault()
-        if (e.dataTransfer) {
-          e.dataTransfer.dropEffect = 'move'
-        }
-        const zone = (e.target as HTMLElement).closest('[data-zone]') as HTMLElement
-        if (zone) {
-          zone.classList.add('drop-zone--active')
-        }
+        if (e.dataTransfer) e.dataTransfer.dropEffect = 'move'
+        const zone = (e.target as HTMLElement).closest('[data-zone]') as HTMLElement | null
+        zone?.classList.add('drop-zone--active')
       }
 
       const handleDragLeave = (e: DragEvent) => {
-        const zone = (e.target as HTMLElement).closest('[data-zone]') as HTMLElement
-        if (zone && e.target === zone) {
-          zone.classList.remove('drop-zone--active')
-        }
+        const zone = (e.target as HTMLElement).closest('[data-zone]') as HTMLElement | null
+        if (zone && e.target === zone) zone.classList.remove('drop-zone--active')
       }
 
       const handleDrop = (e: DragEvent) => {
         e.preventDefault()
         if (!draggedCard) return
-
-        const zone = (e.target as HTMLElement).closest('[data-zone]') as HTMLElement
+        const zone = (e.target as HTMLElement).closest('[data-zone]') as HTMLElement | null
         if (!zone) return
-
         zone.classList.remove('drop-zone--active')
         performDrop(draggedCard, zone)
         draggedCard = null
       }
 
-      // ── Restart ───────────────────────────────────────────────────────────
-      const restart = () => {
-        score = 0
+      // ── Deal a fresh game ─────────────────────────────────────────────────
+      const emptyZones = () => {
+        zones.forEach((zone) => {
+          const content = zone.querySelector<HTMLElement>('[data-zone-content]')
+          if (!content) return
+          content.replaceChildren(emptyTemplate.content.firstElementChild!.cloneNode(true))
+        })
+      }
+
+      const deal = () => {
+        deck = dealPosts()
+        placedCount = 0
+        firstTry = 0
+        missed = new Set<number>()
         selectedCard = null
         draggedCard = null
         busy = false
-        winPanel.hidden = true
-        feedbackEl.textContent = ''
-        feedbackEl.style.display = 'none'
-        hideAllExplanations()
-
-        // Reset all cards back into the tray
-        const wrappers = Array.from(root.querySelectorAll('.post-card-wrapper'))
-        wrappers.forEach((wrapper) => {
-          const card = wrapper.querySelector('[data-post-id]')
-          if (card instanceof HTMLElement) {
-            card.dataset.placed = 'false'
-            card.className = 'post-card'
-          }
-          cardsTray.appendChild(wrapper)
-        })
-
-        // Restore empty messages in drop zones
-        zones.forEach((zone) => {
-          const content = zone.querySelector('[data-zone-content]')
-          if (content instanceof HTMLElement) {
-            const zoneType = zone.dataset.zone
-            const label = zoneType === 'safe' ? dragSafeHere : dragUnsafeHere
-            if (!content.querySelector('.drop-zone__empty')) {
-              const p = document.createElement('p')
-              p.className = 'drop-zone__empty'
-              p.textContent = label
-              content.prepend(p)
-            }
-          }
-        })
-
-        // Shuffle tray
-        shuffleTray()
+        cardsTray.replaceChildren(...deck.map(buildCard))
         updateScore()
       }
 
-      // ── Shuffle tray ──────────────────────────────────────────────────────
-      const shuffleTray = () => {
-        const wrappers = Array.from(cardsTray.querySelectorAll('.post-card-wrapper'))
-        for (let i = wrappers.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1))
-          const temp = wrappers[i]
-          wrappers[i] = wrappers[j]
-          wrappers[j] = temp
-        }
-        wrappers.forEach((wrapper) => cardsTray.appendChild(wrapper))
+      const restart = () => {
+        winPanel.hidden = true
+        hideFeedback()
+        emptyZones()
+        deal()
+        getCards()[0]?.focus({ preventScroll: true })
       }
 
       // ── Attach listeners ──────────────────────────────────────────────────
-      // Drag events on the whole tray (delegation)
       root.addEventListener('dragstart', handleDragStart, true)
       root.addEventListener('dragend', handleDragEnd, true)
 
@@ -459,25 +448,63 @@ const totalPosts = posts.length
         zone.addEventListener('dragover', handleDragOver)
         zone.addEventListener('dragleave', handleDragLeave)
         zone.addEventListener('drop', handleDrop)
-        zone.addEventListener('click', () => handleZoneClick(zone))
+        zone.addEventListener('click', (e) => {
+          // A click on a card or its buttons inside the zone is not a click on the zone itself
+          if (e.target instanceof HTMLElement && e.target.closest('[data-post-id], .post-card__choices')) return
+          handleZoneClick(zone)
+        })
       })
 
-      // Card click handlers (mobile fallback)
-      getCards().forEach((card) => {
-        if (card instanceof HTMLElement) {
-          card.addEventListener('click', (e) => {
-            e.stopPropagation()
-            handleCardClick(card)
-          })
+      // Cards are created again for every game, so one set of delegated listeners handles them all
+      const handleBoardClick = (e: Event) => {
+        const target = e.target
+        if (!(target instanceof HTMLElement)) return
+
+        // "Where does it go?" buttons under the selected card
+        const choice = target.closest<HTMLElement>('[data-choose]')
+        if (choice) {
+          const card = getWrapper(choice)?.querySelector<HTMLElement>('[data-post-id]')
+          const zone = zoneMap.get(choice.dataset.choose ?? '')
+          if (card && zone) performDrop(card, zone, { focusNext: true })
+          return
+        }
+
+        const card = target.closest<HTMLElement>('[data-post-id]')
+        if (card) handleCardClick(card)
+      }
+      root.addEventListener('click', handleBoardClick)
+
+      root.addEventListener('keydown', (e) => {
+        const target = e.target
+        if (!(target instanceof HTMLElement)) return
+
+        const card = target.closest<HTMLElement>('[data-post-id]')
+        if (card && target === card) {
+          if (e.key === 'Escape' && selectedCard === card) {
+            deselectCard()
+            return
+          }
+          if ((e.key !== 'Enter' && e.key !== ' ') || e.repeat || card.dataset.placed === 'true') return
+          e.preventDefault()
+          const wasSelected = selectedCard === card
+          handleCardClick(card)
+          // Newly selected → continue with the choice buttons right below the card
+          if (!wasSelected && selectedCard === card) getChoices(card)?.querySelector<HTMLElement>('button')?.focus()
+          return
+        }
+
+        // Escape inside the choice buttons: back to the card
+        if (e.key === 'Escape' && target.closest('.post-card__choices') && selectedCard) {
+          const back = selectedCard
+          deselectCard()
+          back.focus()
         }
       })
 
-      // Restart buttons
       restartBtns.forEach((btn) => btn.addEventListener('click', restart))
 
       // Initial setup
-      shuffleTray()
-      updateScore()
+      deal()
     })
   }
 
@@ -486,15 +513,6 @@ const totalPosts = posts.length
 </script>
 
 <style>
-  /* ── Tip card ────────────────────────────────────────────────────────────── */
-  .tip-card {
-    border-radius: 0.9rem;
-    border: 1px solid color-mix(in oklab, var(--brand-DC), white 40%);
-    background: linear-gradient(135deg, color-mix(in oklab, var(--brand-DC), white 82%), color-mix(in oklab, var(--brand-DC), white 92%));
-    padding: 1rem 1.25rem;
-    font-size: 0.95rem;
-    color: color-mix(in oklab, var(--brand-DC), black 30%);
-  }
 
   /* ── Game wrapper ────────────────────────────────────────────────────────── */
   .sort-game {
@@ -531,28 +549,49 @@ const totalPosts = posts.length
     color: var(--background-color);
   }
 
-  /* ── Feedback message ────────────────────────────────────────────────────── */
+  /* ── Feedback message (sticks to the top while the board is scrolled) ─────── */
   .sort-game__feedback {
-    display: none;
-    min-height: 1.8rem;
-    font-weight: 600;
-    font-size: var(--font-size-0);
+    position: sticky;
+    top: 0.75rem;
+    z-index: 20;
     margin-bottom: var(--space-s);
     padding: var(--space-s) var(--space-m);
     border-radius: var(--radius-m);
-    transition: color 0.2s;
+    box-shadow: var(--elevation-2);
+    font-size: var(--font-size-0);
+    line-height: 1.5;
+  }
+
+  .sort-game__feedback[hidden] {
+    display: none;
+  }
+
+  .sort-game__feedback-title {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .sort-game__feedback-text {
+    margin: var(--space-3xs) 0 0;
+    font-weight: 500;
   }
 
   .sort-game__feedback--correct {
-    color: #15803d;
+    color: #14532d;
     background-color: #f0fdf4;
     border: 1px solid #86efac;
   }
 
   .sort-game__feedback--wrong {
-    color: #b91c1c;
+    color: #7f1d1d;
     background-color: #fef2f2;
     border: 1px solid #fca5a5;
+  }
+
+  .sort-game__feedback--info {
+    color: #1e3a5f;
+    background-color: #eff6ff;
+    border: 1px solid #93c5fd;
   }
 
   /* ── Game board layout ───────────────────────────────────────────────────── */
@@ -637,13 +676,13 @@ const totalPosts = posts.length
   }
 
   .post-card--placed {
-    cursor: default;
+    cursor: pointer;
     opacity: 0.85;
     border-color: #d1d5db;
   }
 
   .post-card--placed .post-card__text {
-    color: #9ca3af;
+    color: #6b7280;
   }
 
   .post-card--wrong {
@@ -683,19 +722,17 @@ const totalPosts = posts.length
     display: block;
   }
 
-  /* ── Inline explanation (below each card) ──────────────────────────────── */
-  .post-card__explanation {
-    display: none;
+  /* ── "Where does it go?" buttons under the selected card ──────────────────── */
+  .post-card__choices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xs);
     margin: var(--space-2xs) 0 var(--space-xs);
-    padding: var(--space-s) var(--space-m);
-    border-radius: var(--radius-s);
-    border: 1px solid #cbd5e1;
-    border-left: 3px solid #94a3b8;
-    background-color: #e5e7eb;
-    color: #1f2937;
-    font-size: 0.88rem;
-    line-height: 1.5;
-    animation: fadeIn 0.25s ease;
+    animation: fadeIn 0.2s ease;
+  }
+
+  .post-card__choices[hidden] {
+    display: none;
   }
 
   @keyframes fadeIn {
@@ -703,11 +740,34 @@ const totalPosts = posts.length
     to { opacity: 1; transform: translateY(0); }
   }
 
+  .zone-choice {
+    min-height: 44px;
+    padding: var(--space-2xs) var(--space-s);
+    border-radius: var(--radius-m);
+    border: 2px solid;
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.25;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .zone-choice:focus-visible {
+    outline: 3px solid #3b82f6;
+    outline-offset: 2px;
+  }
+
+  .zone-choice--good { color: #14532d; background: #f0fdf4; border-color: #15803d; }
+  .zone-choice--private { color: #78350f; background: #fffbeb; border-color: #b45309; }
+  .zone-choice--unkind { color: #7f1d1d; background: #fef2f2; border-color: #b91c1c; }
+  .zone-choice--ask { color: #312e81; background: #eef2ff; border-color: #4338ca; }
+
   /* ── Zones container ─────────────────────────────────────────────────────── */
   .sort-game__zones {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-m);
+    align-content: start;
   }
 
   /* ── Drop zones ──────────────────────────────────────────────────────────── */
@@ -716,7 +776,7 @@ const totalPosts = posts.length
     border-radius: var(--radius-l);
     border: 2px dashed #ccc;
     background-color: #fafafa;
-    min-height: 250px;
+    min-height: 200px;
     transition:
       border-color 0.2s,
       background-color 0.2s,
@@ -730,31 +790,24 @@ const totalPosts = posts.length
     background-color: #f0f9ff;
   }
 
-  .drop-zone--safe {
-    border-color: #10b981;
-    background-color: #f0fdf4;
-  }
+  .drop-zone--good { border-color: #10b981; background-color: #f0fdf4; }
+  .drop-zone--good.drop-zone--active { background-color: #dcfce7; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3); }
 
-  .drop-zone--safe.drop-zone--active {
-    background-color: #dcfce7;
-    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
-  }
+  .drop-zone--private { border-color: #d97706; background-color: #fffbeb; }
+  .drop-zone--private.drop-zone--active { background-color: #fef3c7; box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.3); }
 
-  .drop-zone--unsafe {
-    border-color: #ef4444;
-    background-color: #fef2f2;
-  }
+  .drop-zone--unkind { border-color: #ef4444; background-color: #fef2f2; }
+  .drop-zone--unkind.drop-zone--active { background-color: #fee2e2; box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3); }
 
-  .drop-zone--unsafe.drop-zone--active {
-    background-color: #fee2e2;
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
-  }
+  .drop-zone--ask { border-color: #6366f1; background-color: #eef2ff; }
+  .drop-zone--ask.drop-zone--active { background-color: #e0e7ff; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3); }
 
   .drop-zone__header {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
-    margin-bottom: var(--space-m);
+    gap: var(--space-s);
+    margin-bottom: var(--space-s);
   }
 
   .drop-zone__title {
@@ -763,12 +816,16 @@ const totalPosts = posts.length
     margin: 0;
   }
 
-  .drop-zone--safe .drop-zone__title {
-    color: #15803d;
-  }
+  .drop-zone--good .drop-zone__title { color: #14532d; }
+  .drop-zone--private .drop-zone__title { color: #78350f; }
+  .drop-zone--unkind .drop-zone__title { color: #7f1d1d; }
+  .drop-zone--ask .drop-zone__title { color: #312e81; }
 
-  .drop-zone--unsafe .drop-zone__title {
-    color: #b91c1c;
+  .drop-zone__hint {
+    margin: var(--space-3xs) 0 0;
+    font-size: 0.82rem;
+    line-height: 1.35;
+    color: #374151;
   }
 
   .drop-zone__icon {
@@ -784,7 +841,7 @@ const totalPosts = posts.length
   }
 
   .drop-zone__empty {
-    color: #9ca3af;
+    color: #4b5563;
     font-size: 0.9rem;
     text-align: center;
     display: flex;
@@ -806,11 +863,6 @@ const totalPosts = posts.length
 
   .drop-zone .post-card__text {
     font-size: 0.85rem;
-  }
-
-  .drop-zone .post-card__explanation {
-    font-size: 0.82rem;
-    padding: var(--space-2xs) var(--space-s);
   }
 
   /* ── Win panel ───────────────────────────────────────────────────────────── */
@@ -867,8 +919,55 @@ const totalPosts = posts.length
     font-size: var(--font-size-0);
   }
 
+  .sort-game__win-inner .sort-game__win-summary {
+    font-size: var(--font-size-2);
+    font-weight: 700;
+  }
+
   .sort-game__win-inner .button {
     margin-top: var(--space-s);
+  }
+
+  .sort-game__review {
+    width: 100%;
+    max-width: 44rem;
+    margin-top: var(--space-s);
+    padding: var(--space-m);
+    border-radius: var(--radius-m);
+    background: rgba(255, 255, 255, 0.7);
+    text-align: left;
+  }
+
+  .sort-game__review[hidden] {
+    display: none;
+  }
+
+  .sort-game__review-title {
+    margin: 0 0 var(--space-xs);
+    font-size: var(--font-size-0);
+    font-weight: 700;
+    color: #14532d;
+  }
+
+  .sort-game__review-list {
+    display: grid;
+    gap: var(--space-xs);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .sort-game__review-item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-3xs) var(--space-s);
+    font-size: 0.9rem;
+    color: #14532d;
+  }
+
+  .sort-game__review-zone {
+    font-weight: 700;
   }
 
   /* ── Responsive adjustments ──────────────────────────────────────────────– */
@@ -887,7 +986,7 @@ const totalPosts = posts.length
     }
 
     .drop-zone {
-      min-height: 180px;
+      min-height: 140px;
     }
 
     .sort-game__zones {

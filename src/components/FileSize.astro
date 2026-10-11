@@ -1,0 +1,31 @@
+---
+/**
+ * FileSize — exact size of one file ("440 KB"), pushed to the right end of a language option in a download
+ * dropdown. Read from the file on disk at build time (src/utils/fileInfo.ts); renders nothing if it is missing.
+ */
+import { fileSize } from '../utils/fileInfo'
+
+interface Props {
+  /** Public URL of the file. */
+  href?: string
+}
+
+const text = fileSize(Astro.props.href, Astro.currentLocale)
+---
+
+{text && <span class="file-size">{text}</span>}
+
+<style>
+  .file-size {
+    margin-inline-start: auto;
+    padding-inline-start: 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--color-neutral-700);
+  }
+
+  :global(html.darkmode) .file-size {
+    color: var(--dm-fg-muted);
+  }
+</style>

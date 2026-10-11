@@ -90,10 +90,43 @@ export const shared = {
     about: {
       title: 'Om oss',
       subtitle:
-        'Finn ut mer om vår misjon om å skape et tryggere digitalt miljø. Dyk ned i læringsmodulene våre designet for å lære enkeltpersoner om digitalt medborgerskap, autentisering, personvern og mer.',
+        'Et gratis verktøysett laget av fem europeiske partnere, slik at alle lærere kan ta med cybersikkerhet inn i klasserommet.',
 
       cofundEU: 'Støttet av EU',
-      cofundEUDesc: 'Dette prosjektet er medfinansiert av Den europeiske unions program Digitalt Europa.',
+      cofundEUDesc: 'Dette prosjektet er medfinansiert av Den europeiske unions program Erasmus+.',
+
+      missionStatement: 'Cybersikkerhet er en viktig livsferdighet, ikke bare et tema for spesialister.',
+      missionSummary: 'Barn tilbringer stadig mer tid på nett, men mange lærere mangler ferdig, aldersmessig tilpasset materiell. Vi tetter det gapet.',
+      benefitsEyebrow: 'Hvem har nytte av det',
+      benefitsTitle: 'Laget for menneskene i utdanning',
+      benefitEducators: 'Lærere',
+      benefitEducatorsDesc: 'Ferdig, fleksibelt undervisningsmateriell om cybersikkerhet, uten behov for dyp teknisk kompetanse.',
+      benefitStudents: 'Elever',
+      benefitStudentsDesc: 'Praktiske ferdigheter i digital sikkerhet gjennom interaktiv og minneverdig læring.',
+      benefitSchools: 'Skoler og partnere',
+      benefitSchoolsDesc: 'Et skalerbart rammeverk for å styrke cybersikkerhetskompetansen i ulike sammenhenger.',
+      coreValuesEyebrow: 'Det som driver oss',
+      partnersEyebrow: 'KidCy-prosjektet',
+      partnersHeading: 'Fem partnere, fem land',
+      visitWebsite: 'Besøk nettsiden',
+      countryLI: 'Liechtenstein',
+      countryCZ: 'Tsjekkia',
+      countryNO: 'Norge',
+      countryAT: 'Østerrike',
+      countryLT: 'Litauen',
+      fundingEyebrow: 'Finansiering',
+      involvedIssueTitle: 'Meld fra om en feil',
+      involvedIssueDesc: 'Funnet en feil eller et oversettelsesproblem? Opprett en sak på GitHub.',
+      involvedIssueCta: 'Opprett en sak',
+      involvedFeedbackTitle: 'Del erfaringer fra klasserommet',
+      involvedFeedbackDesc: 'Fortell oss hva som fungerte og ikke fungerte i din klasse.',
+      involvedFeedbackCta: 'Send tilbakemelding',
+      involvedPartnerTitle: 'Bli partner',
+      involvedPartnerDesc: 'Ta kontakt med en av prosjektpartnerne med ideer eller forslag.',
+      involvedPartnerCta: 'Se partnere',
+      ctaTitle: 'Klar til å undervise?',
+      ctaText: 'Gratis å bruke, tilpasse og dele.',
+      viewOnGithub: 'Se på GitHub',
 
       missionTitle: 'Vårt oppdrag',
       missionP1:
@@ -103,7 +136,6 @@ export const shared = {
       missionP3:
         'Vi tilbyr tilgjengelige, engasjerende ressurser designet spesifikt for lærere og barn, slik at hvert klasserom — uavhengig av teknisk bakgrunn — kan utruste unge mennesker med kunnskap, selvtillit og praktiske ferdigheter til å utforske den digitale verden trygt og ansvarlig.',
 
-      partnersTitle: 'Initiativets partnere',
       initiativeDesc: 'Dette verktøysettet er basert på KidCy-prosjektet – et samarbeid mellom ledende institusjoner innen cybersikkerhetsutdanning og forskning over hele Europa, hvor hver bringer unik ekspertise og perspektiver for å skape en omfattende læringsopplevelse for unge elever.',
       uniLiechtenstein: 'Universitetet i Liechtenstein',
       uniLiechtensteinDesc:

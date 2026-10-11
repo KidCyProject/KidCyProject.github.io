@@ -1,0 +1,123 @@
+---
+/**
+ * HintPanel — collapsible help card for the interactive challenge pages.
+ *
+ * - Desktop (lg and up): always open; the summary is just a heading, not a control.
+ * - Phones: collapsed by default. The parent places the card above the game
+ *   (`order-first lg:order-none`), so a child can open the hints without scrolling
+ *   past the whole game first.
+ *
+ * Without JavaScript the panel simply stays open (the `open` attribute is server-rendered).
+ */
+interface Props {
+  title: string
+  subtitle?: string
+  /** No card chrome — for use inside an existing card. */
+  flat?: boolean
+  class?: string
+}
+
+const { title, subtitle, flat = false, class: className } = Astro.props
+---
+
+<details
+  class:list={[
+    'hint-panel',
+    flat ? 'hint-panel--flat' : 'rounded-2xl border border-slate-200 bg-white p-4 shadow-sm lg:p-6',
+    className,
+  ]}
+  data-hint-panel
+  open
+>
+  <summary class="hint-panel__summary">
+    <span class="hint-panel__text">
+      <h3 class="hint-panel__title text-base font-bold text-slate-900">{title}</h3>
+      {subtitle && <span class="hint-panel__subtitle mt-1 block text-xs text-slate-600">{subtitle}</span>}
+    </span>
+    <span class="hint-panel__chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="hint-panel__body mt-4 space-y-2 border-t border-slate-200 pt-4">
+    <slot />
+  </div>
+</details>
+
+<style>
+  .hint-panel__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    list-style: none;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    min-height: 44px;
+  }
+
+  .hint-panel__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .hint-panel__summary:focus-visible {
+    outline: 3px solid #3b82f6;
+    outline-offset: 4px;
+  }
+
+  .hint-panel__title {
+    margin: 0;
+  }
+
+  .hint-panel__chevron {
+    flex-shrink: 0;
+    font-size: 1.25rem;
+    line-height: 1;
+    color: #475569;
+    transition: transform 0.2s ease;
+  }
+
+  .hint-panel[open] > .hint-panel__summary .hint-panel__chevron {
+    transform: rotate(180deg);
+  }
+
+  /* Flat variant: sits inside another card, separated by a rule */
+  .hint-panel--flat {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 1rem;
+  }
+
+  @media (min-width: 1024px) {
+    .hint-panel__summary {
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .hint-panel__chevron {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const mq = window.matchMedia('(min-width: 1024px)')
+
+  const syncHintPanels = (initial: boolean) => {
+    document.querySelectorAll<HTMLDetailsElement>('[data-hint-panel]').forEach((panel) => {
+      const summary = panel.querySelector('summary')
+      if (mq.matches) {
+        // Desktop: always open, summary is not a control
+        panel.open = true
+        summary?.setAttribute('tabindex', '-1')
+      } else {
+        summary?.removeAttribute('tabindex')
+        // Phone: start collapsed, but never fight a toggle the child already made
+        if (initial && panel.dataset.hintInit !== 'true') panel.open = false
+      }
+      panel.dataset.hintInit = 'true'
+    })
+  }
+
+  const initHintPanels = () => syncHintPanels(true)
+
+  mq.addEventListener('change', () => syncHintPanels(false))
+  document.addEventListener('astro:page-load', initHintPanels)
+  initHintPanels()
+</script>

@@ -307,112 +307,285 @@ export const contentDP = {
 
 export const challengeDP = {
   title: 'Digital Footprint Sorter',
-  subtitle: 'Sort each activity into the right category. Learn which of your everyday actions leave traces online!',
+  subtitle: 'Sort each activity into the right zone, then clean up one profile. Find out which traces you leave online, even the ones you cannot see!',
   howItWorks: 'How it Works',
-  instruction: 'Drag each activity card into the zone where it belongs. On mobile, tap a card to select it, then tap a drop zone.',
-  tip: 'Think about whether the activity involves the internet, an app, or a website. If it does, it probably leaves a digital footprint!',
+  instruction: 'Drag each activity card into the zone where it belongs. On a phone or with a keyboard, select a card, then choose a zone under it. Watch out: some activities look offline but still leave a trace. Then you clean up a profile that shares too much: for each part, choose what should happen to it.',
+  tip: 'Ask yourself: Am I leaving this on purpose, or is it recorded quietly in the background? Or is nothing recorded online at all?',
   tipLabel: 'Tip',
   tryAgain: 'Try Again',
   activitiesToSort: 'Activities to Sort',
-  leavesFootprint: 'Leaves a Footprint',
-  dragOnlineHere: 'Drag online activities here',
-  noFootprint: 'No Footprint',
-  dragOfflineHere: 'Drag offline activities here',
-  correct: 'Correct! 🎯',
-  tryOtherZone: 'Not quite — try the other zone!',
-  winTitle: 'Amazing! You sorted them all!',
-  winMessage: 'You now know which activities leave a digital footprint. Remember: every click, search, and post creates a trail online!',
+  dragHere: 'Drag activities here',
+  zoneAriaTemplate: '{zone} drop zone',
+  chooseZoneLabel: 'Where does this activity belong?',
+  correctInTemplate: 'Correct! → {zone}',
+  zones: {
+    purpose: { icon: '✍️', title: 'On purpose (active)', hint: 'You post, send, like or sign up yourself' },
+    background: { icon: '🕵️', title: 'In the background (passive)', hint: 'Websites and apps record it quietly' },
+    none: { icon: '🚫', title: 'No digital footprint', hint: 'Nothing is recorded online' },
+  },
+  cheatTitle: 'Footprint cheat sheet',
+  cheatSubtitle: 'Two kinds of traces, and how to make them smaller',
+  cheatItems: [
+    {
+      icon: '✍️',
+      text: 'Active footprint: you leave it on purpose. Posting, commenting, liking, sending a message, signing up.',
+    },
+    {
+      icon: '🕵️',
+      text: 'Passive footprint: it is collected in the background. Pages you visit, what you search or watch, how long you stay, your device and your location.',
+    },
+    {
+      icon: '🧹',
+      text: 'Make it smaller: share less, log out when you are done, choose "only friends" instead of "public", and ask a trusted adult if you do not understand a setting.',
+    },
+  ],
+  stage1Label: 'Step 1 of 2: Sort the footprints',
+  stage2Label: 'Step 2 of 2: Clean up a profile',
+  cleanupTitle: 'Clean up Emma\'s profile',
+  cleanupIntro: 'Emma\'s profile shares too much. For each part, choose what Emma should do.',
+  profileVisibleLabel: 'Visible to',
+  profileEveryone: 'Everyone',
+  actions: {
+    delete: '🗑️ Delete or turn off',
+    hide: '🙈 Hide (friends only)',
+    change: '✏️ Change it',
+    keep: '✅ Keep it',
+  },
+  cleanupProgressTemplate: 'Part {n} of {total}',
+  cleanupScoreLabel: 'Correct',
+  chooseActionLabel: 'What should happen to this part?',
+  cleanupCorrect: 'Correct!',
+  cleanupAlso: 'Also a good choice!',
+  cleanupWrong: 'Not quite.',
+  cleanupBestTemplate: 'Best choice: {action}',
+  nextButton: 'Next →',
+  toCleanupButton: 'Continue to Step 2 →',
+  resultsButton: 'See the results →',
+  stage1DoneTitle: 'Footprints sorted!',
+  firstTryTemplate: '{n} of {total} on the first try',
+  winGreat: 'You can spot every kind of footprint. Great job!',
+  winGood: 'Good work! Look at the ones you missed below.',
+  winPractise: 'Keep practising. Before you click, ask: Am I leaving this trace on purpose? Or is it recorded quietly?',
+  reviewTitle: 'Remember these',
+  profile: [
+    {
+      id: 1,
+      icon: '📛',
+      label: 'Profile name',
+      value: 'Emma Rose Johnson',
+      explanation: 'A full real name makes it easy for strangers to find you. Change it to a nickname that does not show your real name.',
+    },
+    {
+      id: 2,
+      icon: '🎂',
+      label: 'Birthday',
+      value: '12 May 2013',
+      explanation: 'A birthday helps others guess passwords and pretend to be you. Hide it so only friends can see it, or remove it.',
+    },
+    {
+      id: 3,
+      icon: '📸',
+      label: 'Photo',
+      value: 'Emma in front of her house. The house number is on the door.',
+      explanation: 'A photo can show private details in the background, like a house number. Delete it, or blur the number before sharing.',
+    },
+    {
+      id: 4,
+      icon: '🏫',
+      label: 'School',
+      value: 'Sunnyside Primary School',
+      explanation: 'A school name tells strangers where to find you every day. Hide it from the public, or remove it.',
+    },
+    {
+      id: 5,
+      icon: '⚽',
+      label: 'About me',
+      value: 'I love football and drawing!',
+      explanation: 'Hobbies are fine to share. They do not show who you are or where you live. Keep it.',
+    },
+    {
+      id: 6,
+      icon: '🏠',
+      label: 'Home address',
+      value: '14 Oak Lane',
+      explanation: 'Nobody needs your home address on a profile. Delete it. Never share it online.',
+    },
+    {
+      id: 7,
+      icon: '💢',
+      label: 'Old comment',
+      value: '"You are so stupid!" (written to a classmate when Emma was angry)',
+      explanation: 'Unkind words stay online and can hurt someone. Delete the comment, and say sorry in person if you can.',
+    },
+    {
+      id: 8,
+      icon: '📱',
+      label: 'Phone number',
+      value: '555-0123',
+      explanation: 'A phone number lets strangers contact you. Delete it from your profile. Friends can get it from you directly.',
+    },
+    {
+      id: 9,
+      icon: '🐶',
+      label: 'Photo',
+      value: 'Emma\'s dog playing in the garden',
+      explanation: 'A pet photo with nothing private in the background is fine. Just do not use your pet\'s name in a password.',
+    },
+    {
+      id: 10,
+      icon: '📍',
+      label: 'Location tag',
+      value: 'Every post shows exactly where Emma is right now',
+      explanation: 'A live location tells strangers where you are. Turn it off. You can share where you were later, if at all.',
+    },
+  ],
+  tryOtherZone: 'Not quite — try another zone!',
+  winTitle: 'All done!',
   playAgain: 'Play Again',
   activities: [
-    { 
-      text: 'Posting a photo on Instagram', 
-      category: 'footprint', 
-      emoji: '📸', 
-      explanation: 'Photos you share online stay on servers and can be found by anyone — even years later!' 
+    {
+      id: 1,
+      text: 'Posting a photo on Instagram',
+      emoji: '📸',
+      explanation: 'Photos you share online stay on servers and can be found by anyone — even years later!',
     },
-    { 
-      text: 'Reading a paper book at home', 
-      category: 'no-footprint', 
-      emoji: '📖', 
-      explanation: 'No internet connection means no digital trace is created.' 
+    {
+      id: 2,
+      text: 'Reading a paper book at home',
+      emoji: '📖',
+      explanation: 'No internet connection means no digital trace is created.',
     },
-    { 
-      text: 'Searching for answers on Google', 
-      category: 'footprint', 
-      emoji: '🔍', 
-      explanation: 'Search engines record what you look for and use it to show you personalised results.' 
+    {
+      id: 3,
+      text: 'Searching for answers on Google',
+      emoji: '🔍',
+      explanation: 'You type it on purpose, but the search engine quietly records what you look for and uses it to show you personalised results.',
     },
-    { 
-      text: 'Playing soccer outside', 
-      category: 'no-footprint', 
-      emoji: '⚽', 
-      explanation: 'Outdoor activities without a phone or app leave no digital record.' 
+    {
+      id: 4,
+      text: 'Playing soccer outside',
+      emoji: '⚽',
+      explanation: 'Outdoor activities without a phone or app leave no digital record.',
     },
-    { 
-      text: 'Sending a message on WhatsApp', 
-      category: 'footprint', 
-      emoji: '💬', 
-      explanation: 'Messages are stored on servers and create a permanent record of your conversations.' 
+    {
+      id: 5,
+      text: 'Sending a message on WhatsApp',
+      emoji: '💬',
+      explanation: 'Messages are stored on servers and create a permanent record of your conversations.',
     },
-    { 
-      text: 'Drawing a picture with crayons', 
-      category: 'no-footprint', 
-      emoji: '🖍️', 
-      explanation: 'Traditional art with physical materials doesn\'t create any online data.' 
+    {
+      id: 6,
+      text: 'Drawing a picture with crayons',
+      emoji: '🖍️',
+      explanation: 'Traditional art with physical materials doesn\'t create any online data.',
     },
-    { 
-      text: 'Creating an account on a game website', 
-      category: 'footprint', 
-      emoji: '🎮', 
-      explanation: 'Signing up stores your name, email, and every action you take on the site.' 
+    {
+      id: 7,
+      text: 'Creating an account on a game website',
+      emoji: '🎮',
+      explanation: 'Signing up stores your name, email, and every action you take on the site.',
     },
-    { 
-      text: 'Riding your bike around the neighbourhood', 
-      category: 'no-footprint', 
-      emoji: '🚲', 
-      explanation: 'Unless you use a tracking app, cycling is a purely offline activity.' 
+    {
+      id: 8,
+      text: 'Riding your bike around the neighbourhood',
+      emoji: '🚲',
+      explanation: 'Unless you use a tracking app, cycling is a purely offline activity.',
     },
-    { 
-      text: 'Watching videos on YouTube', 
-      category: 'footprint', 
-      emoji: '▶️', 
-      explanation: 'YouTube tracks every video you watch and uses it to recommend more content.' 
+    {
+      id: 9,
+      text: 'Watching videos on YouTube',
+      emoji: '▶️',
+      explanation: 'You only watch, but YouTube quietly records every video you watch and uses it to recommend more.',
     },
-    { 
-      text: 'Writing in your paper diary', 
-      category: 'no-footprint', 
-      emoji: '📓', 
-      explanation: 'A paper diary has no internet connection — your thoughts stay truly private.' 
+    {
+      id: 10,
+      text: 'Writing in your paper diary',
+      emoji: '📓',
+      explanation: 'A paper diary has no internet connection — your thoughts stay truly private.',
     },
-    { 
-      text: 'Liking a friend\'s TikTok video', 
-      category: 'footprint', 
-      emoji: '❤️', 
-      explanation: 'Every like you give is recorded and shapes your online profile and recommendations.' 
+    {
+      id: 11,
+      text: 'Liking a friend\'s TikTok video',
+      emoji: '❤️',
+      explanation: 'Every like you give is recorded and shapes your online profile and recommendations.',
     },
-    { 
-      text: 'Playing a board game with family', 
-      category: 'no-footprint', 
-      emoji: '🎲', 
-      explanation: 'Board games are offline fun — no data is created or stored anywhere.' 
+    {
+      id: 12,
+      text: 'Playing a board game with family',
+      emoji: '🎲',
+      explanation: 'Board games are offline fun — no data is created or stored anywhere.',
     },
-    { 
-      text: 'Filling out an online quiz', 
-      category: 'footprint', 
-      emoji: '📝', 
-      explanation: 'Websites collect every answer you type in and may share it with others.' 
+    {
+      id: 13,
+      text: 'Filling out an online quiz',
+      emoji: '📝',
+      explanation: 'Websites collect every answer you type in and may share it with others.',
     },
-    { 
-      text: 'Talking to friends at school', 
-      category: 'no-footprint', 
-      emoji: '🗣️', 
-      explanation: 'Face-to-face conversations leave no digital trace at all.' 
+    {
+      id: 14,
+      text: 'Talking to friends at school',
+      emoji: '🗣️',
+      explanation: 'Face-to-face conversations leave no digital trace at all.',
     },
-    { 
-      text: 'Leaving a comment on a blog', 
-      category: 'footprint', 
-      emoji: '💻', 
-      explanation: 'Comments are public, linked to your name, and stay on the website forever.' 
+    {
+      id: 15,
+      text: 'Leaving a comment on a blog',
+      emoji: '💻',
+      explanation: 'Comments are public, linked to your name, and stay on the website forever.',
+    },
+    {
+      id: 16,
+      text: 'Reading a news website without logging in',
+      emoji: '🌐',
+      explanation: 'The website quietly records which pages you open and how long you stay, even if you never post anything.',
+    },
+    {
+      id: 17,
+      text: 'Connecting your phone to the café\'s public Wi-Fi',
+      emoji: '📶',
+      explanation: 'The Wi-Fi network notes that your device connected, and it may log which sites you visit.',
+    },
+    {
+      id: 18,
+      text: 'Paying for lunch at school with a card',
+      emoji: '💳',
+      explanation: 'It looks offline, but the payment is stored digitally: what you bought, when and where.',
+    },
+    {
+      id: 19,
+      text: 'Walking to school with your phone\'s location turned on',
+      emoji: '📍',
+      explanation: 'Your phone can record where you are all the time, without you posting anything.',
+    },
+    {
+      id: 20,
+      text: 'Wearing a smartwatch that counts your steps',
+      emoji: '⌚',
+      explanation: 'A smartwatch sends your steps, and sometimes your heartbeat, to an app. That is a quiet footprint.',
+    },
+    {
+      id: 21,
+      text: 'Looking at trainers online, then seeing trainer ads everywhere',
+      emoji: '👟',
+      explanation: 'Websites record what you look at and use it to show you adverts. You posted nothing, but they were watching.',
+    },
+    {
+      id: 22,
+      text: 'Sending an email to your teacher',
+      emoji: '✉️',
+      explanation: 'You write and send it on purpose. The email stays in your mailbox and in your teacher\'s.',
+    },
+    {
+      id: 23,
+      text: 'Uploading your homework to the school platform',
+      emoji: '📤',
+      explanation: 'You do it on purpose, and the platform stores your file, your name and the time.',
+    },
+    {
+      id: 24,
+      text: 'Sharing a link to a funny video in the class chat',
+      emoji: '🔗',
+      explanation: 'Sharing is a choice you make on purpose. The message stays in the chat, and others can forward it.',
     },
   ],
 }

@@ -255,10 +255,10 @@ export const contentAP = {
 export const challengeAP = {
   title: 'Hakerio mintyse',
   subtitle:
-    'Esate etinis hakeris, skenuojantis socialinių tinklų profilį. Spustelėkite viską, kas atrodo kaip saugumo spraga – bet saugokite savo gyvybes!',
+    'Esate etinis hakeris. Raskite silpnas vietas socialinio tinklo profilyje, suplanuokite ataką taip, kaip tai padarytų užpuolikas, ir sužinokite, kaip ją sustabdyti!',
   howItWorks: 'Kaip tai veikia',
   instruction:
-    'Išnagrinėkite šį socialinių tinklų profilį tarsi hakeris, ieškantis silpnų vietų. Beveik viskas ekrane yra paspaudžiama – galvokite atidžiai, nes paspaudus tai, kas nėra tikra pažeidžiamoji vieta, prarandate gyvybę!',
+    'Išnagrinėkite šį socialinių tinklų profilį tarsi hakeris, ieškantis silpnų vietų. Beveik viskas ekrane yra paspaudžiama – galvokite atidžiai, nes paspaudus tai, kas nėra tikra pažeidžiamoji vieta, prarandate gyvybę! Paskui suplanuosite ataką taip, kaip tai padarytų užpuolikas, ir sužinosite, kaip ją sustabdyti.',
   tipLabel: 'Patarimas',
   tip: 'Yra tiksliai 4 tikros pažeidžiamosios vietos, paslėptos tarp daugelio nekaltai atrodančių elementų. Ne viskas, ką galima spustelėti, yra saugumo spraga!',
   livesTitle: 'Gyvybės',
@@ -268,7 +268,6 @@ export const challengeAP = {
   vulnerabilitiesCount: '/ 4',
   attackerTargetsTitle: '🎯 Ką taikosi užpuolikai',
   attackerTargets: [
-    '🚩 Silpni arba atskleisti slaptažodžiai',
     '🚩 HTTP vietoj HTTPS',
     '🚩 Vietos dalijimasis realiuoju laiku',
     '🚩 Visa gimimo data viešai matoma',
@@ -307,11 +306,167 @@ export const challengeAP = {
   attackerVoiceAlreadyTagged: 'Jau pažymėta: {label}.',
   attackerVoiceCorrect: '🔓 Rasta pažeidžiamoji vieta: {label}! {explain}',
   attackerVoiceWrong: 'Tai ne pažeidžiamoji vieta — {explain}',
+  part1Label: 'Dalis 1 iš 3: išnagrinėkite profilį',
+  part2Label: 'Dalis 2 iš 3: suplanuokite ataką',
+  part3Label: 'Dalis 3 iš 3: kodėl ir kaip tai sustabdyti',
+  continueButton: 'Tęsti: suplanuoti ataką →',
+  planTitle: 'Užpuoliko planas',
+  planIntro: 'Mažas pėdsakas pats savaime nėra pavojingas. Užpuolikai sudeda pėdsakus į planą. Prie kiekvieno pėdsako pasirinkite tikslą, kuriam jis padeda.',
+  planTrayTitle: 'Profilio pėdsakai',
+  planChooseLabel: 'Kuriam tikslui šis pėdsakas padeda?',
+  planVoiceCorrect: '🧩 Gerai suderinta! {explain}',
+  planVoiceWrong: '🤔 Ne šis tikslas. {explain}',
+  planSummaryTitle: 'Maži pėdsakai sudedami',
+  planSummaryText: 'Gimimo data, augintinio vardas ir nesaugus puslapis gali atverti paskyrą. Vieta realiu laiku ir įrašas apie mokyklą gali išduoti, kur žmogus yra. Užpuolikai tokius pėdsakus renka po vieną.',
+  planScoreTemplate: '{n} iš {total} pėdsakų iš pirmo karto',
+  toQuizButton: 'Tęsti: kodėl ir kaip tai sustabdyti →',
+  goals: {
+    account: { icon: '🔑', title: 'Įsilaužti į paskyrą', hint: 'Perimti profilį ar žaidimo paskyrą' },
+    person: { icon: '🧭', title: 'Surasti žmogų tikrame gyvenime', hint: 'Žinoti, kur žmogus yra ir kada' },
+    none: { icon: '🚫', title: 'Nenaudinga', hint: 'Užpuolikui labai nepadeda' },
+  },
+  clues: [
+    {
+      id: 'birthday',
+      icon: '🎂',
+      text: 'Visa gimimo data profilyje',
+      explanation: 'Žmonės dažnai naudoja gimimo datą slaptažodžiuose ir saugumo atsakymuose. Užpuolikas ją išbando pirmiausia.',
+    },
+    {
+      id: 'pet',
+      icon: '🐱',
+      text: 'Augintinio vardas profilyje',
+      explanation: 'Augintinių vardai yra populiarūs slaptažodžiai ir saugumo atsakymai. Užpuolikas gali išbandyti vardą, kad patektų į paskyrą.',
+    },
+    {
+      id: 'http',
+      icon: '🔓',
+      text: 'Puslapis naudoja http://, o ne https://',
+      explanation: 'Puslapyje su http:// kiti tame pačiame tinkle gali perskaityti, ką rašote. Net slaptažodį.',
+    },
+    {
+      id: 'location',
+      icon: '📍',
+      text: 'Vieta realiu laiku įraše',
+      explanation: 'Vieta realiu laiku tiksliai parodo, kur žmogus yra dabar. Nepažįstamasis galėtų tuo piktnaudžiauti, kad jį surastų.',
+    },
+    {
+      id: 'routine',
+      icon: '🏫',
+      text: 'Įrašas: „Ką tik grįžau iš mokyklos!“',
+      explanation: 'Tai nepažįstamajam išduoda, kada žmogus dažniausiai kur būna. Smulkios detalės, kaip ši, gali susidėti į planą.',
+    },
+    {
+      id: 'avatar',
+      icon: '👤',
+      text: 'Profilio nuotrauka',
+      explanation: 'Profilio nuotrauka yra normali. Užpuolikui ji nepadeda nei įsilaužti į paskyrą, nei surasti žmogų.',
+    },
+    {
+      id: 'bio',
+      icon: '🎮',
+      text: 'Aprašymas: žaidėjas ir mangos gerbėjas',
+      explanation: 'Pomėgiai nėra paslaptis. Patys savaime užpuolikui labai nepadeda.',
+    },
+    {
+      id: 'friends',
+      icon: '👥',
+      text: 'Draugų ir sekėjų skaičius',
+      explanation: 'Skaičius yra tik skaičius. Užpuolikas iš jo nieko negali pasiimti.',
+    },
+  ],
+  quizTitle: 'Kodėl ir kaip tai sustabdyti',
+  quizProgressTemplate: 'Klausimas {n} iš {total}',
+  motiveLabel: 'Kodėl užpuolikas taip daro?',
+  defendLabel: 'Kas padeda labiausiai?',
+  quizVoiceCorrect: '✅ {explain}',
+  quizVoiceWrong: '❌ Ne visai. {explain}',
+  nextButton: 'Toliau →',
+  resultsButton: 'Peržiūrėti rezultatą →',
+  motivationsTitle: 'Kodėl užpuolikai atakuoja',
+  motivationsSubtitle: 'Aštuoni motyvai',
+  motivations: {
+    financial: { name: 'Finansinė nauda', desc: 'Parduoti pavogtus duomenis arba reikalauti išpirkos' },
+    reputation: { name: 'Reputacija', desc: 'Norėti pasirodyti ir gauti pripažinimą' },
+    revenge: { name: 'Kerštas', desc: 'Norėti kam nors atkeršyti' },
+    espionage: { name: 'Šnipinėjimas', desc: 'Gauti slaptos informacijos valstybei ar bendrovei' },
+    error: { name: 'Tiesiog klaida', desc: 'Nelaimingas atsitikimas, sukėlęs problemą' },
+    experiment: { name: 'Eksperimentavimas', desc: 'Išbandyti dalykus dėl smagumo' },
+    fear: { name: 'Baimė', desc: 'Daryti ką nors bloga dėl spaudimo ar grasinimų' },
+    beliefs: { name: 'Įsitikinimai', desc: 'Kovoti už tikslą, kuriuo žmogus tiki' },
+  },
+  motiveCases: [
+    {
+      id: 1,
+      text: 'Vyresnis mokinys įsilaužia į jaunesnio vaiko paskyrą ir paskelbia kvailysčių, kad visi pamatytų, koks jis gudrus.',
+      explanation: 'Jis nori, kad juo žavėtųsi. Noras būti pripažintam ir pasirodyti vadinamas motyvu „reputacija“.',
+    },
+    {
+      id: 2,
+      text: 'Nepažįstamasis įsilaužia į šimtus paskyrų ir parduoda prisijungimo duomenis svetainėje.',
+      explanation: 'Nepažįstamasis nori pinigų. Pavogtų duomenų pardavimas yra „finansinė nauda“.',
+    },
+    {
+      id: 3,
+      text: 'Mokinys įsilaužia į savo klasės draugo paskyrą, nes praėjusį mėnesį tas draugas su juo pasielgė nedraugiškai.',
+      explanation: 'Mokinys nori kam nors atkeršyti. Šis motyvas vadinamas „kerštu“.',
+    },
+    {
+      id: 4,
+      text: 'Vaikas parsisiunčia įsilaužimo įrankį ir bando jį mokyklos kompiuteryje, tik norėdamas pamatyti, kas nutiks.',
+      explanation: 'Jis nenori nieko įskaudinti. Tik išbando, kas bus. Tai vadinama „eksperimentavimu“, bet vis tiek gali padaryti tikros žalos.',
+    },
+    {
+      id: 5,
+      text: 'Vyresnis vaikas sako jaunesniam: „Gauk man savo draugo slaptažodį, kitaip visiems papasakosiu tavo paslaptį.“ Kodėl jaunesnis vaikas tai daro?',
+      explanation: 'Jaunesnis vaikas bijo, ką padarys vyresnis. Daryti ką nors bloga dėl spaudimo ar grasinimų yra „baimė“.',
+    },
+  ],
+  defendCases: [
+    {
+      id: 1,
+      text: 'Užpuolikas nori atspėti slaptažodį. Koks įprotis jam sunkiausiai trukdo?',
+      options: [
+        'Ilgas slaptažodis iš atsitiktinių žodžių, nieko bendra su Jumis neturintis',
+        'Augintinio vardas ir gimimo metai',
+        'Tas pats trumpas slaptažodis visur',
+      ],
+      explanation: 'Ilgą slaptažodį iš atsitiktinių žodžių sunku atspėti. Gimimo datas ir augintinių vardus užpuolikas bando pirmiausia, o vienas slaptažodis visur kelia pavojų visoms paskyroms.',
+    },
+    {
+      id: 2,
+      text: 'Puslapis prasideda http://, neturi spynelės, bet prašo įvesti slaptažodį. Ką darote?',
+      options: [
+        'Neįvedate. Ieškote puslapio, prasidedančio https:// ir turinčio spynelę',
+        'Greitai įvedate, kol niekas nepastebėjo',
+        'Įvedate trumpesnį slaptažodį, kad būtų mažiau ką skaityti',
+      ],
+      explanation: 'Puslapyje su http:// kiti tinkle gali perskaityti, ką rašote. Slaptažodžius įvedinėkite tik https:// puslapiuose.',
+    },
+    {
+      id: 3,
+      text: 'Draugas nori, kad paskelbtumėte, kur dabar esate, kad visi ateitų. Kas saugiausia?',
+      options: [
+        'Išjungti vietą realiu laiku ir nuotrauką pasidalyti vėliau, kai jau išeisite',
+        'Paskelbti ją tik 5 minutėms',
+        'Paskelbti taip, kad matytų visi, net nepažįstamieji',
+      ],
+      explanation: 'Vieta realiu laiku nepažįstamiesiems išduoda, kur dabar esate. Nuotraukomis dalinkitės vėliau ir tik su žmonėmis, kuriuos pažįstate.',
+    },
+  ],
+  finalTitle: 'Užpuoliko mąstymas atrakintas!',
+  finalPart1Template: '1 dalis: rasta {n} iš {total} silpnų vietų',
+  finalPart2Template: '2 dalis: {n} iš {total} pėdsakų iš pirmo karto',
+  finalPart3Template: '3 dalis: {n} iš {total} klausimų iš pirmo karto',
+  finalScoreTemplate: 'Iš viso {n} iš {total} taškų',
+  rankGreat: 'Mąstote kaip užpuolikas ir elgiatės kaip gynėjas. Puikus darbas!',
+  rankGood: 'Gerai padirbėta! Pakartokite dalis, kurios atrodė sunkios.',
+  rankPractise: 'Treniruokitės toliau. Atkreipkite dėmesį į mažus pėdsakus ir klauskite: kaip kas nors galėtų juos sujungti?',
   hotspots: [
     {
       id: 'http',
       label: 'Nešifruotas ryšys (HTTP)',
-      explain: 'Ši svetainė naudoja HTTP vietoj HTTPS. Viskas, ką čia įvedate – įskaitant slaptažodžius – keliauja visiškai nešifruota ir gali būti perimta bet kurio asmens tame pačiame tinkle.'
+      explain: 'Ši svetainė naudoja HTTP, o ne HTTPS. Tai, ką čia įvedate, net slaptažodžiai, nėra užšifruota. Bet kas tame pačiame tinkle gali tai perskaityti.'
     },
     { id: 'avatar',
       label: 'Profilio nuotrauka',
@@ -320,12 +475,12 @@ export const challengeAP = {
     {
       id: 'username',
       label: 'Rodomas vardas / naudotojo vardas',
-      explain: 'Rodomas vardas ir @slapyvardis socialinėse platformose yra visiškai normalu. Tai ne pažeidžiamoji vieta.'
+      explain: 'Vardo ir @slapyvardžio rodymas socialiniuose tinkluose yra įprastas. Tai nėra pažeidžiamoji vieta.'
     },
     {
       id: 'online',
       label: 'Aktyvumo būsena',
-      explain: 'Rodyti, kada esate prisijungę, yra įprasta funkcija. Tai nedidelis privatumo klausimas, bet ne kritinė saugumo pažeidžiamoji vieta.'
+      explain: 'Rodyti, kada esate prisijungę, yra įprasta funkcija. Tai nedidelis privatumo klausimas, bet ne tikra pažeidžiamoji vieta.'
     },
     {
       id: 'bio',
@@ -335,42 +490,42 @@ export const challengeAP = {
     {
       id: 'followers',
       label: 'Sekėjų / draugų skaičius',
-      explain: 'Draugų ir sekėjų skaičius yra įprasta socialinių tinklų funkcija. Tai ne saugumo pažeidžiamoji vieta!'
+      explain: 'Draugų ir sekėjų skaičius yra įprasta funkcija. Tai ne pažeidžiamoji vieta!'
     },
     {
       id: 'birthday',
       label: 'Visa gimimo data atskleista',
-      explain: "Atskleisti visą gimimo datą yra pavojinga! Užpuolikai naudoja gimtadienius slaptažodžiams atspėti (pvz., 'alex2008'), saugumo klausimams atsakyti ir paskyros atkūrimui apeiti."
+      explain: 'Parodyti visą gimimo datą pavojinga! Užpuolikai ją naudoja slaptažodžiams atspėti (pvz., \'alex2008\'), saugumo klausimams atsakyti ir patekti į paskyras.'
     },
     {
       id: 'email',
       label: 'El. paštas profilyje',
-      explain: 'Rodomas el. paštas gali pritraukti šlamšto, tačiau, palyginti su atsklestu slaptažodžiu ar saugumo atsakymu, tai yra gana mažas rūpestis.'
+      explain: 'Viešas el. paštas gali pritraukti šlamšto, bet tai mažesnė problema nei atskleistas slaptažodis ar saugumo atsakymas.'
     },
     {
       id: 'petname',
       label: 'Augintinio vardas atskleistas',
-      explain: 'Augintinio vardo atskleidimas gali būti naudojamas užpuoliko saugumo atsakymams atspėti arba įtikinamesnėms socialinės inžinerijos atakoms kurti.'
+      explain: 'Augintinio vardas dažnai būna saugumo klausimo atsakymas. Užpuolikai gali jį panaudoti patekti į paskyrą arba jus apgauti.'
     },
     {
       id: 'location',
       label: 'Vietos transliavimas realiuoju laiku',
-      explain: 'Šis įrašas atskleidžia tikslią Alekso vietą dabar! Visi – įskaitant nepažįstamuosius ir užpuolikus – gali matyti, kur Aleksas yra šią akimirką. Vietos dalijimasis realiuoju laiku yra rimta saugumo rizika.'
+      explain: 'Šis įrašas rodo, kur Aleksas yra būtent dabar! Tai mato visi, net nepažįstamieji ir užpuolikai. Dalytis vieta realiuoju laiku yra rimta saugumo rizika.'
     },
     {
       id: 'post2',
       label: 'Bendras įrašas',
-      explain: 'Įrašai apie kasdienius dalykus, tokius kaip picos valgymas, yra visiškai normalūs. Jie neatskleidžia jokios jautrios saugumo informacijos!'
+      explain: 'Rašyti apie kasdienius dalykus, pavyzdžiui, picą, yra gerai. Tai neatskleidžia nieko jautraus!'
     },
     {
       id: 'like1',
       label: 'Mygtukas „Patinka"',
-      explain: 'Įrašų pažymėjimas „Patinka" yra visiškai normalus ir nekenksmingas socialinių tinklų veiksmas!'
+      explain: 'Pažymėti įrašus „Patinka“ yra normalu ir nekenksminga!'
     },
     {
       id: 'comment1',
       label: 'Komentaro mygtukas',
-      explain: 'Galimybė komentuoti yra standartinė socialinių tinklų funkcija. Tai ne pažeidžiamoji vieta!'
+      explain: 'Komentarai yra įprasta funkcija. Tai ne pažeidžiamoji vieta!'
     },
     {
       id: 'share1',
@@ -380,7 +535,7 @@ export const challengeAP = {
     {
       id: 'like2',
       label: 'Mygtukas „Patinka"',
-      explain: 'Įrašų pažymėjimas „Patinka" yra visiškai normalus ir nekenksmingas!'
+      explain: 'Pažymėti įrašus „Patinka“ yra normalu ir nekenksminga!'
     },
     {
       id: 'comment2',

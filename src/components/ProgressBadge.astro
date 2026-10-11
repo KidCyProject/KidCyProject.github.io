@@ -1,0 +1,60 @@
+---
+/**
+ * ProgressBadge — "✓ Finished · best 92 %" under a challenge card, filled in from the progress saved in this
+ * browser (see src/utils/challengeProgress.ts). Stays hidden until the challenge has been finished once.
+ */
+import { useTranslations } from 'src/i18n/index'
+import type { ChallengeId } from '../utils/challengeProgress'
+
+interface Props {
+  challenge: ChallengeId
+}
+
+const { challenge } = Astro.props
+const { t } = useTranslations(Astro.currentLocale)
+---
+
+<p class="progress-badge" data-progress-for={challenge} data-template={t('progress.badgeTemplate')} hidden></p>
+
+<script>
+  import { readProgress } from '../utils/challengeProgress'
+  import type { ChallengeId } from '../utils/challengeProgress'
+
+  const fillBadges = () => {
+    const { records } = readProgress()
+    document.querySelectorAll<HTMLElement>('[data-progress-for]').forEach((badge) => {
+      const record = records[badge.dataset.progressFor as ChallengeId]
+      if (!record) {
+        badge.hidden = true
+        return
+      }
+      badge.textContent = (badge.dataset.template ?? '').replace('{best}', String(record.best))
+      badge.hidden = false
+    })
+  }
+
+  document.addEventListener('astro:page-load', fillBadges)
+  fillBadges()
+</script>
+
+<style>
+  .progress-badge {
+    align-self: flex-start;
+    margin: 0;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    background: #dcfce7;
+    color: #14532d;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .progress-badge[hidden] {
+    display: none;
+  }
+
+  :global(.darkmode) .progress-badge {
+    background: #052820;
+    color: #a7f3d0;
+  }
+</style>

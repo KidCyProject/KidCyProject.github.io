@@ -81,6 +81,15 @@ export default [
     },
   },
 
+  // Translation files: texts keep non-breaking spaces on purpose (e.g. Czech "k vašemu", "z neznámého"),
+  // so the irregular-whitespace check skips template literals here, as it already does for plain strings.
+  {
+    files: ['src/i18n/translations/**/*.ts'],
+    rules: {
+      'no-irregular-whitespace': ['error', { skipStrings: true, skipTemplates: true }],
+    },
+  },
+
   // JSX files (React components)
   {
     files: ['**/*.jsx'],

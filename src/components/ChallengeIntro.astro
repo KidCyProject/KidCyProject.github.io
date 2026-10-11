@@ -1,0 +1,43 @@
+---
+/**
+ * ChallengeIntro — the "How it works" block at the top of every interactive challenge:
+ * heading, instruction and a coloured tip card.
+ *
+ * Text comes from the challenge's own translation namespace (`challengeXX.howItWorks`, `.instruction`,
+ * `.tipLabel` and `.tip`); the colour from the module (`--brand-XX`).
+ */
+import { useTranslations } from 'src/i18n/index'
+
+interface Props {
+  /** Translation namespace, e.g. "challengeMW". */
+  ns: string
+  /** Module id in capitals, e.g. "MW" (selects --brand-MW). */
+  brand: string
+}
+
+const { ns, brand } = Astro.props
+const { t } = useTranslations(Astro.currentLocale)
+---
+
+<div class="mb-10 flex flex-col gap-6">
+  <h2 class="mb-2">{t(`${ns}.howItWorks`)}</h2>
+  <p>{t(`${ns}.instruction`)}</p>
+  <div class="tip-card" style={`--tip-brand: var(--brand-${brand})`}>
+    <div class="tip-card__lead">
+      <span class="tip-card__icon" aria-hidden="true">💬</span>
+      <strong class="tip-card__label">{t(`${ns}.tipLabel`)}</strong>
+    </div>
+    <div class="tip-card__body">{t(`${ns}.tip`)}</div>
+  </div>
+</div>
+
+<style>
+  .tip-card {
+    border-radius: 0.9rem;
+    border: 1px solid color-mix(in oklab, var(--tip-brand), white 40%);
+    background: linear-gradient(135deg, color-mix(in oklab, var(--tip-brand), white 82%), color-mix(in oklab, var(--tip-brand), white 92%));
+    padding: 1rem 1.25rem;
+    font-size: 0.95rem;
+    color: color-mix(in oklab, var(--tip-brand), black 30%);
+  }
+</style>

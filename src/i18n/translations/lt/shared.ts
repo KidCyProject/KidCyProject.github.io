@@ -90,10 +90,43 @@ export const shared = {
     about: {
       title: 'Apie',
       subtitle:
-        'Sužinokite daugiau apie mūsų misiją kurti saugesnę skaitmeninę aplinką. Susipažinkite su mūsų mokymosi moduliais, skirtais asmenims mokyti apie skaitmeninį pilietiškumą, autentifikavimą, duomenų privatumą ir daugiau.',
+        'Nemokamą priemonių rinkinį sukūrė penki Europos partneriai, kad kiekvienas mokytojas galėtų atnešti kibernetinį saugumą į klasę.',
 
       cofundEU: 'Remiama ES',
-      cofundEUDesc: 'Šis projektas bendrai finansuojamas iš Europos Sąjungos programos „Skaitmeninė Europa".',
+      cofundEUDesc: 'Šis projektas bendrai finansuojamas iš Europos Sąjungos programos Erasmus+.',
+
+      missionStatement: 'Kibernetinis saugumas yra svarbus gyvenimo įgūdis, o ne tema vien specialistams.',
+      missionSummary: 'Vaikai internete praleidžia vis daugiau laiko, tačiau daugeliui mokytojų trūksta paruoštos, amžiui tinkamos medžiagos. Mes užpildome šią spragą.',
+      benefitsEyebrow: 'Kam tai naudinga',
+      benefitsTitle: 'Sukurta švietimo srities žmonėms',
+      benefitEducators: 'Mokytojai',
+      benefitEducatorsDesc: 'Paruošta naudoti, lanksti kibernetinio saugumo mokymo medžiaga, nereikalaujanti gilių techninių žinių.',
+      benefitStudents: 'Mokiniai',
+      benefitStudentsDesc: 'Praktiniai skaitmeninio saugumo įgūdžiai per interaktyvų ir įsimintiną mokymąsi.',
+      benefitSchools: 'Mokyklos ir partneriai',
+      benefitSchoolsDesc: 'Plečiama sistema kibernetinio raštingumo lygiui kelti įvairiuose kontekstuose.',
+      coreValuesEyebrow: 'Kuo vadovaujamės',
+      partnersEyebrow: 'KidCy projektas',
+      partnersHeading: 'Penki partneriai, penkios šalys',
+      visitWebsite: 'Aplankyti svetainę',
+      countryLI: 'Lichtenšteinas',
+      countryCZ: 'Čekija',
+      countryNO: 'Norvegija',
+      countryAT: 'Austrija',
+      countryLT: 'Lietuva',
+      fundingEyebrow: 'Finansavimas',
+      involvedIssueTitle: 'Pranešti apie problemą',
+      involvedIssueDesc: 'Radote klaidą ar vertimo netikslumą? Sukurkite pranešimą GitHub.',
+      involvedIssueCta: 'Sukurti pranešimą',
+      involvedFeedbackTitle: 'Pasidalykite patirtimi iš klasės',
+      involvedFeedbackDesc: 'Papasakokite, kas jūsų klasėje pasiteisino, o kas ne.',
+      involvedFeedbackCta: 'Siųsti atsiliepimą',
+      involvedPartnerTitle: 'Tapkite partneriu',
+      involvedPartnerDesc: 'Kreipkitės į bet kurį projekto partnerį su idėjomis ar pasiūlymais.',
+      involvedPartnerCta: 'Rodyti partnerius',
+      ctaTitle: 'Pasiruošę mokyti?',
+      ctaText: 'Nemokama naudoti, pritaikyti ir dalytis.',
+      viewOnGithub: 'Peržiūrėti GitHub',
 
       missionTitle: 'Mūsų misija',
       missionP1:
@@ -103,7 +136,6 @@ export const shared = {
       missionP3:
         'Teikiame prieinamus, patrauklius išteklius, specialiai sukurtus mokytojams ir vaikams, kad kiekviena klasė — nepriklausomai nuo techninio išsilavinimo — galėtų suteikti jauniems žmonėms žinių, pasitikėjimo ir praktinių įgūdžių saugiai ir atsakingai tyrinėti skaitmeninį pasaulį.',
 
-      partnersTitle: 'Iniciatyvos partneriai',
       initiativeDesc: 'Šis įrankių rinkinys yra pagrįstas KidCy projektu – bendradarbiavimu tarp pirmaujančių institucijų kibernetinio saugumo švietimo ir tyrimų srityje visoje Europoje, iš kurių kiekviena suteikia unikalią patirtį ir perspektyvas, kad sukurtų išsamų mokymosi patirtį jauniems besimokančiajam.',
       uniLiechtenstein: 'Lichtenšteino universitetas',
       uniLiechtensteinDesc:

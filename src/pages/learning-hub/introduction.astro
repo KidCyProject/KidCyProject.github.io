@@ -1,6 +1,7 @@
 ---
 import DefaultLayout from '@layouts/DefaultLayout.astro'
 import PageHeader from '@components/PageHeader.astro'
+import ProgressBadge from '@components/ProgressBadge.astro'
 import { localizePath } from 'src/i18n/i18n'
 import { useTranslations } from 'src/i18n/index'
 import { modules as moduleData } from 'src/data/modules'
@@ -255,7 +256,13 @@ const localizedModules = modules.map((module) => {
                         {module.challenge?.description ??
                           t('pages.hub.challenges.challengeFallbackDescription')}
                       </p>
-                      <a class="activity-cta" href={module.challenge?.href ?? module.url}>{t('pages.hub.challenges.openChallengeCta')}</a>
+                      {module.challenge && <ProgressBadge challenge={module.id} />}
+                      <div class="activity-cta-row">
+                        <a class="activity-cta" href={module.challenge?.href ?? module.url}>{t('pages.hub.challenges.openChallengeCta')}</a>
+                        {module.challenge && (
+                          <a class="activity-cta activity-cta--outline" href={localizePath(locale, '/learning-hub/my-progress/')}>{t('progress.title')}</a>
+                        )}
+                      </div>
                     </div>
                   </div>
 
@@ -616,6 +623,30 @@ const localizedModules = modules.map((module) => {
     color: var(--module-color);
   }
 
+  /* Buttons side by side; the second one ("My progress") is the reversed variant: outline, not filled */
+  .learning-hub-modules .activity-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.4rem;
+  }
+
+  .learning-hub-modules .activity-cta-row .activity-cta {
+    margin-top: 0;
+  }
+
+  .learning-hub-modules .activity-cta.activity-cta--outline {
+    background: transparent;
+    /* module colour mixed with black so the label stays readable on the light panel */
+    color: color-mix(in oklab, var(--module-color) 55%, #000);
+  }
+
+  .learning-hub-modules .activity-cta.activity-cta--outline:hover,
+  .learning-hub-modules .activity-cta.activity-cta--outline:focus-visible {
+    background: var(--module-color);
+    color: #ffffff;
+  }
+
   /* ── Toggle button ──
      A labelled pill button (text + down chevron) so it is obvious that the
      card opens to reveal the parts, challenge and game. Text stays dark for
@@ -738,6 +769,7 @@ const localizedModules = modules.map((module) => {
       padding: 0.75rem;
     }
   }
+
 </style>
 
 <script>

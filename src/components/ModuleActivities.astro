@@ -11,6 +11,7 @@
 import { localizePath } from 'src/i18n/i18n'
 import { useTranslations } from 'src/i18n/index'
 import { getModule } from 'src/data/modules'
+import ProgressBadge from './ProgressBadge.astro'
 import type { ModuleId } from 'src/data/modules'
 
 interface Props {
@@ -23,6 +24,7 @@ const { t } = useTranslations(locale)
 
 const mod = getModule(moduleId)!
 const moduleUrl = localizePath(locale, `/learning-hub/${mod.slug}/content`)
+const progressUrl = localizePath(locale, '/learning-hub/my-progress/')
 
 const challenge = mod.challenges > 0
   ? {
@@ -62,7 +64,11 @@ const style = `--module-color: ${mod.color}; --panel-border: ${rgba(mod.color, 0
       <p class="ma-label">{t('pages.hub.labels.interactiveChallenge')}</p>
       <h3>{challenge?.title ?? t('pages.hub.labels.challenge')}</h3>
       <p>{challenge?.description ?? t('pages.hub.challenges.challengeFallbackDescription')}</p>
-      <a class="ma-cta" href={challenge?.href ?? moduleUrl}>{t('pages.hub.challenges.openChallengeCta')}</a>
+      {challenge && <ProgressBadge challenge={mod.id} />}
+      <div class="ma-cta-row">
+        <a class="ma-cta" href={challenge?.href ?? moduleUrl}>{t('pages.hub.challenges.openChallengeCta')}</a>
+        {challenge && <a class="ma-cta ma-cta--outline" href={progressUrl}>{t('progress.title')}</a>}
+      </div>
     </div>
   </div>
 
@@ -177,6 +183,30 @@ const style = `--module-color: ${mod.color}; --panel-border: ${rgba(mod.color, 0
     color: var(--module-color);
   }
 
+  /* Buttons side by side; the second one ("My progress") is the reversed variant: outline, not filled */
+  .ma-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: auto;
+  }
+
+  .ma-cta-row .ma-cta {
+    margin-top: 0;
+  }
+
+  .ma-cta.ma-cta--outline {
+    background: transparent;
+    /* module colour mixed with black so the label stays readable on the light panel */
+    color: color-mix(in oklab, var(--module-color) 55%, #000);
+  }
+
+  .ma-cta.ma-cta--outline:hover,
+  .ma-cta.ma-cta--outline:focus-visible {
+    background: var(--module-color);
+    color: #ffffff;
+  }
+
   /* Dark mode */
   :global(html.darkmode) .ma-card {
     background: var(--dm-surface-2);
@@ -190,6 +220,16 @@ const style = `--module-color: ${mod.color}; --panel-border: ${rgba(mod.color, 0
 
   :global(html.darkmode) .ma-card p:not(.ma-label) {
     color: var(--dm-fg-muted);
+  }
+
+  :global(html.darkmode) .ma-cta.ma-cta--outline {
+    color: var(--dm-fg);
+  }
+
+  :global(html.darkmode) .ma-cta.ma-cta--outline:hover,
+  :global(html.darkmode) .ma-cta.ma-cta--outline:focus-visible {
+    background: var(--module-color);
+    color: #ffffff;
   }
 
   :global(html.darkmode) .ma-card--disabled .ma-cta {

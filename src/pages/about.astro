@@ -1,207 +1,270 @@
 ---
 import DefaultLayout from '@layouts/DefaultLayout.astro'
 import PageHeader from '@components/PageHeader.astro'
-import { useTranslations } from '../i18n/index'
 import { Icon } from 'astro-icon/components'
+import { localizePath } from '../i18n/i18n'
+import { useTranslations } from '../i18n/index'
 
-const { t } = useTranslations(Astro.currentLocale)
+const locale = Astro.currentLocale
+const { t } = useTranslations(locale)
+
+const hub = localizePath(locale, '/learning-hub/introduction/')
+const GITHUB = 'https://github.com/KidCyProject/KidCyProject.github.io'
+
+const benefits = [
+  { icon: 'lucide:presentation', title: 'benefitEducators', desc: 'benefitEducatorsDesc' },
+  { icon: 'lucide:backpack', title: 'benefitStudents', desc: 'benefitStudentsDesc' },
+  { icon: 'lucide:school', title: 'benefitSchools', desc: 'benefitSchoolsDesc' },
+]
+
+const values = [
+  { image: '/images/about/scalable.webp', title: 'scalableImpact', desc: 'scalableImpactDesc' },
+  { image: '/images/about/international.webp', title: 'internationalCollab', desc: 'internationalCollabDesc' },
+  { image: '/images/about/adaptable.webp', title: 'practicalAdaptable', desc: 'practicalAdaptableDesc' },
+  { image: '/images/about/european.webp', title: 'europeanCohesion', desc: 'europeanCohesionDesc' },
+]
+
+const partners = [
+  {
+    name: 'uniLiechtenstein',
+    desc: 'uniLiechtensteinDesc',
+    country: 'countryLI',
+    logo: '/images/about/Universitat_Liechtenstein_logo.svg',
+    url: 'https://www.uni.li/en',
+  },
+  {
+    name: 'cyberSecurityHub',
+    desc: 'cyberSecurityHubDesc',
+    country: 'countryCZ',
+    logo: '/images/about/cyberSecurityHubCZ-logo-black_cut.webp',
+    url: 'https://www.cybersecurityhub.cz/',
+  },
+  {
+    name: 'uniInlandNorway',
+    desc: 'uniInlandNorwayDesc',
+    country: 'countryNO',
+    logo: '/images/about/University_of_Inland_Norway_logo.svg.webp',
+    url: 'https://www.inn.no/english/',
+  },
+  {
+    name: 'uniInnsbruck',
+    desc: 'uniInnsbruckDesc',
+    country: 'countryAT',
+    logo: '/images/about/Universitaet-innsbruck-logo-rgb-farbe.svg.webp',
+    url: 'https://www.uibk.ac.at/en',
+  },
+  {
+    name: 'vilniusUni',
+    desc: 'vilniusUniDesc',
+    country: 'countryLT',
+    logo: '/images/about/Logo_vilnius_university.webp',
+    url: 'https://www.vu.lt/en',
+  },
+]
+
+const involve = [
+  { icon: 'lucide:bug', key: 'involvedIssue', href: `${GITHUB}/issues` },
+  { icon: 'lucide:message-square-text', key: 'involvedFeedback', href: `${GITHUB}/issues` },
+  { icon: 'lucide:handshake', key: 'involvedPartner', href: '#partners' },
+]
 ---
 
 <DefaultLayout title={t('pages.about.title')}>
-  <PageHeader
-    title={t('pages.about.title')}
-    subtitle={t('pages.about.subtitle')}
-    bgType="module"
-  />
+  <PageHeader title={t('pages.about.title')} subtitle={t('pages.about.subtitle')} bgType="module" />
 
-  <section class="mb-12" aria-label="About the project">
-    <div class="container">
-
-      <!-- EU Co-fund Section -->
-      <div class="info-card mt-[3.5rem]">
-        <div class="info-card__content" style="">
-          <p class="stat-title">{t('pages.about.cofundEU')}</p>
-          <p class="stat-subtitle">{t('pages.about.cofundEUDesc')}</p>
-        </div>
-            <img src="/images/EN_Co-fundedbytheEU_RGB_POS.webp" alt="EU Co-fund logo"/>
-      </div>
-  
-  <div class="divider" style="margin-top: var(--space-2xl); margin-bottom: var(--space-2xl);"></div>
-
-      <!-- Intro Section -->
-      <div class="section-title mt-[3.5rem] flex items-center gap-4 sm:gap-6">
-          <h2 class="section-heading">{t('pages.about.missionTitle')}</h2>
-      </div>
-
-      <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 items-center mission">
-        <div>
-        <p class="text-xl mt-4">{t('pages.about.missionP1')}</p>
-        <p class="text-xl mt-8">{t('pages.about.missionP2')}</p>
-        <p class="text-xl mt-8">{t('pages.about.missionP3')}</p>
-        </div>
-        <img class="float" src="/images/about/mission.webp" alt="" decoding="async" loading="eager" />
-        </div>
-
-  <div class="divider" style="margin-top: var(--space-2xl); margin-bottom: var(--space-2xl);"></div>
-
-      <!-- Project Partners Section -->
-      <div class="section-title mt-[3.5rem] flex items-center gap-4 sm:gap-6">
-          <h2 class="section-heading">{t('pages.about.partnersTitle')}</h2>
-      </div>
-
+  <!-- Mission -->
+  <section class="page-section" aria-labelledby="mission-title">
+    <div class="container split">
       <div>
-        <p class="text-xl mt-4">{t('pages.about.initiativeDesc')}</p>
-      </div>  
-
-      <div class="initiative-partners-grid mt-8 mb-16">
-        <article class="core-value-card initiative-partner-card">
-          <div class="initiative-partner-content">
-            <div>
-              <h3 class="text-2xl font-bold" style="font-weight: 800;">{t('pages.about.uniLiechtenstein')}</h3>
-              <p class="mt-4">{t('pages.about.uniLiechtensteinDesc')}</p>
-            </div>
-            <img class="justify-self-center logo-image" src="/images/about/Universitat_Liechtenstein_logo.svg" alt="University of Liechtenstein logo" loading="lazy" />
-          </div>
-        </article>
-
-        <article class="core-value-card initiative-partner-card">
-          <div class="initiative-partner-content">
-            <div>
-              <h3 class="text-2xl font-bold" style="font-weight: 800;">{t('pages.about.cyberSecurityHub')}</h3>
-              <p class="mt-4">{t('pages.about.cyberSecurityHubDesc')}</p>
-            </div>
-            <img class="justify-self-center logo-image" src="/images/about/cyberSecurityHubCZ-logo-black_cut.webp" alt="CyberSecurity Hub logo" loading="lazy" />
-          </div>
-        </article>
-
-        <article class="core-value-card initiative-partner-card">
-          <div class="initiative-partner-content">
-            <div>
-              <h3 class="text-2xl font-bold" style="font-weight: 800;">{t('pages.about.uniInlandNorway')}</h3>
-              <p class="mt-4">{t('pages.about.uniInlandNorwayDesc')}</p>
-            </div>
-            <img class="justify-self-center logo-image" src="/images/about/University_of_Inland_Norway_logo.svg.webp" alt="University of Inland Norway logo" loading="lazy" />
-          </div>
-        </article>
-
-        <article class="core-value-card initiative-partner-card">
-          <div class="initiative-partner-content">
-            <div>
-              <h3 class="text-2xl font-bold" style="font-weight: 800;">{t('pages.about.uniInnsbruck')}</h3>
-              <p class="mt-4">{t('pages.about.uniInnsbruckDesc')}</p>
-            </div>
-            <img class="justify-self-center logo-image" src="/images/about/Universitaet-innsbruck-logo-rgb-farbe.svg.webp" alt="University of Innsbruck logo" loading="lazy" />
-          </div>
-        </article>
-
-        <article class="core-value-card initiative-partner-card">
-          <div class="initiative-partner-content">
-            <div>
-              <h3 class="text-2xl font-bold" style="font-weight: 800;">{t('pages.about.vilniusUni')}</h3>
-              <p class="mt-4">{t('pages.about.vilniusUniDesc')}</p>
-            </div>
-            <img class="justify-self-center logo-image" src="/images/about/Logo_vilnius_university.webp" alt="Vilnius University logo" loading="lazy" />
-          </div>
-        </article>
+        <p class="eyebrow" id="mission-title">{t('pages.about.missionTitle')}</p>
+        <p class="statement">{t('pages.about.missionStatement')}</p>
+        <p class="section-sub">{t('pages.about.missionSummary')}</p>
+        <details class="read-more">
+          <summary>
+            <span class="rm-closed">{t('pages.home.readMore')}</span>
+            <span class="rm-open">{t('pages.home.readLess')}</span>
+          </summary>
+          <p>{t('pages.about.missionP1')}</p>
+          <p>{t('pages.about.missionP2')}</p>
+          <p>{t('pages.about.missionP3')}</p>
+        </details>
       </div>
+      <img class="float" src="/images/about/mission.webp" alt="" width="400" height="400" decoding="async" loading="eager" />
+    </div>
+  </section>
 
-  <div class="divider" style="margin-top: var(--space-2xl); margin-bottom: var(--space-2xl);"></div>
+  <!-- Who benefits -->
+  <section class="page-section page-section--alt" aria-labelledby="benefits-title">
+    <div class="container">
+      <p class="eyebrow">{t('pages.about.benefitsEyebrow')}</p>
+      <h2 class="section-title" id="benefits-title">{t('pages.about.benefitsTitle')}</h2>
 
-      <!-- Values Section -->
-      <div class="section-title mt-[3.5rem] flex items-center gap-4 sm:gap-6" id="our-values">
-          <h2 class="section-heading">{t('pages.about.coreValuesTitle')}</h2>
+      <ul class="benefit-grid" role="list">
+        {benefits.map((benefit) => (
+          <li class="core-value-card benefit-card">
+            <span class="benefit-card__icon" aria-hidden="true"><Icon name={benefit.icon} /></span>
+            <h3 class="core-value-title">{t(`pages.about.${benefit.title}`)}</h3>
+            <p class="core-value-description">{t(`pages.about.${benefit.desc}`)}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Core values -->
+  <section class="page-section" id="our-values" aria-labelledby="values-title">
+    <div class="container">
+      <p class="eyebrow">{t('pages.about.coreValuesEyebrow')}</p>
+      <h2 class="section-title" id="values-title">{t('pages.about.coreValuesTitle')}</h2>
+
+      <div class="core-values-grid">
+        {values.map((value) => (
+          <article class="core-value-card value-card">
+            <div class="core-value-media">
+              <img src={value.image} alt="" loading="lazy" />
+            </div>
+            <div class="value-card__text">
+              <h3 class="core-value-title" set:html={t(`pages.about.${value.title}`)} />
+              <p class="core-value-description">{t(`pages.about.${value.desc}`)}</p>
+            </div>
+          </article>
+        ))}
       </div>
+    </div>
+  </section>
 
-      <div class="core-values-grid mt-8 mb-16">
-        <article class="core-value-card">
-          <div class="core-value-media">
-            <img src="/images/about/scalable.webp" alt="Scalable impact illustration" loading="lazy" />
-          </div>
-          <h3 class="core-value-title">{t('pages.about.scalableImpact')}</h3>
-          <p class="core-value-description">{t('pages.about.scalableImpactDesc')}</p>
-        </article>
-        <article class="core-value-card">
-          <div class="core-value-media">
-            <img src="/images/about/international.webp" alt="International collaboration illustration" loading="lazy" />
-          </div>
-          <h3 class="core-value-title">{t('pages.about.internationalCollab')}</h3>
-          <p class="core-value-description">{t('pages.about.internationalCollabDesc')}</p>
-        </article>
-        <article class="core-value-card">
-          <div class="core-value-media">
-            <img src="/images/about/adaptable.webp" alt="Practical and adaptable education illustration" loading="lazy" />
-          </div>
-          <h3 class="core-value-title" set:html={t('pages.about.practicalAdaptable')}></h3>
-          <p class="core-value-description">{t('pages.about.practicalAdaptableDesc')}</p>
-        </article>
-        <article class="core-value-card">
-          <div class="core-value-media">
-            <img src="/images/about/european.webp" alt="European digital cohesion illustration" loading="lazy" />
-          </div>
-          <h3 class="core-value-title">{t('pages.about.europeanCohesion')}</h3>
-          <p class="core-value-description">{t('pages.about.europeanCohesionDesc')}</p>
-        </article>
+  <!-- Partners -->
+  <section class="page-section page-section--alt" id="partners" aria-labelledby="partners-title">
+    <div class="container">
+      <p class="eyebrow">{t('pages.about.partnersEyebrow')}</p>
+      <h2 class="section-title" id="partners-title">{t('pages.about.partnersHeading')}</h2>
+      <p class="section-sub">{t('pages.about.initiativeDesc')}</p>
+
+      <ul class="partner-grid" role="list">
+        {partners.map((partner) => (
+          <li class="core-value-card initiative-partner-card">
+            <img class="logo-image" src={partner.logo} alt="" loading="lazy" />
+            <h3 class="partner-name">{t(`pages.about.${partner.name}`)}</h3>
+            <p class="partner-country">
+              <Icon name="lucide:map-pin" aria-hidden="true" />
+              {t(`pages.about.${partner.country}`)}
+            </p>
+            <a class="button has-icon partner-link" href={partner.url} rel="noopener noreferrer">
+              <Icon name="lucide:external-link" aria-hidden="true" />
+              {t('pages.about.visitWebsite')}
+              <span class="sr-only"> – {t(`pages.about.${partner.name}`)}</span>
+            </a>
+            <details class="read-more">
+              <summary>
+                <span class="rm-closed">{t('pages.home.readMore')}</span>
+                <span class="rm-open">{t('pages.home.readLess')}</span>
+              </summary>
+              <p>{t(`pages.about.${partner.desc}`)}</p>
+            </details>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Funding -->
+  <section class="page-section" aria-labelledby="funding-title">
+    <div class="container split">
+      <div class="funding-logo">
+        <img src="/images/EN_Co-fundedbytheEU_RGB_POS.webp" alt="Co-funded by the European Union" loading="lazy" />
       </div>
-
-  <div class="divider" style="margin-top: var(--space-2xl); margin-bottom: var(--space-2xl);"></div>
-
-      <!-- Joining Section -->
-
-      <div class="section-title mt-[3.5rem] flex items-center gap-4 sm:gap-6">
-          <h2 class="section-heading">{t('pages.about.getInvolvedTitle')}</h2>
+      <div>
+        <p class="eyebrow">{t('pages.about.fundingEyebrow')}</p>
+        <h2 class="section-title" id="funding-title">{t('pages.about.cofundEU')}</h2>
+        <p class="section-sub">{t('pages.about.cofundEUDesc')}</p>
       </div>
+    </div>
+  </section>
 
+  <!-- Get involved -->
+  <section class="page-section page-section--alt" aria-labelledby="involved-title">
+    <div class="container">
+      <h2 class="section-title" id="involved-title">{t('pages.about.getInvolvedTitle')}</h2>
+      <p class="section-sub">{t('pages.about.getInvolvedP1')}</p>
+      <details class="read-more">
+        <summary>
+          <span class="rm-closed">{t('pages.home.readMore')}</span>
+          <span class="rm-open">{t('pages.home.readLess')}</span>
+        </summary>
+        <p>{t('pages.about.getInvolvedP2')}</p>
+        <p>{t('pages.about.getInvolvedP3')}</p>
+      </details>
 
-        <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 items-center join grid-right">
-          <img class="float" src="/images/about/collaboration.webp" alt="" decoding="async" loading="eager" style="transform:scale(0.7)" />
-          <div>
-          <p class="text-xl mt-4">{t('pages.about.getInvolvedP1')}</p>
-          <p class="text-xl mt-8">{t('pages.about.getInvolvedP2')}</p>
-          <p class="text-xl mt-8">{t('pages.about.getInvolvedP3')}</p>
-          </div>
-        </div>  
+      <ul class="benefit-grid" role="list">
+        {involve.map((item) => (
+          <li class="core-value-card benefit-card">
+            <span class="benefit-card__icon" aria-hidden="true"><Icon name={item.icon} /></span>
+            <h3 class="core-value-title">{t(`pages.about.${item.key}Title`)}</h3>
+            <p class="core-value-description">{t(`pages.about.${item.key}Desc`)}</p>
+            <a class="button has-icon is-outline" href={item.href}>
+              {t(`pages.about.${item.key}Cta`)}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Closing call to action -->
+  <section class="page-section final-cta" aria-labelledby="cta-title">
+    <div class="container">
+      <h2 class="section-title" id="cta-title">{t('pages.about.ctaTitle')}</h2>
+      <p class="section-sub">{t('pages.about.ctaText')}</p>
+      <div class="cta-row">
+        <a class="button has-icon" href={hub}>
+          <Icon name="lucide:graduation-cap" />
+          {t('layout.hero.explore')}
+        </a>
+        <a class="button has-icon is-outline" href={GITHUB} rel="noopener noreferrer">
+          <Icon name="lucide:git-branch" />
+          {t('pages.about.viewOnGithub')}
+        </a>
+      </div>
     </div>
   </section>
 </DefaultLayout>
 
 <style>
-  .section-badge {
-    display: flex;
+  /* ── Two-column rows (mission, funding) ───────────────────────────────── */
+  .split {
+    display: grid;
+    gap: 2rem;
     align-items: center;
   }
 
-  .section-icon {
-    color: #fff;
-    background-color: #2563eb;
-    border-color: #2563eb;
-    font-size: 2.5em;
-    font-weight: bold;
+  @media (min-width: 900px) {
+    .split {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 3rem;
+    }
   }
 
-  .section-heading {
-    font-size: clamp(2.75rem, 2.5rem + 1vw, 3.75rem);
-    font-weight: 900;
-    line-height: 1.15;
-    text-decoration: underline;
-    text-decoration-color: #2563eb;
-    margin-bottom: 0.7rem;
+  .statement {
+    font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
+    font-weight: 800;
+    line-height: 1.25;
+    margin-bottom: 1rem;
   }
 
-  .section-subtitle {
-    color: var(--color-neutral-700);
-    font-size: 1.15rem;
-  }
-
-  .divider {
-    border-top: 2px solid var(--color-neutral-300);
+  .split > img {
+    width: 100%;
+    max-width: 380px;
+    height: auto;
+    justify-self: center;
   }
 
   @keyframes float {
-    0%, 100% {
-      transform: translateY(0) scale(0.8);
+    0%,
+    100% {
+      transform: translateY(0);
     }
     50% {
-      transform: translateY(-15px) scale(0.8);
+      transform: translateY(-12px);
     }
   }
 
@@ -209,47 +272,86 @@ const { t } = useTranslations(Astro.currentLocale)
     animation: float 6s ease-in-out infinite;
   }
 
-  .initiative-partners-grid {
+  @media (prefers-reduced-motion: reduce) {
+    .float {
+      animation: none;
+    }
+  }
+
+  /* ── Cards: who benefits and ways to get involved ─────────────────────── */
+  .benefit-grid {
     display: grid;
-    grid-template-columns: 1fr;
     gap: 1.25rem;
+    margin-top: 1.5rem;
+    list-style: none;
+    padding: 0;
   }
 
-  .initiative-partner-content {
+  @media (min-width: 768px) {
+    .benefit-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .benefit-card {
+    align-items: flex-start;
+  }
+
+  .benefit-card__icon {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    align-items: center;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 9999px;
+    font-size: 1.5rem;
+    color: #1d4ed8;
+    background: rgba(37, 99, 235, 0.12);
   }
 
-  @media (min-width: 640px) {
-    .initiative-partner-content {
-      grid-template-columns: minmax(0, 1fr) minmax(150px, 280px);
-      gap: 2.5rem;
-    }
+  :global(html.darkmode) .benefit-card__icon {
+    color: var(--dm-primary);
   }
 
-  @media (min-width: 1024px) {
-    .initiative-partner-content {
-      grid-template-columns: minmax(0, 1fr) minmax(180px, 350px);
-    }
+  .benefit-card .button {
+    margin-top: auto;
+    border-radius: 10px;
   }
 
+  /* ── Core values: 2 × 2 with full text ────────────────────────────────── */
   :global(.core-values-grid) {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1.25rem;
+    margin-top: 1.5rem;
   }
 
-  @media (min-width: 640px) {
+  @media (min-width: 900px) {
     :global(.core-values-grid) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
-  @media (min-width: 1024px) {
-    :global(.core-values-grid) {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+  .value-card {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .value-card :global(.core-value-media) {
+    flex: none;
+    width: 7.5rem;
+    min-height: 0;
+    aspect-ratio: 1;
+  }
+
+  .value-card__text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  @media (max-width: 520px) {
+    .value-card {
+      flex-direction: column;
     }
   }
 
@@ -277,7 +379,6 @@ const { t } = useTranslations(Astro.currentLocale)
     display: grid;
     align-items: center;
     justify-items: center;
-    min-height: 155px;
     padding: 0.75rem;
     border-radius: 0.9rem;
     border: 1px solid #bfdbfe;
@@ -305,48 +406,87 @@ const { t } = useTranslations(Astro.currentLocale)
     color: #334155;
   }
 
+  /* ── Partners ─────────────────────────────────────────────────────────── */
+  .partner-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .initiative-partner-card {
+    flex: 1 1 18rem;
+    max-width: 24rem;
+    height: auto;
+    gap: 0.6rem;
+  }
+
   .logo-image {
     width: 100%;
-    max-width: 700px;
-    height: auto;
-    display: grid;
-    align-items: center;
-    justify-items: center;
-    padding: 1.75rem;
+    height: 7.5rem;
+    object-fit: contain;
+    padding: 1.25rem;
+    margin-bottom: 0.5rem;
     border-radius: 0.9rem;
     border: 1px solid #bfdbfe;
     background: linear-gradient(160deg, #eff6ff 0%, #dbeafe 100%);
   }
 
-  .info-card {
-    background: rgba(37, 99, 235, 0.1);
-    border-radius: 1rem;
-    border: 2px solid var(--brand-primary);
-    padding: 1.25rem;
-    display: grid;
-    gap: 1rem;
-    align-items: center;
-    justify-content: space-between;
-    grid-template-columns: 1fr;
-  }
-
-  .info-card__content {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .stat-title {
-    white-space: pre-line;
-    font-size: clamp(1.25rem, 1rem + 1vw, 2rem);
-    line-height: 1.2;
+  .partner-name {
+    margin: 0;
+    font-size: 1.3rem;
     font-weight: 800;
-    color: var(--text-decoration-color);
+    line-height: 1.2;
   }
 
-  .stat-subtitle {
-    color: var(--color-neutral-600);
+  .partner-country {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin: 0;
+    font-weight: 700;
+    color: var(--link-color);
+  }
+
+  .partner-link {
+    align-self: flex-start;
+    margin-block: 0.25rem;
+  }
+
+  .initiative-partner-card .read-more {
+    margin: 0.25rem 0 0;
+  }
+
+  /* ── Funding ──────────────────────────────────────────────────────────── */
+  .funding-logo {
+    display: grid;
+    place-items: center;
+    padding: 1.5rem;
+    border: 2px solid var(--brand-primary);
+    border-radius: 1rem;
+    background: #ffffff;
+  }
+
+  .funding-logo img {
+    width: 100%;
+    max-width: 26rem;
+    height: auto;
+  }
+
+  /* ── Closing call to action ───────────────────────────────────────────── */
+  .final-cta {
+    text-align: center;
+  }
+
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
   }
 
   .button {
@@ -354,40 +494,7 @@ const { t } = useTranslations(Astro.currentLocale)
     color: var(--button-text-color);
   }
 
-  .info-card img {
-    max-width: 30rem;
-    width: 100%;
-    height: auto;
-    justify-self: center;
-  }
-
-  @media (min-width: 640px) {
-    .info-card {
-      padding: 2rem;
-      grid-template-columns: 3fr 2fr;
-      gap: 1.5rem;
-    }
-  }
-
-  @media (min-width: 640px) {
-    .logo-image {
-      max-width: 350px;
-    }
-  }
-
-
-  @media (max-width: 640px) {
-    .section-badge {
-      justify-content: flex-start;
-    }
-  }
-
-  @media (min-width: 1040px) {
-    .mission {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .join {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+  .button.is-outline {
+    color: var(--link-color);
   }
 </style>

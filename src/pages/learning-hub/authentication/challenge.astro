@@ -1,6 +1,8 @@
 ---
 import DefaultLayout from '@layouts/DefaultLayout.astro'
 import PageHeader from '@components/PageHeader.astro'
+import ChallengeIntro from '@components/ChallengeIntro.astro'
+import ChallengeProgress from '@components/ChallengeProgress.astro'
 import { useTranslations } from 'src/i18n/index'
 
 const { t, v } = useTranslations(Astro.currentLocale)
@@ -17,9 +19,15 @@ const initialTitle = String(initialRound.title ?? '')
 const initialDescription = String(initialRound.description ?? '')
 const initialIcon = String(initialRound.icon ?? '🎮')
 
-const unlockNumberLabel = String(rounds[1]?.label ?? 'Round 2')
-const unlockSymbolLabel = String(rounds[2]?.label ?? 'Round 3')
-const unlockUpperLabel = String(rounds[3]?.label ?? 'Round 4')
+const profile = v<ReadonlyArray<{ icon: string; label: string; value: string }>>('challengeAT.profile') ?? []
+const wordList = v<ReadonlyArray<string>>('challengeAT.words') ?? []
+const commonWords = v<ReadonlyArray<string>>('challengeAT.commonWords') ?? []
+
+// Which round unlocks which rule (badge on the locked rule in the recipe list)
+const unlockPersonalLabel = String(rounds[1]?.label ?? 'Round 2')
+const unlockWordsLabel = String(rounds[2]?.label ?? 'Round 3')
+const unlockUniqueLabel = String(rounds[3]?.label ?? 'Round 4')
+const charCountStart = t('challengeAT.charCountTemplate').replace('{n}', '0')
 
 const roundBadgeText = t('challengeAT.roundBadgeTemplate')
   .replace('{n}', '1')
@@ -40,6 +48,8 @@ const i18n = {
   keepGoing: t('challengeAT.keepGoing'),
   nextRound: t('challengeAT.nextRound'),
   finish: t('challengeAT.finish'),
+  charCountTemplate: t('challengeAT.charCountTemplate'),
+  wordAddAriaTemplate: t('challengeAT.wordAddAriaTemplate'),
 }
 
 const roundsJson = JSON.stringify(rounds.map((r) => ({
@@ -50,6 +60,9 @@ const roundsJson = JSON.stringify(rounds.map((r) => ({
   desc: String(r.desc ?? ''),
 })))
 const hintsJson = JSON.stringify(hints)
+const profileJson = JSON.stringify(profile)
+const wordsJson = JSON.stringify(wordList)
+const commonWordsJson = JSON.stringify(commonWords)
 const i18nJson = JSON.stringify(i18n)
 ---
 
@@ -61,22 +74,12 @@ const i18nJson = JSON.stringify(i18n)
     underlineColor="var(--brand-AT)"
   />
 
+  <ChallengeProgress />
+
   <section class="my-12">
     <div class="container">
 
-      <div class="mb-10 flex flex-col gap-6">
-        <h2 class="mb-2">{t('challengeAT.howItWorks')}</h2>
-        <p>
-          {t('challengeAT.instruction')}
-        </p>
-        <div class="tip-card">
-          <div class="tip-card__lead">
-            <span class="tip-card__icon" aria-hidden="true">💬</span>
-            <strong class="tip-card__label">{t('challengeAT.tipLabel')}</strong>
-          </div>
-          <div class="tip-card__body">{t('challengeAT.tip')}</div>
-        </div>
-      </div>
+      <ChallengeIntro ns="challengeAT" brand="AT" />
 
       <div class="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_340px]">
 
@@ -89,6 +92,9 @@ const i18nJson = JSON.stringify(i18n)
             data-total-rounds={String(totalRounds)}
             data-rounds={roundsJson}
             data-hints={hintsJson}
+            data-profile={profileJson}
+            data-words={wordsJson}
+            data-common-words={commonWordsJson}
             data-i18n={i18nJson}
           >
 
@@ -104,9 +110,24 @@ const i18nJson = JSON.stringify(i18n)
               {initialDescription}
             </div>
 
+            <!-- Practice persona: shown from round 2, so nobody has to use their own details -->
+            <div class="owner-card" id="ownerCard" hidden>
+              <p class="owner-card__title">{t('challengeAT.profileTitle')}</p>
+              <ul class="owner-card__list">
+                {profile.map((fact) => (
+                  <li class="owner-card__item">
+                    <span aria-hidden="true">{fact.icon}</span>
+                    <span class="owner-card__label">{fact.label}:</span>
+                    <strong>{fact.value}</strong>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
             <!-- Password Input -->
             <div class="password-input-section">
               <label for="passwordInput" class="input-label">{t('challengeAT.yourPassword')}</label>
+              <p class="password-warning" role="note">{t('challengeAT.realPasswordWarning')}</p>
               <div class="password-input-wrapper">
                 <input
                   type="password"
@@ -116,6 +137,8 @@ const i18nJson = JSON.stringify(i18n)
                   aria-label={t('challengeAT.passwordInputAriaLabel')}
                   aria-describedby="feedbackMessage"
                   autocomplete="off"
+                  autocapitalize="off"
+                  spellcheck="false"
                 />
                 <button
                   class="toggle-visibility"
@@ -126,6 +149,17 @@ const i18nJson = JSON.stringify(i18n)
                 >
                   <span class="eye-icon">👁️</span>
                 </button>
+              </div>
+              <p class="char-count" id="charCount">{charCountStart}</p>
+
+              <!-- Random word helper: from round 3 -->
+              <div class="word-helper" id="wordHelper" hidden>
+                <div class="word-helper__head">
+                  <span class="word-helper__title">🎲 {t('challengeAT.wordHelperTitle')}</span>
+                  <button type="button" class="word-helper__roll" id="rollWordsBtn">{t('challengeAT.wordHelperRoll')}</button>
+                </div>
+                <p class="word-helper__hint">{t('challengeAT.wordHelperHint')}</p>
+                <div class="word-helper__chips" id="wordChips"></div>
               </div>
             </div>
 
@@ -149,28 +183,28 @@ const i18nJson = JSON.stringify(i18n)
                   <span class="criteria-text">{t('challengeAT.criterionLength')}</span>
                 </div>
 
-                <div class="criteria-item criteria-locked" id="criterion-number">
+                <div class="criteria-item criteria-locked" id="criterion-personal">
                   <span class="criteria-icon">✓</span>
-                  <span class="criteria-text">{t('challengeAT.criterionNumber')}</span>
-                  <span class="criteria-unlock-badge" id="badge-number">{unlockNumberLabel}</span>
+                  <span class="criteria-text">{t('challengeAT.criterionPersonal')}</span>
+                  <span class="criteria-unlock-badge" id="badge-personal">{unlockPersonalLabel}</span>
                 </div>
 
-                <div class="criteria-item criteria-locked" id="criterion-symbol">
+                <div class="criteria-item criteria-locked" id="criterion-common">
                   <span class="criteria-icon">✓</span>
-                  <span class="criteria-text">{t('challengeAT.criterionSymbol')}</span>
-                  <span class="criteria-unlock-badge" id="badge-symbol">{unlockSymbolLabel}</span>
+                  <span class="criteria-text">{t('challengeAT.criterionCommon')}</span>
+                  <span class="criteria-unlock-badge" id="badge-common">{unlockPersonalLabel}</span>
                 </div>
 
-                <div class="criteria-item criteria-locked" id="criterion-upper">
+                <div class="criteria-item criteria-locked" id="criterion-words">
                   <span class="criteria-icon">✓</span>
-                  <span class="criteria-text">{t('challengeAT.criterionUppercase')}</span>
-                  <span class="criteria-unlock-badge" id="badge-upper">{unlockUpperLabel}</span>
+                  <span class="criteria-text">{t('challengeAT.criterionWords')}</span>
+                  <span class="criteria-unlock-badge" id="badge-words">{unlockWordsLabel}</span>
                 </div>
 
-                <div class="criteria-item criteria-locked" id="criterion-lower">
+                <div class="criteria-item criteria-locked" id="criterion-unique">
                   <span class="criteria-icon">✓</span>
-                  <span class="criteria-text">{t('challengeAT.criterionLowercase')}</span>
-                  <span class="criteria-unlock-badge" id="badge-lower">{unlockUpperLabel}</span>
+                  <span class="criteria-text">{t('challengeAT.criterionUnique')}</span>
+                  <span class="criteria-unlock-badge" id="badge-unique">{unlockUniqueLabel}</span>
                 </div>
 
               </div>
@@ -208,7 +242,7 @@ const i18nJson = JSON.stringify(i18n)
           <div class="completion-section hidden" id="completionSection">
             <div class="completion-card">
               <div class="completion-icon">🏆</div>
-              <h2 class="completion-title">{t('challengeAT.completionTitle')}</h2>
+              <h2 class="completion-title" id="completionTitle" tabindex="-1">{t('challengeAT.completionTitle')}</h2>
               <p class="completion-text">
                 {t('challengeAT.completionText')}
               </p>
@@ -273,15 +307,6 @@ const i18nJson = JSON.stringify(i18n)
     </div>
   </section>
   <style>
-    /* ── Tip card ──────────────────────────────────────────────────────────── */
-    .tip-card {
-      border-radius: 0.9rem;
-      border: 1px solid #fcd34d;
-      background: linear-gradient(135deg, #fffbeb, #fef3c7);
-      padding: 1rem 1.25rem;
-      font-size: 0.95rem;
-      color: #92400e;
-    }
 
     /* ── Challenge Card ────────────────────────────────────────────────────── */
     .challenge-card {
@@ -394,6 +419,143 @@ const i18nJson = JSON.stringify(i18n)
       outline: none;
     }
 
+    /* Reminder not to type a real password */
+    .password-warning {
+      margin: 0 0 var(--space-s);
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      background: #eff6ff;
+      color: #1e3a8a;
+      font-size: 0.875rem;
+      line-height: 1.4;
+    }
+
+    :global(.darkmode) .password-warning {
+      background: #1e3a5f;
+      border-color: #2563eb;
+      color: #dbeafe;
+    }
+
+    .char-count {
+      margin: 0.4rem 0 0;
+      font-size: 0.8rem;
+      color: #6b7280;
+      text-align: right;
+    }
+
+    /* ── Practice persona ──────────────────────────────────────────────────── */
+    .owner-card {
+      margin: 0 0 var(--space-l);
+      padding: var(--space-s) var(--space-m);
+      border: 1px solid #fcd34d;
+      border-left: 4px solid #f59e0b;
+      border-radius: 10px;
+      background: #fffbeb;
+    }
+
+    .owner-card__title {
+      margin: 0 0 0.4rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #92400e;
+    }
+
+    .owner-card__list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 1.25rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .owner-card__item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.9rem;
+      color: #1f2937;
+    }
+
+    .owner-card__label { color: #6b7280; }
+
+    /* ── Random word helper ────────────────────────────────────────────────── */
+    .word-helper {
+      margin-top: var(--space-s);
+      padding: var(--space-s) var(--space-m);
+      border: 1px dashed #93c5fd;
+      border-radius: 10px;
+      background: #eff6ff;
+    }
+
+    .word-helper__head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .word-helper__title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #1e3a8a;
+    }
+
+    .word-helper__hint {
+      margin: 0.4rem 0 0.6rem;
+      font-size: 0.85rem;
+      color: #1e3a8a;
+    }
+
+    .word-helper__chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    /* The chips are created by the script, so they do not carry Astro's scope attribute */
+    .word-helper__roll,
+    .word-helper__chips :global(.word-chip) {
+      min-height: 44px;
+      padding: 0.4rem 0.9rem;
+      border: 1.5px solid #3b82f6;
+      background: #ffffff;
+      color: #1e3a8a;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .word-helper__roll { border-radius: 8px; font-size: 0.85rem; }
+    .word-helper__chips :global(.word-chip) { border-radius: 999px; font-size: 0.95rem; font-weight: 600; border-color: #93c5fd; }
+
+    .word-helper__roll:hover,
+    .word-helper__chips :global(.word-chip:hover) {
+      background: #dbeafe;
+      border-color: #3b82f6;
+    }
+
+    .word-helper__roll:focus-visible,
+    .word-helper__chips :global(.word-chip:focus-visible) {
+      outline: 3px solid #3b82f6;
+      outline-offset: 2px;
+    }
+
+    :global(.darkmode) .char-count { color: #94a3b8; }
+    :global(.darkmode) .owner-card { background: #1e1a08; border-color: #92400e; border-left-color: #f59e0b; }
+    :global(.darkmode) .owner-card__title { color: #fcd34d; }
+    :global(.darkmode) .owner-card__item { color: #dde6f0; }
+    :global(.darkmode) .owner-card__label { color: #94a3b8; }
+    :global(.darkmode) .word-helper { background: #14213d; border-color: #3b5b9a; }
+    :global(.darkmode) .word-helper__title,
+    :global(.darkmode) .word-helper__hint { color: #bfdbfe; }
+    :global(.darkmode) .word-helper__roll,
+    :global(.darkmode) .word-helper__chips :global(.word-chip) { background: #1e293b; color: #dbeafe; border-color: #3b82f6; }
+    :global(.darkmode) .word-helper__roll:hover,
+    :global(.darkmode) .word-helper__chips :global(.word-chip:hover) { background: #1e3a8a; }
+
     /* ── Strength Meter ────────────────────────────────────────────────────── */
     .strength-section {
       margin-bottom: var(--space-l);
@@ -436,7 +598,7 @@ const i18nJson = JSON.stringify(i18n)
       padding: 3px 10px;
       border-radius: 6px;
       transition: all 0.3s ease;
-      color: #ef4444;
+      color: #b91c1c;
       background: #fee2e2;
     }
 
@@ -532,7 +694,7 @@ const i18nJson = JSON.stringify(i18n)
     /* Unlock badge shown on locked future criteria */
     .criteria-unlock-badge {
       margin-left: auto;
-      font-size: 0.68rem;
+      font-size: 0.75rem;
       font-weight: 700;
       color: #b45309;
       background: #fef3c7;
@@ -603,7 +765,7 @@ const i18nJson = JSON.stringify(i18n)
 
     .btn-primary:disabled {
       background: #e5e7eb;
-      color: #9ca3af;
+      color: #6b7280;
       cursor: not-allowed;
       box-shadow: none;
     }
@@ -690,13 +852,13 @@ const i18nJson = JSON.stringify(i18n)
 
     .round-row-desc {
       font-size: 0.75rem;
-      color: #9ca3af;
+      color: #6b7280;
     }
 
     .round-row.active-row .round-row-label { color: #92400e; }
     .round-row.active-row .round-row-desc  { color: #b45309; }
     .round-row.completed-row .round-row-label { color: #065f46; }
-    .round-row.completed-row .round-row-desc  { color: #6ee7b7; }
+    .round-row.completed-row .round-row-desc  { color: #047857; }
 
     /* ── Completion Overlay ────────────────────────────────────────────────── */
     .completion-section {
@@ -792,6 +954,10 @@ const i18nJson = JSON.stringify(i18n)
   </style>
 
   <script>
+    import { evaluatePassword } from '../../../utils/passwordCheck'
+    import { recordResult } from '../../../utils/challengeProgress'
+    import type { PasswordCriterion } from '../../../utils/passwordCheck'
+
     const initializePasswordChallenge = () => {
       const root = document.getElementById('challengeCard')
       if (!root || root.dataset.bound === 'true') return
@@ -810,6 +976,9 @@ const i18nJson = JSON.stringify(i18n)
       const rounds = parseJson(root.dataset.rounds, [])
       const hints = parseJson(root.dataset.hints, {})
       const i18n = parseJson(root.dataset.i18n, {})
+      const profile: Array<{ value: string }> = parseJson(root.dataset.profile, [])
+      const wordList: string[] = parseJson(root.dataset.words, [])
+      const commonWords: string[] = parseJson(root.dataset.commonWords, [])
 
       const getText = (key: string, fallback = '') => (typeof i18n[key] === 'string' ? i18n[key] : fallback)
       const formatTemplate = (template: string | unknown, vars: Record<string, unknown>): string => {
@@ -818,6 +987,11 @@ const i18nJson = JSON.stringify(i18n)
       }
 
       const passwordInput = document.getElementById('passwordInput')
+      const charCountEl = document.getElementById('charCount')
+      const ownerCard = document.getElementById('ownerCard')
+      const wordHelper = document.getElementById('wordHelper')
+      const wordChips = document.getElementById('wordChips')
+      const rollWordsBtn = document.getElementById('rollWordsBtn')
       const toggleVisibility = document.getElementById('toggleVisibility')
       const strengthFill = document.getElementById('strengthFill')
       const strengthText = document.getElementById('strengthText')
@@ -834,11 +1008,12 @@ const i18nJson = JSON.stringify(i18n)
 
       if (!passwordInput || !nextRoundBtn) return
 
-      const requiredByRound = [
+      // Rules build up round by round (see src/utils/passwordCheck.ts for what each one means)
+      const requiredByRound: PasswordCriterion[][] = [
         ['length'],
-        ['length', 'number'],
-        ['length', 'number', 'symbol'],
-        ['length', 'number', 'symbol', 'upper', 'lower'],
+        ['length', 'personal', 'common'],
+        ['length', 'personal', 'common', 'words'],
+        ['length', 'personal', 'common', 'words', 'unique'],
       ]
 
       if (!Array.isArray(rounds) || rounds.length === 0) return
@@ -850,16 +1025,18 @@ const i18nJson = JSON.stringify(i18n)
         requiredCriteria: requiredByRound[idx] || requiredByRound[requiredByRound.length - 1],
       }))
 
-      const criterionUnlockRound = {
+      const criterionUnlockRound: Record<PasswordCriterion, number> = {
         length: 1,
-        number: 2,
-        symbol: 3,
-        upper: 4,
-        lower: 4,
+        personal: 2,
+        common: 2,
+        words: 3,
+        unique: 4,
       }
 
-      const allCriteriaIds = ['length', 'number', 'symbol', 'upper', 'lower'] as const
+      const allCriteriaIds: PasswordCriterion[] = ['length', 'personal', 'common', 'words', 'unique']
       let currentIndex = 0
+      // Passwords accepted in earlier rounds — only kept in memory for the "different password" rule
+      const acceptedPasswords: string[] = []
 
       const updateRoundProgress = (completedCount: number) => {
         for (let i = 1; i <= totalRounds; i++) {
@@ -888,7 +1065,7 @@ const i18nJson = JSON.stringify(i18n)
           const badge = document.getElementById(`badge-${id}`)
           if (!el) return
 
-          const unlockAt = criterionUnlockRound[id as keyof typeof criterionUnlockRound]
+          const unlockAt = criterionUnlockRound[id]
 
           if (unlockAt <= currentRound1Based) {
             el.classList.remove('criteria-locked', 'met')
@@ -901,18 +1078,18 @@ const i18nJson = JSON.stringify(i18n)
         })
       }
 
-      const evaluatePassword = (password: string): Record<string, boolean> => ({
-        length: password.length > 10,
-        number: /\d/.test(password),
-        symbol: /[!@#$%^&*?]/.test(password),
-        upper: /[A-Z]/.test(password),
-        lower: /[a-z]/.test(password),
-      })
+      const personalClues = profile.map((fact) => String(fact.value))
 
       const updateFeedback = () => {
         const password = passwordInput instanceof HTMLInputElement ? passwordInput.value : ''
-        const evaluated = evaluatePassword(password)
+        const { met: evaluated, clue } = evaluatePassword(password, {
+          personalClues,
+          commonWords,
+          previous: acceptedPasswords,
+        })
         const required = challenges[currentIndex].requiredCriteria
+
+        if (charCountEl) charCountEl.textContent = formatTemplate(getText('charCountTemplate', ''), { n: [...password].length })
 
         allCriteriaIds.forEach((id) => {
           const el = document.getElementById(`criterion-${id}`)
@@ -951,7 +1128,8 @@ const i18nJson = JSON.stringify(i18n)
           feedback = getText('feedbackAllMet', feedbackMessage?.textContent ?? '')
         } else {
           const missing = required.filter((id) => !evaluated[id])
-          const hintText = missing.length && hints && typeof hints[missing[0]] === 'string' ? hints[missing[0]] : ''
+          const rawHint = missing.length && hints && typeof hints[missing[0]] === 'string' ? hints[missing[0]] : ''
+          const hintText = formatTemplate(rawHint, { clue: clue ?? '' })
           feedback = missing.length
             ? formatTemplate(getText('almostThereTemplate', ''), { hint: hintText })
             : getText('keepGoing', '')
@@ -981,7 +1159,41 @@ const i18nJson = JSON.stringify(i18n)
         updateFeedback()
       }
 
-      const loadChallenge = (index: number) => {
+      // ── Random word helper ───────────────────────────────────────────────
+      const rollWords = () => {
+        if (!wordChips || wordList.length === 0) return
+        const pool = [...wordList]
+        for (let i = pool.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1))
+          ;[pool[i], pool[j]] = [pool[j], pool[i]]
+        }
+        wordChips.replaceChildren(
+          ...pool.slice(0, 6).map((word) => {
+            const chip = document.createElement('button')
+            chip.type = 'button'
+            chip.className = 'word-chip'
+            chip.textContent = word
+            chip.setAttribute('aria-label', formatTemplate(getText('wordAddAriaTemplate', ''), { word }))
+            chip.addEventListener('click', () => addWord(word))
+            return chip
+          }),
+        )
+      }
+
+      const addWord = (word: string) => {
+        if (!(passwordInput instanceof HTMLInputElement)) return
+        // Show what is being built, otherwise the added words would be invisible
+        if (passwordInput.type === 'password') {
+          passwordInput.type = 'text'
+          toggleVisibility?.setAttribute('aria-pressed', 'true')
+          const eyeIcon = toggleVisibility?.querySelector('.eye-icon')
+          if (eyeIcon) eyeIcon.textContent = '🙈'
+        }
+        passwordInput.value = passwordInput.value ? `${passwordInput.value} ${word}` : word
+        passwordInput.dispatchEvent(new Event('input', { bubbles: true }))
+      }
+
+      const loadChallenge = (index: number, moveFocus = false) => {
         currentIndex = index
         const c = challenges[index]
 
@@ -1008,16 +1220,29 @@ const i18nJson = JSON.stringify(i18n)
 
         updateRoundProgress(index)
         applyCriteriaForRound(index)
+        // Round 2+: show who the practice password is for; round 3+: offer the random word helper
+        if (ownerCard) ownerCard.hidden = index < 1
+        if (wordHelper) {
+          wordHelper.hidden = index < 2
+          if (index >= 2) rollWords()
+        }
         resetChallenge()
+        // A new round / restart is user-initiated: continue typing right away (never on first page load)
+        if (moveFocus && passwordInput instanceof HTMLInputElement) passwordInput.focus()
       }
 
       const advanceRound = () => {
         const next = currentIndex + 1
+        if (passwordInput instanceof HTMLInputElement && passwordInput.value) acceptedPasswords.push(passwordInput.value)
         if (next >= challenges.length) {
+          if (passwordInput instanceof HTMLInputElement) passwordInput.value = ''
+          acceptedPasswords.length = 0
           updateRoundProgress(challenges.length)
+          recordResult('at', challenges.length, challenges.length)
           completionSection?.classList.remove('hidden')
+          document.getElementById('completionTitle')?.focus()
         } else {
-          loadChallenge(next)
+          loadChallenge(next, true)
         }
       }
 
@@ -1034,9 +1259,12 @@ const i18nJson = JSON.stringify(i18n)
       nextRoundBtn.addEventListener('click', advanceRound)
       resetBtn?.addEventListener('click', resetChallenge)
 
+      rollWordsBtn?.addEventListener('click', rollWords)
+
       restartBtn?.addEventListener('click', () => {
         completionSection?.classList.add('hidden')
-        loadChallenge(0)
+        acceptedPasswords.length = 0
+        loadChallenge(0, true)
       })
 
       loadChallenge(0)

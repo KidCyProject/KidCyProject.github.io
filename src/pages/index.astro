@@ -79,7 +79,7 @@ const languages = ['English', 'Čeština', 'Deutsch', 'Lietuvių', 'Norsk']
   <Hero />
 
   <!-- The journey: seven module tiles -->
-  <section class="home-section home-section--alt" id="learning-modules" aria-labelledby="journey-title">
+  <section class="page-section page-section--alt" id="learning-modules" aria-labelledby="journey-title">
     <div class="container">
       <p class="eyebrow">{t('pages.home.journeyEyebrow')}</p>
       <h2 class="section-title" id="journey-title">{t('pages.home.journeyTitle')}</h2>
@@ -115,7 +115,7 @@ const languages = ['English', 'Čeština', 'Deutsch', 'Lietuvių', 'Norsk']
   </section>
 
   <!-- What is inside: stats + checklist -->
-  <section class="home-section" aria-labelledby="inside-title">
+  <section class="page-section" aria-labelledby="inside-title">
     <div class="container">
       <p class="eyebrow">{t('pages.home.insideEyebrow')}</p>
       <h2 class="section-title" id="inside-title">{t('pages.home.insideTitle')}</h2>
@@ -143,7 +143,7 @@ const languages = ['English', 'Čeština', 'Deutsch', 'Lietuvių', 'Norsk']
   </section>
 
   <!-- Practise: challenges and games -->
-  <section class="home-section home-section--alt" aria-labelledby="practise-title">
+  <section class="page-section page-section--alt" aria-labelledby="practise-title">
     <div class="container">
       <p class="eyebrow">{t('pages.home.practiseEyebrow')}</p>
       <h2 class="section-title" id="practise-title">{t('pages.home.practiseTitle')}</h2>
@@ -203,7 +203,7 @@ const languages = ['English', 'Čeština', 'Deutsch', 'Lietuvių', 'Norsk']
   </section>
 
   <!-- Quick start -->
-  <section class="home-section" aria-labelledby="quick-title">
+  <section class="page-section" aria-labelledby="quick-title">
     <div class="container">
       <p class="eyebrow">{t('pages.home.quickEyebrow')}</p>
       <h2 class="section-title" id="quick-title">{t('pages.home.quickTitle')}</h2>
@@ -220,7 +220,7 @@ const languages = ['English', 'Čeština', 'Deutsch', 'Lietuvių', 'Norsk']
   </section>
 
   <!-- Languages and mission -->
-  <section class="home-section home-section--alt" aria-label={`${t('pages.home.languagesTitle')}, ${t('pages.home.missionTitle')}`}>
+  <section class="page-section page-section--alt" aria-label={`${t('pages.home.languagesTitle')}, ${t('pages.home.missionTitle')}`}>
     <div class="container two-col">
       <div>
         <p class="eyebrow">{t('pages.home.languagesEyebrow')}</p>
@@ -239,7 +239,7 @@ const languages = ['English', 'Čeština', 'Deutsch', 'Lietuvių', 'Norsk']
   </section>
 
   <!-- Closing call to action -->
-  <section class="home-section final-cta" aria-label={t('pages.home.aboutInitiative')}>
+  <section class="page-section final-cta" aria-label={t('pages.home.aboutInitiative')}>
     <div class="container">
       <p class="eu-note">{t('pages.about.cofundEUDesc')}</p>
       <div class="cta-row">
@@ -257,88 +257,6 @@ const languages = ['English', 'Čeština', 'Deutsch', 'Lietuvių', 'Norsk']
 </DefaultLayout>
 
 <style>
-  .home-section {
-    padding-block: 3.5rem;
-  }
-
-  /* Same soft fade as the page headers (see .bg-module in PageHeader.astro) */
-  .home-section--alt {
-    background: linear-gradient(155deg, color-mix(in oklab, #2563eb 10%, #ffffff) 20%, var(--background-color) 60%);
-    border-block: 1px solid color-mix(in oklab, #2563eb 40%, #ffffff);
-  }
-
-  :global(html.darkmode) .home-section--alt {
-    background: linear-gradient(155deg, color-mix(in oklab, #2563eb 22%, var(--dm-surface-2)) 0%, var(--dm-surface-1) 65%);
-    border-color: color-mix(in oklab, #2563eb 40%, var(--dm-border-sub));
-  }
-
-  .eyebrow {
-    font-size: 0.8125rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--link-color);
-    margin-bottom: 0.35rem;
-  }
-
-  .section-title {
-    font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.75rem);
-    font-weight: 900;
-    line-height: 1.15;
-    text-decoration: underline;
-    text-decoration-color: #2563eb;
-    margin-bottom: 0.75rem;
-  }
-
-  .section-sub {
-    font-size: 1.125rem;
-    color: light-dark(#475569, var(--dm-fg-muted));
-    margin-bottom: 1rem;
-  }
-
-  /* ── Read more (native <details>) ─────────────────────────────────────── */
-  .read-more {
-    margin-bottom: 1.5rem;
-  }
-
-  .read-more summary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    cursor: pointer;
-    font-weight: 700;
-    color: var(--link-color);
-    list-style: none;
-  }
-
-  .read-more summary::-webkit-details-marker {
-    display: none;
-  }
-
-  .read-more summary::after {
-    content: '';
-    width: 0.5rem;
-    height: 0.5rem;
-    border-right: 2px solid currentColor;
-    border-bottom: 2px solid currentColor;
-    transform: rotate(45deg) translateY(-2px);
-    transition: transform 0.2s ease;
-  }
-
-  .read-more[open] summary::after {
-    transform: rotate(-135deg) translateY(-2px);
-  }
-
-  .read-more:not([open]) .rm-open,
-  .read-more[open] .rm-closed {
-    display: none;
-  }
-
-  .read-more p {
-    margin-top: 0.75rem;
-    font-size: 1.0625rem;
-  }
-
   /* ── Module tiles ─────────────────────────────────────────────────────── */
   .tile-grid {
     display: grid;
@@ -712,8 +630,7 @@ const languages = ['English', 'Čeština', 'Deutsch', 'Lietuvių', 'Norsk']
   @media (prefers-reduced-motion: reduce) {
     .tile,
     .stat-card,
-    .dot,
-    .read-more summary::after {
+    .dot {
       transition: none;
     }
   }

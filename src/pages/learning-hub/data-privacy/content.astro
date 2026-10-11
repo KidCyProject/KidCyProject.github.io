@@ -3,10 +3,11 @@ import DefaultLayout from '@layouts/DefaultLayout.astro'
 import PageHeader from '@components/PageHeader.astro'
 import ModuleActivities from '@components/ModuleActivities.astro'
 import ModuleRowList from '@components/ModuleRowList.astro'
+import FileMeta from '@components/FileMeta.astro'
+import FileSize from '@components/FileSize.astro'
 import { Icon } from 'astro-icon/components'
 import { localizePath } from 'src/i18n/i18n'
 import { getModule, introMaterials } from 'src/data/modules'
-import type { ModuleId } from 'src/data/modules'
 import { modulePartsData, mergeParts, MATERIAL_LANGUAGE_LABELS, languageDownloadName } from 'src/data/moduleParts'
 import type { LanguagePackage, TranslationPart, TeachingGuide, RelatedModuleCard, MergedPart, MergedMaterial, MergedActivityStep, PartMeta } from 'src/data/moduleParts'
 import { useTranslations } from 'src/i18n/index'
@@ -177,6 +178,7 @@ const moduleImages = {
                       >
                         <span class="dp-download-code" aria-hidden="true">{file.lang.toUpperCase()}</span>
                         <span lang={file.lang}>{MATERIAL_LANGUAGE_LABELS[file.lang]}</span>
+                        <FileSize href={file.href} />
                       </a>
                     </li>
                   ))}
@@ -258,6 +260,7 @@ const moduleImages = {
                               >
                                 <span class="dp-download-code" aria-hidden="true">{file.lang.toUpperCase()}</span>
                                 <span lang={file.lang}>{MATERIAL_LANGUAGE_LABELS[file.lang]}</span>
+                                <FileSize href={file.href} />
                               </a>
                             </li>
                           ))}
@@ -319,6 +322,7 @@ const moduleImages = {
                                 num: item.id ?? String(i + 1).padStart(2, '0'),
                                 label: String(item.kind ?? ''),
                                 title: String(item.name ?? ''),
+                                files: item.languages?.length ? item.languages.map((file) => file.href) : [item.href],
                               }))}
                             >
                               {(i: number) => {
@@ -354,6 +358,7 @@ const moduleImages = {
                                           >
                                             <span class="dp-download-code" aria-hidden="true">{file.lang.toUpperCase()}</span>
                                             <span lang={file.lang}>{MATERIAL_LANGUAGE_LABELS[file.lang]}</span>
+                                            <FileSize href={file.href} />
                                           </a>
                                         </li>
                                       ))}
@@ -420,6 +425,7 @@ const moduleImages = {
                               </div>
                               <div class="dp-video-preview__info">
                                 <h4 class="dp-video-preview__title">{String(featuredVideo.title ?? '')}</h4>
+                                <FileMeta hrefs={[featuredVideo.downloads?.video?.href]} />
                                 <p class="dp-video-preview__desc">{String(featuredVideo.supportText ?? '')}</p>
                                 <div class="dp-video-preview__actions">
                                   <div class="dp-video-action-wrap">
@@ -462,6 +468,7 @@ const moduleImages = {
                                           >
                                             <span class="dp-download-code" aria-hidden="true">{String(track.srclang ?? '').toUpperCase()}</span>
                                             <span lang={String(track.srclang ?? '')}>{String(track.label ?? '')}</span>
+                                            <FileSize href={String(track.src ?? '')} />
                                           </a>
                                         </li>
                                       ))}
@@ -1284,6 +1291,8 @@ const moduleImages = {
 
   .dp-video-preview__desc {
     margin: 0;
+    /* same spacing as above the download buttons (info gap is 0.2rem) */
+    margin-top: calc(var(--space-s) - 0.2rem);
     font-size: var(--font-size-0);
     line-height: 1.5;
     color: var(--foreground-color);

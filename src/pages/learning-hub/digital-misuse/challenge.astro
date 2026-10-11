@@ -1,6 +1,9 @@
 ---
 import DefaultLayout from '@layouts/DefaultLayout.astro'
 import PageHeader from '@components/PageHeader.astro'
+import ChallengeIntro from '@components/ChallengeIntro.astro'
+import ChallengeProgress from '@components/ChallengeProgress.astro'
+import HelpBox from '@components/HelpBox.astro'
 import { useTranslations } from 'src/i18n/index'
 import { toJsonScript } from '../../../utils/jsonScript'
 
@@ -9,6 +12,7 @@ const { v: vEn } = useTranslations('en')
 
 // ── Types ──────────────────────────────────────────────────────────────────
 type StructChoice = { next: string; points: number }
+type StructStory = { id: number; sensitive?: true; nodes: Record<string, StructNode> }
 type StructNode = {
   mood: string
   ending?: true
@@ -30,6 +34,7 @@ type StoryNode = {
 }
 type Story = {
   id: number
+  sensitive?: true
   title: string
   emoji: string
   topic: string
@@ -37,7 +42,11 @@ type Story = {
 }
 
 // ── Story structure (game mechanics — not translated) ──────────────────────
-const storyStructure: Array<{ id: number; nodes: Record<string, StructNode> }> = [
+// Star rule: good = 3, okay = 2, bad = 1. 0 stars only when the player hands over photos, an address
+// or a password. `points` is live per-choice feedback ("Points this run"); it does not decide the stars.
+// `sensitive` stories (private photos, strangers asking for your address) are left out unless the player
+// switches them on, and they open with a content note.
+const storyStructure: StructStory[] = [
   { id: 1, nodes: {
     start:  { mood: 'worried',   choices: [{ next: 'end_a',  points: 0 }, { next: 'mid_b',  points: 1 }, { next: 'mid_c',  points: 2 }] },
     end_a:  { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
@@ -81,12 +90,12 @@ const storyStructure: Array<{ id: number; nodes: Record<string, StructNode> }> =
   { id: 5, nodes: {
     start:  { mood: 'sad',       choices: [{ next: 'end_a',  points: 0 }, { next: 'end_b',  points: 0 }, { next: 'mid_c',  points: 2 }] },
     end_a:  { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
-    end_b:  { mood: 'okay',      ending: true, type: 'okay', stars: 1 },
+    end_b:  { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
     mid_c:  { mood: 'supportive',choices: [{ next: 'end_c1', points: 2 }, { next: 'end_c2', points: 2 }] },
     end_c1: { mood: 'good',      ending: true, type: 'good', stars: 3 },
     end_c2: { mood: 'good',      ending: true, type: 'good', stars: 3 },
   }},
-  { id: 6, nodes: {
+  { id: 6, sensitive: true, nodes: {
     start:  { mood: 'worried',   choices: [{ next: 'end_a',  points: 0 }, { next: 'mid_b',  points: 1 }, { next: 'mid_c',  points: 2 }] },
     end_a:  { mood: 'bad',       ending: true, type: 'bad',  stars: 0 },
     mid_b:  { mood: 'worried',   choices: [{ next: 'end_b1', points: 0 }, { next: 'end_b2', points: 2 }] },
@@ -96,7 +105,7 @@ const storyStructure: Array<{ id: number; nodes: Record<string, StructNode> }> =
     end_c1: { mood: 'good',      ending: true, type: 'good', stars: 3 },
     end_c2: { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
   }},
-  { id: 7, nodes: {
+  { id: 7, sensitive: true, nodes: {
     start:  { mood: 'worried',   choices: [{ next: 'end_a',  points: 0 }, { next: 'mid_b',  points: 1 }, { next: 'mid_c',  points: 2 }] },
     end_a:  { mood: 'bad',       ending: true, type: 'bad',  stars: 0 },
     mid_b:  { mood: 'worried',   choices: [{ next: 'end_b1', points: 0 }, { next: 'end_b2', points: 2 }] },
@@ -111,7 +120,7 @@ const storyStructure: Array<{ id: number; nodes: Record<string, StructNode> }> =
     end_a:  { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
     mid_b:  { mood: 'worried',   choices: [{ next: 'end_b1', points: 2 }, { next: 'end_b2', points: 0 }] },
     end_b1: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    end_b2: { mood: 'okay',      ending: true, type: 'okay', stars: 1 },
+    end_b2: { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
     mid_c:  { mood: 'supportive',choices: [{ next: 'end_c1', points: 2 }, { next: 'end_c2', points: 1 }] },
     end_c1: { mood: 'good',      ending: true, type: 'good', stars: 3 },
     end_c2: { mood: 'good',      ending: true, type: 'good', stars: 3 },
@@ -130,11 +139,52 @@ const storyStructure: Array<{ id: number; nodes: Record<string, StructNode> }> =
     start:  { mood: 'worried',   choices: [{ next: 'end_a',  points: 0 }, { next: 'mid_b',  points: 0 }, { next: 'mid_c',  points: 2 }] },
     end_a:  { mood: 'bad',       ending: true, type: 'bad',  stars: 0 },
     mid_b:  { mood: 'worried',   choices: [{ next: 'end_b1', points: 0 }, { next: 'end_b2', points: 2 }] },
-    end_b1: { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
+    end_b1: { mood: 'bad',       ending: true, type: 'bad',  stars: 0 },
     end_b2: { mood: 'good',      ending: true, type: 'good', stars: 3 },
     mid_c:  { mood: 'worried',   choices: [{ next: 'end_c1', points: 2 }, { next: 'end_c2', points: 0 }] },
     end_c1: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    end_c2: { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
+    end_c2: { mood: 'bad',       ending: true, type: 'bad',  stars: 0 },
+  }},
+  // 11 disinformation · 12 misinformation · 13 harmful influencer · 14 algorithm and fake news
+  { id: 11, nodes: {
+    start:  { mood: 'worried',   choices: [{ next: 'end_a',  points: 0 }, { next: 'mid_b',  points: 1 }, { next: 'mid_c',  points: 2 }] },
+    end_a:  { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
+    mid_b:  { mood: 'worried',   choices: [{ next: 'end_b1', points: 0 }, { next: 'end_b2', points: 2 }] },
+    end_b1: { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
+    end_b2: { mood: 'good',      ending: true, type: 'good', stars: 3 },
+    mid_c:  { mood: 'supportive',choices: [{ next: 'end_c1', points: 2 }, { next: 'end_c2', points: 1 }] },
+    end_c1: { mood: 'good',      ending: true, type: 'good', stars: 3 },
+    end_c2: { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
+  }},
+  { id: 12, nodes: {
+    start:  { mood: 'worried',   choices: [{ next: 'end_a',  points: 0 }, { next: 'mid_b',  points: 1 }, { next: 'mid_c',  points: 2 }] },
+    end_a:  { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
+    mid_b:  { mood: 'worried',   choices: [{ next: 'end_b1', points: 0 }, { next: 'end_b2', points: 2 }] },
+    end_b1: { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
+    end_b2: { mood: 'good',      ending: true, type: 'good', stars: 3 },
+    mid_c:  { mood: 'supportive',choices: [{ next: 'end_c1', points: 2 }, { next: 'end_c2', points: 1 }] },
+    end_c1: { mood: 'good',      ending: true, type: 'good', stars: 3 },
+    end_c2: { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
+  }},
+  { id: 13, nodes: {
+    start:  { mood: 'worried',   choices: [{ next: 'end_a',  points: 0 }, { next: 'mid_b',  points: 1 }, { next: 'mid_c',  points: 2 }] },
+    end_a:  { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
+    mid_b:  { mood: 'worried',   choices: [{ next: 'end_b1', points: 0 }, { next: 'end_b2', points: 2 }] },
+    end_b1: { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
+    end_b2: { mood: 'good',      ending: true, type: 'good', stars: 3 },
+    mid_c:  { mood: 'supportive',choices: [{ next: 'end_c1', points: 2 }, { next: 'end_c2', points: 1 }] },
+    end_c1: { mood: 'good',      ending: true, type: 'good', stars: 3 },
+    end_c2: { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
+  }},
+  { id: 14, nodes: {
+    start:  { mood: 'worried',   choices: [{ next: 'end_a',  points: 0 }, { next: 'mid_b',  points: 1 }, { next: 'mid_c',  points: 2 }] },
+    end_a:  { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
+    mid_b:  { mood: 'worried',   choices: [{ next: 'end_b1', points: 1 }, { next: 'end_b2', points: 0 }] },
+    end_b1: { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
+    end_b2: { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
+    mid_c:  { mood: 'supportive',choices: [{ next: 'end_c1', points: 2 }, { next: 'end_c2', points: 1 }] },
+    end_c1: { mood: 'good',      ending: true, type: 'good', stars: 3 },
+    end_c2: { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
   }},
 ]
 
@@ -177,6 +227,7 @@ const stories: Story[] = storyStructure.map((struct, idx) => {
 
   return {
     id:    struct.id,
+    ...(struct.sensitive ? { sensitive: true as const } : {}),
     title: String(raw.title ?? fb.title ?? ''),
     emoji: String(raw.emoji ?? fb.emoji ?? ''),
     topic: String(raw.topic ?? fb.topic ?? ''),
@@ -207,15 +258,26 @@ const labels = {
   rankBeginningMsg: t('challengeDM.rankBeginningMsg'),
   yourBestScore:    t('challengeDM.yourBestScore'),
   bestResultDesc:   t('challengeDM.bestResultDesc'),
-  badgeGood:        '\u2728 Great Outcome!',
-  badgeOkay:        '\u{1F324}\uFE0F Could Be Better',
-  badgeBad:         '\u274C Tough Lesson',
-  topicLabel:       'Topic',
-  storyOf:          'of',
-  pointsLabel:      'Points this run',
+  badgeGood:        t('challengeDM.badgeGood'),
+  badgeOkay:        t('challengeDM.badgeOkay'),
+  badgeBad:         t('challengeDM.badgeBad'),
+  topicLabel:       t('challengeDM.topicLabel'),
+  storyOfTemplate:  t('challengeDM.storyOfTemplate'),
+  storyLabelTemplate: t('challengeDM.storyLabelTemplate'),
+  pointsLabel:      t('challengeDM.pointsLabel'),
+  sensitiveNoteTitle:    t('challengeDM.sensitiveNoteTitle'),
+  sensitiveNoteTemplate: t('challengeDM.sensitiveNoteTemplate'),
+  skipStory:             t('challengeDM.skipStory'),
+  skippedLabel:          t('challengeDM.skippedLabel'),
+  scoreDenomTemplate:    t('challengeDM.scoreDenomTemplate'),
 }
 
+// Server-side defaults for the first story, so no English placeholder flashes before the script runs
+const fmt = (template: string, vars: Record<string, string | number>) =>
+  template.replace(/\{(\w+)\}/g, (_m, key) => String(vars[key] ?? ''))
+
 const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>('challengeDM.watchOutItems') ?? []
+const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0]
 ---
 
 <DefaultLayout title={t('challengeDM.title')}>
@@ -225,6 +287,8 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
     bgType="module"
     underlineColor="var(--brand-DM)"
   />
+
+  <ChallengeProgress />
 
   <script
     type="application/json"
@@ -236,20 +300,10 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
     <div class="container">
 
       <!-- How It Works -->
-      <div class="mb-10 flex flex-col gap-6">
-        <h2 class="mb-2">{t('challengeDM.howItWorks')}</h2>
-        <p>{t('challengeDM.instruction')}</p>
-        <div class="tip-card">
-          <div class="tip-card__lead">
-            <span class="tip-card__icon" aria-hidden="true">💬</span>
-            <strong class="tip-card__label">{t('challengeDM.tipLabel')}</strong>
-          </div>
-          <div class="tip-card__body">{t('challengeDM.tip')}</div>
-        </div>
-      </div>
+      <ChallengeIntro ns="challengeDM" brand="DM" />
 
       <!-- Two-column layout -->
-      <div class="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_300px]">
+      <div class="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_300px]" id="dm-grid">
 
         <!-- ── Main: Story Area ─────────────────────────────────────────── -->
         <div>
@@ -259,7 +313,7 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
             <div class="story-header-left">
               <span class="story-emoji" id="story-emoji">📖</span>
               <div class="story-header-text">
-                <span class="story-number" id="story-number">Story 1 of 10</span>
+                <span class="story-number" id="story-number">{fmt(labels.storyOfTemplate, { n: 1, total: stories.filter((story) => !story.sensitive).length })}</span>
                 <span class="story-title-text" id="story-title-text">…</span>
               </div>
             </div>
@@ -275,20 +329,27 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
             <!-- Welcome / between-story state -->
             <div id="welcome-state" class="welcome-state">
               <div class="welcome-icon" id="welcome-emoji">📱</div>
-              <h3 class="welcome-title" id="welcome-title">Story 1</h3>
-              <p class="welcome-topic" id="welcome-topic">Topic</p>
+              <h3 class="welcome-title" id="welcome-title">{fmt(labels.storyLabelTemplate, { n: 1 })} {firstVisibleStory?.title}</h3>
+              <p class="welcome-topic" id="welcome-topic">{labels.topicLabel}: {firstVisibleStory?.topic}</p>
               <p class="welcome-desc" id="welcome-desc">{labels.welcomeDesc}</p>
-              <button class="btn btn-primary" id="start-btn">{labels.startStory}</button>
+              <div class="sensitive-note hidden" id="sensitive-note">
+                <strong id="sensitive-note-title">{labels.sensitiveNoteTitle}</strong>
+                <p id="sensitive-note-text"></p>
+              </div>
+              <div class="welcome-buttons">
+                <button class="btn btn-primary" id="start-btn">{labels.startStory}</button>
+                <button class="btn btn-secondary hidden" id="skip-btn">{labels.skipStory}</button>
+              </div>
             </div>
 
             <!-- Messages area -->
-            <div id="messages-area" class="messages-area hidden" aria-live="polite" aria-label="Story messages"></div>
+            <div id="messages-area" class="messages-area hidden" aria-live="polite" aria-label={t('challengeDM.messagesAriaLabel')}></div>
 
             <!-- Choices -->
             <div id="choices-container" class="choices-container hidden"></div>
 
             <!-- Ending card -->
-            <div id="ending-card" class="ending-card hidden">
+            <div id="ending-card" class="ending-card hidden" tabindex="-1" role="group" aria-labelledby="ending-title">
               <div class="ending-badge" id="ending-badge">{labels.badgeGood}</div>
               <div class="ending-title" id="ending-title">…</div>
               <div class="ending-stars" id="ending-stars">★★★</div>
@@ -307,10 +368,13 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
             <button class="btn btn-primary" id="all-done-btn" style="display:none">{labels.seeFinalScore}</button>
           </div>
 
+          <!-- Where to find help (collapsed on phones) -->
+          <HelpBox class="mt-6" />
+
         </div><!-- main column -->
 
         <!-- ── Sidebar ──────────────────────────────────────────────────── -->
-        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm h-fit sticky top-6">
+        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm h-fit">
 
           <!-- Total score -->
           <div class="mb-4">
@@ -319,7 +383,16 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
           </div>
           <div class="score-display border-t border-slate-200 pt-4 mb-6">
             <span class="score-big" id="total-stars-display">0</span>
-            <span class="score-denom">/ 30 ★</span>
+            <span class="score-denom" id="score-denom"></span>
+          </div>
+
+          <!-- Sensitive stories are off until a teacher or the player switches them on -->
+          <div class="mb-6 border-t border-slate-200 pt-4">
+            <label class="sensitive-toggle" for="sensitive-toggle">
+              <input type="checkbox" id="sensitive-toggle" aria-describedby="sensitive-toggle-note" />
+              <span class="text-sm font-semibold text-slate-900">{t('challengeDM.sensitiveToggleLabel')}</span>
+            </label>
+            <p id="sensitive-toggle-note" class="mt-1 text-xs text-slate-700">{t('challengeDM.sensitiveToggleNote')}</p>
           </div>
 
           <!-- Story progress -->
@@ -345,14 +418,14 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
       </div><!-- grid -->
 
       <!-- Final score overlay -->
-      <div class="final-overlay hidden" id="final-overlay">
+      <div class="final-overlay hidden" id="final-overlay" role="dialog" aria-modal="true" aria-labelledby="final-title">
         <div class="final-card">
           <div class="final-icon">🎉</div>
-          <h2 class="final-title">{labels.allStoriesComplete}</h2>
+          <h2 class="final-title" id="final-title">{labels.allStoriesComplete}</h2>
           <p class="final-subtitle">{labels.finalScoreDesc}</p>
           <div class="final-score-box">
             <span id="final-stars-count">0</span>
-            <span class="final-denom">/ 30 ★</span>
+            <span class="final-denom" id="final-denom"></span>
           </div>
           <div class="final-rank" id="final-rank"></div>
           <p class="final-rank-msg" id="final-rank-msg"></p>
@@ -364,15 +437,6 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
   </section>
 
   <style>
-    /* ── Tip card ──────────────────────────────────────────────────────────── */
-    .tip-card {
-      border-radius: 0.9rem;
-      border: 1px solid color-mix(in oklab, var(--brand-DM), white 40%);
-      background: linear-gradient(135deg, color-mix(in oklab, var(--brand-DM), white 82%), color-mix(in oklab, var(--brand-DM), white 92%));
-      padding: 1rem 1.25rem;
-      font-size: 0.95rem;
-      color: color-mix(in oklab, var(--brand-DM), black 30%);
-    }
 
     /* ── Story header ──────────────────────────────────────────────────────── */
     .story-header {
@@ -401,11 +465,11 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
     }
 
     .story-number {
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: #ef4444;
+      color: #b91c1c;
     }
 
     .story-title-text {
@@ -421,7 +485,11 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
       gap: 1px;
     }
 
-    .pts-label { font-size: 0.68rem; color: #94a3b8; font-weight: 600; }
+    .pts-label { font-size: 0.75rem; color: #64748b; font-weight: 600; }
+    :global(.darkmode) .story-number { color: #fca5a5; }
+    :global(.darkmode) .pts-label,
+    :global(.darkmode) .score-denom,
+    :global(.darkmode) .s-row-label { color: #94a3b8; }
     .pts-value { font-size: 1.3rem; font-weight: 800; color: #ef4444; line-height: 1; }
 
     /* ── Story panel ───────────────────────────────────────────────────────── */
@@ -462,15 +530,64 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: #ef4444;
+      color: #b91c1c;
       margin: 0;
     }
+
+    :global(.darkmode) .welcome-topic { color: #fca5a5; }
 
     .welcome-desc {
       font-size: 0.9rem;
       color: #64748b;
       margin: 0;
       max-width: 360px;
+    }
+
+    /* ── Content note (sensitive stories) and the switch that turns them on ─── */
+    .sensitive-note {
+      max-width: 420px;
+      margin: 4px 0 6px;
+      padding: 10px 14px;
+      border: 2px solid #d97706;
+      border-radius: 10px;
+      background: #fffbeb;
+      color: #78350f;
+      text-align: left;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .welcome-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .sensitive-note strong { display: block; margin-bottom: 2px; }
+    .sensitive-note p { margin: 0; }
+
+    :global(.darkmode) .sensitive-note {
+      background: #2a1a05;
+      border-color: #b45309;
+      color: #fcd34d;
+    }
+
+    .sensitive-toggle {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 44px;
+      cursor: pointer;
+    }
+
+    .sensitive-toggle input {
+      width: 1.25rem;
+      height: 1.25rem;
+      flex-shrink: 0;
+      accent-color: #dc2626;
+      cursor: pointer;
     }
 
     /* ── Messages area ─────────────────────────────────────────────────────── */
@@ -535,7 +652,7 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
     }
 
     :global(.msg-player .msg-content) {
-      background: #ef4444;
+      background: #dc2626;
       border-radius: 14px 4px 14px 14px;
       color: white;
       font-weight: 500;
@@ -574,8 +691,8 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
     }
 
     :global(.choice-btn:hover) {
-      background: #ef4444;
-      border-color: #ef4444;
+      background: #dc2626;
+      border-color: #dc2626;
       color: white;
       transform: translateY(-2px);
     }
@@ -668,25 +785,25 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+      background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
       color: white;
-      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+      box-shadow: 0 4px 12px rgba(185, 28, 28, 0.3);
     }
 
     .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
+      box-shadow: 0 6px 16px rgba(185, 28, 28, 0.4);
     }
 
     .btn-secondary {
       background: white;
-      color: #ef4444;
+      color: #b91c1c;
       border: 2px solid #fca5a5;
     }
 
     .btn-secondary:hover {
       background: #fff1f2;
-      border-color: #ef4444;
+      border-color: #dc2626;
     }
 
     /* ── Sidebar: score display ────────────────────────────────────────────── */
@@ -697,7 +814,7 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
     }
 
     .score-big  { font-size: 2.4rem; font-weight: 900; color: #ef4444; line-height: 1; }
-    .score-denom { font-size: 1rem; color: #94a3b8; font-weight: 600; }
+    .score-denom { font-size: 1rem; color: #64748b; font-weight: 600; }
 
     /* ── Sidebar: story rows ───────────────────────────────────────────────── */
     .story-rows-list {
@@ -759,11 +876,11 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
     }
 
     .s-row-label {
-      font-size: 0.65rem;
+      font-size: 0.75rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: #94a3b8;
+      color: #64748b;
     }
 
     .s-row-title {
@@ -776,7 +893,7 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
     }
 
     .s-row-stars {
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       letter-spacing: 1px;
       flex-shrink: 0;
     }
@@ -859,6 +976,8 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
   </style>
 
   <script>
+    import { recordResult } from '../../../utils/challengeProgress'
+
     // ── Types ─────────────────────────────────────────────────────────────────
     interface Choice {
       text: string
@@ -879,6 +998,7 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
 
     interface Story {
       id: number
+      sensitive?: true
       title: string
       emoji: string
       topic: string
@@ -911,8 +1031,14 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
       badgeOkay: string
       badgeBad: string
       topicLabel: string
-      storyOf: string
+      storyOfTemplate: string
+      storyLabelTemplate: string
       pointsLabel: string
+      sensitiveNoteTitle: string
+      sensitiveNoteTemplate: string
+      skipStory: string
+      skippedLabel: string
+      scoreDenomTemplate: string
     }
 
     // ── Load data ─────────────────────────────────────────────────────────────
@@ -926,13 +1052,36 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
       let currentNodeId    = 'start'
       let sessionPoints    = 0
       let completedSet     = new Set<number>()
+      let skippedSet       = new Set<number>()   // sensitive stories the player chose to skip: no stars, no penalty
       let bestStars        : Record<number, number> = {}
+      // Sensitive stories stay out of the list until switched on (a per-viewer choice, remembered when the browser allows)
+      const sensitiveKey   = 'kidcy-dm-sensitive'
+      let sensitiveOn      = false
+      try { sensitiveOn = localStorage.getItem(sensitiveKey) === '1' } catch { /* storage blocked: stay off */ }
+      // Pending story-flow timer (choice → next node → choices/ending). Cancelled whenever the
+      // story is reloaded or switched, otherwise a stale callback renders into the wrong story.
+      let pendingTimer     : ReturnType<typeof setTimeout> | null = null
+
+      const schedule = (fn: () => void, ms: number) => {
+        if (pendingTimer !== null) clearTimeout(pendingTimer)
+        pendingTimer = setTimeout(() => { pendingTimer = null; fn() }, ms)
+      }
+      const cancelPending = () => {
+        if (pendingTimer !== null) clearTimeout(pendingTimer)
+        pendingTimer = null
+      }
 
       // ── DOM refs ────────────────────────────────────────────────────────────
       const getEl = (id: string) => document.getElementById(id) as HTMLElement
 
       // ── Helpers ─────────────────────────────────────────────────────────────
-      const totalBestStars = () => Object.values(bestStars).reduce((s, v) => s + v, 0)
+      const fmt = (template: string, vars: Record<string, string | number>) =>
+        template.replace(/\{(\w+)\}/g, (_m, key) => String(vars[key] ?? ''))
+
+      // The stories in play: every story, or all but the sensitive ones
+      const visibleIdx     = () => stories.map((_s, i) => i).filter((i) => sensitiveOn || !stories[i].sensitive)
+      const maxStars       = () => visibleIdx().filter((i) => !skippedSet.has(i)).length * 3
+      const totalBestStars = () => visibleIdx().reduce((sum, i) => sum + (bestStars[i] ?? 0), 0)
 
       const moodEmoji: Record<string, string> = {
         neutral: '\u{1F4D6}', worried: '\u{1F61F}', sad: '\u{1F622}', supportive: '\u{1F4AA}',
@@ -942,20 +1091,25 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
       // ── Sidebar ─────────────────────────────────────────────────────────────
       function updateSidebar() {
         getEl('total-stars-display').textContent = String(totalBestStars())
+        getEl('score-denom').textContent = fmt(labels.scoreDenomTemplate, { max: maxStars() })
 
         const container = getEl('story-rows')
         container.innerHTML = ''
 
-        stories.forEach((story, idx) => {
+        const visible = visibleIdx()
+        visible.forEach((idx, pos) => {
+          const story    = stories[idx]
           const isDone   = completedSet.has(idx)
+          const isSkipped = skippedSet.has(idx)
           const isActive = idx === currentStoryIdx
-          const isLocked = idx > 0 && !completedSet.has(idx - 1) && !isActive
+          const before   = visible[pos - 1]
+          const isLocked = pos > 0 && !completedSet.has(before) && !skippedSet.has(before) && !isActive
 
           const row = document.createElement('div')
           row.className = `s-row${isActive ? ' s-row-active' : ''}`
           if (!isLocked) {
             row.style.cursor = 'pointer'
-            row.addEventListener('click', () => { if (idx !== currentStoryIdx) loadStory(idx) })
+            row.addEventListener('click', () => { if (idx !== currentStoryIdx) loadStory(idx, true) })
           }
 
           const dot = document.createElement('div')
@@ -966,7 +1120,7 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
 
           const lbl = document.createElement('span')
           lbl.className = 's-row-label'
-          lbl.textContent = `Story ${idx + 1}: `
+          lbl.textContent = fmt(labels.storyLabelTemplate, { n: pos + 1 }) + ' '
 
           const ttl = document.createElement('span')
           ttl.className = 's-row-title'
@@ -977,7 +1131,10 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
 
           const starsEl = document.createElement('div')
           starsEl.className = 's-row-stars'
-          if (isDone) {
+          if (isSkipped && !isDone) {
+            starsEl.textContent = '\u23ED'
+            starsEl.setAttribute('aria-label', labels.skippedLabel)
+          } else if (isDone) {
             const s = bestStars[idx] ?? 0
             starsEl.textContent = '\u2605'.repeat(s) + '\u2606'.repeat(3 - s)
             starsEl.style.color = s === 3 ? '#f59e0b' : s >= 2 ? '#94a3b8' : '#d1d5db'
@@ -993,23 +1150,34 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
       }
 
       // ── Load / reset a story ─────────────────────────────────────────────────
-      function loadStory(idx: number) {
+      function loadStory(idx: number, moveFocus = false) {
+        cancelPending()
         currentStoryIdx = idx
         currentNodeId   = 'start'
         sessionPoints   = 0
 
         const story = stories[idx]
+        const visible = visibleIdx()
+        const position = visible.indexOf(idx) + 1
 
         getEl('story-emoji').textContent      = story.emoji
-        getEl('story-number').textContent     = `Story ${idx + 1} ${labels.storyOf} ${stories.length}`
+        getEl('story-number').textContent     = fmt(labels.storyOfTemplate, { n: position, total: visible.length })
         getEl('story-title-text').textContent = story.title
         getEl('session-pts').textContent      = '0'
 
         getEl('welcome-emoji').textContent  = story.emoji
-        getEl('welcome-title').textContent  = `Story ${idx + 1}: ${story.title}`
+        getEl('welcome-title').textContent  = `${fmt(labels.storyLabelTemplate, { n: position })} ${story.title}`
         getEl('welcome-topic').textContent  = `${labels.topicLabel}: ${story.topic}`
         getEl('welcome-desc').textContent   = labels.welcomeDesc
         getEl('start-btn').textContent      = labels.startStory
+
+        // Content note for the sensitive stories
+        const note = getEl('sensitive-note')
+        note.classList.toggle('hidden', !story.sensitive)
+        getEl('sensitive-note-title').textContent = labels.sensitiveNoteTitle
+        getEl('sensitive-note-text').textContent  = fmt(labels.sensitiveNoteTemplate, { topic: story.topic })
+        getEl('skip-btn').classList.toggle('hidden', !story.sensitive)
+        getEl('skip-btn').textContent = labels.skipStory
 
         // Reset panel
         getEl('messages-area').innerHTML = ''
@@ -1021,6 +1189,7 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
         getEl('welcome-state').classList.remove('hidden')
 
         updateSidebar()
+        if (moveFocus) getEl('start-btn').focus()
       }
 
       // ── Start button \u2192 play first node ──────────────────────────────────────
@@ -1038,7 +1207,7 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
 
         addNarratorMsg(node.text, node.mood)
 
-        setTimeout(() => {
+        schedule(() => {
           if (node.ending) {
             showEnding(node)
           } else if (node.choices) {
@@ -1102,6 +1271,7 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
           btn.addEventListener('click', () => selectChoice(choice))
           container.appendChild(btn)
         })
+        ;(container.querySelector('.choice-btn') as HTMLElement | null)?.focus({ preventScroll: true })
       }
 
       // ── Handle choice selection ──────────────────────────────────────────────
@@ -1114,7 +1284,7 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
 
         addPlayerMsg(choice.text)
 
-        setTimeout(() => displayNode(choice.next), 600)
+        schedule(() => displayNode(choice.next), 600)
       }
 
       // ── Show ending card ─────────────────────────────────────────────────────
@@ -1128,6 +1298,7 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
         const prev = bestStars[currentStoryIdx] ?? -1
         if (stars > prev) bestStars[currentStoryIdx] = stars
         completedSet.add(currentStoryIdx)
+        skippedSet.delete(currentStoryIdx)
 
         const badgeText  = { good: labels.badgeGood, okay: labels.badgeOkay, bad: labels.badgeBad }
         const cardClass  = { good: 'ending-card-good', okay: 'ending-card-okay', bad: 'ending-card-bad' }
@@ -1145,12 +1316,14 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
         getEl('ending-lesson-text').textContent = lesson
 
         card.classList.remove('hidden')
+        card.focus({ preventScroll: true })
 
         // Action buttons
         const actions  = getEl('action-buttons')
         const nextBtn  = getEl('next-story-btn')
         const doneBtn  = getEl('all-done-btn')
-        const isLast   = currentStoryIdx === stories.length - 1
+        const visible  = visibleIdx()
+        const isLast   = currentStoryIdx === visible[visible.length - 1]
 
         getEl('retry-btn').textContent  = labels.tryDifferentPath
         nextBtn.textContent             = labels.nextStory
@@ -1166,17 +1339,22 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
       // ── Final score overlay ──────────────────────────────────────────────────
       function showFinalScore() {
         const total = totalBestStars()
+        const share = maxStars() ? total / maxStars() : 0
+        recordResult('dm', total, maxStars())
         getEl('final-stars-count').textContent = String(total)
+        getEl('final-denom').textContent = fmt(labels.scoreDenomTemplate, { max: maxStars() })
 
         let rank = '', msg = ''
-        if      (total >= 27) { rank = labels.rankChampion;  msg = labels.rankChampionMsg  }
-        else if (total >= 21) { rank = labels.rankDefender;  msg = labels.rankDefenderMsg  }
-        else if (total >= 15) { rank = labels.rankNavigator; msg = labels.rankNavigatorMsg }
-        else                  { rank = labels.rankBeginning; msg = labels.rankBeginningMsg }
+        if      (share >= 0.9) { rank = labels.rankChampion;  msg = labels.rankChampionMsg  }
+        else if (share >= 0.7) { rank = labels.rankDefender;  msg = labels.rankDefenderMsg  }
+        else if (share >= 0.5) { rank = labels.rankNavigator; msg = labels.rankNavigatorMsg }
+        else                   { rank = labels.rankBeginning; msg = labels.rankBeginningMsg }
 
         getEl('final-rank').textContent     = rank
         getEl('final-rank-msg').textContent = msg
         getEl('final-overlay').classList.remove('hidden')
+        ;(getEl('dm-grid') as HTMLElement).inert = true   // keep keyboard and screen readers inside the dialog
+        getEl('play-again-btn').focus()
       }
 
       // ── Init ─────────────────────────────────────────────────────────────────
@@ -1184,19 +1362,46 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
       if (!guard || guard.dataset.initialized === 'true') return
       guard.dataset.initialized = 'true'
 
-      loadStory(0)
+      loadStory(visibleIdx()[0])
+
+      const toggle = getEl('sensitive-toggle') as HTMLInputElement
+      toggle.checked = sensitiveOn
+      toggle.addEventListener('change', () => {
+        sensitiveOn = toggle.checked
+        try { localStorage.setItem(sensitiveKey, sensitiveOn ? '1' : '0') } catch { /* storage blocked: keep it for this visit only */ }
+        const visible = visibleIdx()
+        if (visible.includes(currentStoryIdx)) {
+          updateSidebar()
+        } else {
+          // The story on screen was just switched off: continue with the next one that is still in
+          loadStory(visible.find((i) => i > currentStoryIdx) ?? visible[visible.length - 1])
+        }
+      })
 
       getEl('start-btn').addEventListener('click', startStory)
-      getEl('retry-btn').addEventListener('click', () => loadStory(currentStoryIdx))
+      getEl('skip-btn').addEventListener('click', () => {
+        skippedSet.add(currentStoryIdx)
+        const next = visibleIdx().find((i) => i > currentStoryIdx)
+        if (next !== undefined) loadStory(next, true)
+        else showFinalScore()
+      })
+      getEl('retry-btn').addEventListener('click', () => loadStory(currentStoryIdx, true))
       getEl('next-story-btn').addEventListener('click', () => {
-        if (currentStoryIdx < stories.length - 1) loadStory(currentStoryIdx + 1)
+        const next = visibleIdx().find((i) => i > currentStoryIdx)
+        if (next !== undefined) loadStory(next, true)
       })
       getEl('all-done-btn').addEventListener('click', showFinalScore)
+      // The final dialog has one control, so Tab simply stays on it
+      getEl('final-overlay').addEventListener('keydown', (e) => {
+        if (e.key === 'Tab') { e.preventDefault(); getEl('play-again-btn').focus() }
+      })
       getEl('play-again-btn').addEventListener('click', () => {
         getEl('final-overlay').classList.add('hidden')
+        ;(getEl('dm-grid') as HTMLElement).inert = false
         completedSet.clear()
+        skippedSet.clear()
         bestStars = {}
-        loadStory(0)
+        loadStory(visibleIdx()[0], true)
       })
     }
 

@@ -256,10 +256,10 @@ export const contentAP = {
 export const challengeAP = {
   title: "In Hacker's Mind",
   subtitle:
-    "You are an ethical hacker scanning a social media profile. Click on anything that looks like a security flaw — but watch your lives!",
+    'You are an ethical hacker. Find the weak spots on a social media profile, plan the attack the way an attacker would, and learn how to stop it!',
   howItWorks: 'How it Works',
   instruction:
-    "Examine this social media profile as if you were a hacker looking for weak spots. Almost everything on the screen is clickable — think carefully, because clicking something that is not a real vulnerability costs you a life!",
+    'Examine this social media profile as if you were a hacker looking for weak spots. Almost everything on the screen is clickable, so think carefully: clicking something that is not a real vulnerability costs you a life! Then you plan the attack the way an attacker would, and find out how to stop it.',
   tipLabel: 'Tip',
   tip: "There are exactly 4 real vulnerabilities hidden among many innocent-looking elements. Not every clickable thing is a security flaw!",
   livesTitle: 'Lives',
@@ -269,7 +269,6 @@ export const challengeAP = {
   vulnerabilitiesCount: '/ 4',
   attackerTargetsTitle: '🎯 What Attackers Target',
   attackerTargets: [
-    '🚩 Weak or exposed passwords',
     '🚩 HTTP instead of HTTPS',
     '🚩 Real-time location sharing',
     '🚩 Full birthdate visible publicly',
@@ -308,11 +307,167 @@ export const challengeAP = {
   attackerVoiceAlreadyTagged: 'Already tagged: {label}.',
   attackerVoiceCorrect: '🔓 Vulnerability found: {label}! {explain}',
   attackerVoiceWrong: 'Not a vulnerability — {explain}',
+  part1Label: 'Part 1 of 3: Scan the profile',
+  part2Label: 'Part 2 of 3: Plan the attack',
+  part3Label: 'Part 3 of 3: Why, and how to stop it',
+  continueButton: 'Continue: plan the attack →',
+  planTitle: 'The attacker\'s plan',
+  planIntro: 'A small clue is not a danger on its own. Attackers put clues together into a plan. For each clue, choose the goal it helps with.',
+  planTrayTitle: 'Clues from the profile',
+  planChooseLabel: 'Which goal does this clue help with?',
+  planVoiceCorrect: '🧩 Good match! {explain}',
+  planVoiceWrong: '🤔 Not that goal. {explain}',
+  planSummaryTitle: 'Small clues add up',
+  planSummaryText: 'Birthday, pet name and an unsafe page can open an account. A live location and a post about school can show where someone is. Attackers collect clues like these, one by one.',
+  planScoreTemplate: '{n} of {total} clues on the first try',
+  toQuizButton: 'Continue: why, and how to stop it →',
+  goals: {
+    account: { icon: '🔑', title: 'Break into the account', hint: 'Take over the profile or the game account' },
+    person: { icon: '🧭', title: 'Find the person in real life', hint: 'Know where the person is, and when' },
+    none: { icon: '🚫', title: 'Not useful', hint: 'Does not help an attacker much' },
+  },
+  clues: [
+    {
+      id: 'birthday',
+      icon: '🎂',
+      text: 'Full birthday on the profile',
+      explanation: 'People often use their birthday in passwords and security answers. An attacker tries it first.',
+    },
+    {
+      id: 'pet',
+      icon: '🐱',
+      text: 'Pet name on the profile',
+      explanation: 'Pet names are popular passwords and security answers. An attacker can try the name to get into the account.',
+    },
+    {
+      id: 'http',
+      icon: '🔓',
+      text: 'The page uses http:// and not https://',
+      explanation: 'On an http:// page, what you type can be read by others on the same network. That includes a password.',
+    },
+    {
+      id: 'location',
+      icon: '📍',
+      text: 'Live location in a post',
+      explanation: 'A live location shows exactly where someone is right now. A stranger could misuse it to find the person.',
+    },
+    {
+      id: 'routine',
+      icon: '🏫',
+      text: 'Post: "Just got back from school!"',
+      explanation: 'This tells a stranger when the person is usually where. Small details like this can add up to a plan.',
+    },
+    {
+      id: 'avatar',
+      icon: '👤',
+      text: 'Profile picture',
+      explanation: 'A profile picture is normal. It does not help an attacker break in or find the person.',
+    },
+    {
+      id: 'bio',
+      icon: '🎮',
+      text: 'Bio: gamer and manga fan',
+      explanation: 'Hobbies are not a secret. On their own they do not help an attacker much.',
+    },
+    {
+      id: 'friends',
+      icon: '👥',
+      text: 'Friend and follower counts',
+      explanation: 'A count is only a number. It gives an attacker nothing to use.',
+    },
+  ],
+  quizTitle: 'Why, and how to stop it',
+  quizProgressTemplate: 'Question {n} of {total}',
+  motiveLabel: 'Why would the attacker do this?',
+  defendLabel: 'What helps most?',
+  quizVoiceCorrect: '✅ {explain}',
+  quizVoiceWrong: '❌ Not quite. {explain}',
+  nextButton: 'Next →',
+  resultsButton: 'See my results →',
+  motivationsTitle: 'Why attackers attack',
+  motivationsSubtitle: 'Eight motivations',
+  motivations: {
+    financial: { name: 'Financial gain', desc: 'Selling stolen data or asking for ransom' },
+    reputation: { name: 'Reputation', desc: 'Showing off and wanting recognition' },
+    revenge: { name: 'Revenge', desc: 'Getting back at someone' },
+    espionage: { name: 'Espionage', desc: 'Getting secret information for a country or a company' },
+    error: { name: 'Just an error', desc: 'An accident that causes a problem' },
+    experiment: { name: 'Experimenting', desc: 'Trying things out for fun' },
+    fear: { name: 'Fear', desc: 'Doing something bad because of pressure or threats' },
+    beliefs: { name: 'Beliefs', desc: 'Fighting for a cause someone believes in' },
+  },
+  motiveCases: [
+    {
+      id: 1,
+      text: 'An older student breaks into a younger kid\'s account and posts silly things, so everyone can see how clever he is.',
+      explanation: 'He wants to be admired. Wanting recognition and showing off is the motivation called "reputation".',
+    },
+    {
+      id: 2,
+      text: 'A stranger breaks into hundreds of accounts and sells the logins on a website.',
+      explanation: 'The stranger wants money. Selling stolen data is "financial gain".',
+    },
+    {
+      id: 3,
+      text: 'A student breaks into a classmate\'s account because the classmate was mean to them last month.',
+      explanation: 'The student wants to get back at someone. This motivation is called "revenge".',
+    },
+    {
+      id: 4,
+      text: 'A kid downloads a hacking tool and tries it on a school computer, just to see what happens.',
+      explanation: 'The kid does not want to hurt anyone and just tries things out. That is "experimenting", but it can still do real damage.',
+    },
+    {
+      id: 5,
+      text: 'An older kid tells a younger one: "Get me your friend\'s password, or I will tell everyone your secret." Why does the younger kid do it?',
+      explanation: 'The younger kid is afraid of what the older one will do. Doing something bad because of pressure or threats is "fear".',
+    },
+  ],
+  defendCases: [
+    {
+      id: 1,
+      text: 'An attacker wants to guess a password. Which habit makes it hardest for them?',
+      options: [
+        'A long password of random words that has nothing to do with you',
+        'Your pet\'s name and the year you were born',
+        'The same short password for every account',
+      ],
+      explanation: 'A long password of random words is hard to guess. Birthdays and pet names are the first things an attacker tries, and one password for everything puts all your accounts at risk.',
+    },
+    {
+      id: 2,
+      text: 'A page starts with http:// and has no padlock, but it asks you to type your password. What do you do?',
+      options: [
+        'Do not type it. Look for a page that starts with https:// and has a padlock',
+        'Type it quickly, before anyone notices',
+        'Type a shorter password, so there is less to read',
+      ],
+      explanation: 'On an http:// page, others on the network can read what you type. Only enter passwords on https:// pages.',
+    },
+    {
+      id: 3,
+      text: 'A friend wants you to post where you are right now, so everyone can come. What is the safest choice?',
+      options: [
+        'Turn off live location, and share the photo later, after you have left',
+        'Post it, but only for 5 minutes',
+        'Post it so that everyone, even strangers, can see it',
+      ],
+      explanation: 'A live location tells strangers where you are right now. Share photos later, and only with people you know.',
+    },
+  ],
+  finalTitle: 'Attacker mind: unlocked!',
+  finalPart1Template: 'Part 1: {n} of {total} weak spots found',
+  finalPart2Template: 'Part 2: {n} of {total} clues on the first try',
+  finalPart3Template: 'Part 3: {n} of {total} questions on the first try',
+  finalScoreTemplate: 'Score: {n} of {total}',
+  rankGreat: 'You think like an attacker and act like a defender. Great work!',
+  rankGood: 'Good work! Replay the parts you found tricky.',
+  rankPractise: 'Keep practising. Look at small clues and ask: how could someone put them together?',
   hotspots: [
     { 
       id: 'http',      
       label: 'Unencrypted Connection (HTTP)',    
-      explain: "This site uses HTTP instead of HTTPS. Everything you type here — including passwords — travels completely unencrypted and can be intercepted by anyone on the same network." 
+      explain: 'This site uses HTTP, not HTTPS. What you type here, even passwords, is not scrambled. Anyone on the same network can read it.' 
     },
     { id: 'avatar',    
       label: 'Profile Picture',                  
@@ -321,12 +476,12 @@ export const challengeAP = {
     { 
       id: 'username',  
       label: 'Display Name / Username',          
-      explain: "Displaying your name and @handle is completely normal on social platforms. Not a vulnerability." 
+      explain: 'Showing your name and @handle is normal on social sites. It is not a vulnerability.' 
     },
     { 
       id: 'online',    
       label: 'Active Status',                    
-      explain: "Showing when you're online is a common feature. It's a minor privacy consideration, but not a critical security vulnerability." 
+      explain: 'Showing when you are online is a common feature. It is a small privacy matter, but not a real vulnerability.' 
     },
     { 
       id: 'bio',       
@@ -336,42 +491,42 @@ export const challengeAP = {
     { 
       id: 'followers', 
       label: 'Follower / Friend Count',          
-      explain: "Friend and follower counts are a normal social media feature. Not a security vulnerability!" 
+      explain: 'Friend and follower counts are a normal feature. Not a vulnerability!' 
     },
     { 
       id: 'birthday',  
       label: 'Full Birthday Exposed',            
-      explain: "Exposing your full date of birth is dangerous! Attackers use birthdays to guess passwords (e.g. 'alex2008'), answer security questions, and bypass account recovery." 
+      explain: 'Showing your full birthday is dangerous! Attackers use it to guess passwords (like \'alex2008\'), answer security questions and get into accounts.' 
     },
     { 
       id: 'email',     
       label: 'Email on Profile',                 
-      explain: "Showing an email can attract spam, but compared to an exposed password or security answer, it's a relatively minor concern." 
+      explain: 'A public email can bring spam, but it is a smaller problem than an exposed password or security answer.' 
     },
     { 
       id: 'petname',   
       label: 'Pet Name Exposed',                 
-      explain: "Exposing your pet's name can be used by attackers to guess security answers or create more convincing social engineering attacks." 
+      explain: 'Your pet\'s name is often a security answer. Attackers can use it to get into accounts or to trick you.' 
     },
     { 
       id: 'location',  
       label: 'Real-time Location Broadcast',    
-      explain: "This post reveals Alex's exact location right now! Anyone — including strangers and attackers — can see where Alex is at this moment. Real-time location sharing is a serious safety risk." 
+      explain: 'This post shows exactly where Alex is right now! Anyone, even strangers and attackers, can see it. Sharing your live location is a serious safety risk.' 
     },
     { 
       id: 'post2',     
       label: 'Generic Post',                     
-      explain: "Posting about everyday activities like having pizza is totally fine. It doesn't expose any sensitive security information!" 
+      explain: 'Posting about everyday things like pizza is fine. It gives away nothing sensitive!' 
     },
     { 
       id: 'like1',     
       label: 'Like Button',                      
-      explain: "Liking posts is a completely normal and harmless social media interaction!" 
+      explain: 'Liking posts is normal and harmless!' 
     },
     { 
       id: 'comment1',  
       label: 'Comment Button',                   
-      explain: "Being able to comment is a standard social media feature. Not a vulnerability!" 
+      explain: 'Comments are a normal feature. Not a vulnerability!' 
     },
     { 
       id: 'share1',    
@@ -381,7 +536,7 @@ export const challengeAP = {
     { 
       id: 'like2',     
       label: 'Like Button',                      
-      explain: "Liking posts is completely normal and harmless!" 
+      explain: 'Liking posts is normal and harmless!' 
     },
     { 
       id: 'comment2',  

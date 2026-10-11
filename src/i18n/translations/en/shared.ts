@@ -90,11 +90,43 @@ export const shared = {
     about: {
       title: 'About',
       subtitle:
-        'Learn more about our mission to create a safer digital environment. Dive into our learning modules designed to teach individuals about digital citizenship, authentication, data privacy, and more.',
+        'A free toolkit built by five European partners, so any teacher can bring cybersecurity into the classroom.',
 
       cofundEU: 'Supported by the EU',
-      cofundEUDesc:
-        'This project is co-funded by the European Union’s Digital Europe Programme.',
+      cofundEUDesc: 'This project is co-funded by the European Union’s Erasmus+ Programme.',
+
+      missionStatement: 'Cybersecurity is an essential life skill, not a topic for specialists.',
+      missionSummary: 'Children spend more time online every year, but many teachers have no ready-made, age-appropriate material. We close that gap.',
+      benefitsEyebrow: 'Who benefits',
+      benefitsTitle: 'Built for the people in education',
+      benefitEducators: 'Educators',
+      benefitEducatorsDesc: 'Ready-to-use, flexible cybersecurity teaching materials, no deep technical expertise needed.',
+      benefitStudents: 'Students',
+      benefitStudentsDesc: 'Practical digital safety skills through interactive, memorable learning experiences.',
+      benefitSchools: 'Schools and partners',
+      benefitSchoolsDesc: 'A scalable framework for raising cybersecurity literacy across diverse contexts.',
+      coreValuesEyebrow: 'What guides us',
+      partnersEyebrow: 'KidCy Project',
+      partnersHeading: 'Five partners, five countries',
+      visitWebsite: 'Visit website',
+      countryLI: 'Liechtenstein',
+      countryCZ: 'Czechia',
+      countryNO: 'Norway',
+      countryAT: 'Austria',
+      countryLT: 'Lithuania',
+      fundingEyebrow: 'Funding',
+      involvedIssueTitle: 'Report an issue',
+      involvedIssueDesc: 'Found an error or a translation problem? Open an issue on GitHub.',
+      involvedIssueCta: 'Open an issue',
+      involvedFeedbackTitle: 'Share classroom feedback',
+      involvedFeedbackDesc: 'Tell us what worked and what did not in your class.',
+      involvedFeedbackCta: 'Send feedback',
+      involvedPartnerTitle: 'Partner with us',
+      involvedPartnerDesc: 'Contact any project partner with ideas or proposals.',
+      involvedPartnerCta: 'See partners',
+      ctaTitle: 'Ready to teach?',
+      ctaText: 'Free to use, adapt and share.',
+      viewOnGithub: 'View on GitHub',
 
       missionTitle: 'Our Mission',
       missionP1:
@@ -104,7 +136,6 @@ export const shared = {
       missionP3:
         'We provide accessible, engaging resources designed specifically for teachers and kids, so that every classroom — regardless of technical background — can equip young people with the knowledge, confidence, and practical skills to explore the digital world safely and responsibly.',
 
-      partnersTitle: 'Initiative Partners',
       initiativeDesc: 'This toolkit is based on the KidCy Project – a collaborative effort between leading institutions in cybersecurity education and research across Europe, each bringing unique expertise and perspectives to create a comprehensive learning experience for young learners.',
       uniLiechtenstein: 'University of Liechtenstein',
       uniLiechtensteinDesc:

@@ -1,0 +1,158 @@
+---
+/**
+ * ChallengeProgress — the small "Result saved" notice shown when a challenge run ends.
+ *
+ * A challenge calls `recordResult()` from src/utils/challengeProgress.ts; that saves the result in the browser
+ * and fires a `kidcy:progress` event, which this notice listens to. One include per challenge page.
+ */
+import { localizePath } from 'src/i18n/i18n'
+import { useTranslations } from 'src/i18n/index'
+
+const locale = Astro.currentLocale
+const { t } = useTranslations(locale)
+
+const labels = {
+  savedTitle: t('progress.savedTitle'),
+  savedTemplate: t('progress.savedTemplate'),
+  newBest: t('progress.newBest'),
+  yourBestTemplate: t('progress.yourBestTemplate'),
+  notStoredNote: t('progress.notStoredNote'),
+}
+---
+
+<div
+  class="progress-toast"
+  data-progress-toast
+  data-labels={JSON.stringify(labels)}
+  role="status"
+  aria-live="polite"
+  hidden
+>
+  <div class="progress-toast__body">
+    <strong class="progress-toast__title" data-toast-title></strong>
+    <p class="progress-toast__text" data-toast-text></p>
+    <p class="progress-toast__note" data-toast-note hidden></p>
+  </div>
+  <a class="progress-toast__link" href={localizePath(locale, '/learning-hub/my-progress/')}>{t('progress.viewProgress')}</a>
+  <button type="button" class="progress-toast__close" data-toast-close aria-label={t('progress.closeLabel')}>✕</button>
+</div>
+
+<script>
+  import { PROGRESS_EVENT } from '../utils/challengeProgress'
+  import type { ProgressEventDetail } from '../utils/challengeProgress'
+
+  const fmt = (template: string, vars: Record<string, string | number>) =>
+    String(template ?? '').replace(/\{(\w+)\}/g, (_m, key) => String(vars[key] ?? ''))
+
+  let hideTimer: ReturnType<typeof setTimeout> | undefined
+
+  window.addEventListener(PROGRESS_EVENT, (event) => {
+    const toast = document.querySelector<HTMLElement>('[data-progress-toast]')
+    if (!toast) return
+    const { percent, previousBest, isBest, stored } = (event as CustomEvent<ProgressEventDetail>).detail
+    const labels = JSON.parse(toast.dataset.labels ?? '{}') as Record<string, string>
+
+    const title = toast.querySelector<HTMLElement>('[data-toast-title]')
+    const text = toast.querySelector<HTMLElement>('[data-toast-text]')
+    const note = toast.querySelector<HTMLElement>('[data-toast-note]')
+    if (!title || !text || !note) return
+
+    title.textContent = labels.savedTitle
+    const lines = [fmt(labels.savedTemplate, { percent })]
+    if (previousBest !== null && percent > previousBest) lines.push(labels.newBest)
+    else if (previousBest !== null && !isBest) lines.push(fmt(labels.yourBestTemplate, { best: previousBest }))
+    text.textContent = lines.join(' ')
+    note.textContent = labels.notStoredNote
+    note.hidden = stored
+
+    toast.hidden = false
+    clearTimeout(hideTimer)
+    hideTimer = setTimeout(() => { toast.hidden = true }, 20000)
+  })
+
+  document.addEventListener('click', (event) => {
+    if (!(event.target instanceof HTMLElement) || !event.target.closest('[data-toast-close]')) return
+    const toast = document.querySelector<HTMLElement>('[data-progress-toast]')
+    if (toast) toast.hidden = true
+  })
+</script>
+
+<style>
+  .progress-toast {
+    position: fixed;
+    inset-inline: var(--space-s);
+    inset-block-end: var(--space-s);
+    z-index: 2000; /* above the full-screen end dialogs of the challenges */
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-xs) var(--space-m);
+    max-width: 40rem;
+    margin-inline: auto;
+    padding: var(--space-s) var(--space-m);
+    border: 2px solid #15803d;
+    border-radius: var(--radius-l);
+    background: #f0fdf4;
+    color: #14532d;
+    box-shadow: var(--elevation-3, 0 12px 32px rgba(0, 0, 0, 0.25));
+  }
+
+  .progress-toast[hidden] {
+    display: none;
+  }
+
+  .progress-toast__body {
+    flex: 1 1 14rem;
+    min-width: 0;
+  }
+
+  .progress-toast__title {
+    display: block;
+    font-size: var(--font-size-0);
+  }
+
+  .progress-toast__text,
+  .progress-toast__note {
+    margin: var(--space-3xs) 0 0;
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+
+  .progress-toast__note[hidden] {
+    display: none;
+  }
+
+  .progress-toast__link {
+    font-weight: 700;
+    color: #14532d;
+    text-decoration: underline;
+  }
+
+  .progress-toast__link:focus-visible,
+  .progress-toast__close:focus-visible {
+    outline: 3px solid #1d4ed8;
+    outline-offset: 2px;
+  }
+
+  .progress-toast__close {
+    min-width: 44px;
+    min-height: 44px;
+    border: none;
+    border-radius: var(--radius-m);
+    background: transparent;
+    color: #14532d;
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
+
+  :global(.darkmode) .progress-toast {
+    background: #052820;
+    border-color: #059669;
+    color: #a7f3d0;
+  }
+
+  :global(.darkmode) .progress-toast__link,
+  :global(.darkmode) .progress-toast__close {
+    color: #a7f3d0;
+  }
+</style>

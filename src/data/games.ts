@@ -52,8 +52,13 @@ export const moduleGames: Partial<Record<ModuleId, GameFile>> = {
 export const formatFileSize = (bytes: number, locale = 'en'): string => {
   if (bytes <= 0) return ''
   const mb = bytes / (1024 * 1024)
+  // Under 1 MB the size is given in KB, rounded to 10 KB from 100 KB up ("approximate size")
+  const kb = bytes / 1024
+  if (kb < 995) {
+    return `${new Intl.NumberFormat(locale).format(kb < 100 ? Math.max(1, Math.round(kb)) : Math.round(kb / 10) * 10)} KB`
+  }
   const nf = new Intl.NumberFormat(locale, { maximumFractionDigits: mb < 10 ? 1 : 0 })
-  return mb < 0.1 ? `${nf.format(bytes / 1024)} KB` : `${nf.format(mb)} MB`
+  return `${nf.format(mb)} MB`
 }
 
 // ── Video walkthroughs ────────────────────────────────────────────────────────

@@ -1,7 +1,12 @@
 ---
 import DefaultLayout from '@layouts/DefaultLayout.astro'
 import PageHeader from '@components/PageHeader.astro'
+import ChallengeIntro from '@components/ChallengeIntro.astro'
+import ChallengeProgress from '@components/ChallengeProgress.astro'
+import HintPanel from '@components/HintPanel.astro'
 import { useTranslations } from 'src/i18n/index'
+import { toJsonScript } from '../../../utils/jsonScript'
+import { AP_GOALS } from '../../../data/apPlan'
 
 const { t, v } = useTranslations(Astro.currentLocale)
 const { v: vEn } = useTranslations('en')
@@ -32,6 +37,57 @@ rawHotspots.forEach((item) => {
 
 const hs = (id: string) => hotspotById.get(id) ?? { id, label: id, explain: '' }
 const attackerTargets = v<ReadonlyArray<string>>('challengeAP.attackerTargets') ?? []
+// The address bar follows the profile handle of the current language (e.g. @martin123 in Czech)
+const profileSlug = t('challengeAP.profile.handle').replace(/^@/, '')
+
+// ── Parts 2 and 3 (plan the attack · why and how to stop it): texts by id, English filling any gap ──
+type GoalText = { icon: string; title: string; hint: string }
+type ClueText = { id: string; icon: string; text: string; explanation: string }
+type MotivationText = { name: string; desc: string }
+type MotiveCaseText = { id: number; text: string; explanation: string }
+type DefendCaseText = { id: number; text: string; options: string[]; explanation: string }
+
+const merge = <T extends { id: string | number }>(en: ReadonlyArray<T>, local: ReadonlyArray<T>): T[] =>
+  en.map((item) => ({ ...item, ...local.find((other) => other.id === item.id) }))
+
+const goalsEn = vEn<Record<string, GoalText>>('challengeAP.goals') ?? {}
+const goalsLocal = v<Record<string, GoalText>>('challengeAP.goals') ?? {}
+const goalTexts = Object.fromEntries(AP_GOALS.map((goal) => [goal, { ...goalsEn[goal], ...goalsLocal[goal] }])) as Record<string, GoalText>
+const clues = merge(vEn<ReadonlyArray<ClueText>>('challengeAP.clues') ?? [], v<ReadonlyArray<ClueText>>('challengeAP.clues') ?? [])
+const motivationsEn = vEn<Record<string, MotivationText>>('challengeAP.motivations') ?? {}
+const motivationsLocal = v<Record<string, MotivationText>>('challengeAP.motivations') ?? {}
+const motivations = Object.fromEntries(
+  Object.keys(motivationsEn).map((id) => [id, { ...motivationsEn[id], ...motivationsLocal[id] }]),
+) as Record<string, MotivationText>
+const motiveCases = merge(vEn<ReadonlyArray<MotiveCaseText>>('challengeAP.motiveCases') ?? [], v<ReadonlyArray<MotiveCaseText>>('challengeAP.motiveCases') ?? [])
+const defendCases = merge(vEn<ReadonlyArray<DefendCaseText>>('challengeAP.defendCases') ?? [], v<ReadonlyArray<DefendCaseText>>('challengeAP.defendCases') ?? [])
+
+const planLabels = {
+  part1Label: t('challengeAP.part1Label'),
+  part2Label: t('challengeAP.part2Label'),
+  part3Label: t('challengeAP.part3Label'),
+  continueButton: t('challengeAP.continueButton'),
+  planIntro: t('challengeAP.planIntro'),
+  planChooseLabel: t('challengeAP.planChooseLabel'),
+  planVoiceCorrect: t('challengeAP.planVoiceCorrect'),
+  planVoiceWrong: t('challengeAP.planVoiceWrong'),
+  planScoreTemplate: t('challengeAP.planScoreTemplate'),
+  quizTitle: t('challengeAP.quizTitle'),
+  quizProgressTemplate: t('challengeAP.quizProgressTemplate'),
+  motiveLabel: t('challengeAP.motiveLabel'),
+  defendLabel: t('challengeAP.defendLabel'),
+  quizVoiceCorrect: t('challengeAP.quizVoiceCorrect'),
+  quizVoiceWrong: t('challengeAP.quizVoiceWrong'),
+  nextButton: t('challengeAP.nextButton'),
+  resultsButton: t('challengeAP.resultsButton'),
+  finalPart1Template: t('challengeAP.finalPart1Template'),
+  finalPart2Template: t('challengeAP.finalPart2Template'),
+  finalPart3Template: t('challengeAP.finalPart3Template'),
+  finalScoreTemplate: t('challengeAP.finalScoreTemplate'),
+  rankGreat: t('challengeAP.rankGreat'),
+  rankGood: t('challengeAP.rankGood'),
+  rankPractise: t('challengeAP.rankPractise'),
+}
 ---
 
 <DefaultLayout title={t('challengeAP.title')}>
@@ -40,6 +96,14 @@ const attackerTargets = v<ReadonlyArray<string>>('challengeAP.attackerTargets') 
     subtitle={t('challengeAP.subtitle')}
     bgType="module"
     underlineColor="var(--brand-AP)"
+  />
+
+  <ChallengeProgress />
+
+  <script
+    type="application/json"
+    id="ap-challenge-data"
+    set:html={toJsonScript({ clues, goals: goalTexts, motivations, motiveCases, defendCases, labels: planLabels })}
   />
 
   <section
@@ -59,26 +123,23 @@ const attackerTargets = v<ReadonlyArray<string>>('challengeAP.attackerTargets') 
   >
     <div class="container">
 
-      <div class="mb-10 flex flex-col gap-6">
-        <h2 class="mb-2">{t('challengeAP.howItWorks')}</h2>
-        <p>
-          {t('challengeAP.instruction')}
-        </p>
-        <div class="tip-card">
-          <div class="tip-card__lead">
-            <span class="tip-card__icon" aria-hidden="true">💬</span>
-            <strong class="tip-card__label">{t('challengeAP.tipLabel')}</strong>
-          </div>
-          <div class="tip-card__body">{t('challengeAP.tip')}</div>
-        </div>
-      </div>
+      <ChallengeIntro ns="challengeAP" brand="AP" />
 
       <div class="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_300px]">
 
-        <!-- Main: Browser Window -->
+        <!-- Main: the three parts of the challenge -->
         <div>
 
-          <!-- Mock browser window -->
+          <p class="ap-part" data-part-label></p>
+
+          <!-- Attacker voice: shows the explanation after every click -->
+          <div class="attacker-bar mb-4" id="attacker-bar" role="status" aria-live="polite">
+            <span class="attacker-icon" aria-hidden="true">🕵️</span>
+            <p class="attacker-text" id="attacker-voice"></p>
+          </div>
+
+          <!-- Part 1: mock browser window -->
+          <div data-part-area="1">
           <div class="browser-window">
 
             <!-- Browser chrome (dark) -->
@@ -97,7 +158,7 @@ const attackerTargets = v<ReadonlyArray<string>>('challengeAP.attackerTargets') 
 	                data-explain={hs('http').explain}
 	              >
 	                <span class="addr-lock">🔓</span>
-	                <span class="addr-url">http://socialmedia-insecure.com/profile/alex123</span>
+	                <span class="addr-url">http://socialmedia-insecure.com/profile/{profileSlug}</span>
 	              </button>
             </div>
 
@@ -318,45 +379,140 @@ const attackerTargets = v<ReadonlyArray<string>>('challengeAP.attackerTargets') 
               </div>
             </div>
           </div>
-        </div>
+          </div><!-- /part 1 -->
 
-        <!-- Sidebar -->
-        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm h-fit sticky top-6">
+          <!-- Part 2: plan the attack -->
+          <div data-part-area="2" hidden>
+            <div class="ap-card">
+              <h2 class="ap-card__title" id="plan-title" tabindex="-1">{t('challengeAP.planTitle')}</h2>
+              <p class="ap-card__intro">{t('challengeAP.planIntro')}</p>
 
-	          <!-- Lives -->
-	          <div class="mb-4">
-	            <h3 class="text-base font-bold text-slate-900">{t('challengeAP.livesTitle')}</h3>
-	            <p class="mt-1 text-xs text-slate-600">{t('challengeAP.livesDesc')}</p>
-	          </div>
-          <div class="lives-row border-t border-slate-200 pt-4 mb-6">
-            <span class="life-icon" id="life-1">❤️</span>
-            <span class="life-icon" id="life-2">❤️</span>
-            <span class="life-icon" id="life-3">❤️</span>
+              <div class="plan-board">
+                <div class="plan-tray">
+                  <h3 class="plan-tray__title">{t('challengeAP.planTrayTitle')}</h3>
+                  <div class="plan-tray__list" data-plan-tray></div>
+                </div>
+
+                <div class="plan-zones">
+                  {AP_GOALS.map((goal) => (
+                    <div class={`plan-zone plan-zone--${goal}`}>
+                      <button type="button" class="plan-zone__btn" data-goal={goal}>
+                        <span class="plan-zone__icon" aria-hidden="true">{goalTexts[goal]?.icon}</span>
+                        <span class="plan-zone__text">
+                          <strong class="plan-zone__title">{goalTexts[goal]?.title}</strong>
+                          <span class="plan-zone__hint">{goalTexts[goal]?.hint}</span>
+                        </span>
+                      </button>
+                      <ul class="plan-zone__list" data-goal-list={goal}></ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div class="plan-summary" data-plan-summary hidden>
+                <h3 class="plan-summary__title">{t('challengeAP.planSummaryTitle')}</h3>
+                <p>{t('challengeAP.planSummaryText')}</p>
+                <p class="plan-summary__score" data-plan-score></p>
+                <button type="button" class="btn btn-primary" data-to-quiz>{t('challengeAP.toQuizButton')}</button>
+              </div>
+            </div>
           </div>
 
-	          <!-- Found counter -->
-	          <div class="mb-6 border-t border-slate-200 pt-4">
-	            <h3 class="text-sm font-bold text-slate-900 mb-3">{t('challengeAP.vulnerabilitiesFoundTitle')}</h3>
-	            <div class="vuln-counter">
-	              <span class="vuln-count" id="found-count">0</span>
-	              <span class="vuln-denom">{t('challengeAP.vulnerabilitiesCount')}</span>
-	            </div>
-	            <ul class="vuln-list mt-3" id="found-list">
-	              <li class="vuln-empty">{t('challengeAP.vulnerabilitiesEmpty')}</li>
-	            </ul>
-	          </div>
+          <!-- Part 3: why, and how to stop it -->
+          <div data-part-area="3" hidden>
+            <div class="ap-card">
+              <h2 class="ap-card__title" id="quiz-title" tabindex="-1">{t('challengeAP.quizTitle')}</h2>
+              <p class="quiz-progress" data-quiz-progress></p>
+              <p class="quiz-kind" data-quiz-kind></p>
+              <p class="quiz-text" id="quiz-text" data-quiz-text></p>
+              <div class="quiz-options" data-quiz-options role="group" aria-labelledby="quiz-text"></div>
+              <button type="button" class="btn btn-primary quiz-next" data-quiz-next hidden></button>
+            </div>
+          </div>
 
-	          <!-- Tips -->
-	          <div class="border-t border-slate-200 pt-4">
-	            <h3 class="text-sm font-bold text-slate-900 mb-3">{t('challengeAP.attackerTargetsTitle')}</h3>
-	            <div class="space-y-2">
-	              {attackerTargets.map((item) => (
-	                <div class="rounded-lg bg-red-50 p-3">
-	                  <p class="text-xs font-semibold text-red-900">{item}</p>
-	                </div>
-	              ))}
-	            </div>
-	          </div>
+          <!-- Results -->
+          <div data-part-area="4" hidden>
+            <div class="ap-card ap-final">
+              <div class="ap-final__icon" aria-hidden="true">🕵️</div>
+              <h2 class="ap-card__title" id="final-title" tabindex="-1">{t('challengeAP.finalTitle')}</h2>
+              <p class="ap-final__score" data-final-score></p>
+              <ul class="ap-final__list">
+                <li data-final-part="1"></li>
+                <li data-final-part="2"></li>
+                <li data-final-part="3"></li>
+              </ul>
+              <p class="ap-final__message" data-final-message></p>
+              <button type="button" class="btn btn-primary" data-play-again>{t('challengeAP.tryAgain')}</button>
+            </div>
+          </div>
+
+          <!-- Templates cloned by the script (cloning keeps the scoped-style attributes) -->
+          <template data-plan-chip-template>
+            <button type="button" class="plan-chip" aria-pressed="false">
+              <span class="plan-chip__icon" aria-hidden="true"></span>
+              <span class="plan-chip__text"></span>
+            </button>
+          </template>
+          <template data-plan-item-template>
+            <li class="plan-zone__item">
+              <span aria-hidden="true"></span>
+              <span></span>
+            </li>
+          </template>
+          <template data-quiz-option-template>
+            <button type="button" class="quiz-option"></button>
+          </template>
+        </div>
+
+        <!-- Sidebar: on phones it sits above the game so lives and progress stay in view -->
+        <div class="order-first h-fit rounded-2xl border border-slate-200 bg-white p-4 shadow-sm lg:sticky lg:top-6 lg:order-none lg:p-6">
+
+          <div class="grid grid-cols-2 gap-4 lg:block" data-part-only="1">
+            <!-- Lives -->
+            <div class="lg:mb-6">
+              <h3 class="text-base font-bold text-slate-900">{t('challengeAP.livesTitle')}</h3>
+              <p class="mt-1 text-xs text-slate-600">{t('challengeAP.livesDesc')}</p>
+              <div class="lives-row mt-3 border-t border-slate-200 pt-3 lg:mt-4 lg:pt-4">
+                <span class="life-icon" id="life-1">❤️</span>
+                <span class="life-icon" id="life-2">❤️</span>
+                <span class="life-icon" id="life-3">❤️</span>
+              </div>
+            </div>
+
+            <!-- Found counter -->
+            <div class="lg:mb-6 lg:border-t lg:border-slate-200 lg:pt-4">
+              <h3 class="mb-3 text-sm font-bold text-slate-900">{t('challengeAP.vulnerabilitiesFoundTitle')}</h3>
+              <div class="vuln-counter">
+                <span class="vuln-count" id="found-count">0</span>
+                <span class="vuln-denom">{t('challengeAP.vulnerabilitiesCount')}</span>
+              </div>
+              <ul class="vuln-list mt-3" id="found-list">
+                <li class="vuln-empty">{t('challengeAP.vulnerabilitiesEmpty')}</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- What attackers target (parts 1–2): collapsed on phones -->
+          <div data-help-for="1 2">
+            <HintPanel flat class="mt-4" title={t('challengeAP.attackerTargetsTitle')}>
+              {attackerTargets.map((item) => (
+                <div class="rounded-lg bg-red-50 p-3">
+                  <p class="text-xs font-semibold text-red-900">{item}</p>
+                </div>
+              ))}
+            </HintPanel>
+          </div>
+
+          <!-- Why attackers attack (part 3) -->
+          <div data-help-for="3" hidden>
+            <HintPanel flat title={t('challengeAP.motivationsTitle')} subtitle={t('challengeAP.motivationsSubtitle')}>
+              {Object.values(motivations).map((motivation) => (
+                <div class="text-sm">
+                  <strong>{motivation.name}</strong> — {motivation.desc}
+                </div>
+              ))}
+            </HintPanel>
+          </div>
 
         </div>
       </div>
@@ -364,7 +520,7 @@ const attackerTargets = v<ReadonlyArray<string>>('challengeAP.attackerTargets') 
   </section>
 
   <!-- Game-end overlay -->
-  <div class="game-overlay hidden" id="game-overlay">
+  <div class="game-overlay hidden" id="game-overlay" role="dialog" aria-modal="true" aria-labelledby="overlay-title" aria-describedby="overlay-msg">
     <div class="overlay-card">
       <div class="overlay-icon" id="overlay-icon">🎉</div>
       <h2 class="overlay-title" id="overlay-title">…</h2>
@@ -372,20 +528,14 @@ const attackerTargets = v<ReadonlyArray<string>>('challengeAP.attackerTargets') 
 	      <div class="overlay-score">
 	        <span id="overlay-found">0</span> {t('challengeAP.vulnFoundSuffix')}
 	      </div>
-	      <button class="btn btn-primary" id="reset-btn">{t('challengeAP.tryAgain')}</button>
+	      <div class="overlay-actions">
+	        <button class="btn btn-primary" id="continue-btn">{t('challengeAP.continueButton')}</button>
+	        <button class="btn btn-secondary" id="reset-btn">{t('challengeAP.tryAgain')}</button>
+	      </div>
 	    </div>
 	  </div>
 
   <style>
-    /* ── Tip card ──────────────────────────────────────────────────────────── */
-    .tip-card {
-      border-radius: 0.9rem;
-      border: 1px solid #ddd6fe;
-      background: linear-gradient(135deg, #f5f3ff, #ede9fe);
-      padding: 1rem 1.25rem;
-      font-size: 0.95rem;
-      color: #4c1d95;
-    }
 
     /* ── Attacker voice bar ────────────────────────────────────────────────── */
     .attacker-bar {
@@ -396,6 +546,7 @@ const attackerTargets = v<ReadonlyArray<string>>('challengeAP.attackerTargets') 
       border: 1px solid #4338ca;
       border-radius: 10px;
       padding: 12px 16px;
+      min-height: 5.5rem;
       transition: background 0.4s ease, border-color 0.4s ease;
     }
 
@@ -482,26 +633,6 @@ const attackerTargets = v<ReadonlyArray<string>>('challengeAP.attackerTargets') 
       background: #f0f2f5;
     }
 
-    /* Cover photo */
-    .cover-btn {
-      display: block;
-      width: 100%;
-      padding: 0;
-      border: 2px solid transparent;
-      border-radius: 0;
-      cursor: pointer;
-      transition: border-color 0.2s, filter 0.2s;
-    }
-
-    .cover-btn:hover:not([data-found]) .cover-inner { filter: brightness(1.08); }
-    .cover-btn[data-found="true"] { border-color: #22c55e; }
-
-    .cover-inner {
-      height: 140px;
-      background: linear-gradient(135deg, #7c3aed 0%, #4c1d95 50%, #1e1b4b 100%);
-      transition: filter 0.2s;
-    }
-
     /* Profile head */
     .profile-head {
       background: white;
@@ -572,7 +703,7 @@ const attackerTargets = v<ReadonlyArray<string>>('challengeAP.attackerTargets') 
     }
 
     .display-name { font-weight: 700; font-size: 1.15rem; color: #111827; }
-    .handle       { color: #9ca3af; font-size: 0.85rem; }
+    .handle       { color: #6b7280; font-size: 0.85rem; }
 
     .online-dot   { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; flex-shrink: 0; }
     .status-label { font-size: 0.8rem; color: #6b7280; }
@@ -634,79 +765,8 @@ const attackerTargets = v<ReadonlyArray<string>>('challengeAP.attackerTargets') 
       border-color: rgba(0,0,0,0.06);
     }
 
-    .non-click {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 5px 4px;
-      font-size: 0.85rem;
-      color: #374151;
-      margin-bottom: 2px;
-      cursor: default;
-    }
-
     .row-icon { font-size: 1rem; flex-shrink: 0; }
     .row-text { font-size: 0.85rem; }
-
-    /* Password row */
-    .pw-row-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 4px 4px;
-      margin-bottom: 4px;
-    }
-
-    .pw-display-area {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex: 1;
-    }
-
-    .pw-text {
-      font-family: 'Courier New', monospace;
-      font-size: 0.875rem;
-      color: #374151;
-      letter-spacing: 0.08em;
-      transition: color 0.3s;
-    }
-
-    .show-pw-btn {
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: #6d28d9;
-      background: #f5f3ff;
-      border: 1.5px solid #ddd6fe;
-      border-radius: 4px;
-      padding: 3px 9px;
-      cursor: pointer;
-      transition: background 0.15s, border-color 0.15s;
-      flex-shrink: 0;
-      font-family: inherit;
-    }
-
-    .show-pw-btn:hover:not([data-found]) {
-      background: #ede9fe;
-      border-color: #c4b5fd;
-    }
-
-    .show-pw-btn[data-found="true"] {
-      background: rgba(34, 197, 94, 0.12) !important;
-      border-color: #22c55e !important;
-      color: #065f46 !important;
-    }
-
-    /* Security question row */
-    .secq-row {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 2px;
-    }
-
-    .secq-label  { font-size: 0.7rem; color: #9ca3af; line-height: 1.2; }
-    .secq-value  { font-size: 0.85rem; color: #374151; }
-    .secq-answer { color: #7c3aed; }
 
     /* ── Posts ─────────────────────────────────────────────────────────────── */
     .profile-right { display: flex; flex-direction: column; }
@@ -732,7 +792,7 @@ const attackerTargets = v<ReadonlyArray<string>>('challengeAP.attackerTargets') 
     .post-header-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
     .post-av   { font-size: 1.5rem; }
     .post-uname { font-weight: 600; font-size: 0.875rem; color: #111827; line-height: 1.2; }
-    .post-time  { font-size: 0.72rem; color: #9ca3af; }
+    .post-time  { font-size: 0.75rem; color: #6b7280; }
     .post-body  { font-size: 0.875rem; color: #374151; line-height: 1.5; margin-bottom: 10px; }
 
     .post-place-badge {
@@ -740,7 +800,7 @@ const attackerTargets = v<ReadonlyArray<string>>('challengeAP.attackerTargets') 
       border-radius: 6px;
       padding: 8px 12px;
       font-size: 0.8rem;
-      color: #6b7280;
+      color: #4b5563;
       text-align: center;
     }
 
@@ -778,7 +838,7 @@ const attackerTargets = v<ReadonlyArray<string>>('challengeAP.attackerTargets') 
       color: #374151;
     }
 
-    .act-count { color: #9ca3af; font-weight: 400; }
+    .act-count { color: #6b7280; font-weight: 400; }
 
     /* ── Universal found / wrong states ───────────────────────────────────── */
     .hotspot-btn[data-found="true"] {
@@ -801,6 +861,27 @@ const attackerTargets = v<ReadonlyArray<string>>('challengeAP.attackerTargets') 
 
     .hotspot-btn.wrong-flash { animation: wrongFlash 0.55s ease; }
 
+    /* Comfortable tap targets: 44px on touch screens and phones */
+    /* Dark mode: the muted greys of the profile need lighter tones on the dark surface */
+    :global(.darkmode) .handle,
+    :global(.darkmode) .post-time,
+    :global(.darkmode) .act-count,
+    :global(.darkmode) .stat-item,
+    :global(.darkmode) .status-label,
+    :global(.darkmode) .vuln-denom,
+    :global(.darkmode) .vuln-empty { color: #94a3b8; }
+    :global(.darkmode) .action-btn { color: #cbd5e1; }
+
+    .hotspot-btn { min-height: 36px; }
+    @media (pointer: coarse), (max-width: 768px) {
+      .hotspot-btn { min-height: 44px; }
+    }
+
+    /* Phones: the list of found items is long; the counter and the attacker bar already tell the story */
+    @media (max-width: 1023px) {
+      #found-list.vuln-list { display: none; }
+    }
+
     /* ── Sidebar ───────────────────────────────────────────────────────────── */
     .lives-row { display: flex; gap: 8px; }
 
@@ -816,7 +897,7 @@ const attackerTargets = v<ReadonlyArray<string>>('challengeAP.attackerTargets') 
 
     .vuln-counter { display: flex; align-items: baseline; gap: 8px; }
     .vuln-count   { font-size: 2.4rem; font-weight: 900; color: #6d28d9; list-style: none; }
-    .vuln-denom   { font-size: 1rem; color: #9ca3af; font-weight: 600; }
+    .vuln-denom   { font-size: 1rem; color: #6b7280; font-weight: 600; }
 
     .vuln-list {
       list-style: none;
@@ -836,7 +917,7 @@ const attackerTargets = v<ReadonlyArray<string>>('challengeAP.attackerTargets') 
       font-weight: 600;
     }
 
-    .vuln-empty { font-size: 0.8rem; color: #9ca3af; }
+    .vuln-empty { font-size: 0.8rem; color: #6b7280; }
 
     /* ── Game-end overlay ──────────────────────────────────────────────────── */
     .game-overlay {
@@ -913,6 +994,249 @@ const attackerTargets = v<ReadonlyArray<string>>('challengeAP.attackerTargets') 
       box-shadow: 0 6px 16px rgba(109, 40, 217, 0.4);
     }
 
+    .btn-secondary {
+      background: white;
+      color: #5b21b6;
+      border: 2px solid #c4b5fd;
+    }
+
+    .btn-secondary:hover {
+      background: #f5f3ff;
+      border-color: #7c3aed;
+    }
+
+    .btn:focus-visible,
+    .plan-chip:focus-visible,
+    .plan-zone__btn:focus-visible,
+    .quiz-option:focus-visible {
+      outline: 3px solid #3b82f6;
+      outline-offset: 2px;
+    }
+
+    .overlay-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-s);
+    }
+
+    /* ── Parts 2–4: plan the attack, why and how to stop it, results ──────── */
+    .ap-part {
+      margin: 0 0 var(--space-s);
+      font-size: var(--font-size-1);
+      font-weight: 700;
+    }
+
+    .ap-part[hidden] { display: none; }
+
+    .ap-card {
+      padding: var(--space-l);
+      border: 1px solid #ddd6fe;
+      border-radius: 14px;
+      background: white;
+      box-shadow: 0 4px 16px rgba(76, 29, 149, 0.08);
+    }
+
+    .ap-card__title {
+      margin: 0 0 var(--space-xs);
+      font-size: var(--font-size-3);
+      color: #1f2937;
+    }
+
+    .ap-card__intro { margin: 0 0 var(--space-m); color: #374151; }
+
+    .plan-board {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-m);
+    }
+
+    .plan-tray {
+      padding: var(--space-m);
+      border: 2px dashed #d1d5db;
+      border-radius: 12px;
+      background: #f9fafb;
+    }
+
+    .plan-tray__title { margin: 0 0 var(--space-s); font-size: var(--font-size-0); font-weight: 700; color: #1f2937; }
+    .plan-tray__list { display: flex; flex-wrap: wrap; gap: var(--space-2xs); }
+
+    .plan-chip {
+      display: flex;
+      align-items: center;
+      gap: var(--space-s);
+      width: auto;
+      max-width: 100%;
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-s);
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
+      background: white;
+      color: #1f2937;
+      font: inherit;
+      font-size: 0.9rem;
+      text-align: left;
+      cursor: pointer;
+      transition: border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
+    }
+
+    .plan-chip:hover { border-color: #7c3aed; }
+
+    .plan-chip--selected {
+      border-color: #6d28d9;
+      background: #f5f3ff;
+      box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.25);
+    }
+
+    .plan-chip--wrong {
+      animation: planShake 0.4s ease;
+      border-color: #dc2626;
+      background: #fef2f2;
+    }
+
+    @keyframes planShake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+
+    .plan-chip__icon { font-size: 1.25rem; flex-shrink: 0; }
+
+    .plan-zones { display: flex; flex-direction: column; gap: var(--space-s); }
+
+    .plan-zone {
+      padding: var(--space-s);
+      border: 2px solid;
+      border-radius: 12px;
+    }
+
+    .plan-zone--account { border-color: #7c3aed; background: #f5f3ff; }
+    .plan-zone--person { border-color: #d97706; background: #fffbeb; }
+    .plan-zone--none { border-color: #9ca3af; background: #f3f4f6; }
+
+    .plan-zone__btn {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-s);
+      width: 100%;
+      min-height: 44px;
+      padding: var(--space-2xs);
+      border: none;
+      border-radius: 8px;
+      background: transparent;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .plan-zone__btn:hover { background: rgba(255, 255, 255, 0.6); }
+    .plan-zone__icon { font-size: 1.4rem; line-height: 1.2; }
+    .plan-zone__text { display: flex; flex-direction: column; }
+    .plan-zone__title { font-size: var(--font-size-0); }
+    .plan-zone--account .plan-zone__title { color: #4c1d95; }
+    .plan-zone--person .plan-zone__title { color: #78350f; }
+    .plan-zone--none .plan-zone__title { color: #374151; }
+    .plan-zone__hint { font-size: 0.82rem; line-height: 1.35; color: #374151; }
+
+    .plan-zone__list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3xs);
+      margin: var(--space-2xs) 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .plan-zone__item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: var(--space-2xs) var(--space-xs);
+      border-radius: 8px;
+      background: white;
+      color: #1f2937;
+      font-size: 0.85rem;
+    }
+
+    .plan-summary {
+      margin-top: var(--space-l);
+      padding: var(--space-m);
+      border: 2px solid #86efac;
+      border-radius: 12px;
+      background: #f0fdf4;
+      color: #14532d;
+    }
+
+    .plan-summary[hidden] { display: none; }
+    .plan-summary p { margin: 0 0 var(--space-s); }
+    .plan-summary__title { margin: 0 0 var(--space-xs); font-size: var(--font-size-1); color: #14532d; }
+    .plan-summary__score { font-weight: 700; }
+
+    .quiz-progress { margin: 0; font-size: 0.85rem; font-weight: 700; color: #4b5563; }
+    .quiz-kind { margin: var(--space-xs) 0 0; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: #5b21b6; }
+    .quiz-text { margin: var(--space-2xs) 0 var(--space-m); font-size: var(--font-size-1); line-height: 1.5; color: #1f2937; }
+    .quiz-options { display: grid; gap: var(--space-xs); }
+
+    .quiz-option {
+      min-height: 48px;
+      padding: var(--space-xs) var(--space-m);
+      border: 2px solid #c4b5fd;
+      border-radius: 10px;
+      background: #f5f3ff;
+      color: #3b0764;
+      font: inherit;
+      font-weight: 600;
+      line-height: 1.4;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .quiz-option:hover:not(:disabled) { border-color: #6d28d9; background: #ede9fe; }
+    .quiz-option:disabled { cursor: default; }
+    .quiz-option--right { border-color: #15803d; background: #f0fdf4; color: #14532d; box-shadow: 0 0 0 3px #fff, 0 0 0 6px #15803d; }
+    .quiz-option--wrong { border-color: #b91c1c; background: #fef2f2; color: #7f1d1d; opacity: 0.8; }
+    .quiz-next { margin-top: var(--space-m); }
+    .quiz-next[hidden] { display: none; }
+
+    .ap-final { text-align: center; }
+    .ap-final__icon { font-size: 3.5rem; line-height: 1; }
+    .ap-final__score { margin: 0 0 var(--space-s); font-size: var(--font-size-2); font-weight: 800; color: #4c1d95; }
+    .ap-final__list { display: grid; gap: var(--space-2xs); margin: 0 0 var(--space-m); padding: 0; list-style: none; color: #374151; }
+    .ap-final__message { margin: 0 0 var(--space-m); font-weight: 600; color: #1f2937; }
+
+    /* Dark mode for parts 2–4 */
+    :global(.darkmode) .ap-card { background: #1e293b; border-color: #334155; box-shadow: none; }
+    :global(.darkmode) .ap-card__title,
+    :global(.darkmode) .plan-tray__title,
+    :global(.darkmode) .quiz-text,
+    :global(.darkmode) .ap-final__message { color: #f1f5f9; }
+    :global(.darkmode) .ap-card__intro,
+    :global(.darkmode) .quiz-progress,
+    :global(.darkmode) .ap-final__list { color: #cbd5e1; }
+    :global(.darkmode) .quiz-kind { color: #c4b5fd; }
+    :global(.darkmode) .ap-final__score { color: #c4b5fd; }
+    :global(.darkmode) .plan-tray { background: #0f172a; border-color: #475569; }
+    :global(.darkmode) .plan-chip { background: #1e293b; border-color: #475569; color: #e2e8f0; }
+    :global(.darkmode) .plan-chip:hover { border-color: #a78bfa; }
+    :global(.darkmode) .plan-chip--selected { background: #2e1065; border-color: #a78bfa; box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.3); }
+    :global(.darkmode) .plan-chip--wrong { background: #450a0a; border-color: #f87171; }
+    :global(.darkmode) .plan-zone--account { background: #2e1065; border-color: #7c3aed; }
+    :global(.darkmode) .plan-zone--person { background: #2a1a05; border-color: #b45309; }
+    :global(.darkmode) .plan-zone--none { background: #1f2937; border-color: #6b7280; }
+    :global(.darkmode) .plan-zone__btn:hover { background: rgba(255, 255, 255, 0.06); }
+    :global(.darkmode) .plan-zone--account .plan-zone__title { color: #c4b5fd; }
+    :global(.darkmode) .plan-zone--person .plan-zone__title { color: #fcd34d; }
+    :global(.darkmode) .plan-zone--none .plan-zone__title { color: #e5e7eb; }
+    :global(.darkmode) .plan-zone__hint { color: #cbd5e1; }
+    :global(.darkmode) .plan-zone__item { background: #0f172a; color: #e2e8f0; }
+    :global(.darkmode) .plan-summary { background: #052820; border-color: #059669; color: #a7f3d0; }
+    :global(.darkmode) .plan-summary__title { color: #6ee7b7; }
+    :global(.darkmode) .quiz-option { background: #2e1065; border-color: #7c3aed; color: #ede9fe; }
+    :global(.darkmode) .quiz-option:hover:not(:disabled) { background: #3b0764; border-color: #a78bfa; }
+    :global(.darkmode) .quiz-option--right { background: #052820; border-color: #059669; color: #a7f3d0; box-shadow: 0 0 0 3px #0f172a, 0 0 0 6px #34d399; }
+    :global(.darkmode) .quiz-option--wrong { background: #450a0a; border-color: #ef4444; color: #fecaca; }
+    :global(.darkmode) .btn-secondary { background: #1e293b; color: #c4b5fd; border-color: #7c3aed; }
+
     /* ── Reduced motion ────────────────────────────────────────────────────── */
     @media (prefers-reduced-motion: reduce) {
       * {
@@ -924,6 +1248,10 @@ const attackerTargets = v<ReadonlyArray<string>>('challengeAP.attackerTargets') 
   </style>
 
   <script>
+    import { AP_CLUES, AP_GOALS, dealQuestions, rankFor, shuffle } from '../../../data/apPlan'
+    import type { ApGoal, ApQuestion } from '../../../data/apPlan'
+    import { recordResult } from '../../../utils/challengeProgress'
+
     const initializeVulnerabilityChallenge = () => {
       document.querySelectorAll('[data-vulnerability-game]').forEach((root) => {
         if (!(root instanceof HTMLElement)) return
@@ -955,12 +1283,15 @@ const attackerTargets = v<ReadonlyArray<string>>('challengeAP.attackerTargets') 
         const overlayMsg = document.querySelector('#overlay-msg')
         const overlayFound = document.querySelector('#overlay-found')
         const resetBtn = document.querySelector('#reset-btn')
+        const continueBtn = document.querySelector('#continue-btn')
+        let lastClicked: HTMLElement | null = null
 
         const hotspotBtns = Array.from(root.querySelectorAll('.hotspot-btn')).filter((el) => el instanceof HTMLElement)
 
         if (!(foundListEl instanceof HTMLElement)) return
         if (!(gameOverlay instanceof HTMLElement)) return
         if (!(resetBtn instanceof HTMLElement)) return
+        if (!(continueBtn instanceof HTMLElement)) return
         if (hotspotBtns.length === 0) return
 
         // ── State ───────────────────────────────────────────────────────────
@@ -1040,6 +1371,8 @@ const attackerTargets = v<ReadonlyArray<string>>('challengeAP.attackerTargets') 
           if (overlayFound instanceof HTMLElement) overlayFound.textContent = String(found.size)
 
           gameOverlay.classList.remove('hidden')
+          root.inert = true          // keep keyboard and screen readers inside the dialog
+          ;(won ? continueBtn : resetBtn).focus()
           setVoice(
             won ? formatTemplate(voiceWinTemplate, { total: TOTAL_CORRECT }) : voiceLose,
             won ? 'correct' : 'wrong'
@@ -1051,6 +1384,7 @@ const attackerTargets = v<ReadonlyArray<string>>('challengeAP.attackerTargets') 
           const btn = e.currentTarget
           if (!(btn instanceof HTMLElement)) return
 
+          lastClicked = btn
           const id = btn.dataset.id ?? ''
           const correct = btn.dataset.correct === 'true'
           const label = btn.dataset.label ?? id
@@ -1081,8 +1415,15 @@ const attackerTargets = v<ReadonlyArray<string>>('challengeAP.attackerTargets') 
 
         hotspotBtns.forEach((btn) => btn.addEventListener('click', handleClick))
 
-        // ── Reset ────────────────────────────────────────────────────────────
-        resetBtn.addEventListener('click', () => {
+        // The dialog has two controls: Tab and Shift+Tab move between them
+        gameOverlay.addEventListener('keydown', (e) => {
+          if (e.key !== 'Tab') return
+          e.preventDefault()
+          ;(document.activeElement === continueBtn ? resetBtn : continueBtn).focus()
+        })
+
+        // ── Reset part 1 ─────────────────────────────────────────────────────
+        const resetPart1 = () => {
           found.clear()
           wrongAttempts = 0
           gameOver = false
@@ -1095,10 +1436,275 @@ const attackerTargets = v<ReadonlyArray<string>>('challengeAP.attackerTargets') 
           if (attackerBar instanceof HTMLElement) attackerBar.classList.remove('bar-correct', 'bar-wrong')
 
           gameOverlay.classList.add('hidden')
+          root.inert = false
           updateLives()
           updateFoundUI()
           setVoice(voiceInitial, 'neutral')
+        }
+
+        resetBtn.addEventListener('click', () => {
+          resetPart1()
+          lastClicked?.focus()
         })
+
+        // ═════════════════ PARTS 2–4: plan the attack · why and how to stop it · results ═════════════════
+        const dataEl = document.getElementById('ap-challenge-data')
+        if (dataEl) {
+          const data = JSON.parse(dataEl.textContent ?? '{}') as {
+            clues: { id: string; icon: string; text: string; explanation: string }[]
+            goals: Record<string, { icon: string; title: string; hint: string }>
+            motivations: Record<string, { name: string; desc: string }>
+            motiveCases: { id: number; text: string; explanation: string }[]
+            defendCases: { id: number; text: string; options: string[]; explanation: string }[]
+            labels: Record<string, string>
+          }
+          const L = data.labels
+          const clueById = new Map(data.clues.map((clue) => [clue.id, clue]))
+          const clueGoal = new Map<string, ApGoal>(AP_CLUES.map((rule) => [rule.id, rule.goal]))
+          const motiveById = new Map(data.motiveCases.map((item) => [item.id, item]))
+          const defendById = new Map(data.defendCases.map((item) => [item.id, item]))
+          const PLAN_TOTAL = AP_CLUES.length
+
+          const q = <T extends HTMLElement>(selector: string) => root.querySelector<T>(selector)
+          const partLabel = q('[data-part-label]')
+          const planTray = q('[data-plan-tray]')
+          const planSummary = q('[data-plan-summary]')
+          const planScore = q('[data-plan-score]')
+          const toQuizBtn = q('[data-to-quiz]')
+          const quizProgress = q('[data-quiz-progress]')
+          const quizKind = q('[data-quiz-kind]')
+          const quizText = q('[data-quiz-text]')
+          const quizOptions = q('[data-quiz-options]')
+          const quizNext = q('[data-quiz-next]')
+          const finalScore = q('[data-final-score]')
+          const finalMessage = q('[data-final-message]')
+          const playAgainBtn = q('[data-play-again]')
+          const chipTemplate = q<HTMLTemplateElement>('template[data-plan-chip-template]')
+          const itemTemplate = q<HTMLTemplateElement>('template[data-plan-item-template]')
+          const optionTemplate = q<HTMLTemplateElement>('template[data-quiz-option-template]')
+          const goalButtons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-goal]'))
+          const helpPanels = Array.from(root.querySelectorAll<HTMLElement>('[data-help-for]'))
+          const onlyPart1 = Array.from(root.querySelectorAll<HTMLElement>('[data-part-only]'))
+
+          if (partLabel && planTray && planSummary && planScore && toQuizBtn && quizProgress && quizKind && quizText &&
+              quizOptions && quizNext && finalScore && finalMessage && playAgainBtn && chipTemplate && itemTemplate &&
+              optionTemplate && goalButtons.length === AP_GOALS.length) {
+
+            // ── Which part is on screen ─────────────────────────────────────
+            const partLabels = [L.part1Label, L.part1Label, L.part2Label, L.part3Label, L.part3Label]
+            const showPart = (part: 1 | 2 | 3 | 4) => {
+              root.querySelectorAll<HTMLElement>('[data-part-area]').forEach((area) => {
+                area.hidden = area.dataset.partArea !== String(part)
+              })
+              onlyPart1.forEach((el) => { el.hidden = part !== 1 })
+              helpPanels.forEach((el) => { el.hidden = !(el.dataset.helpFor ?? '').split(' ').includes(String(part)) })
+              partLabel.textContent = partLabels[part]
+              partLabel.hidden = part === 4
+            }
+
+            // ── Part 2: plan the attack ─────────────────────────────────────
+            let planPlaced = 0
+            let planFirstTry = 0
+            let planMissed = new Set<string>()
+            let selectedChip: HTMLElement | null = null
+            let planBusy = false
+
+            const chips = () => Array.from(planTray.querySelectorAll<HTMLElement>('.plan-chip'))
+            const deselectChip = () => {
+              selectedChip?.classList.remove('plan-chip--selected')
+              selectedChip?.setAttribute('aria-pressed', 'false')
+              selectedChip = null
+            }
+
+            const buildPlan = () => {
+              planPlaced = 0
+              planFirstTry = 0
+              planMissed = new Set<string>()
+              selectedChip = null
+              planBusy = false
+              planSummary.hidden = true
+              root.querySelectorAll<HTMLElement>('[data-goal-list]').forEach((list) => list.replaceChildren())
+              planTray.replaceChildren(
+                ...shuffle(AP_CLUES).map((rule) => {
+                  const clue = clueById.get(rule.id)
+                  const chip = chipTemplate.content.firstElementChild!.cloneNode(true) as HTMLElement
+                  chip.dataset.clue = rule.id
+                  chip.querySelector('.plan-chip__icon')!.textContent = clue?.icon ?? ''
+                  chip.querySelector('.plan-chip__text')!.textContent = clue?.text ?? ''
+                  return chip
+                }),
+              )
+            }
+
+            const placeClue = (chip: HTMLElement, goal: ApGoal) => {
+              const id = chip.dataset.clue ?? ''
+              const clue = clueById.get(id)
+              if (!clue || planBusy) return
+              if (clueGoal.get(id) === goal) {
+                const item = itemTemplate.content.firstElementChild!.cloneNode(true) as HTMLElement
+                const spans = item.querySelectorAll('span')
+                spans[0].textContent = clue.icon
+                spans[1].textContent = clue.text
+                root.querySelector(`[data-goal-list="${goal}"]`)?.append(item)
+                chip.remove()
+                selectedChip = null
+                planPlaced++
+                if (!planMissed.has(id)) planFirstTry++
+                setVoice(formatTemplate(L.planVoiceCorrect, { explain: clue.explanation }), 'correct')
+                if (planPlaced === PLAN_TOTAL) {
+                  planScore.textContent = formatTemplate(L.planScoreTemplate, { n: planFirstTry, total: PLAN_TOTAL })
+                  planSummary.hidden = false
+                  toQuizBtn.focus()
+                } else {
+                  chips()[0]?.focus()
+                }
+              } else {
+                planMissed.add(id)
+                planBusy = true
+                chip.classList.add('plan-chip--wrong')
+                setVoice(formatTemplate(L.planVoiceWrong, { explain: clue.explanation }), 'wrong')
+                setTimeout(() => { chip.classList.remove('plan-chip--wrong'); planBusy = false }, 600)
+                deselectChip()
+              }
+            }
+
+            planTray.addEventListener('click', (e) => {
+              const chip = (e.target as HTMLElement).closest<HTMLElement>('.plan-chip')
+              if (!chip || planBusy) return
+              if (selectedChip === chip) { deselectChip(); return }
+              deselectChip()
+              selectedChip = chip
+              chip.classList.add('plan-chip--selected')
+              chip.setAttribute('aria-pressed', 'true')
+              goalButtons[0]?.focus()
+            })
+            goalButtons.forEach((button) => button.addEventListener('click', () => {
+              if (!selectedChip) { setVoice(L.planChooseLabel, 'neutral'); chips()[0]?.focus(); return }
+              placeClue(selectedChip, button.dataset.goal as ApGoal)
+            }))
+
+            const startPart2 = () => {
+              buildPlan()
+              showPart(2)
+              setVoice(L.planIntro, 'neutral')
+              root.querySelector<HTMLElement>('#plan-title')?.focus()
+            }
+
+            // ── Part 3: why, and how to stop it ─────────────────────────────
+            let questions: ApQuestion[] = []
+            let qIndex = 0
+            let qFirstTry = 0
+            let qMissed = new Set<string>()
+            let qAnswered = false
+
+            const optionLabel = (question: ApQuestion, option: string): string =>
+              question.kind === 'motive'
+                ? data.motivations[option]?.name ?? option
+                : defendById.get(question.id)?.options[Number(option.slice(1))] ?? option
+
+            const renderQuestion = () => {
+              const question = questions[qIndex]
+              if (!question) return
+              qAnswered = false
+              const item = question.kind === 'motive' ? motiveById.get(question.id) : defendById.get(question.id)
+              quizProgress.textContent = formatTemplate(L.quizProgressTemplate, { n: qIndex + 1, total: questions.length })
+              quizKind.textContent = question.kind === 'motive' ? L.motiveLabel : L.defendLabel
+              quizText.textContent = item?.text ?? ''
+              quizNext.hidden = true
+              quizNext.textContent = qIndex + 1 >= questions.length ? L.resultsButton : L.nextButton
+              quizOptions.replaceChildren(
+                ...question.options.map((option) => {
+                  const button = optionTemplate.content.firstElementChild!.cloneNode(true) as HTMLButtonElement
+                  button.dataset.option = option
+                  button.textContent = optionLabel(question, option)
+                  return button
+                }),
+              )
+              setVoice(question.kind === 'motive' ? L.motiveLabel : L.defendLabel, 'neutral')
+              ;(quizOptions.querySelector('button') as HTMLElement | null)?.focus({ preventScroll: true })
+            }
+
+            quizOptions.addEventListener('click', (e) => {
+              const button = (e.target as HTMLElement).closest<HTMLButtonElement>('.quiz-option')
+              const question = questions[qIndex]
+              if (!button || !question || qAnswered) return
+              const key = `${question.kind}-${question.id}`
+              const item = question.kind === 'motive' ? motiveById.get(question.id) : defendById.get(question.id)
+              const explain = item?.explanation ?? ''
+              if (button.dataset.option === question.answer) {
+                qAnswered = true
+                if (!qMissed.has(key)) qFirstTry++
+                quizOptions.querySelectorAll<HTMLButtonElement>('.quiz-option').forEach((other) => {
+                  other.disabled = true
+                  other.classList.toggle('quiz-option--right', other === button)
+                })
+                setVoice(formatTemplate(L.quizVoiceCorrect, { explain }), 'correct')
+                quizNext.hidden = false
+                quizNext.focus()
+              } else {
+                qMissed.add(key)
+                button.disabled = true
+                button.classList.add('quiz-option--wrong')
+                setVoice(formatTemplate(L.quizVoiceWrong, { explain }), 'wrong')
+              }
+            })
+
+            const startPart3 = () => {
+              questions = dealQuestions()
+              qIndex = 0
+              qFirstTry = 0
+              qMissed = new Set<string>()
+              showPart(3)
+              renderQuestion()
+              root.querySelector<HTMLElement>('#quiz-title')?.scrollIntoView({ block: 'start' })
+            }
+
+            quizNext.addEventListener('click', () => {
+              qIndex++
+              if (qIndex >= questions.length) showFinal()
+              else renderQuestion()
+            })
+
+            // ── Part 4: results ─────────────────────────────────────────────
+            function showFinal() {
+              const points = found.size + planFirstTry + qFirstTry
+              const total = TOTAL_CORRECT + PLAN_TOTAL + questions.length
+              recordResult('ap', points, total)
+              showPart(4)
+              finalScore.textContent = formatTemplate(L.finalScoreTemplate, { n: points, total })
+              const lines: [string, number, number][] = [
+                [L.finalPart1Template, found.size, TOTAL_CORRECT],
+                [L.finalPart2Template, planFirstTry, PLAN_TOTAL],
+                [L.finalPart3Template, qFirstTry, questions.length],
+              ]
+              lines.forEach(([template, n, of], i) => {
+                const li = root.querySelector(`[data-final-part="${i + 1}"]`)
+                if (li) li.textContent = formatTemplate(template, { n, total: of })
+              })
+              const rank = rankFor(points, total)
+              finalMessage.textContent = rank === 'great' ? L.rankGreat : rank === 'good' ? L.rankGood : L.rankPractise
+              setVoice(finalMessage.textContent, 'correct')
+              root.querySelector<HTMLElement>('#final-title')?.focus()
+            }
+
+            // ── Hooks into part 1 and a full restart ────────────────────────
+            continueBtn.addEventListener('click', () => {
+              gameOverlay.classList.add('hidden')
+              root.inert = false
+              startPart2()
+            })
+            toQuizBtn.addEventListener('click', startPart3)
+            playAgainBtn.addEventListener('click', () => {
+              resetPart1()
+              showPart(1)
+              setVoice(voiceInitial, 'neutral')
+              ;(root.querySelector('.hotspot-btn') as HTMLElement | null)?.focus()
+            })
+
+            continueBtn.textContent = L.continueButton
+            showPart(1)
+          }
+        }
 
         // ── Init ─────────────────────────────────────────────────────────────
         updateLives()

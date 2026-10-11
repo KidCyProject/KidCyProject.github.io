@@ -114,11 +114,20 @@ const label = (key: string, file: { bytes: number }) => {
     margin: 1.25rem 0 1.5rem;
   }
 
+  /* Same size as the download buttons at the top of the module pages (about 44 px high) */
   .game-download__button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-width: 2px;
+    border-radius: 6px;
     background: var(--game-color);
     border-color: var(--game-color);
     color: #fff;
     text-decoration: none;
+  }
+
+  .game-download__button.has-icon :global([data-icon]) {
+    inline-size: 22px;
   }
 
   .game-download__button:hover {
@@ -135,6 +144,20 @@ const label = (key: string, file: { bytes: number }) => {
   .game-download__button--hub:hover {
     background: var(--game-color);
     color: #fff;
+  }
+
+  /* Dark mode: the global outline button (_dark.scss) is blue, here it keeps the module colour */
+  :global(.darkmode) .game-download__button.game-download__button--hub.is-outline {
+    background: transparent;
+    border-color: var(--game-color);
+    color: var(--game-color);
+  }
+
+  :global(.darkmode) .game-download__button.game-download__button--hub.is-outline:hover,
+  :global(.darkmode) .game-download__button.game-download__button--hub.is-outline:focus-visible {
+    background: var(--game-color);
+    border-color: var(--game-color);
+    color: #1c1917;
   }
 
   .game-download__steps-title {

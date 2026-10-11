@@ -1,56 +1,69 @@
 ---
 import DefaultLayout from '@layouts/DefaultLayout.astro'
 import PageHeader from '@components/PageHeader.astro'
+import ChallengeIntro from '@components/ChallengeIntro.astro'
+import ChallengeProgress from '@components/ChallengeProgress.astro'
+import HintPanel from '@components/HintPanel.astro'
 import { useTranslations } from 'src/i18n/index'
+import { toJsonScript } from '../../../utils/jsonScript'
+import { DP_ACTIONS, DP_ZONES } from '../../../data/dpFootprint'
 
 /**
- * Digital Footprint or Not? Challenge
+ * Digital Footprint Sorter
  *
- * A drag-and-drop sorting mini-game for ages 10-12 where students learn
- * which everyday activities leave a digital footprint and which do not.
+ * Step 1: sort activities into "on purpose" (active footprint), "in the background" (passive footprint)
+ *         and "no digital footprint". Some cards look offline but leave a trace.
+ * Step 2: clean up a profile — delete, hide, change or keep each part.
  *
- * Features:
- * - 15 activity cards with emoji icons
- * - Two drop zones: "Leaves a Footprint" (teal) and "No Footprint" (gray)
- * - Drag-and-drop on desktop, tap-to-select on mobile
- * - Immediate visual feedback with explanations
- * - Score tracking and win celebration
- * - Accessible: aria-live regions, focus-visible outlines, semantic HTML
+ * Drag and drop with the mouse; on a phone or with a keyboard, select a card and use the buttons under it.
+ * Answers and dealing live in src/data/dpFootprint.ts, all text in the translation files.
  */
 
 const { t, v } = useTranslations(Astro.currentLocale)
 const { v: vEn } = useTranslations('en')
 
-type ChallengeActivity = {
-  id: number
-  text: string
-  category: 'footprint' | 'no-footprint'
-  emoji: string
-  explanation: string
+type ZoneText = { icon: string; title: string; hint: string }
+type ActivityText = { id: number; text: string; emoji: string; explanation: string }
+type ProfileText = { id: number; icon: string; label: string; value: string; explanation: string }
+type CheatItem = { icon: string; text: string }
+
+const zonesEn = vEn<Record<string, ZoneText>>('challengeDP.zones') ?? {}
+const zonesLocal = v<Record<string, ZoneText>>('challengeDP.zones') ?? {}
+const zoneTexts = Object.fromEntries(DP_ZONES.map((zone) => [zone, { ...zonesEn[zone], ...zonesLocal[zone] }])) as Record<string, ZoneText>
+
+const actionsEn = vEn<Record<string, string>>('challengeDP.actions') ?? {}
+const actionsLocal = v<Record<string, string>>('challengeDP.actions') ?? {}
+const actionTexts = Object.fromEntries(DP_ACTIONS.map((action) => [action, actionsLocal[action] ?? actionsEn[action]])) as Record<string, string>
+
+// Texts by id: the page language, with English filling any gap
+const activitiesEn = vEn<ReadonlyArray<ActivityText>>('challengeDP.activities') ?? []
+const activitiesLocal = v<ReadonlyArray<ActivityText>>('challengeDP.activities') ?? []
+const activities = activitiesEn.map((en) => ({ ...en, ...activitiesLocal.find((item) => item.id === en.id) }))
+
+const profileEn = vEn<ReadonlyArray<ProfileText>>('challengeDP.profile') ?? []
+const profileLocal = v<ReadonlyArray<ProfileText>>('challengeDP.profile') ?? []
+const profile = profileEn.map((en) => ({ ...en, ...profileLocal.find((item) => item.id === en.id) }))
+
+const cheatItems = v<ReadonlyArray<CheatItem>>('challengeDP.cheatItems') ?? vEn<ReadonlyArray<CheatItem>>('challengeDP.cheatItems') ?? []
+
+const labels = {
+  stage1Label: t('challengeDP.stage1Label'),
+  stage2Label: t('challengeDP.stage2Label'),
+  tryOtherZone: t('challengeDP.tryOtherZone'),
+  correctInTemplate: t('challengeDP.correctInTemplate'),
+  cleanupProgressTemplate: t('challengeDP.cleanupProgressTemplate'),
+  cleanupScoreLabel: t('challengeDP.cleanupScoreLabel'),
+  cleanupCorrect: t('challengeDP.cleanupCorrect'),
+  cleanupAlso: t('challengeDP.cleanupAlso'),
+  cleanupWrong: t('challengeDP.cleanupWrong'),
+  cleanupBestTemplate: t('challengeDP.cleanupBestTemplate'),
+  nextButton: t('challengeDP.nextButton'),
+  resultsButton: t('challengeDP.resultsButton'),
+  firstTryTemplate: t('challengeDP.firstTryTemplate'),
+  winGreat: t('challengeDP.winGreat'),
+  winGood: t('challengeDP.winGood'),
+  winPractise: t('challengeDP.winPractise'),
 }
-
-const rawActivities = v<ReadonlyArray<Record<string, unknown>>>('challengeDP.activities') ?? []
-const enActivities = vEn<ReadonlyArray<Record<string, unknown>>>('challengeDP.activities') ?? []
-
-const activityCount = Math.max(rawActivities.length, enActivities.length)
-const activities: ReadonlyArray<ChallengeActivity> = Array.from({ length: activityCount }, (_, idx) => {
-  const raw = rawActivities[idx] ?? {}
-  const fallback = enActivities[idx] ?? {}
-  const categoryCandidate = (raw.category ?? fallback.category) as string
-  const category = categoryCandidate === 'footprint' || categoryCandidate === 'no-footprint'
-    ? categoryCandidate
-    : 'footprint'
-
-  return {
-    id: idx + 1,
-    text: String(raw.text ?? fallback.text ?? ''),
-    category,
-    emoji: String(raw.emoji ?? fallback.emoji ?? ''),
-    explanation: String(raw.explanation ?? fallback.explanation ?? ''),
-  }
-})
-
-const totalActivities = activities.length
 ---
 
 <DefaultLayout title={t('challengeDP.title')}>
@@ -61,117 +74,159 @@ const totalActivities = activities.length
     underlineColor="var(--brand-DP)"
   />
 
+  <ChallengeProgress />
+
+  <script
+    type="application/json"
+    id="dp-challenge-data"
+    set:html={toJsonScript({ activities, profile, zones: zoneTexts, actions: actionTexts, labels })}
+  />
+
   <section class="my-12">
     <div class="container mb-12">
-      <div class="mb-10 flex flex-col gap-6">
-        <h2 class="mb-2">{t('challengeDP.howItWorks')}</h2>
-        <p>
-          {t('challengeDP.instruction')}
-        </p>
-        <div class="tip-card">
-          <div class="tip-card__lead">
-            <span class="tip-card__icon" aria-hidden="true">💬</span>
-            <strong class="tip-card__label">{t('challengeDP.tipLabel')}</strong>
-          </div>
-          <div class="tip-card__body">{t('challengeDP.tip')}</div>
-        </div>
-      </div>
+      <ChallengeIntro ns="challengeDP" brand="DP" />
     </div>
   </section>
 
-  <section
-    class="fp-game"
-    data-fp-game
-    data-total-activities={totalActivities}
-    data-score-label={t('challengeDP.activitiesToSort')}
-    data-feedback-correct={t('challengeDP.correct')}
-    data-feedback-wrong={t('challengeDP.tryOtherZone')}
-    data-drag-footprint-here={t('challengeDP.dragOnlineHere')}
-    data-drag-no-footprint-here={t('challengeDP.dragOfflineHere')}
-  >
+  <section class="fp-game" data-fp-game>
     <div class="container">
 
-      <!-- Toolbar with score and restart -->
-      <div class="fp-game__toolbar">
-        <div class="fp-game__score" data-score aria-live="polite">0 / {totalActivities}</div>
-        <button class="button fp-game__restart" type="button" data-restart>{t('challengeDP.tryAgain')}</button>
+      <!-- Cheat sheet: the two kinds of footprint and how to make them smaller (collapsed on phones) -->
+      <HintPanel class="mb-6" title={t('challengeDP.cheatTitle')} subtitle={t('challengeDP.cheatSubtitle')}>
+        {cheatItems.map((item) => (
+          <div class="flex gap-2 text-sm">
+            <span class="shrink-0" aria-hidden="true">{item.icon}</span>
+            <div>{item.text}</div>
+          </div>
+        ))}
+      </HintPanel>
+
+      <p class="fp-game__stage" data-stage-label></p>
+
+      <!-- Feedback: stays in view while scrolling, so the explanation is never left behind -->
+      <div class="fp-game__feedback" data-feedback role="status" aria-live="polite" hidden>
+        <p class="fp-game__feedback-title" data-feedback-title></p>
+        <p class="fp-game__feedback-text" data-feedback-text></p>
       </div>
 
-      <!-- Feedback message -->
-      <div class="fp-game__feedback" data-feedback aria-live="polite"></div>
+      <!-- ── STEP 1: sort the footprints ── -->
+      <div data-stage="sort">
+        <div class="fp-game__toolbar">
+          <div class="fp-game__score" data-score aria-live="polite"></div>
+          <button class="button fp-game__restart" type="button" data-restart>{t('challengeDP.tryAgain')}</button>
+        </div>
 
-      <!-- Game board -->
-      <div class="fp-game__board">
+        <div class="fp-game__board">
+          <div class="fp-game__tray" data-tray>
+            <h3 class="fp-game__tray-label">{t('challengeDP.activitiesToSort')}</h3>
+            <div class="fp-game__cards-container" data-cards-tray></div>
+          </div>
 
-        <!-- Card tray (source) -->
-        <div class="fp-game__tray" data-tray>
-          <h3 class="fp-game__tray-label">{t('challengeDP.activitiesToSort')}</h3>
-          <div class="fp-game__cards-container" data-cards-tray>
-            {activities.map((activity) => (
-              <div class="activity-card-wrapper">
-                <div
-                  class="activity-card"
-                  data-activity-id={activity.id}
-                  data-category={activity.category}
-                  data-explanation={activity.explanation}
-                  draggable="true"
-                  tabindex="0"
-                >
-                  <div class="activity-card__emoji">{activity.emoji}</div>
-                  <div class="activity-card__text">{activity.text}</div>
-                  <div class="activity-card__check" aria-hidden="true">✓</div>
+          <div class="fp-game__zones">
+            {DP_ZONES.map((zone) => (
+              <div
+                class={`drop-zone drop-zone--${zone}`}
+                data-zone={zone}
+                role="region"
+                aria-label={t('challengeDP.zoneAriaTemplate').replace('{zone}', zoneTexts[zone]?.title ?? zone)}
+              >
+                <div class="drop-zone__header">
+                  <div>
+                    <h3 class="drop-zone__title">{zoneTexts[zone]?.title}</h3>
+                    <p class="drop-zone__hint">{zoneTexts[zone]?.hint}</p>
+                  </div>
+                  <span class="drop-zone__icon" aria-hidden="true">{zoneTexts[zone]?.icon}</span>
                 </div>
-                <div class="activity-card__explanation" data-card-explanation={activity.id} aria-live="polite"></div>
+                <div class="drop-zone__content" data-zone-content>
+                  <p class="drop-zone__empty">{t('challengeDP.dragHere')}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
+      </div>
 
-        <!-- Drop zones -->
-        <div class="fp-game__zones">
+      <!-- Between the steps -->
+      <div class="fp-game__between" data-between hidden>
+        <span class="fp-game__between-icon" aria-hidden="true">👣</span>
+        <h2 id="between-title" tabindex="-1">{t('challengeDP.stage1DoneTitle')}</h2>
+        <p class="fp-game__between-summary" data-between-summary></p>
+        <button class="button" type="button" data-to-cleanup>{t('challengeDP.toCleanupButton')}</button>
+      </div>
 
-          <!-- Leaves a Digital Footprint (Teal) -->
-          <div
-            class="drop-zone drop-zone--footprint"
-            data-zone="footprint"
-            role="region"
-            aria-label={t('challengeDP.leavesFootprint')}
-          >
-            <div class="drop-zone__header">
-              <h3 class="drop-zone__title">{t('challengeDP.leavesFootprint')}</h3>
-              <span class="drop-zone__icon">👣</span>
-            </div>
-            <div class="drop-zone__content" data-zone-content>
-              <p class="drop-zone__empty">{t('challengeDP.dragOnlineHere')}</p>
-            </div>
-          </div>
-
-          <!-- No Digital Footprint (Gray) -->
-          <div
-            class="drop-zone drop-zone--no-footprint"
-            data-zone="no-footprint"
-            role="region"
-            aria-label={t('challengeDP.noFootprint')}
-          >
-            <div class="drop-zone__header">
-              <h3 class="drop-zone__title">{t('challengeDP.noFootprint')}</h3>
-              <span class="drop-zone__icon">🚫</span>
-            </div>
-            <div class="drop-zone__content" data-zone-content>
-              <p class="drop-zone__empty">{t('challengeDP.dragOfflineHere')}</p>
-            </div>
-          </div>
-
+      <!-- ── STEP 2: clean up a profile ── -->
+      <div class="cleanup" data-stage="cleanup" hidden>
+        <div class="cleanup__intro">
+          <h2 id="cleanup-title" tabindex="-1">{t('challengeDP.cleanupTitle')}</h2>
+          <p>{t('challengeDP.cleanupIntro')}</p>
         </div>
 
+        <div class="fp-game__toolbar">
+          <div class="fp-game__score" data-cleanup-score aria-live="polite"></div>
+          <span class="cleanup__progress" data-cleanup-progress></span>
+          <button class="button fp-game__restart" type="button" data-restart>{t('challengeDP.tryAgain')}</button>
+        </div>
+
+        <div class="cleanup-card">
+          <div class="cleanup-card__icon" data-profile-icon aria-hidden="true"></div>
+          <div class="cleanup-card__body">
+            <p class="cleanup-card__label" id="profile-label-text" data-profile-label></p>
+            <p class="cleanup-card__value" id="profile-value-text" data-profile-value></p>
+            <p class="cleanup-card__visible">
+              {t('challengeDP.profileVisibleLabel')}: <strong>{t('challengeDP.profileEveryone')}</strong>
+            </p>
+          </div>
+        </div>
+
+        <div class="cleanup-actions" role="group" aria-label={t('challengeDP.chooseActionLabel')} aria-describedby="profile-label-text profile-value-text">
+          {DP_ACTIONS.map((action) => (
+            <button type="button" class={`cleanup-action cleanup-action--${action}`} data-action={action}>
+              {actionTexts[action]}
+            </button>
+          ))}
+        </div>
+
+        <button class="button cleanup__next" type="button" data-cleanup-next hidden></button>
       </div>
+
+      <!-- Templates cloned by the script. Cloning keeps the scoped-style attributes, so the cards look the same as server-rendered ones -->
+      <template data-card-template>
+        <div class="activity-card-wrapper">
+          <div class="activity-card" draggable="true" tabindex="0" role="button" aria-pressed="false">
+            <div class="activity-card__emoji" aria-hidden="true"></div>
+            <div class="activity-card__text"></div>
+            <div class="activity-card__check" aria-hidden="true">✓</div>
+          </div>
+          <div class="activity-card__choices" role="group" aria-label={t('challengeDP.chooseZoneLabel')} hidden>
+            {DP_ZONES.map((zone) => (
+              <button type="button" class={`zone-choice zone-choice--${zone}`} data-choose={zone}>
+                {zoneTexts[zone]?.icon} {zoneTexts[zone]?.title}
+              </button>
+            ))}
+          </div>
+        </div>
+      </template>
+      <template data-empty-template>
+        <p class="drop-zone__empty">{t('challengeDP.dragHere')}</p>
+      </template>
+      <template data-review-template>
+        <li class="fp-game__review-item">
+          <span data-review-text></span>
+          <span class="fp-game__review-answer" data-review-answer></span>
+        </li>
+      </template>
 
       <!-- Win celebration -->
       <div class="fp-game__win" data-win hidden>
         <div class="fp-game__win-inner">
-          <span class="fp-game__win-icon">🎉</span>
-          <h2>{t('challengeDP.winTitle')}</h2>
-          <p>{t('challengeDP.winMessage')}</p>
+          <span class="fp-game__win-icon" aria-hidden="true">🎉</span>
+          <h2 id="win-title" tabindex="-1">{t('challengeDP.winTitle')}</h2>
+          <p class="fp-game__win-summary" data-win-summary></p>
+          <p data-win-message></p>
+          <div class="fp-game__review" data-review hidden>
+            <h3 class="fp-game__review-title">{t('challengeDP.reviewTitle')}</h3>
+            <ul class="fp-game__review-list" data-review-list></ul>
+          </div>
           <button class="button" type="button" data-restart>{t('challengeDP.playAgain')}</button>
         </div>
       </div>
@@ -180,162 +235,204 @@ const totalActivities = activities.length
   </section>
 
 <script>
+  import { DP_ACTIVITIES, dealActivities, dealProfile, isProfileRight, rankFor } from '../../../data/dpFootprint'
+  import { recordResult } from '../../../utils/challengeProgress'
+  import type { DpActivityRule, DpAction, DpProfileRule, DpZone } from '../../../data/dpFootprint'
+
   const initializeFootprintGame = () => {
     document.querySelectorAll('[data-fp-game]').forEach((root) => {
       if (!(root instanceof HTMLElement)) return
       if (root.dataset.bound === 'true') return
       root.dataset.bound = 'true'
 
-      const totalActivities = Number.parseInt(root.dataset.totalActivities ?? '', 10) || 0
-      const feedbackCorrect = root.dataset.feedbackCorrect ?? ''
-      const feedbackWrong = root.dataset.feedbackWrong ?? ''
-      const dragFootprintHere = root.dataset.dragFootprintHere ?? ''
-      const dragNoFootprintHere = root.dataset.dragNoFootprintHere ?? ''
+      const dataEl = document.getElementById('dp-challenge-data')
+      if (!dataEl) return
+      const { activities, profile, zones: zoneTexts, actions: actionTexts, labels } = JSON.parse(dataEl.textContent ?? '{}') as {
+        activities: { id: number; text: string; emoji: string; explanation: string }[]
+        profile: { id: number; icon: string; label: string; value: string; explanation: string }[]
+        zones: Record<string, { icon: string; title: string; hint: string }>
+        actions: Record<string, string>
+        labels: Record<string, string>
+      }
+      const activityById = new Map(activities.map((item) => [item.id, item]))
+      const profileById = new Map(profile.map((item) => [item.id, item]))
+      const activityRuleById = new Map<number, DpActivityRule>(DP_ACTIVITIES.map((rule) => [rule.id, rule]))
+      const fmt = (template: string, vars: Record<string, string | number>) =>
+        String(template ?? '').replace(/\{(\w+)\}/g, (_m, key) => String(vars[key] ?? ''))
+      const zoneLabel = (zone: string) => `${zoneTexts[zone]?.icon ?? ''} ${zoneTexts[zone]?.title ?? zone}`.trim()
 
-      const scoreEl = root.querySelector('[data-score]')
-      const feedbackEl = root.querySelector<HTMLElement>('[data-feedback]')
-      const winPanel = root.querySelector<HTMLElement>('[data-win]')
-      const cardsTray = root.querySelector('[data-cards-tray]')
+      const q = <T extends HTMLElement>(selector: string) => root.querySelector<T>(selector)
+      const scoreEl = q('[data-score]')
+      const stageLabel = q('[data-stage-label]')
+      const feedbackEl = q('[data-feedback]')
+      const feedbackTitle = q('[data-feedback-title]')
+      const feedbackText = q('[data-feedback-text]')
+      const sortStage = q('[data-stage="sort"]')
+      const cleanupStage = q('[data-stage="cleanup"]')
+      const betweenPanel = q('[data-between]')
+      const betweenSummary = q('[data-between-summary]')
+      const cleanupScore = q('[data-cleanup-score]')
+      const cleanupProgress = q('[data-cleanup-progress]')
+      const profileIcon = q('[data-profile-icon]')
+      const profileLabel = q('[data-profile-label]')
+      const profileValue = q('[data-profile-value]')
+      const cleanupNext = q<HTMLButtonElement>('[data-cleanup-next]')
+      const winPanel = q('[data-win]')
+      const winSummary = q('[data-win-summary]')
+      const winMessage = q('[data-win-message]')
+      const reviewBox = q('[data-review]')
+      const reviewList = q('[data-review-list]')
+      const cardsTray = q('[data-cards-tray]')
       const zones = root.querySelectorAll<HTMLElement>('[data-zone]')
+      const actionButtons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-action]'))
       const restartBtns = root.querySelectorAll('[data-restart]')
+      const cardTemplate = q<HTMLTemplateElement>('template[data-card-template]')
+      const emptyTemplate = q<HTMLTemplateElement>('template[data-empty-template]')
+      const reviewTemplate = q<HTMLTemplateElement>('template[data-review-template]')
 
-      if (!scoreEl || !feedbackEl || !winPanel || !cardsTray || zones.length === 0) return
+      if (!scoreEl || !stageLabel || !feedbackEl || !feedbackTitle || !feedbackText || !sortStage || !cleanupStage ||
+          !betweenPanel || !betweenSummary || !cleanupScore || !cleanupProgress || !profileIcon || !profileLabel ||
+          !profileValue || !cleanupNext || !winPanel || !winSummary || !winMessage || !reviewBox || !reviewList ||
+          !cardsTray || !cardTemplate || !emptyTemplate || !reviewTemplate || zones.length === 0) return
 
-      let score = 0
+      // ── State ─────────────────────────────────────────────────────────────
+      let deck: DpActivityRule[] = []
+      let placedCount = 0
+      let sortFirstTry = 0
+      let sortMissed = new Set<number>()
       let selectedCard: HTMLElement | null = null
       let draggedCard: HTMLElement | null = null
       let busy = false
 
-      // ── Initialize zone maps ───────────────────────────────────────
+      let profileDeck: DpProfileRule[] = []
+      let profileIndex = 0
+      let profileCorrect = 0
+      let profileFirstTry = 0
+      let profileMissed = new Set<number>()
+      let profileAnswered = false
+
       const zoneMap = new Map<string, HTMLElement>()
-      zones.forEach((zone) => {
-        zoneMap.set(zone.dataset.zone || '', zone)
-      })
+      zones.forEach((zone) => zoneMap.set(zone.dataset.zone || '', zone))
 
-      // ── Get all cards ──────────────────────────────────────────────
       const getCards = () => Array.from(root.querySelectorAll<HTMLElement>('[data-activity-id]'))
-
-      // ── Get wrapper for a card ─────────────────────────────────────
       const getWrapper = (card: HTMLElement) => card.closest('.activity-card-wrapper') as HTMLElement | null
+      const getChoices = (card: HTMLElement) => getWrapper(card)?.querySelector<HTMLElement>('.activity-card__choices') ?? null
 
-      // ── Update score display ───────────────────────────────────────
-      const updateScore = () => {
-        const correctCount = getCards().filter((c) => c.dataset.placed === 'true').length
-        const total = totalActivities || getCards().length
-        scoreEl.textContent = `${correctCount} / ${total}`
-      }
-
-      // ── Show feedback ──────────────────────────────────────────────
-      let feedbackTimer: ReturnType<typeof setTimeout>
-      const showFeedback = (message: string, type: 'correct' | 'wrong') => {
-        clearTimeout(feedbackTimer)
-        feedbackEl.textContent = message
+      // ── Feedback: explanation of the last answer, always in view ──────────
+      const showFeedback = (type: 'correct' | 'wrong' | 'info', title: string, text: string) => {
+        feedbackTitle.textContent = title
+        feedbackText.textContent = text
         feedbackEl.className = `fp-game__feedback fp-game__feedback--${type}`
-        feedbackEl.style.display = 'block'
-        feedbackTimer = setTimeout(() => {
-          feedbackEl.textContent = ''
-          feedbackEl.style.display = 'none'
-        }, 3000)
+        feedbackEl.hidden = false
+      }
+      const hideFeedback = () => {
+        feedbackEl.hidden = true
+        feedbackTitle.textContent = ''
+        feedbackText.textContent = ''
       }
 
-      // ── Show explanation below a specific card ─────────────────────
-      const showCardExplanation = (card: HTMLElement, text: string) => {
-        hideAllExplanations()
-
-        const activityId = card.dataset.activityId
-        const explanationEl = root.querySelector(`[data-card-explanation="${activityId}"]`) as HTMLElement | null
-        if (!explanationEl) return
-
-        explanationEl.textContent = text
-        explanationEl.className = 'activity-card__explanation'
-        explanationEl.style.display = 'block'
-
-        explanationEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+      // ── Which part of the game is on screen ───────────────────────────────
+      const showStage = (stage: 'sort' | 'between' | 'cleanup' | 'done') => {
+        sortStage.hidden = stage !== 'sort'
+        betweenPanel.hidden = stage !== 'between'
+        cleanupStage.hidden = stage !== 'cleanup'
+        winPanel.hidden = stage !== 'done'
+        stageLabel.hidden = stage === 'done'
+        stageLabel.textContent = stage === 'cleanup' ? labels.stage2Label : labels.stage1Label
       }
 
-      const hideAllExplanations = () => {
-        root.querySelectorAll('[data-card-explanation]').forEach((el) => {
-          if (el instanceof HTMLElement) {
-            el.style.display = 'none'
-            el.textContent = ''
-          }
-        })
+      // ═════════════════════════ STEP 1: SORT ═══════════════════════════════
+      const updateScore = () => {
+        scoreEl.textContent = `${placedCount} / ${deck.length}`
       }
 
-      // ── Deselect card (mobile) ─────────────────────────────────────
+      const buildCard = (rule: DpActivityRule): HTMLElement => {
+        const item = activityById.get(rule.id)
+        const wrapper = cardTemplate.content.firstElementChild!.cloneNode(true) as HTMLElement
+        wrapper.querySelector<HTMLElement>('.activity-card')!.dataset.activityId = String(rule.id)
+        wrapper.querySelector('.activity-card__emoji')!.textContent = item?.emoji ?? ''
+        wrapper.querySelector('.activity-card__text')!.textContent = item?.text ?? ''
+        return wrapper
+      }
+
       const deselectCard = () => {
         if (selectedCard) {
           selectedCard.classList.remove('activity-card--selected')
+          selectedCard.setAttribute('aria-pressed', 'false')
+          const choices = getChoices(selectedCard)
+          if (choices) choices.hidden = true
         }
         selectedCard = null
       }
 
-      // ── Handle card click (mobile select only) ─────────────────────
       const handleCardClick = (card: HTMLElement) => {
-        if (card.dataset.placed === 'true' || busy) return
-
-        if (selectedCard === card) {
-          deselectCard()
-          hideAllExplanations()
+        if (busy) return
+        const id = Number(card.dataset.activityId)
+        if (card.dataset.placed === 'true') {
+          // A placed card can be tapped to read its explanation again
+          const item = activityById.get(id)
+          const rule = activityRuleById.get(id)
+          if (item && rule) showFeedback('info', zoneLabel(rule.zone), item.explanation)
           return
         }
-
+        if (selectedCard === card) {
+          deselectCard()
+          return
+        }
         deselectCard()
         selectedCard = card
         card.classList.add('activity-card--selected')
-        hideAllExplanations()
+        card.setAttribute('aria-pressed', 'true')
+        const choices = getChoices(card)
+        if (choices) choices.hidden = false
       }
 
-      // ── Handle zone click (mobile drop) ────────────────────────────
-      const handleZoneClick = (zone: HTMLElement) => {
-        if (!selectedCard || busy || selectedCard.dataset.placed === 'true') return
-        performDrop(selectedCard, zone)
-      }
-
-      // ── Move card + wrapper into a drop zone ──────────────────────
       const moveCardToZone = (card: HTMLElement, zone: HTMLElement) => {
         const wrapper = getWrapper(card)
         const content = zone.querySelector('[data-zone-content]')
         if (!content || !wrapper) return
-
-        const empty = content.querySelector('.drop-zone__empty')
-        if (empty) empty.remove()
-
+        content.querySelector('.drop-zone__empty')?.remove()
         content.appendChild(wrapper)
       }
 
-      // ── Perform drop logic ─────────────────────────────────────────
-      const performDrop = (card: HTMLElement, zone: HTMLElement) => {
-        if (card.dataset.placed === 'true') return
+      const focusNextCard = () => {
+        getCards().find((card) => card.dataset.placed !== 'true')?.focus()
+      }
+
+      const performDrop = (card: HTMLElement, zone: HTMLElement, options: { focusNext?: boolean } = {}) => {
+        if (card.dataset.placed === 'true' || busy) return
+        const id = Number(card.dataset.activityId)
+        const rule = activityRuleById.get(id)
+        const item = activityById.get(id)
+        if (!rule || !item) return
 
         busy = true
-        const cardCategory = card.dataset.category || ''
-        const zoneType = zone.dataset.zone || ''
-        const explanation = card.dataset.explanation || ''
+        const chosen = zone.dataset.zone as DpZone
 
-        if (cardCategory === zoneType) {
-          // Correct placement
+        if (rule.zone === chosen) {
           card.dataset.placed = 'true'
           card.classList.add('activity-card--placed')
-          card.classList.remove('activity-card--selected')
-
+          card.draggable = false
+          card.tabIndex = -1
+          card.setAttribute('aria-pressed', 'false')
+          deselectCard()
           moveCardToZone(card, zone)
 
-          score++
+          placedCount++
+          if (!sortMissed.has(id)) sortFirstTry++
           updateScore()
-          showFeedback(feedbackCorrect, 'correct')
-          showCardExplanation(card, explanation)
-          deselectCard()
+          showFeedback('correct', fmt(labels.correctInTemplate, { zone: zoneLabel(chosen) }), item.explanation)
+          if (options.focusNext) focusNextCard()
 
           setTimeout(() => {
             busy = false
-            checkWin()
+            checkSortDone()
           }, 600)
         } else {
-          // Wrong placement
+          // Wrong zone: counts against the first-try score, and the explanation says why
+          sortMissed.add(id)
           card.classList.add('activity-card--wrong')
-          showFeedback(feedbackWrong, 'wrong')
-          hideAllExplanations()
+          showFeedback('wrong', labels.tryOtherZone, item.explanation)
 
           setTimeout(() => {
             card.classList.remove('activity-card--wrong')
@@ -344,21 +441,25 @@ const totalActivities = activities.length
         }
       }
 
-      // ── Check win condition ────────────────────────────────────────
-      const checkWin = () => {
-        const allCorrect = getCards().every((c) => c.dataset.placed === 'true')
-        if (allCorrect) {
-          setTimeout(() => {
-            winPanel.hidden = false
-            winPanel.scrollIntoView({ behavior: 'smooth', block: 'center' })
-          }, 400)
-        }
+      const handleZoneClick = (zone: HTMLElement) => {
+        if (!selectedCard || busy || selectedCard.dataset.placed === 'true') return
+        performDrop(selectedCard, zone)
       }
 
-      // ── Drag event handlers ────────────────────────────────────────
+      const checkSortDone = () => {
+        if (getCards().length === 0 || !getCards().every((card) => card.dataset.placed === 'true')) return
+        betweenSummary.textContent = fmt(labels.firstTryTemplate, { n: sortFirstTry, total: deck.length })
+        setTimeout(() => {
+          hideFeedback()
+          showStage('between')
+          root.querySelector<HTMLElement>('#between-title')?.focus()
+        }, 400)
+      }
+
+      // ── Drag event handlers ───────────────────────────────────────────────
       const handleDragStart = (e: DragEvent) => {
         if (!(e.target instanceof HTMLElement)) return
-        const card = e.target.closest('[data-activity-id]') as HTMLElement
+        const card = e.target.closest('[data-activity-id]') as HTMLElement | null
         if (!card || card.dataset.placed === 'true') {
           e.preventDefault()
           return
@@ -373,97 +474,165 @@ const totalActivities = activities.length
 
       const handleDragEnd = (e: DragEvent) => {
         if (!(e.target instanceof HTMLElement)) return
-        const card = e.target.closest('[data-activity-id]') as HTMLElement
-        if (card) {
-          card.classList.remove('activity-card--dragging')
-        }
+        e.target.closest('[data-activity-id]')?.classList.remove('activity-card--dragging')
+        zones.forEach((zone) => zone.classList.remove('drop-zone--active'))
       }
 
       const handleDragOver = (e: DragEvent) => {
         e.preventDefault()
-        if (e.dataTransfer) {
-          e.dataTransfer.dropEffect = 'move'
-        }
-        const zone = (e.target as HTMLElement).closest('[data-zone]') as HTMLElement
-        if (zone) {
-          zone.classList.add('drop-zone--active')
-        }
+        if (e.dataTransfer) e.dataTransfer.dropEffect = 'move'
+        const zone = (e.target as HTMLElement).closest('[data-zone]') as HTMLElement | null
+        zone?.classList.add('drop-zone--active')
       }
 
       const handleDragLeave = (e: DragEvent) => {
-        const zone = (e.target as HTMLElement).closest('[data-zone]') as HTMLElement
-        if (zone && e.target === zone) {
-          zone.classList.remove('drop-zone--active')
-        }
+        const zone = (e.target as HTMLElement).closest('[data-zone]') as HTMLElement | null
+        if (zone && e.target === zone) zone.classList.remove('drop-zone--active')
       }
 
       const handleDrop = (e: DragEvent) => {
         e.preventDefault()
         if (!draggedCard) return
-
-        const zone = (e.target as HTMLElement).closest('[data-zone]') as HTMLElement
+        const zone = (e.target as HTMLElement).closest('[data-zone]') as HTMLElement | null
         if (!zone) return
-
         zone.classList.remove('drop-zone--active')
         performDrop(draggedCard, zone)
         draggedCard = null
       }
 
-      // ── Restart ────────────────────────────────────────────────────
-      const restart = () => {
-        score = 0
+      // ═════════════════════════ STEP 2: CLEAN UP ═══════════════════════════
+      const updateCleanupScore = () => {
+        cleanupScore.textContent = `${profileCorrect} / ${profileDeck.length} ${labels.cleanupScoreLabel}`.trim()
+      }
+
+      const renderProfile = () => {
+        const rule = profileDeck[profileIndex]
+        const item = rule && profileById.get(rule.id)
+        if (!rule || !item) return
+        profileAnswered = false
+        hideFeedback()
+        profileIcon.textContent = item.icon
+        profileLabel.textContent = item.label
+        profileValue.textContent = item.value
+        cleanupProgress.textContent = fmt(labels.cleanupProgressTemplate, { n: profileIndex + 1, total: profileDeck.length })
+        cleanupNext.hidden = true
+        cleanupNext.textContent = profileIndex + 1 >= profileDeck.length ? labels.resultsButton : labels.nextButton
+        actionButtons.forEach((button) => {
+          button.disabled = false
+          button.classList.remove('is-right', 'is-wrong')
+          button.style.opacity = '1'
+        })
+        updateCleanupScore()
+        actionButtons[0]?.focus({ preventScroll: true })
+      }
+
+      const handleAction = (button: HTMLButtonElement) => {
+        if (profileAnswered) return
+        const rule = profileDeck[profileIndex]
+        const item = rule && profileById.get(rule.id)
+        if (!rule || !item) return
+        const chosen = button.dataset.action as DpAction
+
+        if (isProfileRight(rule, chosen)) {
+          profileAnswered = true
+          profileCorrect++
+          if (!profileMissed.has(rule.id)) profileFirstTry++
+          const title = chosen === rule.best
+            ? labels.cleanupCorrect
+            : `${labels.cleanupAlso} ${fmt(labels.cleanupBestTemplate, { action: actionTexts[rule.best] })}`
+          showFeedback('correct', title, item.explanation)
+          actionButtons.forEach((other) => {
+            other.disabled = true
+            const isChosen = other === button
+            other.classList.toggle('is-right', isChosen)
+            other.style.opacity = isChosen ? '1' : '0.45'
+          })
+          updateCleanupScore()
+          cleanupNext.hidden = false
+          cleanupNext.focus()
+        } else {
+          // Wrong choice: it counts against the first-try score, and the explanation says why
+          profileMissed.add(rule.id)
+          button.disabled = true
+          button.classList.add('is-wrong')
+          button.style.opacity = '0.6'
+          showFeedback('wrong', labels.cleanupWrong, item.explanation)
+        }
+      }
+
+      const startCleanup = () => {
+        hideFeedback()
+        showStage('cleanup')
+        renderProfile()
+        root.querySelector<HTMLElement>('#cleanup-title')?.scrollIntoView({ block: 'start' })
+      }
+
+      const showFinal = () => {
+        const total = deck.length + profileDeck.length
+        const firstTry = sortFirstTry + profileFirstTry
+        recordResult('dp', firstTry, total)
+        winSummary.textContent = fmt(labels.firstTryTemplate, { n: firstTry, total })
+        const rank = rankFor(firstTry, total)
+        winMessage.textContent = rank === 'great' ? labels.winGreat : rank === 'good' ? labels.winGood : labels.winPractise
+
+        reviewList.replaceChildren()
+        const addReview = (text: string, answer: string) => {
+          const row = reviewTemplate.content.firstElementChild!.cloneNode(true) as HTMLElement
+          row.querySelector('[data-review-text]')!.textContent = text
+          row.querySelector('[data-review-answer]')!.textContent = `→ ${answer}`
+          reviewList.append(row)
+        }
+        deck.filter((rule) => sortMissed.has(rule.id)).forEach((rule) => {
+          const item = activityById.get(rule.id)
+          addReview(`${item?.emoji ?? ''} ${item?.text ?? ''}`.trim(), zoneLabel(rule.zone))
+        })
+        profileDeck.filter((rule) => profileMissed.has(rule.id)).forEach((rule) => {
+          const item = profileById.get(rule.id)
+          addReview(`${item?.icon ?? ''} ${item?.label ?? ''}: ${item?.value ?? ''}`.trim(), actionTexts[rule.best])
+        })
+        reviewBox.hidden = reviewList.children.length === 0
+
+        hideFeedback()
+        showStage('done')
+        winPanel.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        winPanel.querySelector<HTMLElement>('#win-title')?.focus({ preventScroll: true })
+      }
+
+      // ═════════════════════════ DEAL + RESTART ═════════════════════════════
+      const emptyZones = () => {
+        zones.forEach((zone) => {
+          const content = zone.querySelector<HTMLElement>('[data-zone-content]')
+          content?.replaceChildren(emptyTemplate.content.firstElementChild!.cloneNode(true))
+        })
+      }
+
+      const deal = () => {
+        deck = dealActivities()
+        placedCount = 0
+        sortFirstTry = 0
+        sortMissed = new Set<number>()
         selectedCard = null
         draggedCard = null
         busy = false
-        winPanel.hidden = true
-        feedbackEl.textContent = ''
-        feedbackEl.style.display = 'none'
-        hideAllExplanations()
-
-        // Reset all cards back into the tray
-        const wrappers = Array.from(root.querySelectorAll('.activity-card-wrapper'))
-        wrappers.forEach((wrapper) => {
-          const card = wrapper.querySelector('[data-activity-id]')
-          if (card instanceof HTMLElement) {
-            card.dataset.placed = 'false'
-            card.className = 'activity-card'
-          }
-          cardsTray.appendChild(wrapper)
-        })
-
-        // Restore empty messages in drop zones
-        zones.forEach((zone) => {
-          const content = zone.querySelector('[data-zone-content]')
-          if (content instanceof HTMLElement) {
-            const zoneType = zone.dataset.zone
-            const label = zoneType === 'footprint' ? dragFootprintHere : dragNoFootprintHere
-            if (!content.querySelector('.drop-zone__empty')) {
-              const p = document.createElement('p')
-              p.className = 'drop-zone__empty'
-              p.textContent = label
-              content.prepend(p)
-            }
-          }
-        })
-
-        // Shuffle tray
-        shuffleTray()
+        profileDeck = dealProfile()
+        profileIndex = 0
+        profileCorrect = 0
+        profileFirstTry = 0
+        profileMissed = new Set<number>()
+        profileAnswered = false
+        cardsTray.replaceChildren(...deck.map(buildCard))
         updateScore()
       }
 
-      // ── Shuffle tray ───────────────────────────────────────────────
-      const shuffleTray = () => {
-        const wrappers = Array.from(cardsTray.querySelectorAll('.activity-card-wrapper'))
-        for (let i = wrappers.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1))
-          const temp = wrappers[i]
-          wrappers[i] = wrappers[j]
-          wrappers[j] = temp
-        }
-        wrappers.forEach((wrapper) => cardsTray.appendChild(wrapper))
+      const restart = () => {
+        hideFeedback()
+        emptyZones()
+        deal()
+        showStage('sort')
+        getCards()[0]?.focus({ preventScroll: true })
       }
 
-      // ── Attach listeners ───────────────────────────────────────────
+      // ── Listeners ─────────────────────────────────────────────────────────
       root.addEventListener('dragstart', handleDragStart, true)
       root.addEventListener('dragend', handleDragEnd, true)
 
@@ -471,25 +640,70 @@ const totalActivities = activities.length
         zone.addEventListener('dragover', handleDragOver)
         zone.addEventListener('dragleave', handleDragLeave)
         zone.addEventListener('drop', handleDrop)
-        zone.addEventListener('click', () => handleZoneClick(zone))
+        zone.addEventListener('click', (e) => {
+          // A click on a card or its buttons inside the zone is not a click on the zone itself
+          if (e.target instanceof HTMLElement && e.target.closest('[data-activity-id], .activity-card__choices')) return
+          handleZoneClick(zone)
+        })
       })
 
-      // Card click handlers (mobile fallback)
-      getCards().forEach((card) => {
-        if (card instanceof HTMLElement) {
-          card.addEventListener('click', (e) => {
-            e.stopPropagation()
-            handleCardClick(card)
-          })
+      // Cards are created again for every game, so one set of delegated listeners handles them all
+      root.addEventListener('click', (e) => {
+        const target = e.target
+        if (!(target instanceof HTMLElement)) return
+
+        // "Where does it go?" buttons under the selected card
+        const choice = target.closest<HTMLElement>('[data-choose]')
+        if (choice) {
+          const card = getWrapper(choice)?.querySelector<HTMLElement>('[data-activity-id]')
+          const zone = zoneMap.get(choice.dataset.choose ?? '')
+          if (card && zone) performDrop(card, zone, { focusNext: true })
+          return
+        }
+
+        const card = target.closest<HTMLElement>('[data-activity-id]')
+        if (card) handleCardClick(card)
+      })
+
+      root.addEventListener('keydown', (e) => {
+        const target = e.target
+        if (!(target instanceof HTMLElement)) return
+
+        const card = target.closest<HTMLElement>('[data-activity-id]')
+        if (card && target === card) {
+          if (e.key === 'Escape' && selectedCard === card) {
+            deselectCard()
+            return
+          }
+          if ((e.key !== 'Enter' && e.key !== ' ') || e.repeat || card.dataset.placed === 'true') return
+          e.preventDefault()
+          const wasSelected = selectedCard === card
+          handleCardClick(card)
+          // Newly selected → continue with the buttons right below the card
+          if (!wasSelected && selectedCard === card) getChoices(card)?.querySelector<HTMLElement>('button')?.focus()
+          return
+        }
+
+        // Escape inside the zone buttons: back to the card
+        if (e.key === 'Escape' && target.closest('.activity-card__choices') && selectedCard) {
+          const back = selectedCard
+          deselectCard()
+          back.focus()
         }
       })
 
-      // Restart buttons
+      actionButtons.forEach((button) => button.addEventListener('click', () => handleAction(button)))
+      cleanupNext.addEventListener('click', () => {
+        profileIndex++
+        if (profileIndex >= profileDeck.length) showFinal()
+        else renderProfile()
+      })
+      root.querySelector('[data-to-cleanup]')?.addEventListener('click', startCleanup)
       restartBtns.forEach((btn) => btn.addEventListener('click', restart))
 
       // Initial setup
-      shuffleTray()
-      updateScore()
+      deal()
+      showStage('sort')
     })
   }
 
@@ -498,22 +712,23 @@ const totalActivities = activities.length
 </script>
 
 <style>
-  /* ── Tip card ──────────────────────────────────────────────────────────── */
-  .tip-card {
-    border-radius: 0.9rem;
-    border: 1px solid color-mix(in oklab, var(--brand-DP), white 50%);
-    background: linear-gradient(135deg, color-mix(in oklab, var(--brand-DP), white 88%), color-mix(in oklab, var(--brand-DP), white 96%));
-    padding: 1rem 1.25rem;
-    font-size: 0.95rem;
-    color: color-mix(in oklab, var(--brand-DP), black 40%);
-  }
 
-  /* ── Game wrapper ──────────────────────────────────────────────────────── */
+  /* ── Game wrapper ────────────────────────────────────────────────────────── */
   .fp-game {
     margin-bottom: var(--space-3xl);
   }
 
-  /* ── Toolbar ───────────────────────────────────────────────────────────── */
+  .fp-game__stage {
+    margin: 0 0 var(--space-s);
+    font-size: var(--font-size-1);
+    font-weight: 700;
+  }
+
+  .fp-game__stage[hidden] {
+    display: none;
+  }
+
+  /* ── Toolbar ─────────────────────────────────────────────────────────────── */
   .fp-game__toolbar {
     display: flex;
     align-items: center;
@@ -540,34 +755,55 @@ const totalActivities = activities.length
 
   .fp-game__restart:where(:hover, :focus-visible) {
     background-color: var(--link-color);
-    color: white;
+    color: var(--background-color);
   }
 
-  /* ── Feedback message ──────────────────────────────────────────────────── */
+  /* ── Feedback message (sticks to the top while the board is scrolled) ─────── */
   .fp-game__feedback {
-    display: none;
-    min-height: 1.8rem;
-    font-weight: 600;
-    font-size: var(--font-size-0);
+    position: sticky;
+    top: 0.75rem;
+    z-index: 20;
     margin-bottom: var(--space-s);
     padding: var(--space-s) var(--space-m);
     border-radius: var(--radius-m);
-    transition: color 0.2s;
+    box-shadow: var(--elevation-2);
+    font-size: var(--font-size-0);
+    line-height: 1.5;
+  }
+
+  .fp-game__feedback[hidden] {
+    display: none;
+  }
+
+  .fp-game__feedback-title {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .fp-game__feedback-text {
+    margin: var(--space-3xs) 0 0;
+    font-weight: 500;
   }
 
   .fp-game__feedback--correct {
-    color: #15803d;
+    color: #14532d;
     background-color: #f0fdf4;
     border: 1px solid #86efac;
   }
 
   .fp-game__feedback--wrong {
-    color: #b91c1c;
+    color: #7f1d1d;
     background-color: #fef2f2;
     border: 1px solid #fca5a5;
   }
 
-  /* ── Game board layout ─────────────────────────────────────────────────── */
+  .fp-game__feedback--info {
+    color: #1e3a5f;
+    background-color: #eff6ff;
+    border: 1px solid #93c5fd;
+  }
+
+  /* ── Game board layout ───────────────────────────────────────────────────── */
   .fp-game__board {
     display: grid;
     grid-template-columns: 1fr 1.5fr;
@@ -581,7 +817,7 @@ const totalActivities = activities.length
     }
   }
 
-  /* ── Tray (source area) ────────────────────────────────────────────────── */
+  /* ── Tray (source area) ──────────────────────────────────────────────────── */
   .fp-game__tray {
     padding: var(--space-m);
     border-radius: var(--radius-l);
@@ -608,7 +844,7 @@ const totalActivities = activities.length
     flex-direction: column;
   }
 
-  /* ── Activity card ─────────────────────────────────────────────────────── */
+  /* ── Activity card ───────────────────────────────────────────────────────── */
   .activity-card {
     display: flex;
     align-items: center;
@@ -638,9 +874,9 @@ const totalActivities = activities.length
   }
 
   .activity-card--selected {
-    border-color: var(--brand-DP);
-    background-color: color-mix(in oklab, var(--brand-DP), white 92%);
-    box-shadow: 0 0 0 3px color-mix(in oklab, var(--brand-DP), transparent 70%);
+    border-color: #3b82f6;
+    background-color: #eff6ff;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
   }
 
   .activity-card--dragging {
@@ -649,13 +885,13 @@ const totalActivities = activities.length
   }
 
   .activity-card--placed {
-    cursor: default;
+    cursor: pointer;
     opacity: 0.85;
     border-color: #d1d5db;
   }
 
   .activity-card--placed .activity-card__text {
-    color: #9ca3af;
+    color: #6b7280;
   }
 
   .activity-card--wrong {
@@ -688,26 +924,24 @@ const totalActivities = activities.length
     display: none;
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--brand-DP);
+    color: #10b981;
   }
 
   .activity-card--placed .activity-card__check {
     display: block;
   }
 
-  /* ── Inline explanation (below each card) ──────────────────────────────── */
-  .activity-card__explanation {
-    display: none;
+  /* ── "Where does it go?" buttons under the selected card ──────────────────── */
+  .activity-card__choices {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-2xs);
     margin: var(--space-2xs) 0 var(--space-xs);
-    padding: var(--space-s) var(--space-m);
-    border-radius: var(--radius-s);
-    border: 1px solid #cbd5e1;
-    border-left: 3px solid #94a3b8;
-    background-color: #e5e7eb;
-    color: #1f2937;
-    font-size: 0.88rem;
-    line-height: 1.5;
-    animation: fadeIn 0.25s ease;
+    animation: fadeIn 0.2s ease;
+  }
+
+  .activity-card__choices[hidden] {
+    display: none;
   }
 
   @keyframes fadeIn {
@@ -715,20 +949,42 @@ const totalActivities = activities.length
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* ── Zones container ───────────────────────────────────────────────────── */
-  .fp-game__zones {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-m);
+  .zone-choice {
+    min-height: 44px;
+    padding: var(--space-2xs) var(--space-s);
+    border-radius: var(--radius-m);
+    border: 2px solid;
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.25;
+    cursor: pointer;
+    text-align: center;
   }
 
-  /* ── Drop zones ────────────────────────────────────────────────────────── */
+  .zone-choice:focus-visible {
+    outline: 3px solid #3b82f6;
+    outline-offset: 2px;
+  }
+
+  .zone-choice--purpose { color: #115e59; background: #f0fdfa; border-color: #0f766e; }
+  .zone-choice--background { color: #312e81; background: #eef2ff; border-color: #4338ca; }
+  .zone-choice--none { color: #374151; background: #f3f4f6; border-color: #4b5563; }
+
+  /* ── Zones container ─────────────────────────────────────────────────────── */
+  .fp-game__zones {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-m);
+    align-content: start;
+  }
+
+  /* ── Drop zones ──────────────────────────────────────────────────────────── */
   .drop-zone {
     padding: var(--space-m);
     border-radius: var(--radius-l);
     border: 2px dashed #ccc;
     background-color: #fafafa;
-    min-height: 250px;
+    min-height: 170px;
     transition:
       border-color 0.2s,
       background-color 0.2s,
@@ -738,35 +994,25 @@ const totalActivities = activities.length
   }
 
   .drop-zone--active {
-    box-shadow: 0 0 0 3px color-mix(in oklab, var(--brand-DP), transparent 70%);
-    background-color: color-mix(in oklab, var(--brand-DP), white 94%);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+    background-color: #f0f9ff;
   }
 
-  .drop-zone--footprint {
-    border-color: #10b981;
-    background-color: #f0fdf4;
-  }
+  .drop-zone--purpose { border-color: #0d9488; background-color: #f0fdfa; }
+  .drop-zone--purpose.drop-zone--active { background-color: #ccfbf1; box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.3); }
 
-  .drop-zone--footprint.drop-zone--active {
-    background-color: #dcfce7;
-    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
-  }
+  .drop-zone--background { border-color: #6366f1; background-color: #eef2ff; }
+  .drop-zone--background.drop-zone--active { background-color: #e0e7ff; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3); }
 
-  .drop-zone--no-footprint {
-    border-color: #ef4444;
-    background-color: #fef2f2;
-  }
-
-  .drop-zone--no-footprint.drop-zone--active {
-    background-color: #fee2e2;
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
-  }
+  .drop-zone--none { border-color: #6b7280; background-color: #f3f4f6; }
+  .drop-zone--none.drop-zone--active { background-color: #e5e7eb; box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.3); }
 
   .drop-zone__header {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
-    margin-bottom: var(--space-m);
+    gap: var(--space-s);
+    margin-bottom: var(--space-s);
   }
 
   .drop-zone__title {
@@ -775,12 +1021,15 @@ const totalActivities = activities.length
     margin: 0;
   }
 
-  .drop-zone--footprint .drop-zone__title {
-    color: #15803d;
-  }
+  .drop-zone--purpose .drop-zone__title { color: #115e59; }
+  .drop-zone--background .drop-zone__title { color: #312e81; }
+  .drop-zone--none .drop-zone__title { color: #374151; }
 
-  .drop-zone--no-footprint .drop-zone__title {
-    color: #b91c1c;
+  .drop-zone__hint {
+    margin: var(--space-3xs) 0 0;
+    font-size: 0.82rem;
+    line-height: 1.35;
+    color: #374151;
   }
 
   .drop-zone__icon {
@@ -796,7 +1045,7 @@ const totalActivities = activities.length
   }
 
   .drop-zone__empty {
-    color: #9ca3af;
+    color: #4b5563;
     font-size: 0.9rem;
     text-align: center;
     display: flex;
@@ -820,14 +1069,166 @@ const totalActivities = activities.length
     font-size: 0.85rem;
   }
 
-  .drop-zone .activity-card__explanation {
-    font-size: 0.82rem;
-    padding: var(--space-2xs) var(--space-s);
+  /* ── Between the steps ───────────────────────────────────────────────────── */
+  .fp-game__between {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-s);
+    margin: var(--space-xl) 0;
+    padding: var(--space-xl);
+    border-radius: var(--radius-l);
+    border: 3px solid #0d9488;
+    background: linear-gradient(135deg, #f0fdfa, #ccfbf1);
+    box-shadow: var(--elevation-2);
+    text-align: center;
   }
 
-  /* ── Win panel ─────────────────────────────────────────────────────────── */
+  .fp-game__between[hidden] {
+    display: none;
+  }
+
+  .fp-game__between-icon {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .fp-game__between h2 {
+    margin: 0;
+    color: #115e59;
+    font-size: var(--font-size-3);
+  }
+
+  .fp-game__between-summary {
+    margin: 0;
+    color: #115e59;
+    font-size: var(--font-size-2);
+    font-weight: 700;
+  }
+
+  /* ── Step 2: clean up a profile ──────────────────────────────────────────── */
+  .cleanup[hidden] {
+    display: none;
+  }
+
+  .cleanup__intro h2 {
+    margin: 0 0 var(--space-2xs);
+    font-size: var(--font-size-3);
+  }
+
+  .cleanup__intro p {
+    margin: 0 0 var(--space-m);
+  }
+
+  .cleanup__progress {
+    font-size: var(--font-size-0);
+    font-weight: 700;
+  }
+
+  .cleanup-card {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-m);
+    max-width: 40rem;
+    margin-bottom: var(--space-m);
+    padding: var(--space-m);
+    border-radius: var(--radius-l);
+    border: 2px solid #d1d5db;
+    background-color: white;
+    box-shadow: var(--elevation-1);
+  }
+
+  .cleanup-card__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: #ccfbf1;
+    font-size: 1.75rem;
+  }
+
+  .cleanup-card__body {
+    min-width: 0;
+  }
+
+  .cleanup-card__label {
+    margin: 0;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #374151;
+  }
+
+  .cleanup-card__value {
+    margin: var(--space-3xs) 0 var(--space-2xs);
+    font-size: var(--font-size-1);
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--color-neutral-800);
+    overflow-wrap: anywhere;
+  }
+
+  .cleanup-card__visible {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #374151;
+  }
+
+  .cleanup-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-s);
+    max-width: 40rem;
+  }
+
+  .cleanup-action {
+    min-height: 48px;
+    padding: var(--space-xs) var(--space-s);
+    border-radius: var(--radius-m);
+    border: 2px solid;
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.3;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .cleanup-action:focus-visible {
+    outline: 3px solid #3b82f6;
+    outline-offset: 2px;
+  }
+
+  .cleanup-action--delete { color: #7f1d1d; background: #fef2f2; border-color: #b91c1c; }
+  .cleanup-action--hide { color: #78350f; background: #fffbeb; border-color: #b45309; }
+  .cleanup-action--change { color: #1e3a8a; background: #eff6ff; border-color: #1d4ed8; }
+  .cleanup-action--keep { color: #14532d; background: #f0fdf4; border-color: #15803d; }
+
+  .cleanup-action:disabled {
+    cursor: default;
+  }
+
+  .cleanup-action.is-right { box-shadow: 0 0 0 3px #fff, 0 0 0 6px #15803d; }
+  .cleanup-action.is-wrong { box-shadow: 0 0 0 3px #fff, 0 0 0 6px #b91c1c; }
+
+  .cleanup__next {
+    margin-top: var(--space-m);
+  }
+
+  .cleanup__next[hidden] {
+    display: none;
+  }
+
+  /* ── Win panel ───────────────────────────────────────────────────────────── */
   .fp-game__win {
     margin-top: var(--space-xl);
+  }
+
+  .fp-game__win[hidden] {
+    display: none;
   }
 
   .fp-game__win-inner {
@@ -837,8 +1238,8 @@ const totalActivities = activities.length
     gap: var(--space-s);
     padding: var(--space-xl);
     border-radius: var(--radius-l);
-    border: 3px solid var(--brand-DP);
-    background: linear-gradient(135deg, color-mix(in oklab, var(--brand-DP), white 92%), color-mix(in oklab, var(--brand-DP), white 84%));
+    border: 3px solid #0d9488;
+    background: linear-gradient(135deg, #f0fdfa, #ccfbf1);
     box-shadow: var(--elevation-2);
     text-align: center;
     animation: slideUp 0.5s ease;
@@ -867,23 +1268,76 @@ const totalActivities = activities.length
   }
 
   .fp-game__win-inner h2 {
-    color: color-mix(in oklab, var(--brand-DP), black 40%);
+    color: #115e59;
     margin: 0;
     font-size: var(--font-size-3);
   }
 
   .fp-game__win-inner p {
-    color: color-mix(in oklab, var(--brand-DP), black 30%);
+    color: #134e4a;
     max-width: 50ch;
     margin: 0;
     font-size: var(--font-size-0);
+  }
+
+  .fp-game__win-inner .fp-game__win-summary {
+    font-size: var(--font-size-2);
+    font-weight: 700;
   }
 
   .fp-game__win-inner .button {
     margin-top: var(--space-s);
   }
 
-  /* ── Responsive adjustments ────────────────────────────────────────────── */
+  .fp-game__review {
+    width: 100%;
+    max-width: 44rem;
+    margin-top: var(--space-s);
+    padding: var(--space-m);
+    border-radius: var(--radius-m);
+    background: rgba(255, 255, 255, 0.7);
+    text-align: left;
+  }
+
+  .fp-game__review[hidden] {
+    display: none;
+  }
+
+  .fp-game__review-title {
+    margin: 0 0 var(--space-xs);
+    font-size: var(--font-size-0);
+    font-weight: 700;
+    color: #115e59;
+  }
+
+  .fp-game__review-list {
+    display: grid;
+    gap: var(--space-xs);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .fp-game__review-item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-3xs) var(--space-s);
+    font-size: 0.9rem;
+    color: #134e4a;
+  }
+
+  .fp-game__review-answer {
+    font-weight: 700;
+  }
+
+  /* ── Responsive adjustments ──────────────────────────────────────────────– */
+  @media (min-width: 641px) {
+    .activity-card__choices {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
   @media (max-width: 640px) {
     .activity-card {
       padding: var(--space-s);
@@ -899,10 +1353,10 @@ const totalActivities = activities.length
     }
 
     .drop-zone {
-      min-height: 180px;
+      min-height: 140px;
     }
 
-    .fp-game__zones {
+    .cleanup-actions {
       grid-template-columns: 1fr;
     }
   }

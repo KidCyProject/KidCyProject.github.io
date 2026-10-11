@@ -1,55 +1,65 @@
 ---
 import DefaultLayout from '@layouts/DefaultLayout.astro'
 import PageHeader from '@components/PageHeader.astro'
+import ChallengeIntro from '@components/ChallengeIntro.astro'
+import ChallengeProgress from '@components/ChallengeProgress.astro'
+import HintPanel from '@components/HintPanel.astro'
+import HelpBox from '@components/HelpBox.astro'
 import { useTranslations } from 'src/i18n/index'
 import { toJsonScript } from '../../../utils/jsonScript'
+import { SE_CASES_PER_GAME, SE_SCENARIOS } from '../../../data/seScenarios'
 
 const { t, v } = useTranslations(Astro.currentLocale)
 const { v: vEn } = useTranslations('en')
 
-type Scenario = {
-  id: number
-  type: 'email' | 'chat'
-  from: string
-  subject?: string
-  message: string
-  correct: 'trust' | 'ignore-report'
-  explanation: string
-  tactic: string
-}
+// Answer key (channel, best action, trick, goal) comes from src/data/seScenarios.ts and is the same for
+// every language. The translation files only hold the text of each case, matched by id.
+type CaseText = { id: number; from?: string; subject?: string; message?: string; explanation?: string }
+const rawText = v<ReadonlyArray<CaseText>>('challengeSE.scenarios') ?? []
+const enText = vEn<ReadonlyArray<CaseText>>('challengeSE.scenarios') ?? []
+const textFor = (list: ReadonlyArray<CaseText>, id: number) => list.find((c) => Number(c.id) === id)
 
-const rawScenarios = v<ReadonlyArray<Record<string, unknown>>>('challengeSE.scenarios') ?? []
-const enScenarios = vEn<ReadonlyArray<Record<string, unknown>>>('challengeSE.scenarios') ?? []
-const scenarioCount = Math.max(rawScenarios.length, enScenarios.length)
-
-const scenarios: Scenario[] = Array.from({ length: scenarioCount }, (_, idx) => {
-  const raw = rawScenarios[idx] ?? {}
-  const fb = enScenarios[idx] ?? {}
-  const correct = (raw.correct ?? fb.correct) as string
-  const type = (raw.type ?? fb.type) as string
+const scenarios = SE_SCENARIOS.map((rule) => {
+  const raw = textFor(rawText, rule.id)
+  const fb = textFor(enText, rule.id)
   return {
-    id: (raw.id ?? fb.id ?? idx + 1) as number,
-    type: type === 'chat' ? 'chat' : 'email',
-    from: String(raw.from ?? fb.from ?? ''),
-    subject: raw.subject !== undefined ? String(raw.subject) : fb.subject !== undefined ? String(fb.subject) : undefined,
-    message: String(raw.message ?? fb.message ?? ''),
-    correct: correct === 'trust' ? 'trust' : 'ignore-report',
-    explanation: String(raw.explanation ?? fb.explanation ?? ''),
-    tactic: String(raw.tactic ?? fb.tactic ?? ''),
+    ...rule,
+    from: String(raw?.from ?? fb?.from ?? ''),
+    subject: raw?.subject ?? fb?.subject,
+    message: String(raw?.message ?? fb?.message ?? ''),
+    explanation: String(raw?.explanation ?? fb?.explanation ?? ''),
   }
 })
+
+const tactics = v<Record<string, { label: string; desc: string }>>('challengeSE.tactics') ?? {}
+const wants = v<Record<string, string>>('challengeSE.wants') ?? {}
+const stca = v<ReadonlyArray<{ icon: string; label: string; text: string }>>('challengeSE.stca') ?? []
+const redFlags = v<string[]>('challengeSE.redFlags') ?? vEn<string[]>('challengeSE.redFlags') ?? []
 
 const labels = {
   caseLabel: t('challengeSE.caseLabel'),
   ofLabel: t('challengeSE.ofLabel'),
-  fromLabel: t('challengeSE.fromLabel'),
-  subjectLabel: t('challengeSE.subjectLabel'),
-  messageLabel: t('challengeSE.messageLabel'),
-  trustButton: t('challengeSE.trustButton'),
-  ignoreButton: t('challengeSE.ignoreButton'),
   nextCase: t('challengeSE.nextCase'),
-  correctLabel: t('challengeSE.correctLabel'),
+  bestLabel: t('challengeSE.bestLabel'),
+  safeLabel: t('challengeSE.safeLabel'),
   incorrectLabel: t('challengeSE.incorrectLabel'),
+  bestAnswerTemplate: t('challengeSE.bestAnswerTemplate'),
+  actionTrust: t('challengeSE.actionTrust'),
+  actionCheck: t('challengeSE.actionCheck'),
+  actionReport: t('challengeSE.actionReport'),
+  safeNoteOverCautious: t('challengeSE.safeNoteOverCautious'),
+  safeNoteAskOnScam: t('challengeSE.safeNoteAskOnScam'),
+  safeNoteReportOnCheck: t('challengeSE.safeNoteReportOnCheck'),
+  quizTitle: t('challengeSE.quizTitle'),
+  quizCorrectTemplate: t('challengeSE.quizCorrectTemplate'),
+  quizWrongTemplate: t('challengeSE.quizWrongTemplate'),
+  trickLabel: t('challengeSE.trickLabel'),
+  wantLabel: t('challengeSE.wantLabel'),
+  emailBadge: t('challengeSE.emailBadge'),
+  chatBadge: t('challengeSE.chatBadge'),
+  smsBadge: t('challengeSE.smsBadge'),
+  callBadge: t('challengeSE.callBadge'),
+  personBadge: t('challengeSE.personBadge'),
   rankRookie: t('challengeSE.rankRookie'),
   rankRookieMsg: t('challengeSE.rankRookieMsg'),
   rankJunior: t('challengeSE.rankJunior'),
@@ -59,10 +69,11 @@ const labels = {
   rankMaster: t('challengeSE.rankMaster'),
   rankMasterMsg: t('challengeSE.rankMasterMsg'),
   casesIdentified: t('challengeSE.casesIdentified'),
-  redFlagDetected: 'Red Flag Detected',
+  tricksSpottedTemplate: t('challengeSE.tricksSpottedTemplate'),
+  safeCountTemplate: t('challengeSE.safeCountTemplate'),
 }
 
-const redFlags = v<string[]>('challengeSE.redFlags') ?? vEn<string[]>('challengeSE.redFlags') ?? []
+const startDescription = t('challengeSE.startDescription').replace('{n}', String(SE_CASES_PER_GAME))
 ---
 
 <DefaultLayout title={t('challengeSE.title')}>
@@ -73,27 +84,17 @@ const redFlags = v<string[]>('challengeSE.redFlags') ?? vEn<string[]>('challenge
     underlineColor="var(--brand-SE)"
   />
 
+  <ChallengeProgress />
+
   <script
     type="application/json"
     id="se-challenge-data"
-    set:html={toJsonScript({ scenarios, labels })}
+    set:html={toJsonScript({ scenarios, labels, tactics, wants })}
   />
 
   <section class="my-12">
     <div class="container">
-      <div class="mb-10 flex flex-col gap-6">
-        <h2 class="mb-2">{t('challengeSE.howItWorks')}</h2>
-        <p>
-          {t('challengeSE.instruction')}
-        </p>
-        <div class="tip-card">
-          <div class="tip-card__lead">
-            <span class="tip-card__icon" aria-hidden="true">💬</span>
-            <strong class="tip-card__label">{t('challengeSE.tipLabel')}</strong>
-          </div>
-          <div class="tip-card__body">{t('challengeSE.tip')}</div>
-        </div>
-      </div>
+      <ChallengeIntro ns="challengeSE" brand="SE" />
 
       <div class="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_350px]">
         <!-- Main Challenge Area -->
@@ -103,7 +104,7 @@ const redFlags = v<string[]>('challengeSE.redFlags') ?? vEn<string[]>('challenge
             <div class="mx-auto flex max-w-2xl flex-col gap-4 text-center">
               <h2 class="text-2xl font-bold text-slate-900">{t('challengeSE.startTitle')}</h2>
               <p class="text-slate-600">
-                {t('challengeSE.startDescription')}
+                {startDescription}
               </p>
               <button
                 id="btn-start-game"
@@ -138,6 +139,7 @@ const redFlags = v<string[]>('challengeSE.redFlags') ?? vEn<string[]>('challenge
                 <div
                   id="msg-icon"
                   class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-lg"
+                  aria-hidden="true"
                 >
                   ✉️
                 </div>
@@ -162,27 +164,36 @@ const redFlags = v<string[]>('challengeSE.redFlags') ?? vEn<string[]>('challenge
                 <div id="msg-body" class="mt-3 rounded-lg bg-white p-4 leading-relaxed text-slate-900"></div>
               </div>
 
-              <!-- Manipulation Tactic (shown after answer) -->
+              <!-- Trick used + what the attacker wanted (shown after the answer, only for tricks) -->
               <div id="tactic-container" class="hidden mb-4 rounded-lg bg-yellow-50 p-4 border border-yellow-200">
                 <p class="text-xs font-bold uppercase text-yellow-800 mb-1" id="red-flag-label"></p>
                 <p id="msg-tactic" class="text-sm font-semibold text-yellow-900"></p>
+                <p id="msg-want" class="mt-2 text-sm text-yellow-900"></p>
               </div>
             </div>
 
-            <!-- Action Buttons -->
-            <div class="grid grid-cols-2 gap-3">
+            <!-- Action Buttons: Stop – Think – Check – Ask -->
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
               <button
                 id="btn-trust"
-                class="rounded-lg bg-green-600 px-4 py-3 text-center font-semibold text-white transition hover:bg-green-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 disabled:cursor-not-allowed disabled:opacity-50"
-                id="btn-trust"
+                type="button"
+                class="rounded-lg bg-green-700 px-4 py-3 text-center font-semibold text-white transition hover:bg-green-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                <span id="btn-trust-label"></span>
+                {t('challengeSE.trustButton')}
               </button>
               <button
-                id="btn-ignore-report"
-                class="rounded-lg bg-red-600 px-4 py-3 text-center font-semibold text-white transition hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 disabled:cursor-not-allowed disabled:opacity-50"
+                id="btn-check"
+                type="button"
+                class="rounded-lg bg-blue-700 px-4 py-3 text-center font-semibold text-white transition hover:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                <span id="btn-ignore-label"></span>
+                {t('challengeSE.checkButton')}
+              </button>
+              <button
+                id="btn-report"
+                type="button"
+                class="rounded-lg bg-red-700 px-4 py-3 text-center font-semibold text-white transition hover:bg-red-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-700 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {t('challengeSE.ignoreButton')}
               </button>
             </div>
 
@@ -190,11 +201,20 @@ const redFlags = v<string[]>('challengeSE.redFlags') ?? vEn<string[]>('challenge
             <div id="feedback-container" class="hidden rounded-lg border-l-4 p-4" role="status" aria-live="assertive">
               <p id="feedback-text" class="font-semibold"></p>
               <p id="feedback-explanation" class="mt-2 text-sm"></p>
+              <p id="feedback-note" class="mt-2 text-sm font-semibold"></p>
+            </div>
+
+            <!-- Spot the trick (after a careful answer) -->
+            <div id="quiz-container" class="hidden rounded-lg border border-slate-300 bg-white p-4" role="group" aria-labelledby="quiz-title">
+              <p id="quiz-title" class="font-semibold text-slate-900"></p>
+              <div id="quiz-options" class="mt-3 grid gap-2 sm:grid-cols-3"></div>
+              <p id="quiz-result" class="mt-3 text-sm font-semibold text-slate-900" role="status" aria-live="polite"></p>
             </div>
 
             <!-- Next Button -->
             <button
               id="btn-next-case"
+              type="button"
               class="hidden w-full rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
             >
             </button>
@@ -203,7 +223,7 @@ const redFlags = v<string[]>('challengeSE.redFlags') ?? vEn<string[]>('challenge
           <!-- Game State: Results -->
           <div id="game-results" class="hidden space-y-6 text-center">
             <div>
-              <h2 class="text-3xl font-bold text-slate-900">{t('challengeSE.completedTitle')}</h2>
+              <h2 id="results-title" tabindex="-1" class="text-3xl font-bold text-slate-900">{t('challengeSE.completedTitle')}</h2>
               <p class="mt-2 text-lg text-slate-600">{t('challengeSE.completedDescription')}</p>
             </div>
 
@@ -211,6 +231,7 @@ const redFlags = v<string[]>('challengeSE.redFlags') ?? vEn<string[]>('challenge
             <div class="rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 p-8">
               <div class="text-5xl font-bold text-blue-600" id="final-score">0</div>
               <p class="mt-2 text-slate-600" id="cases-identified-label"></p>
+              <div id="final-extra" class="mt-3 space-y-1 text-sm text-slate-700"></div>
             </div>
 
             <!-- Rank Badge -->
@@ -220,10 +241,10 @@ const redFlags = v<string[]>('challengeSE.redFlags') ?? vEn<string[]>('challenge
               <p id="rank-message" class="text-slate-600">{t('challengeSE.defaultRankMessage')}</p>
             </div>
 
-            <!-- Summary -->
+            <!-- Review of every case -->
             <div class="rounded-lg bg-slate-50 p-6 text-left">
               <h3 class="mb-3 font-bold text-slate-900">{t('challengeSE.performanceSummary')}</h3>
-              <div id="summary-list" class="space-y-2 text-sm text-slate-700"></div>
+              <div id="summary-list" class="space-y-3 text-sm text-slate-700"></div>
             </div>
 
             <!-- Play Again Button -->
@@ -236,78 +257,120 @@ const redFlags = v<string[]>('challengeSE.redFlags') ?? vEn<string[]>('challenge
           </div>
         </div>
 
-        <!-- Side Panel: Detective Notes -->
-        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm h-fit sticky top-6">
-          <div class="mb-4">
-            <h3 class="text-base font-bold text-slate-900">{t('challengeSE.detectiveNotes')}</h3>
-            <p class="mt-1 text-xs text-slate-600">{t('challengeSE.detectiveTipsTitle')}</p>
-          </div>
+        <!-- Side Panel: Detective Notes (above the game, collapsed, on phones) -->
+        <div class="order-first h-fit lg:sticky lg:top-6 lg:order-none">
+          <HintPanel title={t('challengeSE.detectiveNotes')} subtitle={t('challengeSE.detectiveTipsTitle')}>
+            <!-- Stop – Think – Check – Ask -->
+            <div class="rounded-lg border border-blue-200 bg-blue-50 p-3 stca-box">
+              <p class="mb-2 text-sm font-bold text-blue-900">{t('challengeSE.stcaTitle')}</p>
+              <ol class="space-y-2">
+                {stca.map((step) => (
+                  <li class="flex gap-2 text-xs text-blue-900">
+                    <span aria-hidden="true">{step.icon}</span>
+                    <span><strong>{step.label}:</strong> {step.text}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
 
-          <div class="space-y-3 border-t border-slate-200 pt-4">
-            {redFlags.map((flag) => (
-              <div class="rounded-lg bg-red-50 p-3">
-                <p class="text-xs font-bold text-red-900">{flag}</p>
-              </div>
-            ))}
-          </div>
+            <div class="space-y-3 pt-2">
+              {redFlags.map((flag) => (
+                <div class="rounded-lg bg-red-50 p-3">
+                  <p class="text-xs font-bold text-red-900">{flag}</p>
+                </div>
+              ))}
+            </div>
 
-          <div class="mt-4 rounded-lg border border-blue-200 bg-blue-50 p-3 text-xs text-blue-900">
-            <strong>💡</strong> {t('challengeSE.proTip')}
-          </div>
+            <div class="mt-4 rounded-lg border border-blue-200 bg-blue-50 p-3 text-xs text-blue-900 stca-box">
+              <strong>💡</strong> {t('challengeSE.proTip')}
+            </div>
+          </HintPanel>
         </div>
       </div>
+
+      <!-- Where to find help (collapsed on phones) -->
+      <HelpBox class="mt-8" />
     </div>
   </section>
 
   <script>
+    import { dealDeck, evaluateChoice, quizOptions, rankFor } from '../../../data/seScenarios'
+    import { recordResult } from '../../../utils/challengeProgress'
+    import type { SeAction, SeOutcome, SeTactic } from '../../../data/seScenarios'
+
+    type Case = {
+      id: number
+      channel: 'email' | 'chat' | 'sms' | 'call' | 'person'
+      best: SeAction
+      tactic?: SeTactic
+      want?: 'information' | 'access' | 'money'
+      from: string
+      subject?: string
+      message: string
+      explanation: string
+    }
+
     const initializeChallenge = () => {
       const dataEl = document.getElementById('se-challenge-data')
       if (!dataEl) return
-      const { scenarios, labels } = JSON.parse(dataEl.textContent ?? '{}')
+      const { scenarios, labels, tactics, wants } = JSON.parse(dataEl.textContent ?? '{}') as {
+        scenarios: Case[]
+        labels: Record<string, string>
+        tactics: Record<string, { label: string; desc: string }>
+        wants: Record<string, string>
+      }
       if (!scenarios || !labels) return
 
-      const gameLoading = document.getElementById('game-loading')
-      const gamePlaying = document.getElementById('game-playing')
-      const gameResults = document.getElementById('game-results')
+      const $ = (id: string) => document.getElementById(id)
+      const gameLoading = $('game-loading')
+      const gamePlaying = $('game-playing')
+      const gameResults = $('game-results')
 
-      const btnStartGame = document.getElementById('btn-start-game')
-      const btnTrust = document.getElementById('btn-trust') as HTMLButtonElement | null
-      const btnIgnoreReport = document.getElementById('btn-ignore-report') as HTMLButtonElement | null
-      const btnNextCase = document.getElementById('btn-next-case') as HTMLButtonElement | null
-      const btnPlayAgain = document.getElementById('btn-play-again') as HTMLButtonElement | null
+      const btnStartGame = $('btn-start-game')
+      const btnTrust = $('btn-trust') as HTMLButtonElement | null
+      const btnCheck = $('btn-check') as HTMLButtonElement | null
+      const btnReport = $('btn-report') as HTMLButtonElement | null
+      const btnNextCase = $('btn-next-case') as HTMLButtonElement | null
+      const btnPlayAgain = $('btn-play-again') as HTMLButtonElement | null
 
-      const progressText = document.getElementById('progress-text')
-      const progressBar = document.getElementById('progress-bar')
-      const msgIcon = document.getElementById('msg-icon')
-      const msgTypeBadge = document.getElementById('msg-type-badge')
-      const msgFrom = document.getElementById('msg-from')
-      const msgSubject = document.getElementById('msg-subject')
-      const msgSubjectContainer = document.getElementById('msg-subject-container')
-      const msgBody = document.getElementById('msg-body')
-      const msgTactic = document.getElementById('msg-tactic')
-      const tacticContainer = document.getElementById('tactic-container')
-      const redFlagLabel = document.getElementById('red-flag-label')
+      const progressText = $('progress-text')
+      const progressBar = $('progress-bar')
+      const msgIcon = $('msg-icon')
+      const msgTypeBadge = $('msg-type-badge')
+      const msgFrom = $('msg-from')
+      const msgSubject = $('msg-subject')
+      const msgSubjectContainer = $('msg-subject-container')
+      const msgBody = $('msg-body')
+      const msgTactic = $('msg-tactic')
+      const msgWant = $('msg-want')
+      const tacticContainer = $('tactic-container')
+      const redFlagLabel = $('red-flag-label')
 
-      const feedbackContainer = document.getElementById('feedback-container')
-      const feedbackText = document.getElementById('feedback-text')
-      const feedbackExplanation = document.getElementById('feedback-explanation')
+      const feedbackContainer = $('feedback-container')
+      const feedbackText = $('feedback-text')
+      const feedbackExplanation = $('feedback-explanation')
+      const feedbackNote = $('feedback-note')
 
-      const finalScore = document.getElementById('final-score')
-      const rankDisplay = document.getElementById('rank-display')
-      const rankMessage = document.getElementById('rank-message')
-      const summaryList = document.getElementById('summary-list')
-      const casesIdentifiedLabel = document.getElementById('cases-identified-label')
+      const quizContainer = $('quiz-container')
+      const quizTitle = $('quiz-title')
+      const quizOptionsEl = $('quiz-options')
+      const quizResult = $('quiz-result')
 
-      const btnTrustLabel = document.getElementById('btn-trust-label')
-      const btnIgnoreLabel = document.getElementById('btn-ignore-label')
+      const finalScore = $('final-score')
+      const finalExtra = $('final-extra')
+      const rankDisplay = $('rank-display')
+      const rankMessage = $('rank-message')
+      const summaryList = $('summary-list')
+      const casesIdentifiedLabel = $('cases-identified-label')
 
       if (
         !gameLoading || !gamePlaying || !gameResults ||
-        !btnStartGame || !btnTrust || !btnIgnoreReport || !btnNextCase || !btnPlayAgain ||
+        !btnStartGame || !btnTrust || !btnCheck || !btnReport || !btnNextCase || !btnPlayAgain ||
         !progressText || !progressBar || !msgIcon || !msgTypeBadge || !msgFrom ||
-        !msgSubject || !msgSubjectContainer || !msgBody || !msgTactic || !tacticContainer ||
-        !feedbackContainer || !feedbackText || !feedbackExplanation ||
-        !finalScore || !rankDisplay || !rankMessage || !summaryList
+        !msgSubject || !msgSubjectContainer || !msgBody || !msgTactic || !msgWant || !tacticContainer || !redFlagLabel ||
+        !feedbackContainer || !feedbackText || !feedbackExplanation || !feedbackNote ||
+        !quizContainer || !quizTitle || !quizOptionsEl || !quizResult ||
+        !finalScore || !finalExtra || !rankDisplay || !rankMessage || !summaryList
       ) {
         return
       }
@@ -315,42 +378,61 @@ const redFlags = v<string[]>('challengeSE.redFlags') ?? vEn<string[]>('challenge
       if (btnStartGame.dataset.bound === 'true') return
       btnStartGame.dataset.bound = 'true'
 
-      // Set button labels from translated data
-      if (btnTrustLabel) btnTrustLabel.innerHTML = labels.trustButton.replace(' ', '<br />')
-      if (btnIgnoreLabel) btnIgnoreLabel.innerHTML = labels.ignoreButton.replace(' ', '<br />')
-      if (btnNextCase) btnNextCase.textContent = labels.nextCase
-      if (casesIdentifiedLabel) casesIdentifiedLabel.textContent = labels.casesIdentified
-      if (redFlagLabel) redFlagLabel.textContent = labels.redFlagDetected
+      const fmt = (template: string, vars: Record<string, string | number>) =>
+        String(template ?? '').replace(/\{(\w+)\}/g, (_m, key) => String(vars[key] ?? ''))
 
-      let deck: typeof scenarios[number][] = []
-      let currentIndex = 0
-      let score = 0
-      let answered = false
-      const answers: { scenario: number; correct: boolean }[] = []
-
-      const shuffle = <T,>(array: T[]): T[] => {
-        const copy = [...array]
-        for (let i = copy.length - 1; i > 0; i -= 1) {
-          const j = Math.floor(Math.random() * (i + 1))
-          const temp = copy[i]
-          copy[i] = copy[j]
-          copy[j] = temp
-        }
-        return copy
+      const scenarioById = new Map(scenarios.map((s) => [s.id, s]))
+      const actionName: Record<SeAction, string> = { trust: labels.actionTrust, check: labels.actionCheck, report: labels.actionReport }
+      const channelInfo: Record<Case['channel'], { icon: string; badge: string }> = {
+        email: { icon: '✉️', badge: labels.emailBadge },
+        chat: { icon: '💬', badge: labels.chatBadge },
+        sms: { icon: '📱', badge: labels.smsBadge },
+        call: { icon: '📞', badge: labels.callBadge },
+        person: { icon: '🧍', badge: labels.personBadge },
+      }
+      const wantIcon: Record<string, string> = { information: '🪪', access: '🔑', money: '💰' }
+      const outcomeIcon: Record<SeOutcome, string> = { best: '✅', safe: '🛡️', wrong: '❌' }
+      const outcomeText: Record<SeOutcome, string> = { best: labels.bestLabel, safe: labels.safeLabel, wrong: labels.incorrectLabel }
+      const feedbackClasses: Record<SeOutcome, string> = {
+        best: 'border-green-400 bg-green-50',
+        safe: 'fb-safe',
+        wrong: 'border-red-400 bg-red-50',
+      }
+      const feedbackTextClasses: Record<SeOutcome, string> = {
+        best: 'text-green-900',
+        safe: 'fb-safe-text',
+        wrong: 'text-red-900',
       }
 
+      if (btnNextCase) btnNextCase.textContent = labels.nextCase
+      if (redFlagLabel) redFlagLabel.textContent = labels.trickLabel
+      quizTitle.textContent = labels.quizTitle
+
+      type Answer = { scenario: Case; outcome: SeOutcome; trick: 'right' | 'wrong' | null }
+      let deck: Case[] = []
+      let currentIndex = 0
+      let answered = false
+      let answers: Answer[] = []
+
       const startGame = () => {
-        deck = shuffle(scenarios)
+        deck = dealDeck()
+          .map((rule) => scenarioById.get(rule.id))
+          .filter((s): s is Case => Boolean(s))
         currentIndex = 0
-        score = 0
         answered = false
-        answers.length = 0
+        answers = []
 
         gameLoading.classList.add('hidden')
         gamePlaying.classList.remove('hidden')
         gameResults.classList.add('hidden')
 
         showCase()
+      }
+
+      const setDecisionButtons = (disabled: boolean) => {
+        btnTrust.disabled = disabled
+        btnCheck.disabled = disabled
+        btnReport.disabled = disabled
       }
 
       const showCase = () => {
@@ -360,108 +442,180 @@ const redFlags = v<string[]>('challengeSE.redFlags') ?? vEn<string[]>('challenge
         }
 
         const scenario = deck[currentIndex]
+        const info = channelInfo[scenario.channel]
 
         msgFrom.textContent = scenario.from
         msgBody.textContent = scenario.message
+        msgIcon.textContent = info.icon
+        msgTypeBadge.textContent = info.badge
 
-        if (scenario.type === 'email') {
-          msgIcon.textContent = '✉️'
-          msgTypeBadge.textContent = 'Email'
+        if (scenario.channel === 'email') {
           msgSubject.textContent = scenario.subject ?? ''
           msgSubjectContainer.classList.remove('hidden')
         } else {
-          msgIcon.textContent = '💬'
-          msgTypeBadge.textContent = 'Chat'
           msgSubjectContainer.classList.add('hidden')
         }
 
-        const progress = (currentIndex / deck.length) * 100
-        progressBar.style.width = `${progress}%`
+        progressBar.style.width = `${(currentIndex / deck.length) * 100}%`
         progressText.textContent = `${labels.caseLabel} ${currentIndex + 1} ${labels.ofLabel} ${deck.length}`
 
         feedbackContainer.classList.add('hidden')
         tacticContainer.classList.add('hidden')
+        quizContainer.classList.add('hidden')
+        quizOptionsEl.replaceChildren()
+        quizResult.textContent = ''
         btnNextCase.classList.add('hidden')
 
-        btnTrust.disabled = false
-        btnIgnoreReport.disabled = false
-
+        setDecisionButtons(false)
         answered = false
+
+        // Land on the first decision button and let a screen reader read the message with it
+        const described = scenario.channel === 'email' ? 'msg-from msg-subject msg-body' : 'msg-from msg-body'
+        ;[btnTrust, btnCheck, btnReport].forEach((b) => b.setAttribute('aria-describedby', described))
+        btnTrust.focus()
       }
 
-      const handleAnswer = (choice: 'trust' | 'ignore-report') => {
+      const showNext = () => {
+        btnNextCase.classList.remove('hidden')
+        // The decision buttons / quiz just changed: hand the focus on once the live region starts reading
+        setTimeout(() => btnNextCase.focus(), 200)
+      }
+
+      const revealTrick = (scenario: Case) => {
+        if (!scenario.tactic) return
+        const tactic = tactics[scenario.tactic]
+        msgTactic.textContent = tactic ? `${tactic.label}: ${tactic.desc}` : ''
+        msgWant.textContent = scenario.want ? `${labels.wantLabel}: ${wantIcon[scenario.want] ?? ''} ${wants[scenario.want] ?? ''}` : ''
+        tacticContainer.classList.remove('hidden')
+      }
+
+      const handleAnswer = (choice: SeAction) => {
         if (answered) return
         answered = true
 
         const scenario = deck[currentIndex]
-        const isCorrect = scenario.correct === choice
+        const outcome = evaluateChoice(scenario, choice)
+        setDecisionButtons(true)
 
-        btnTrust.disabled = true
-        btnIgnoreReport.disabled = true
-
-        feedbackContainer.classList.remove('hidden')
-        if (isCorrect) {
-          feedbackContainer.classList.remove('border-red-400', 'bg-red-50')
-          feedbackContainer.classList.add('border-green-400', 'bg-green-50')
-          feedbackText.textContent = '✅ ' + labels.correctLabel + '!'
-          feedbackText.classList.remove('text-red-900')
-          feedbackText.classList.add('text-green-900')
-          score += 1
-        } else {
-          feedbackContainer.classList.remove('border-green-400', 'bg-green-50')
-          feedbackContainer.classList.add('border-red-400', 'bg-red-50')
-          feedbackText.textContent = '❌ ' + labels.incorrectLabel
-          feedbackText.classList.remove('text-green-900')
-          feedbackText.classList.add('text-red-900')
-        }
-
+        feedbackContainer.className = `rounded-lg border-l-4 p-4 ${feedbackClasses[outcome]}`
+        feedbackText.className = `font-semibold ${feedbackTextClasses[outcome]}`
+        feedbackText.textContent = `${outcomeIcon[outcome]} ${outcomeText[outcome]}`
         feedbackExplanation.textContent = scenario.explanation
-        msgTactic.textContent = scenario.tactic
-        tacticContainer.classList.remove('hidden')
-        btnNextCase.classList.remove('hidden')
 
-        answers.push({ scenario: scenario.id, correct: isCorrect })
+        // What to do better, in plain words
+        const notes: string[] = []
+        if (outcome === 'safe') {
+          if (choice === 'check') notes.push(scenario.best === 'trust' ? labels.safeNoteOverCautious : labels.safeNoteAskOnScam)
+          else notes.push(labels.safeNoteReportOnCheck)
+        }
+        if (outcome !== 'best') notes.push(fmt(labels.bestAnswerTemplate, { action: actionName[scenario.best] }))
+        feedbackNote.textContent = notes.join(' ')
+        feedbackNote.className = `mt-2 text-sm font-semibold ${feedbackTextClasses[outcome]}`
+
+        const answer: Answer = { scenario, outcome, trick: null }
+        answers.push(answer)
+
+        if (scenario.tactic && choice !== 'trust') {
+          startQuiz(scenario, answer)
+        } else {
+          revealTrick(scenario)
+          showNext()
+        }
+      }
+
+      // "Spot the trick": three buttons, one right answer
+      const startQuiz = (scenario: Case, answer: Answer) => {
+        if (!scenario.tactic) return
+        const correct = scenario.tactic
+        quizOptionsEl.replaceChildren(
+          ...quizOptions(correct).map((id) => {
+            const option = document.createElement('button')
+            option.type = 'button'
+            option.className = 'quiz-btn'
+            option.dataset.tactic = id
+            option.textContent = tactics[id]?.label ?? id
+            option.addEventListener('click', () => {
+              const isRight = id === correct
+              answer.trick = isRight ? 'right' : 'wrong'
+              quizOptionsEl.querySelectorAll<HTMLButtonElement>('.quiz-btn').forEach((b) => {
+                b.disabled = true
+                if (b.dataset.tactic === correct) b.classList.add('quiz-btn--right')
+              })
+              if (!isRight) option.classList.add('quiz-btn--wrong')
+              quizResult.textContent = fmt(isRight ? labels.quizCorrectTemplate : labels.quizWrongTemplate, { tactic: tactics[correct]?.label ?? correct })
+              revealTrick(scenario)
+              showNext()
+            })
+            return option
+          }),
+        )
+        quizContainer.classList.remove('hidden')
+        // After the feedback has been read, move on to the question
+        setTimeout(() => quizOptionsEl.querySelector<HTMLButtonElement>('.quiz-btn')?.focus(), 200)
       }
 
       const showResults = () => {
         gamePlaying.classList.add('hidden')
         gameResults.classList.remove('hidden')
+        $('results-title')?.focus()
 
-        let rank = ''
-        let message = ''
+        const total = answers.length
+        const best = answers.filter((a) => a.outcome === 'best').length
+        const safe = answers.filter((a) => a.outcome === 'safe').length
+        const tricksAsked = answers.filter((a) => a.trick !== null).length
+        const tricksSpotted = answers.filter((a) => a.trick === 'right').length
 
-        if (score <= 4) {
-          rank = labels.rankRookie
-          message = labels.rankRookieMsg
-        } else if (score <= 8) {
-          rank = labels.rankJunior
-          message = labels.rankJuniorMsg
-        } else if (score <= 12) {
-          rank = labels.rankSenior
-          message = labels.rankSeniorMsg
-        } else {
-          rank = labels.rankMaster
-          message = labels.rankMasterMsg
+        recordResult('se', best, total)
+        const rank = rankFor(best, total)
+        const rankText = {
+          rookie: [labels.rankRookie, labels.rankRookieMsg],
+          junior: [labels.rankJunior, labels.rankJuniorMsg],
+          senior: [labels.rankSenior, labels.rankSeniorMsg],
+          master: [labels.rankMaster, labels.rankMasterMsg],
+        }[rank]
+
+        finalScore.textContent = String(best)
+        if (casesIdentifiedLabel) casesIdentifiedLabel.textContent = fmt(labels.casesIdentified, { n: total })
+        rankDisplay.textContent = rankText[0]
+        rankMessage.textContent = rankText[1]
+
+        finalExtra.replaceChildren()
+        const addExtra = (text: string) => {
+          const line = document.createElement('p')
+          line.textContent = text
+          finalExtra.appendChild(line)
         }
+        if (tricksAsked > 0) addExtra(fmt(labels.tricksSpottedTemplate, { n: tricksSpotted, total: tricksAsked }))
+        if (safe > 0) addExtra(fmt(labels.safeCountTemplate, { n: safe }))
 
-        finalScore.textContent = String(score)
-        rankDisplay.textContent = rank
-        rankMessage.textContent = message
-
-        summaryList.innerHTML = ''
-        answers.forEach((answer, idx) => {
-          const scenario = deck[idx]
-          const icon = answer.correct ? '✅' : '❌'
-          const line = document.createElement('div')
-          line.className = 'flex items-center gap-2'
-          line.innerHTML = `<span>${icon}</span><span>${labels.caseLabel} ${scenario.id}: ${answer.correct ? labels.correctLabel : labels.incorrectLabel}</span>`
-          summaryList.appendChild(line)
-        })
+        // Review: every case, and what the best answer was when it was not chosen
+        summaryList.replaceChildren(
+          ...answers.map((answer, idx) => {
+            const row = document.createElement('div')
+            row.className = 'flex items-start gap-2'
+            const icon = document.createElement('span')
+            icon.setAttribute('aria-hidden', 'true')
+            icon.textContent = outcomeIcon[answer.outcome]
+            const body = document.createElement('div')
+            const title = document.createElement('p')
+            title.className = 'font-semibold'
+            title.textContent = `${labels.caseLabel} ${idx + 1}: ${answer.scenario.from} — ${outcomeText[answer.outcome]}`
+            body.appendChild(title)
+            if (answer.outcome !== 'best') {
+              const hint = document.createElement('p')
+              hint.textContent = fmt(labels.bestAnswerTemplate, { action: actionName[answer.scenario.best] })
+              body.appendChild(hint)
+            }
+            row.append(icon, body)
+            return row
+          }),
+        )
       }
 
       btnStartGame.addEventListener('click', startGame)
       btnTrust.addEventListener('click', () => handleAnswer('trust'))
-      btnIgnoreReport.addEventListener('click', () => handleAnswer('ignore-report'))
+      btnCheck.addEventListener('click', () => handleAnswer('check'))
+      btnReport.addEventListener('click', () => handleAnswer('report'))
       btnNextCase.addEventListener('click', () => {
         currentIndex += 1
         showCase()
@@ -474,14 +628,6 @@ const redFlags = v<string[]>('challengeSE.redFlags') ?? vEn<string[]>('challenge
   </script>
 
   <style>
-    .tip-card {
-      border-radius: 0.9rem;
-      border: 1px solid color-mix(in oklab, var(--brand-SE), white 50%);
-      background: linear-gradient(135deg, color-mix(in oklab, var(--brand-SE), white 88%), color-mix(in oklab, var(--brand-SE), white 96%));
-      padding: 1rem 1.25rem;
-      font-size: 0.95rem;
-      color: color-mix(in oklab, var(--brand-SE), black 40%);
-    }
 
     :global(body) {
       --tw-bg-opacity: 1;
@@ -489,6 +635,94 @@ const redFlags = v<string[]>('challengeSE.redFlags') ?? vEn<string[]>('challenge
 
     button:disabled {
       cursor: not-allowed;
+    }
+
+    /* "Safe choice" feedback: blue, between the green (best) and the red (wrong) */
+    #feedback-container.fb-safe {
+      border-color: #60a5fa;
+      background: #eff6ff;
+    }
+
+    .fb-safe-text {
+      color: #1e3a8a;
+    }
+
+    /* The answer buttons of "Spot the trick" are created by the script (no Astro scope attribute) */
+    #quiz-options :global(.quiz-btn) {
+      min-height: 44px;
+      padding: 0.5rem 0.75rem;
+      border: 2px solid #94a3b8;
+      border-radius: 0.5rem;
+      background: #ffffff;
+      color: #1e293b;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    #quiz-options :global(.quiz-btn:hover:not(:disabled)) {
+      background: #eff6ff;
+      border-color: #2563eb;
+    }
+
+    #quiz-options :global(.quiz-btn:focus-visible) {
+      outline: 3px solid #2563eb;
+      outline-offset: 2px;
+    }
+
+    #quiz-options :global(.quiz-btn:disabled) {
+      cursor: default;
+      opacity: 1;
+    }
+
+    #quiz-options :global(.quiz-btn--right) {
+      border-color: #15803d;
+      background: #dcfce7;
+      color: #14532d;
+    }
+
+    #quiz-options :global(.quiz-btn--wrong) {
+      border-color: #b91c1c;
+      background: #fee2e2;
+      color: #7f1d1d;
+    }
+
+    :global(.darkmode) #feedback-container.fb-safe {
+      border-color: #3b82f6;
+      background: #14213d;
+    }
+
+    :global(.darkmode) .fb-safe-text {
+      color: #bfdbfe;
+    }
+
+    :global(.darkmode) .stca-box {
+      background: #14213d !important;
+      border-color: #3b5b9a !important;
+    }
+
+    :global(.darkmode) .stca-box,
+    :global(.darkmode) .stca-box * {
+      color: #bfdbfe !important;
+    }
+
+    :global(.darkmode) #quiz-options :global(.quiz-btn) {
+      background: #1e293b;
+      border-color: #64748b;
+      color: #e2e8f0;
+    }
+
+    :global(.darkmode) #quiz-options :global(.quiz-btn--right) {
+      background: #052820;
+      border-color: #34d399;
+      color: #6ee7b7;
+    }
+
+    :global(.darkmode) #quiz-options :global(.quiz-btn--wrong) {
+      background: #2a0f0f;
+      border-color: #f87171;
+      color: #fca5a5;
     }
   </style>
 </DefaultLayout>

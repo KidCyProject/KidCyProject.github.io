@@ -90,10 +90,43 @@ export const shared = {
     about: {
       title: 'O projektu',
       subtitle:
-        'Zjistěte více o našem poslání vytvořit bezpečnější digitální prostředí. Ponořte se do našich vzdělávacích modulů, které učí o digitálním občanství, ověřování totožnosti, soukromí dat a dalších tématech.',
+        'Bezplatnou sadu nástrojů vytvořilo pět evropských partnerů, aby mohl každý učitel přinést kyberbezpečnost do třídy.',
 
       cofundEU: 'Podporováno EU',
-      cofundEUDesc: 'Tento projekt je spolufinancován Evropskou unií v rámci programu Digitální Evropa.',
+      cofundEUDesc: 'Tento projekt je spolufinancován Evropskou unií v rámci programu Erasmus+.',
+
+      missionStatement: 'Kyberbezpečnost je zásadní životní dovednost, ne téma jen pro odborníky.',
+      missionSummary: 'Děti tráví online stále více času, ale mnoho učitelů nemá hotové materiály vhodné pro daný věk. My tuto mezeru zaplňujeme.',
+      benefitsEyebrow: 'Kdo má prospěch',
+      benefitsTitle: 'Vytvořeno pro lidi ve vzdělávání',
+      benefitEducators: 'Pedagogové',
+      benefitEducatorsDesc: 'Hotové a flexibilní materiály o kyberbezpečnosti, bez nutnosti hlubokých technických znalostí.',
+      benefitStudents: 'Žáci',
+      benefitStudentsDesc: 'Praktické dovednosti digitální bezpečnosti díky interaktivním a nezapomenutelným zážitkům z učení.',
+      benefitSchools: 'Školy a partneři',
+      benefitSchoolsDesc: 'Škálovatelný rámec pro zvyšování kybernetické gramotnosti v různých prostředích.',
+      coreValuesEyebrow: 'Čím se řídíme',
+      partnersEyebrow: 'Projekt KidCy',
+      partnersHeading: 'Pět partnerů, pět zemí',
+      visitWebsite: 'Navštívit web',
+      countryLI: 'Lichtenštejnsko',
+      countryCZ: 'Česko',
+      countryNO: 'Norsko',
+      countryAT: 'Rakousko',
+      countryLT: 'Litva',
+      fundingEyebrow: 'Financování',
+      involvedIssueTitle: 'Nahlaste problém',
+      involvedIssueDesc: 'Našli jste chybu nebo problém s překladem? Založte hlášení na GitHubu.',
+      involvedIssueCta: 'Založit hlášení',
+      involvedFeedbackTitle: 'Podělte se o zkušenosti ze třídy',
+      involvedFeedbackDesc: 'Řekněte nám, co se vám ve třídě osvědčilo a co ne.',
+      involvedFeedbackCta: 'Poslat zpětnou vazbu',
+      involvedPartnerTitle: 'Staňte se partnerem',
+      involvedPartnerDesc: 'Obraťte se na kteréhokoli z partnerů projektu s nápady nebo návrhy.',
+      involvedPartnerCta: 'Zobrazit partnery',
+      ctaTitle: 'Jste připraveni učit?',
+      ctaText: 'Zdarma k použití, úpravám a sdílení.',
+      viewOnGithub: 'Zobrazit na GitHubu',
 
       missionTitle: 'Naše poslání',
       missionP1:
@@ -103,7 +136,6 @@ export const shared = {
       missionP3:
         'Poskytujeme dostupné a poutavé materiály připravené speciálně pro učitele a děti, aby každá třída — bez ohledu na technické zázemí — mohla mladé lidi vybavit znalostmi, sebedůvěrou a praktickými dovednostmi k bezpečnému a odpovědnému objevování digitálního světa.',
 
-      partnersTitle: 'Partneři iniciativy',
       initiativeDesc: 'Tato sada nástrojů je zpřístupněna díky projektu KidCy v rámci spolupráce mezi předními institucemi v oblasti vzdělávání a výzkumu kyberbezpečnosti po celé Evropě, z nichž každá přináší jedinečnou odbornost a perspektivy k vytvoření komplexního vzdělávacího zážitku pro mladé žáky.',
       uniLiechtenstein: 'Univerzita v Lichtenštejnsku',
       uniLiechtensteinDesc:

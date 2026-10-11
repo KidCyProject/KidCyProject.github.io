@@ -90,10 +90,43 @@ export const shared = {
     about: {
       title: 'Über uns',
       subtitle:
-        'Erfahren Sie mehr über unsere Mission, eine sicherere digitale Umgebung zu schaffen. Tauchen Sie in unsere Lernmodule ein, die Einzelpersonen über digitale Staatsbürgerschaft, Authentifizierung, Datenschutz und mehr aufklären sollen.',
+        'Ein kostenloses Toolkit von fünf europäischen Partnern, damit jede Lehrkraft Cybersicherheit in den Unterricht bringen kann.',
 
       cofundEU: 'Unterstützt durch die EU',
-      cofundEUDesc: 'Dieses Projekt wird durch das Programm Digitales Europa der Europäischen Union mitfinanziert.',
+      cofundEUDesc: 'Dieses Projekt wird durch das Programm Erasmus+ der Europäischen Union mitfinanziert.',
+
+      missionStatement: 'Cybersicherheit ist eine wichtige Lebenskompetenz, nicht nur ein Thema für Spezialisten.',
+      missionSummary: 'Kinder verbringen immer mehr Zeit online, doch vielen Lehrkräften fehlen fertige, altersgerechte Materialien. Diese Lücke schließen wir.',
+      benefitsEyebrow: 'Wer profitiert',
+      benefitsTitle: 'Gemacht für die Menschen in der Bildung',
+      benefitEducators: 'Lehrkräfte',
+      benefitEducatorsDesc: 'Sofort einsetzbare, flexible Materialien zur Cybersicherheit, ohne tiefes technisches Wissen.',
+      benefitStudents: 'Schülerinnen und Schüler',
+      benefitStudentsDesc: 'Praktische Fähigkeiten für digitale Sicherheit durch interaktive, einprägsame Lernerfahrungen.',
+      benefitSchools: 'Schulen und Partner',
+      benefitSchoolsDesc: 'Ein skalierbarer Rahmen, um Cybersicherheitskompetenz in ganz unterschiedlichen Kontexten zu stärken.',
+      coreValuesEyebrow: 'Was uns leitet',
+      partnersEyebrow: 'KidCy-Projekt',
+      partnersHeading: 'Fünf Partner, fünf Länder',
+      visitWebsite: 'Website besuchen',
+      countryLI: 'Liechtenstein',
+      countryCZ: 'Tschechien',
+      countryNO: 'Norwegen',
+      countryAT: 'Österreich',
+      countryLT: 'Litauen',
+      fundingEyebrow: 'Förderung',
+      involvedIssueTitle: 'Problem melden',
+      involvedIssueDesc: 'Fehler oder Übersetzungsproblem entdeckt? Eröffnen Sie ein Issue auf GitHub.',
+      involvedIssueCta: 'Issue eröffnen',
+      involvedFeedbackTitle: 'Erfahrungen aus dem Unterricht teilen',
+      involvedFeedbackDesc: 'Sagen Sie uns, was in Ihrer Klasse funktioniert hat und was nicht.',
+      involvedFeedbackCta: 'Feedback senden',
+      involvedPartnerTitle: 'Partner werden',
+      involvedPartnerDesc: 'Wenden Sie sich mit Ideen oder Vorschlägen an einen der Projektpartner.',
+      involvedPartnerCta: 'Partner ansehen',
+      ctaTitle: 'Bereit zum Unterrichten?',
+      ctaText: 'Kostenlos nutzen, anpassen und weitergeben.',
+      viewOnGithub: 'Auf GitHub ansehen',
 
       missionTitle: 'Unsere Mission',
       missionP1:
@@ -103,7 +136,6 @@ export const shared = {
       missionP3:
         'Wir stellen zugängliche, ansprechende Ressourcen bereit, die speziell für Lehrkräfte und Kinder entwickelt wurden, damit jedes Klassenzimmer — unabhängig von technischen Vorkenntnissen — junge Menschen mit dem Wissen, dem Selbstvertrauen und den praktischen Fähigkeiten ausstatten kann, um die digitale Welt sicher und verantwortungsvoll zu erkunden.',
 
-      partnersTitle: 'Projektpartner',
       initiativeDesc: 'Dieses Toolkit basiert auf dem KidCy-Projekt – einer Zusammenarbeit führender Institutionen in der Cybersicherheitsbildung und -forschung in ganz Europa, von denen jede einzigartige Expertise und Perspektiven einbringt, um ein umfassendes Lernerlebnis für junge Lernende zu schaffen.',
       uniLiechtenstein: 'Universität Liechtenstein',
       uniLiechtensteinDesc:

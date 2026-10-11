@@ -14,6 +14,7 @@
 // ---------------------------------------------------------------------------
 
 import { shared } from './shared'
+import { progress, help } from './progress'
 import { contentDC, challengeDC } from './contentDC'
 import { contentAP, challengeAP } from './contentAP'
 import { contentAT, challengeAT } from './contentAT'
@@ -24,6 +25,8 @@ import { contentDM, challengeDM } from './contentDM'
 
 export const no = {
   ...shared,
+  progress,
+  help,
   contentDC,
   challengeDC,
   contentAP,

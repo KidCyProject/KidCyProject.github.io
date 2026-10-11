@@ -1,0 +1,595 @@
+---
+/**
+ * My progress — which challenges have been finished, plus a printable certificate.
+ *
+ * Everything here is read from the progress saved in this browser (src/utils/challengeProgress.ts). Nothing is
+ * sent anywhere, and the name typed for the certificate is not stored.
+ */
+import DefaultLayout from '@layouts/DefaultLayout.astro'
+import PageHeader from '@components/PageHeader.astro'
+import HelpBox from '@components/HelpBox.astro'
+import { localizePath } from 'src/i18n/i18n'
+import { useTranslations } from 'src/i18n/index'
+import { modules } from 'src/data/modules'
+import { toJsonScript } from '../../utils/jsonScript'
+import { CHALLENGE_IDS } from '../../utils/challengeProgress'
+
+const locale = Astro.currentLocale
+const { t } = useTranslations(locale)
+
+const challenges = CHALLENGE_IDS.map((id) => {
+  const module = modules.find((item) => item.id === id)
+  return {
+    id,
+    color: module?.color ?? '#6d28d9',
+    title: t(`challenge${id.toUpperCase()}.title`),
+    // Name of the module the challenge belongs to (shown above the title; a module may get more challenges later)
+    moduleTitle: t(`pages.hub.modules.${id}.title`),
+    href: localizePath(locale, `/learning-hub/${module?.slug ?? ''}/challenge/`),
+  }
+})
+
+const labels = {
+  overallTemplate: t('progress.overallTemplate'),
+  bestTemplate: t('progress.bestTemplate'),
+  runsTemplate: t('progress.runsTemplate'),
+  lastTemplate: t('progress.lastTemplate'),
+  starsTemplate: t('progress.starsTemplate'),
+  statusNotStarted: t('progress.statusNotStarted'),
+  statusDone: t('progress.statusDone'),
+  openCta: t('progress.openCta'),
+  replayCta: t('progress.replayCta'),
+  certBodyTemplate: t('progress.certBodyTemplate'),
+  certResultTemplate: t('progress.certResultTemplate'),
+  certDateLabel: t('progress.certDateLabel'),
+  resetButton: t('progress.resetButton'),
+  resetConfirm: t('progress.resetConfirm'),
+  resetDone: t('progress.resetDone'),
+}
+---
+
+<DefaultLayout title={t('progress.title')}>
+  <PageHeader title={t('progress.title')} subtitle={t('progress.subtitle')} bgType="module" />
+
+  <script type="application/json" id="progress-page-data" set:html={toJsonScript({ challenges, labels })} />
+
+  <section class="progress-page my-12">
+    <div class="container">
+
+      <div class="no-print">
+        <p class="progress-note">🔒 {t('progress.privacyNote')}</p>
+        <p class="progress-note progress-note--warn" data-storage-note hidden>{t('progress.storageOffNote')}</p>
+
+        <div class="overall">
+          <p class="overall__count" data-overall aria-live="polite"></p>
+          <div class="overall__track" aria-hidden="true"><div class="overall__bar" data-overall-bar></div></div>
+        </div>
+
+        <h2 class="progress-heading">{t('progress.listTitle')}</h2>
+        <ul class="progress-list">
+          {challenges.map((challenge) => (
+            <li class="progress-card" style={`--module-color: ${challenge.color}`} data-challenge={challenge.id}>
+              <p class="progress-card__eyebrow">{challenge.moduleTitle}</p>
+              <div class="progress-card__head">
+                <h3 class="progress-card__title">{challenge.title}</h3>
+                <span class="progress-card__status" data-status>{t('progress.statusNotStarted')}</span>
+              </div>
+              <p class="progress-card__stars" data-stars hidden></p>
+              <p class="progress-card__details" data-details hidden></p>
+              <a class="progress-card__cta" href={challenge.href} data-cta>{t('progress.openCta')}</a>
+            </li>
+          ))}
+        </ul>
+
+        <section class="certificate-setup" aria-labelledby="certificate-title">
+          <h2 class="progress-heading" id="certificate-title">{t('progress.certificateTitle')}</h2>
+          <p>{t('progress.certificateHint')}</p>
+          <div class="certificate-setup__row">
+            <label for="certificate-name">{t('progress.nameLabel')}</label>
+            <input
+              id="certificate-name"
+              type="text"
+              maxlength="60"
+              autocomplete="off"
+              autocapitalize="words"
+              placeholder={t('progress.namePlaceholder')}
+              data-name-input
+            />
+            <button type="button" class="progress-button" data-print disabled>{t('progress.printButton')}</button>
+          </div>
+          <p class="progress-note" data-need-one>{t('progress.needOne')}</p>
+        </section>
+      </div>
+
+      <!-- The certificate: always on a light "paper", so it prints the same in every theme -->
+      <article class="certificate" data-certificate aria-label={t('progress.certHeading')} hidden>
+        <p class="certificate__brand">KidCy · Wise Web Wanderers</p>
+        <h2 class="certificate__title">{t('progress.certHeading')}</h2>
+        <p class="certificate__intro">{t('progress.certIntro')}</p>
+        <p class="certificate__name" data-cert-name>&nbsp;</p>
+        <p class="certificate__body" data-cert-body></p>
+        <ul class="certificate__list" data-cert-list></ul>
+        <p class="certificate__date" data-cert-date></p>
+        <p class="certificate__note">{t('progress.certNote')}</p>
+      </article>
+
+      <HelpBox class="no-print mt-8" />
+
+      <div class="reset no-print">
+        <button type="button" class="progress-button progress-button--quiet" data-reset>{t('progress.resetButton')}</button>
+        <p class="progress-note" data-reset-note role="status" aria-live="polite"></p>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    import { CHALLENGE_IDS, canStoreProgress, clearProgress, completedCount, readProgress, starsFor } from '../../utils/challengeProgress'
+    import type { ChallengeId } from '../../utils/challengeProgress'
+
+    const initProgressPage = () => {
+      const dataEl = document.getElementById('progress-page-data')
+      const page = document.querySelector<HTMLElement>('.progress-page')
+      if (!dataEl || !page || page.dataset.bound === 'true') return
+      page.dataset.bound = 'true'
+
+      const { challenges, labels } = JSON.parse(dataEl.textContent ?? '{}') as {
+        challenges: { id: ChallengeId; title: string; href: string }[]
+        labels: Record<string, string>
+      }
+      const fmt = (template: string, vars: Record<string, string | number>) =>
+        String(template ?? '').replace(/\{(\w+)\}/g, (_m, key) => String(vars[key] ?? ''))
+      const q = <T extends HTMLElement>(selector: string) => page.querySelector<T>(selector)
+
+      const overall = q('[data-overall]')
+      const overallBar = q('[data-overall-bar]')
+      const storageNote = q('[data-storage-note]')
+      const printBtn = q<HTMLButtonElement>('[data-print]')
+      const needOne = q('[data-need-one]')
+      const nameInput = q<HTMLInputElement>('[data-name-input]')
+      const certificate = q('[data-certificate]')
+      const certName = q('[data-cert-name]')
+      const certBody = q('[data-cert-body]')
+      const certList = q('[data-cert-list]')
+      const certDate = q('[data-cert-date]')
+      const resetBtn = q<HTMLButtonElement>('[data-reset]')
+      const resetNote = q('[data-reset-note]')
+      if (!overall || !overallBar || !printBtn || !needOne || !nameInput || !certificate || !certName || !certBody ||
+          !certList || !certDate || !resetBtn || !resetNote) return
+
+      const lang = document.documentElement.lang || 'en'
+      const stars = (count: number) => '★'.repeat(count) + '☆'.repeat(3 - count)
+
+      const render = () => {
+        const data = readProgress()
+        const done = completedCount(data)
+        overall.textContent = fmt(labels.overallTemplate, { n: done, total: CHALLENGE_IDS.length })
+        overallBar.style.width = `${Math.round((done / CHALLENGE_IDS.length) * 100)}%`
+        if (storageNote) storageNote.hidden = canStoreProgress()
+
+        challenges.forEach((challenge) => {
+          const card = q(`[data-challenge="${challenge.id}"]`)
+          if (!card) return
+          const record = data.records[challenge.id]
+          const status = card.querySelector<HTMLElement>('[data-status]')
+          const details = card.querySelector<HTMLElement>('[data-details]')
+          const starsEl = card.querySelector<HTMLElement>('[data-stars]')
+          const cta = card.querySelector<HTMLElement>('[data-cta]')
+          card.classList.toggle('progress-card--done', Boolean(record))
+          if (status) status.textContent = record ? `✓ ${labels.statusDone}` : labels.statusNotStarted
+          if (cta) cta.textContent = record ? labels.replayCta : labels.openCta
+          if (details && starsEl) {
+            details.hidden = !record
+            starsEl.hidden = !record
+            if (record) {
+              const count = starsFor(record.best)
+              starsEl.textContent = stars(count)
+              starsEl.setAttribute('aria-label', fmt(labels.starsTemplate, { n: count }))
+              starsEl.removeAttribute('aria-hidden')
+              details.textContent = [
+                fmt(labels.bestTemplate, { best: record.best }),
+                fmt(labels.runsTemplate, { n: record.plays }),
+                fmt(labels.lastTemplate, { date: new Date(record.last).toLocaleDateString(lang) }),
+              ].join(' · ')
+            }
+          }
+        })
+
+        // Certificate
+        const hasAny = done > 0
+        certificate.hidden = !hasAny
+        printBtn.disabled = !hasAny
+        needOne.hidden = hasAny
+        if (hasAny) {
+          certBody.textContent = fmt(labels.certBodyTemplate, { n: done, total: CHALLENGE_IDS.length })
+          certList.replaceChildren(
+            ...challenges
+              .filter((challenge) => data.records[challenge.id])
+              .map((challenge) => {
+                const record = data.records[challenge.id]!
+                const item = document.createElement('li')
+                item.textContent = `${stars(starsFor(record.best))}  ${fmt(labels.certResultTemplate, { title: challenge.title, best: record.best })}`
+                return item
+              }),
+          )
+          certDate.textContent = `${labels.certDateLabel}: ${new Date().toLocaleDateString(lang)}`
+        }
+      }
+
+      nameInput.addEventListener('input', () => {
+        certName.textContent = nameInput.value.trim() || '\u00A0'
+      })
+      printBtn.addEventListener('click', () => window.print())
+
+      // Deleting progress takes two presses, so it cannot happen by accident
+      let armed: ReturnType<typeof setTimeout> | undefined
+      const disarm = () => {
+        resetBtn.textContent = labels.resetButton
+        resetBtn.dataset.armed = 'false'
+      }
+      resetBtn.addEventListener('click', () => {
+        if (resetBtn.dataset.armed === 'true') {
+          clearTimeout(armed)
+          clearProgress()
+          disarm()
+          render()
+          resetNote.textContent = labels.resetDone
+          return
+        }
+        resetBtn.dataset.armed = 'true'
+        resetBtn.textContent = labels.resetConfirm
+        resetNote.textContent = ''
+        clearTimeout(armed)
+        armed = setTimeout(disarm, 6000)
+      })
+
+      render()
+    }
+
+    document.addEventListener('astro:page-load', initProgressPage)
+    initProgressPage()
+  </script>
+
+  <style>
+    .progress-note {
+      margin: 0 0 var(--space-s);
+      font-size: 0.95rem;
+      color: var(--color-neutral-700);
+    }
+
+    .progress-note[hidden] {
+      display: none;
+    }
+
+    .progress-note--warn {
+      padding: var(--space-xs) var(--space-s);
+      border: 2px solid #d97706;
+      border-radius: var(--radius-m);
+      background: #fffbeb;
+      color: #78350f;
+    }
+
+    .overall {
+      margin: var(--space-m) 0 var(--space-l);
+    }
+
+    .overall__count {
+      margin: 0 0 var(--space-2xs);
+      font-size: var(--font-size-2);
+      font-weight: 800;
+    }
+
+    .overall__track {
+      height: 0.9rem;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+    }
+
+    .overall__bar {
+      height: 100%;
+      width: 0;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #22c55e, #15803d);
+      transition: width 0.4s ease;
+    }
+
+    .progress-heading {
+      margin: var(--space-l) 0 var(--space-s);
+      font-size: var(--font-size-3);
+    }
+
+    .progress-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+      gap: var(--space-m);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .progress-card {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2xs);
+      padding: var(--space-m);
+      border: 2px solid color-mix(in oklab, var(--module-color), transparent 55%);
+      border-radius: var(--radius-l);
+      background: color-mix(in oklab, var(--module-color), transparent 92%);
+    }
+
+    .progress-card--done {
+      border-color: var(--module-color);
+    }
+
+    /* Same small caps label as on the learning hub cards */
+    .progress-card__eyebrow {
+      margin: 0;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      color: var(--color-neutral-900);
+    }
+
+    .progress-card__head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-2xs);
+    }
+
+    .progress-card__title {
+      margin: 0;
+      font-size: var(--font-size-1);
+      line-height: 1.25;
+    }
+
+    .progress-card__status {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--color-neutral-700);
+    }
+
+    .progress-card--done .progress-card__status {
+      color: #14532d;
+    }
+
+    .progress-card__stars {
+      margin: 0;
+      font-size: 1.3rem;
+      letter-spacing: 0.15em;
+      color: #b45309;
+    }
+
+    .progress-card__stars[hidden],
+    .progress-card__details[hidden] {
+      display: none;
+    }
+
+    .progress-card__details {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--color-neutral-700);
+    }
+
+    .progress-card__cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      align-self: flex-start;
+      margin-top: auto;
+      padding: 0.45rem 1.1rem;
+      border-radius: 0.5rem;
+      border: 2px solid var(--module-color);
+      background: var(--module-color);
+      font-weight: 800;
+      font-size: 1rem;
+      color: #ffffff;
+      text-decoration: none;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .progress-card__cta:hover,
+    .progress-card__cta:focus-visible {
+      background: transparent;
+      color: var(--module-color);
+    }
+
+    .certificate-setup__row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-s);
+      margin: var(--space-s) 0;
+    }
+
+    .certificate-setup__row label {
+      font-weight: 700;
+    }
+
+    .certificate-setup__row input {
+      min-height: 44px;
+      width: min(22rem, 100%);
+      padding: 0 var(--space-s);
+      border: 2px solid var(--border-color-subtle);
+      border-radius: var(--radius-m);
+      font: inherit;
+    }
+
+    .progress-button {
+      min-height: 44px;
+      padding: 0 var(--space-m);
+      border: 2px solid var(--link-color);
+      border-radius: var(--radius-l);
+      background: var(--link-color);
+      color: var(--background-color);
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .progress-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .progress-button--quiet {
+      background: transparent;
+      color: var(--link-color);
+    }
+
+    .progress-button:focus-visible,
+    .progress-card__cta:focus-visible,
+    .certificate-setup__row input:focus-visible {
+      outline: 3px solid #1d4ed8;
+      outline-offset: 2px;
+    }
+
+    .reset {
+      margin-top: var(--space-xl);
+    }
+
+    /* ── The certificate: a light sheet in every theme ─────────────────────── */
+    .certificate {
+      max-width: 46rem;
+      margin: var(--space-l) auto 0;
+      padding: var(--space-xl) var(--space-l);
+      border: 8px double #6d28d9 !important;
+      border-radius: 6px;
+      background: #ffffff !important;
+      color: #1f2937 !important;
+      text-align: center;
+    }
+
+    .certificate[hidden] {
+      display: none;
+    }
+
+    .certificate p,
+    .certificate li,
+    .certificate h2 {
+      color: #1f2937 !important;
+    }
+
+    .certificate__brand {
+      margin: 0 0 var(--space-s);
+      font-size: 0.9rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #6d28d9 !important;
+    }
+
+    .certificate__title {
+      margin: 0 0 var(--space-m);
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+    }
+
+    .certificate__intro,
+    .certificate__body {
+      margin: 0 0 var(--space-xs);
+      font-size: 1.05rem;
+    }
+
+    .certificate__name {
+      min-height: 2.6rem;
+      margin: 0 auto var(--space-s);
+      max-width: 30rem;
+      border-bottom: 2px solid #1f2937;
+      font-size: 1.7rem;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .certificate__list {
+      display: grid;
+      gap: var(--space-2xs);
+      margin: var(--space-m) auto;
+      padding: 0;
+      max-width: 34rem;
+      list-style: none;
+      text-align: start;
+      font-size: 1rem;
+    }
+
+    .certificate__date {
+      margin: var(--space-m) 0 var(--space-xs);
+      font-weight: 700;
+    }
+
+    .certificate__note {
+      margin: 0;
+      font-size: 0.8rem;
+    }
+
+    :global(.darkmode) .progress-note--warn {
+      background: #2a1a05;
+      border-color: #b45309;
+      color: #fcd34d;
+    }
+
+    :global(.darkmode) .progress-note:not(.progress-note--warn),
+    :global(.darkmode) .progress-card__details,
+    :global(.darkmode) .progress-card__status {
+      color: #cbd5e1;
+    }
+
+    :global(.darkmode) .progress-card__eyebrow {
+      color: #cbd5e1;
+    }
+
+    :global(.darkmode) .progress-card__cta {
+      color: #ffffff;
+    }
+
+    :global(.darkmode) .progress-card__cta:hover,
+    :global(.darkmode) .progress-card__cta:focus-visible {
+      color: var(--module-color);
+    }
+
+    :global(.darkmode) .overall__track {
+      background: #334155;
+    }
+
+    :global(.darkmode) .progress-card--done .progress-card__status {
+      color: #6ee7b7;
+    }
+
+    :global(.darkmode) .progress-card__stars {
+      color: #fbbf24;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .overall__bar {
+        transition: none;
+      }
+    }
+
+    /* ── Print: only the certificate ───────────────────────────────────────── */
+    @media print {
+      :global(body > header),
+      :global(body > footer),
+      :global(.page-header),
+      :global(.no-print) {
+        display: none !important;
+      }
+
+      :global(html),
+      :global(body) {
+        display: block !important;
+        background: #ffffff !important;
+      }
+
+      .progress-page {
+        margin: 0;
+      }
+
+      .certificate {
+        margin: 0 auto;
+        break-inside: avoid;
+      }
+    }
+  </style>
+</DefaultLayout>
