@@ -4,6 +4,7 @@ import PageHeader from '@components/PageHeader.astro'
 import ChallengeIntro from '@components/ChallengeIntro.astro'
 import ChallengeProgress from '@components/ChallengeProgress.astro'
 import HintPanel from '@components/HintPanel.astro'
+import HelpBox from '@components/HelpBox.astro'
 import { useTranslations } from 'src/i18n/index'
 import { toJsonScript } from '../../../utils/jsonScript'
 import { DC_ZONES } from '../../../data/dcPosts'
@@ -157,6 +158,12 @@ const labels = {
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <section class="page-section">
+    <div class="container">
+      <HelpBox class="mt-8" />
     </div>
   </section>
 

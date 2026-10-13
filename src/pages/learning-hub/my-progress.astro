@@ -7,7 +7,6 @@
  */
 import DefaultLayout from '@layouts/DefaultLayout.astro'
 import PageHeader from '@components/PageHeader.astro'
-import HelpBox from '@components/HelpBox.astro'
 import { localizePath } from 'src/i18n/i18n'
 import { useTranslations } from 'src/i18n/index'
 import { modules } from 'src/data/modules'
@@ -112,8 +111,6 @@ const labels = {
         <p class="certificate__date" data-cert-date></p>
         <p class="certificate__note">{t('progress.certNote')}</p>
       </article>
-
-      <HelpBox class="no-print mt-8" />
 
       <div class="reset no-print">
         <button type="button" class="progress-button progress-button--quiet" data-reset>{t('progress.resetButton')}</button>

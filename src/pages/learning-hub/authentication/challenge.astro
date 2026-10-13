@@ -3,6 +3,7 @@ import DefaultLayout from '@layouts/DefaultLayout.astro'
 import PageHeader from '@components/PageHeader.astro'
 import ChallengeIntro from '@components/ChallengeIntro.astro'
 import ChallengeProgress from '@components/ChallengeProgress.astro'
+import HelpBox from '@components/HelpBox.astro'
 import { useTranslations } from 'src/i18n/index'
 
 const { t, v } = useTranslations(Astro.currentLocale)
@@ -306,6 +307,13 @@ const i18nJson = JSON.stringify(i18n)
       </div>
     </div>
   </section>
+
+  <section class="page-section">
+    <div class="container">
+      <HelpBox class="mt-8" />
+    </div>
+  </section>
+
   <style>
 
     /* ── Challenge Card ────────────────────────────────────────────────────── */
