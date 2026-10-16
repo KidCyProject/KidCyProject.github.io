@@ -435,6 +435,13 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
           // Image: Privacy Setting Strategy
           { id: '1.3.4',
             href: '/materials/digital-citizenship/part3/images/en/1.3.4.Image.Privacy_setting_strategy.png',
+            languages: [
+              { lang: 'en', href: '/materials/digital-citizenship/part3/images/en/1.3.4.Image.Privacy_setting_strategy.png' },
+              { lang: 'cs', href: '/materials/digital-citizenship/part3/images/cs/1.3.4.Image.Privacy_setting_strategy_CS.png' },
+              { lang: 'no', href: '/materials/digital-citizenship/part3/images/no/1.3.4.Image.Privacy_setting_strategy_NO.png' },
+              { lang: 'lt', href: '/materials/digital-citizenship/part3/images/lt/1.3.4.Image.Privacy_setting_strategy_LT.png' },
+              { lang: 'de', href: '/materials/digital-citizenship/part3/images/de/1.3.4.Image.Privacy_settings_strategy_DE.png' },
+            ],
           },
           // Image: App Privacy Settings
           { id: '1.3.5',
@@ -539,10 +546,24 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
           // Image: Digital Footprint
           { id: '1.5.1',
             href: '/materials/digital-citizenship/part5/images/en/1.5.1.Image.Digital_footprint.png',
+            languages: [
+              { lang: 'en', href: '/materials/digital-citizenship/part5/images/en/1.5.1.Image.Digital_footprint.png' },
+              { lang: 'cs', href: '/materials/digital-citizenship/part5/images/cs/1.5.1.Image.Digital_footprint_CS.png' },
+              { lang: 'no', href: '/materials/digital-citizenship/part5/images/no/1.5.1.Image.Digital_footprint_NO.png' },
+              { lang: 'lt', href: '/materials/digital-citizenship/part5/images/lt/1.5.1.Image.Digital_footprint_LT.png' },
+              { lang: 'de', href: '/materials/digital-citizenship/part5/images/de/1.5.1.Image.Digital_footprint_DE.png' },
+            ],
           },
           // Scenario Cards: Good and Bad to Post
           { id: '1.5.2',
             href: '/materials/digital-citizenship/part5/cards/en/1.5.2.Scenario_cards.Good_and_bad_to_post.pdf',
+            languages: [
+              { lang: 'en', href: '/materials/digital-citizenship/part5/cards/en/1.5.2.Scenario_cards.Good_and_bad_to_post.pdf' },
+              { lang: 'cs', href: '/materials/digital-citizenship/part5/cards/cs/1.5.2.Scenario_cards.Good_and_bad_to_post_CS.pdf' },
+              { lang: 'no', href: '/materials/digital-citizenship/part5/cards/no/1.5.2.Scenario_cards.Good_and_bad_to_post_NO.pdf' },
+              { lang: 'lt', href: '/materials/digital-citizenship/part5/cards/lt/1.5.2.Scenario_cards.Good_and_bad_to_post_LT.pdf' },
+              { lang: 'de', href: '/materials/digital-citizenship/part5/cards/de/1.5.2.Scenario_cards.Good_and_bad_to_post_DE.pdf' },
+            ],
           },
           // Scenario Cards: Social Media Posts
           { id: '1.5.3',
@@ -580,18 +601,32 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
           // Worksheet: Trusteees: People Around Me
           { id: '2.1.1',
             href: '/materials/attacker-perspective/part1/worksheets/en/2.1.1.Worksheet.Trusted_people_around_me.pdf',
+            languages: [
+              { lang: 'en', href: '/materials/attacker-perspective/part1/worksheets/en/2.1.1.Worksheet.Trusted_people_around_me.pdf' },
+              { lang: 'cs', href: '/materials/attacker-perspective/part1/worksheets/cs/2.1.1.Worksheet.Trusted_people_around_me_CS.pdf' },
+              { lang: 'no', href: '/materials/attacker-perspective/part1/worksheets/no/2.1.1.Worksheet.Trusted_people_around_me_NO.pdf' },
+              { lang: 'lt', href: '/materials/attacker-perspective/part1/worksheets/lt/2.1.1.Worksheet.Trusted_people_around_me_LT.pdf' },
+              { lang: 'de', href: '/materials/attacker-perspective/part1/worksheets/de/2.1.1.Worksheet.Trusted_people_around_me_DE.pdf' },
+            ],
           },
           // Worksheet: Circles of Trust
           { id: '2.1.2',
             href: '/materials/attacker-perspective/part1/worksheets/en/2.1.2.Worksheet.Circles_of_trust.pdf',
+            languages: [
+              { lang: 'en', href: '/materials/attacker-perspective/part1/worksheets/en/2.1.2.Worksheet.Circles_of_trust.pdf' },
+              { lang: 'cs', href: '/materials/attacker-perspective/part1/worksheets/cs/2.1.2.Worksheet.Circles_of_trust_CS.pdf' },
+              { lang: 'no', href: '/materials/attacker-perspective/part1/worksheets/no/2.1.2.Worksheet.Circles_of_trust_NO.pdf' },
+              { lang: 'lt', href: '/materials/attacker-perspective/part1/worksheets/lt/2.1.2.Worksheet.Circles_of_trust_LT.pdf' },
+              { lang: 'de', href: '/materials/attacker-perspective/part1/worksheets/de/2.1.2.Worksheet.Circles_of_trust_DE.pdf' },
+            ],
           },
           // Image: Situation: Found Money
           { id: '2.1.3',
-            href: '/materials/attacker-perspective/part1/images/2.1.3.Situation.Found_money.jpg',
+            href: '/materials/attacker-perspective/part1/images/2.1.3.Image.Situation_Found_money.png',
           },
           // Image: Situation: Saw a Photo
           { id: '2.1.4',
-            href: '/materials/attacker-perspective/part1/images/2.1.4.Situation.Saw_a_photo.jpg',
+            href: '/materials/attacker-perspective/part1/images/2.1.4.Image.Situation_Saw_a_photo.png',
           },
         ],
       },
@@ -611,15 +646,36 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
         materials: [
           // Scenario Cards: Identify the Behaviour
           { id: '2.2.1',
-            href: '/materials/attacker-perspective/part2/cards/en/2.2.1.Cards.Identify_the_behaviour.pdf',
+            href: '/materials/attacker-perspective/part2/cards/en/2.2.1.Scenario_cards.Identify_the_behaviour.pdf',
+            languages: [
+              { lang: 'en', href: '/materials/attacker-perspective/part2/cards/en/2.2.1.Scenario_cards.Identify_the_behaviour.pdf' },
+              { lang: 'cs', href: '/materials/attacker-perspective/part2/cards/cs/2.2.1.Scenario_cards.Identify_the_behaviour_CS.pdf' },
+              { lang: 'no', href: '/materials/attacker-perspective/part2/cards/no/2.2.1.Scenario_cards.Identify_the_behaviour_NO.pdf' },
+              { lang: 'lt', href: '/materials/attacker-perspective/part2/cards/lt/2.2.1.Scenario_cards.Identify_the_behaviour_LT.pdf' },
+              { lang: 'de', href: '/materials/attacker-perspective/part2/cards/de/2.2.1.Scenario_cards.Identify_the_behaviour_DE.pdf' },
+            ],
           },
           // Scenario Cards: Recognise the Characters
           { id: '2.2.2',
-            href: '/materials/attacker-perspective/part2/cards/en/2.2.2.Cards.Recognise_the_characters.pdf',
+            href: '/materials/attacker-perspective/part2/cards/en/2.2.2.Scenario_cards.Recognise_the_characters.pdf',
+            languages: [
+              { lang: 'en', href: '/materials/attacker-perspective/part2/cards/en/2.2.2.Scenario_cards.Recognise_the_characters.pdf' },
+              { lang: 'cs', href: '/materials/attacker-perspective/part2/cards/cs/2.2.2.Scenario_cards.Recognise_the_characters_CS.pdf' },
+              { lang: 'no', href: '/materials/attacker-perspective/part2/cards/no/2.2.2.Scenario_cards.Recognise_the_characters_NO.pdf' },
+              { lang: 'lt', href: '/materials/attacker-perspective/part2/cards/lt/2.2.2.Scenario_cards.Recognise_the_characters_LT.pdf' },
+              { lang: 'de', href: '/materials/attacker-perspective/part2/cards/de/2.2.2.Scenario_cards.Recognise_the_characters_DE.pdf' },
+            ],
           },
           // Image: Attacker Motivations
           { id: '2.2.4',
             href: '/materials/attacker-perspective/part2/images/en/2.2.4.Image.Attacker_motivations.png',
+            languages: [
+              { lang: 'en', href: '/materials/attacker-perspective/part2/images/en/2.2.4.Image.Attacker_motivations.png' },
+              { lang: 'cs', href: '/materials/attacker-perspective/part2/images/cs/2.2.4.Image.Attacker_motivations_CS.png' },
+              { lang: 'no', href: '/materials/attacker-perspective/part2/images/no/2.2.4.Image.Attacker_motivations_NO.png' },
+              { lang: 'lt', href: '/materials/attacker-perspective/part2/images/lt/2.2.4.Image.Attacker_motivations_LT.png' },
+              { lang: 'de', href: '/materials/attacker-perspective/part2/images/de/2.2.4.Image.Attacker_motivations_DE.png' },
+            ],
           },
           // Image: Looking into the Fairytale: Attacker Motivation and Means
           { id: '2.2.5',
@@ -628,6 +684,13 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
           // Worksheet: Attack Analysis
           { id: '2.2.6',
             href: '/materials/attacker-perspective/part2/worksheets/en/2.2.6.Worksheet.Attack_analysis.pdf',
+            languages: [
+              { lang: 'en', href: '/materials/attacker-perspective/part2/worksheets/en/2.2.6.Worksheet.Attack_analysis.pdf' },
+              { lang: 'cs', href: '/materials/attacker-perspective/part2/worksheets/cs/2.2.6.Worksheet.Attack_analysis_CS.pdf' },
+              { lang: 'no', href: '/materials/attacker-perspective/part2/worksheets/no/2.2.6.Worksheet.Attack_analysis_NO.pdf' },
+              { lang: 'lt', href: '/materials/attacker-perspective/part2/worksheets/lt/2.2.6.Worksheet.Attack_analysis_LT.pdf' },
+              { lang: 'de', href: '/materials/attacker-perspective/part2/worksheets/de/2.2.6.Worksheet.Attack_analysis_DE.pdf' },
+            ],
           },
         ],
         featuredVideo: {
@@ -683,8 +746,10 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
             href: '/materials/attacker-perspective/part3/readings/en/2.3.1.Reading.Smishing_and_impersonation.docx',
             languages: [
               { lang: 'en', href: '/materials/attacker-perspective/part3/readings/en/2.3.1.Reading.Smishing_and_impersonation.docx' },
+              { lang: 'cs', href: '/materials/attacker-perspective/part3/readings/cs/2.3.1.Reading.Smishing_and_impersonation_CS.docx' },
               { lang: 'no', href: '/materials/attacker-perspective/part3/readings/no/2.3.1.Reading.Smishing_and_impersonation_NO.docx' },
               { lang: 'lt', href: '/materials/attacker-perspective/part3/readings/lt/2.3.1.Reading.Smishing_and_impersonation_LT.docx' },
+              { lang: 'de', href: '/materials/attacker-perspective/part3/readings/de/2.3.1.Reading.Smishing_and_impersonation_DE.docx' },
             ],
           },
           // Reading: Vishing, Fraud, and Impersonation
@@ -692,8 +757,10 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
             href: '/materials/attacker-perspective/part3/readings/en/2.3.2.Reading.Vishing_fraud_and_impersonation.docx',
             languages: [
               { lang: 'en', href: '/materials/attacker-perspective/part3/readings/en/2.3.2.Reading.Vishing_fraud_and_impersonation.docx' },
+              { lang: 'cs', href: '/materials/attacker-perspective/part3/readings/cs/2.3.2.Reading.Vishing_fraud_and_impersonation_CS.docx' },
               { lang: 'no', href: '/materials/attacker-perspective/part3/readings/no/2.3.2.Reading.Vishing_fraud_and_impersonation_NO.docx' },
               { lang: 'lt', href: '/materials/attacker-perspective/part3/readings/lt/2.3.2.Reading.Vishing_fraud_and_impersonation_LT.docx' },
+              { lang: 'de', href: '/materials/attacker-perspective/part3/readings/de/2.3.2.Reading.Vishing_fraud_and_impersonation_DE.docx' },
             ],
           },
           // Reading: Most Common Cyber Threats
@@ -701,13 +768,22 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
             href: '/materials/attacker-perspective/part3/readings/en/2.3.3.Reading.Most_common_cyber_threats.docx',
             languages: [
               { lang: 'en', href: '/materials/attacker-perspective/part3/readings/en/2.3.3.Reading.Most_common_cyber_threats.docx' },
+              { lang: 'cs', href: '/materials/attacker-perspective/part3/readings/cs/2.3.3.Reading.Most_common_cyber_threats_CS.docx' },
               { lang: 'no', href: '/materials/attacker-perspective/part3/readings/no/2.3.3.Reading.Most_common_cyber_threats_NO.docx' },
               { lang: 'lt', href: '/materials/attacker-perspective/part3/readings/lt/2.3.3.Reading.Most_common_cyber_threats_LT.docx' },
+              { lang: 'de', href: '/materials/attacker-perspective/part3/readings/de/2.3.3.Reading.Most_common_cyber_threats_DE.docx' },
             ],
           },
           // Scenario Cards: Common Adversary Techniques
           { id: '2.3.4',
-            href: '/materials/attacker-perspective/part3/cards/en/2.3.4.Image.Common_adversary_techniques.pdf',
+            href: '/materials/attacker-perspective/part3/cards/en/2.3.4.Scenario_cards.Common_adversary_techniques.pdf',
+            languages: [
+              { lang: 'en', href: '/materials/attacker-perspective/part3/cards/en/2.3.4.Scenario_cards.Common_adversary_techniques.pdf' },
+              { lang: 'cs', href: '/materials/attacker-perspective/part3/cards/cs/2.3.4.Scenario_cards.Common_adversary_techniques_CS.pdf' },
+              { lang: 'no', href: '/materials/attacker-perspective/part3/cards/no/2.3.4.Scenario_cards.Common_adversary_techniques_NO.pdf' },
+              { lang: 'lt', href: '/materials/attacker-perspective/part3/cards/lt/2.3.4.Scenario_cards.Common_adversary_techniques_LT.pdf' },
+              { lang: 'de', href: '/materials/attacker-perspective/part3/cards/de/2.3.4.Scenario_cards.Common_adversary_techniques_DE.pdf' },
+            ],
           },
           // Cards: Attackers and Their Plans
           { id: '2.3.5',
@@ -715,11 +791,12 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
           },
           // Worksheet: Puzzle: Party of Attackers
           { id: '2.3.6',
-            href: '/materials/attacker-perspective/part3/worksheets/en/2.3.6.Puzzle.Party_of_attackers.docx',
+            href: '/materials/attacker-perspective/part3/worksheets/en/2.3.6.Worksheet.Puzzle.Party_of_attackers.docx',
             languages: [
-              { lang: 'en', href: '/materials/attacker-perspective/part3/worksheets/en/2.3.6.Puzzle.Party_of_attackers.docx' },
-              { lang: 'no', href: '/materials/attacker-perspective/part3/worksheets/no/2.3.6.Puzzle.Party_of_attackers_NO.docx' },
-              { lang: 'lt', href: '/materials/attacker-perspective/part3/worksheets/lt/2.3.6.Puzzle.Party_of_attackers_LT.docx' },
+              { lang: 'en', href: '/materials/attacker-perspective/part3/worksheets/en/2.3.6.Worksheet.Puzzle.Party_of_attackers.docx' },
+              { lang: 'cs', href: '/materials/attacker-perspective/part3/worksheets/cs/2.3.6.Worksheet.Puzzle.Party_of_attackers_CS.docx' },
+              { lang: 'no', href: '/materials/attacker-perspective/part3/worksheets/no/2.3.6.Worksheet.Puzzle.Party_of_attackers_NO.docx' },
+              { lang: 'lt', href: '/materials/attacker-perspective/part3/worksheets/lt/2.3.6.Worksheet.Puzzle.Party_of_attackers_LT.docx' },
             ],
           },
         ],
@@ -757,8 +834,10 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
             href: '/materials/authentication/part1/worksheets/en/3.1.4.Worksheet.What_would_happen_if.docx',
             languages: [
               { lang: 'en', href: '/materials/authentication/part1/worksheets/en/3.1.4.Worksheet.What_would_happen_if.docx' },
+              { lang: 'cs', href: '/materials/authentication/part1/worksheets/cs/3.1.4.Worksheet.What_would_happen_if_CS.docx' },
               { lang: 'no', href: '/materials/authentication/part1/worksheets/no/3.1.4.Worksheet.What_would_happen_if_NO.docx' },
               { lang: 'lt', href: '/materials/authentication/part1/worksheets/lt/3.1.4.Worksheet.What_would_happen_if_LT.docx' },
+              { lang: 'de', href: '/materials/authentication/part1/worksheets/de/3.1.4.Worksheet.What_would_happen_if_DE.docx' },
             ],
           },
           // Worksheet: My Digital Assets
@@ -766,8 +845,10 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
             href: '/materials/authentication/part1/worksheets/en/3.1.5.Worksheet.My_digital_assets.docx',
             languages: [
               { lang: 'en', href: '/materials/authentication/part1/worksheets/en/3.1.5.Worksheet.My_digital_assets.docx' },
+              { lang: 'cs', href: '/materials/authentication/part1/worksheets/cs/3.1.5.Worksheet.My_digital_assets_CS.docx' },
               { lang: 'no', href: '/materials/authentication/part1/worksheets/no/3.1.5.Worksheet.My_digital_assets_NO.docx' },
               { lang: 'lt', href: '/materials/authentication/part1/worksheets/lt/3.1.5.Worksheet.My_digital_assets_LT.docx' },
+              { lang: 'de', href: '/materials/authentication/part1/worksheets/de/3.1.5.Worksheet.My_digital_assets_DE.docx' },
             ],
           },
         ],
@@ -825,15 +906,24 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
           },
           // Image: Logging into a Digital System
           { id: '3.2.3',
-            href: '/materials/authentication/part2/images/en/3.2.3.Image.Logging_into_a_digital_system.pdf',
+            href: '/materials/authentication/part2/images/en/3.2.3.Image.Logging_into_a_digital_system.png',
+            languages: [
+              { lang: 'en', href: '/materials/authentication/part2/images/en/3.2.3.Image.Logging_into_a_digital_system.png' },
+              { lang: 'cs', href: '/materials/authentication/part2/images/cs/3.2.3.Image.Logging_into_a_digital_system_CS.png' },
+              { lang: 'no', href: '/materials/authentication/part2/images/no/3.2.3.Image.Logging_into_a_digital_system_NO.png' },
+              { lang: 'lt', href: '/materials/authentication/part2/images/lt/3.2.3.Image.Logging_into_a_digital_system_LT.png' },
+              { lang: 'de', href: '/materials/authentication/part2/images/de/3.2.3.Image.Logging_into_a_digital_system_DE.png' },
+            ],
           },
           // Worksheet: Authentication in Everyday Life
           { id: '3.2.4',
             href: '/materials/authentication/part2/worksheets/en/3.2.4.Worksheet.Authentication_in_everyday_life.docx',
             languages: [
               { lang: 'en', href: '/materials/authentication/part2/worksheets/en/3.2.4.Worksheet.Authentication_in_everyday_life.docx' },
+              { lang: 'cs', href: '/materials/authentication/part2/worksheets/cs/3.2.4.Worksheet.Authentication_in_everyday_life_CS.docx' },
               { lang: 'no', href: '/materials/authentication/part2/worksheets/no/3.2.4.Worksheet.Authentication_in_everyday_life_NO.docx' },
               { lang: 'lt', href: '/materials/authentication/part2/worksheets/lt/3.2.4.Worksheet.Authentication_in_everyday_life_LT.docx' },
+              { lang: 'de', href: '/materials/authentication/part2/worksheets/de/3.2.4.Worksheet.Authentication_in_everyday_life_DE.docx' },
             ],
           },
         ],
@@ -887,11 +977,25 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
         materials: [
           // Image: Examples of Weak Passwords
           { id: '3.3.2',
-            href: '/materials/authentication/part3/images/en/3.3.2.Image.Examples_of_weak_passwords.pdf',
+            href: '/materials/authentication/part3/images/en/3.3.2.Image.Examples_of_weak_passwords.png',
+            languages: [
+              { lang: 'en', href: '/materials/authentication/part3/images/en/3.3.2.Image.Examples_of_weak_passwords.png' },
+              { lang: 'cs', href: '/materials/authentication/part3/images/cs/3.3.2.Image.Examples_of_weak_passwords_CS.png' },
+              { lang: 'no', href: '/materials/authentication/part3/images/no/3.3.2.Image.Examples_of_weak_passwords_NO.png' },
+              { lang: 'lt', href: '/materials/authentication/part3/images/lt/3.3.2.Image.Examples_of_weak_passwords_LT.png' },
+              { lang: 'de', href: '/materials/authentication/part3/images/de/3.3.2.Image.Examples_of_weak_passwords_DE.png' },
+            ],
           },
           // Image: Examples of Strong Passwords
           { id: '3.3.3',
-            href: '/materials/authentication/part3/images/en/3.3.3.Image.Examples_of_strong_passwords.pdf',
+            href: '/materials/authentication/part3/images/en/3.3.3.Image.Examples_of_strong_passwords.png',
+            languages: [
+              { lang: 'en', href: '/materials/authentication/part3/images/en/3.3.3.Image.Examples_of_strong_passwords.png' },
+              { lang: 'cs', href: '/materials/authentication/part3/images/cs/3.3.3.Image.Examples_of_strong_passwords_CS.png' },
+              { lang: 'no', href: '/materials/authentication/part3/images/no/3.3.3.Image.Examples_of_strong_passwords_NO.png' },
+              { lang: 'lt', href: '/materials/authentication/part3/images/lt/3.3.3.Image.Examples_of_strong_passwords_LT.png' },
+              { lang: 'de', href: '/materials/authentication/part3/images/de/3.3.3.Image.Examples_of_strong_passwords_DE.png' },
+            ],
           },
           // Cards: Create a Strong Password
           { id: '3.3.4',
@@ -900,14 +1004,23 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
           // Image: Check Your Password
           { id: '3.3.5',
             href: '/materials/authentication/part3/images/en/3.3.5.Image.Check_your_password.png',
+            languages: [
+              { lang: 'en', href: '/materials/authentication/part3/images/en/3.3.5.Image.Check_your_password.png' },
+              { lang: 'cs', href: '/materials/authentication/part3/images/cs/3.3.5.Image.Check_your_password_CS.png' },
+              { lang: 'no', href: '/materials/authentication/part3/images/no/3.3.5.Image.Check_your_password_NO.png' },
+              { lang: 'lt', href: '/materials/authentication/part3/images/lt/3.3.5.Image.Check_your_password_LT.png' },
+              { lang: 'de', href: '/materials/authentication/part3/images/de/3.3.5.Image.Check_your_password_DE.png' },
+            ],
           },
           // Worksheet: My Strong Password Rules
           { id: '3.3.6',
             href: '/materials/authentication/part3/worksheets/en/3.3.6.Worksheet.My_strong_password_rules.docx',
             languages: [
               { lang: 'en', href: '/materials/authentication/part3/worksheets/en/3.3.6.Worksheet.My_strong_password_rules.docx' },
+              { lang: 'cs', href: '/materials/authentication/part3/worksheets/cs/3.3.6.Worksheet.My_strong_password_rules_CS.docx' },
               { lang: 'no', href: '/materials/authentication/part3/worksheets/no/3.3.6.Worksheet.My_strong_password_rules_NO.docx' },
               { lang: 'lt', href: '/materials/authentication/part3/worksheets/lt/3.3.6.Worksheet.My_strong_password_rules_LT.docx' },
+              { lang: 'de', href: '/materials/authentication/part3/worksheets/de/3.3.6.Worksheet.My_strong_password_rules_DE.docx' },
             ],
           },
         ],
@@ -962,6 +1075,13 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
           // Image: Two Different Types of Authentication Used Together
           { id: '3.4.1',
             href: '/materials/authentication/part4/images/en/3.4.1.Image.Two_types_of_authentication_used_together.pdf',
+            languages: [
+              { lang: 'en', href: '/materials/authentication/part4/images/en/3.4.1.Image.Two_types_of_authentication_used_together.pdf' },
+              { lang: 'cs', href: '/materials/authentication/part4/images/cs/3.4.1.Image.Two_types_of_authentication_used_together_CS.pdf' },
+              { lang: 'no', href: '/materials/authentication/part4/images/no/3.4.1.Image.Two_types_of_authentication_used_together_NO.pdf' },
+              { lang: 'lt', href: '/materials/authentication/part4/images/lt/3.4.1.Image.Two_types_of_authentication_used_together_LT.pdf' },
+              { lang: 'de', href: '/materials/authentication/part4/images/de/3.4.1.Image.Two_types_of_authentication_used_together_DE.pdf' },
+            ],
           },
           // Schema: Set of Money Coins
           { id: '3.4.2',
@@ -992,8 +1112,10 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
             href: '/materials/authentication/part4/worksheets/en/3.4.9.Worksheet.Password_problems_and_solutions.docx',
             languages: [
               { lang: 'en', href: '/materials/authentication/part4/worksheets/en/3.4.9.Worksheet.Password_problems_and_solutions.docx' },
+              { lang: 'cs', href: '/materials/authentication/part4/worksheets/cs/3.4.9.Worksheet.Password_problems_and_solutions_CS.docx' },
               { lang: 'no', href: '/materials/authentication/part4/worksheets/no/3.4.9.Worksheet.Password_problems_and_solutions_NO.docx' },
               { lang: 'lt', href: '/materials/authentication/part4/worksheets/lt/3.4.9.Worksheet.Password_problems_and_solutions_LT.docx' },
+              { lang: 'de', href: '/materials/authentication/part4/worksheets/de/3.4.9.Worksheet.Password_problems_and_solutions_DE.docx' },
             ],
           },
         ],
@@ -1047,15 +1169,24 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
         materials: [
           // Image: Safe and Unsafe Online Behaviours
           { id: '3.5.1',
-            href: '/materials/authentication/part5/images/3.5.1.Image.Safe_and_unsafe_online_behaviours.pdf',
+            href: '/materials/authentication/part5/images/en/3.5.1.Image.Safe_and_unsafe_online_behaviours.pdf',
+            languages: [
+              { lang: 'en', href: '/materials/authentication/part5/images/en/3.5.1.Image.Safe_and_unsafe_online_behaviours.pdf' },
+              { lang: 'cs', href: '/materials/authentication/part5/images/cs/3.5.1.Image.Safe_and_unsafe_online_behaviours_CS.pdf' },
+              { lang: 'no', href: '/materials/authentication/part5/images/no/3.5.1.Image.Safe_and_unsafe_online_behaviours_NO.pdf' },
+              { lang: 'lt', href: '/materials/authentication/part5/images/lt/3.5.1.Image.Safe_and_unsafe_online_behaviours_LT.pdf' },
+              { lang: 'de', href: '/materials/authentication/part5/images/de/3.5.1.Image.Safe_and_unsafe_online_behaviours_DE.pdf' },
+            ],
           },
           // Worksheet: Digital Identity and Authentication Scenarios
           { id: '3.5.3',
             href: '/materials/authentication/part5/worksheets/en/3.5.3.Worksheet.Digital_identity_and_authentication_scenarios.docx',
             languages: [
               { lang: 'en', href: '/materials/authentication/part5/worksheets/en/3.5.3.Worksheet.Digital_identity_and_authentication_scenarios.docx' },
+              { lang: 'cs', href: '/materials/authentication/part5/worksheets/cs/3.5.3.Worksheet.Digital_identity_and_authentication_scenarios_CS.docx' },
               { lang: 'no', href: '/materials/authentication/part5/worksheets/no/3.5.3.Worksheet.Digital_identity_and_authentication_scenarios_NO.docx' },
               { lang: 'lt', href: '/materials/authentication/part5/worksheets/lt/3.5.3.Worksheet.Digital_identity_and_authentication_scenarios_LT.docx' },
+              { lang: 'de', href: '/materials/authentication/part5/worksheets/de/3.5.3.Worksheet.Digital_identity_and_authentication_scenarios_DE.docx' },
             ],
           },
           // Worksheet: How I Protect My Digital Identity
@@ -1063,8 +1194,10 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
             href: '/materials/authentication/part5/worksheets/en/3.5.4.Worksheet.How_I_protect_my_digital_identity.docx',
             languages: [
               { lang: 'en', href: '/materials/authentication/part5/worksheets/en/3.5.4.Worksheet.How_I_protect_my_digital_identity.docx' },
+              { lang: 'cs', href: '/materials/authentication/part5/worksheets/cs/3.5.4.Worksheet.How_I_protect_my_digital_identity_CS.docx' },
               { lang: 'no', href: '/materials/authentication/part5/worksheets/no/3.5.4.Worksheet.How_I_protect_my_digital_identity_NO.docx' },
               { lang: 'lt', href: '/materials/authentication/part5/worksheets/lt/3.5.4.Worksheet.How_I_protect_my_digital_identity_LT.docx' },
+              { lang: 'de', href: '/materials/authentication/part5/worksheets/de/3.5.4.Worksheet.How_I_protect_my_digital_identity_DE.docx' },
             ],
           },
         ],
@@ -1138,6 +1271,7 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
             href: '/materials/data-privacy/part1/worksheets/en/4.1.3.Worksheet.Reflection_Public_vs_Private_Data.docx',
             languages: [
               { lang: 'en', href: '/materials/data-privacy/part1/worksheets/en/4.1.3.Worksheet.Reflection_Public_vs_Private_Data.docx' },
+              { lang: 'cs', href: '/materials/data-privacy/part1/worksheets/cs/4.1.3.Worksheet.Reflection_Public_vs_Private_Data_CS.docx' },
               { lang: 'no', href: '/materials/data-privacy/part1/worksheets/no/4.1.3.Worksheet.Reflection_Public_vs_Private_Data_NO.docx' },
               { lang: 'lt', href: '/materials/data-privacy/part1/worksheets/lt/4.1.3.Worksheet.Reflection_Public_vs_Private_Data_LT.docx' },
             ],
@@ -1211,6 +1345,7 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
             href: '/materials/data-privacy/part2/worksheets/en/4.2.3.Worksheet.Share_or_Dont_Share.docx',
             languages: [
               { lang: 'en', href: '/materials/data-privacy/part2/worksheets/en/4.2.3.Worksheet.Share_or_Dont_Share.docx' },
+              { lang: 'cs', href: '/materials/data-privacy/part2/worksheets/cs/4.2.3.Worksheet.Share_or_Dont_Share_CS.docx' },
               { lang: 'no', href: '/materials/data-privacy/part2/worksheets/no/4.2.3.Worksheet.Share_or_Dont_Share_NO.docx' },
               { lang: 'lt', href: '/materials/data-privacy/part2/worksheets/lt/4.2.3.Worksheet.Share_or_Dont_Share_LT.docx' },
             ],
@@ -1236,6 +1371,9 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
             href: '/materials/data-privacy/part3/images/en/4.3.2.Image.Comic_story_A_day_in_the_life_of_Sam_online.png',
             languages: [
               { lang: 'en', href: '/materials/data-privacy/part3/images/en/4.3.2.Image.Comic_story_A_day_in_the_life_of_Sam_online.png' },
+              { lang: 'cs', href: '/materials/data-privacy/part3/images/cs/4.3.2.Image.Comic_story_A_day_in_the_life_of_Sam_online_CS.png' },
+              { lang: 'no', href: '/materials/data-privacy/part3/images/no/4.3.2.Image.Comic_story_A_day_in_the_life_of_Sam_online_NO.png' },
+              { lang: 'lt', href: '/materials/data-privacy/part3/images/lt/4.3.2.Image.Comic_story_A_day_in_the_life_of_Sam_online_LT.png' },
               { lang: 'de', href: '/materials/data-privacy/part3/images/de/4.3.2.Image.Comic_story_A_day_in_the_life_of_Sam_online_DE.png' },
             ],
           },
@@ -1244,6 +1382,7 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
             href: '/materials/data-privacy/part3/worksheets/en/4.3.3.Worksheet.Track_Sams_Footprint.docx',
             languages: [
               { lang: 'en', href: '/materials/data-privacy/part3/worksheets/en/4.3.3.Worksheet.Track_Sams_Footprint.docx' },
+              { lang: 'cs', href: '/materials/data-privacy/part3/worksheets/cs/4.3.3.Worksheet.Track_Sams_Footprint_CS.docx' },
               { lang: 'no', href: '/materials/data-privacy/part3/worksheets/no/4.3.3.Worksheet.Track_Sams_Footprint_NO.docx' },
               { lang: 'lt', href: '/materials/data-privacy/part3/worksheets/lt/4.3.3.Worksheet.Track_Sams_Footprint_LT.docx' },
               { lang: 'de', href: '/materials/data-privacy/part3/worksheets/de/4.3.3.Worksheet.Track_Sams_Footprint_DE.docx' },
@@ -1326,6 +1465,7 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
             href: '/materials/data-privacy/part4/worksheets/en/4.4.2a.Worksheet.Fix_this_profile.docx',
             languages: [
               { lang: 'en', href: '/materials/data-privacy/part4/worksheets/en/4.4.2a.Worksheet.Fix_this_profile.docx' },
+              { lang: 'cs', href: '/materials/data-privacy/part4/worksheets/cs/4.4.2a.Worksheet.Fix_this_profile_CS.docx' },
               { lang: 'lt', href: '/materials/data-privacy/part4/worksheets/lt/4.4.2a.Worksheet.Fix_this_profile_LT.docx' },
             ],
           },
@@ -1345,6 +1485,7 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
             href: '/materials/data-privacy/part4/worksheets/en/4.4.3.Worksheet.Privacy_Tips_for_Kids.docx',
             languages: [
               { lang: 'en', href: '/materials/data-privacy/part4/worksheets/en/4.4.3.Worksheet.Privacy_Tips_for_Kids.docx' },
+              { lang: 'cs', href: '/materials/data-privacy/part4/worksheets/cs/4.4.3.Worksheet.Privacy_Tips_for_Kids_CS.docx' },
               { lang: 'no', href: '/materials/data-privacy/part4/worksheets/no/4.4.3.Worksheet.Privacy_Tips_for_Kids_NO.docx' },
               { lang: 'lt', href: '/materials/data-privacy/part4/worksheets/lt/4.4.3.Worksheet.Privacy_Tips_for_Kids_LT.docx' },
             ],
@@ -1358,6 +1499,7 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
             href: '/materials/data-privacy/part4/worksheets/en/4.4.6.Worksheet.Puzzle.Using_digital_traces.docx',
             languages: [
               { lang: 'en', href: '/materials/data-privacy/part4/worksheets/en/4.4.6.Worksheet.Puzzle.Using_digital_traces.docx' },
+              { lang: 'cs', href: '/materials/data-privacy/part4/worksheets/cs/4.4.6.Worksheet.Puzzle.Using_digital_traces_CS.docx' },
               { lang: 'no', href: '/materials/data-privacy/part4/worksheets/no/4.4.6.Worksheet.Puzzle.Using_digital_traces_NO.docx' },
               { lang: 'lt', href: '/materials/data-privacy/part4/worksheets/lt/4.4.6.Worksheet.Puzzle.Using_digital_traces_LT.docx' },
             ],
@@ -1417,27 +1559,57 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
         // Materials with `languages` → "Download" shows a language dropdown;
         // without it (no translatable text) → plain "Download" button.
         materials: [
-          // Image: Hacking Systems vs. Tricking People
-          { id: '5.1.2',
-            href: '/materials/social-engineering/part1/images/5.1.2.Images.Hacking_systems_versus_tricking_people.pdf',
+          // Image: Hacking Systems vs. Tricking People (a: one-page poster)
+          { id: '5.1.2a',
+            href: '/materials/social-engineering/part1/images/5.1.2a.Image.Hacking_systems_versus_tricking_people.pdf',
           },
-          // Image: Goals of an Attacker
-          { id: '5.1.3',
-            href: '/materials/social-engineering/part1/images/en/5.1.3.Image.Goals_of_an_attacker.pdf',
+          // Image: Hacking Systems vs. Tricking People (b: three separate images)
+          { id: '5.1.2b',
+            href: '/materials/social-engineering/part1/images/5.1.2b.Images.Hacking_systems_versus_tricking_people.pdf',
+          },
+          // Image: Goals of an Attacker (a: one-page poster)
+          { id: '5.1.3a',
+            href: '/materials/social-engineering/part1/images/en/5.1.3a.Image.Goals_of_an_attacker.pdf',
+            languages: [
+              { lang: 'en', href: '/materials/social-engineering/part1/images/en/5.1.3a.Image.Goals_of_an_attacker.pdf' },
+              { lang: 'cs', href: '/materials/social-engineering/part1/images/cs/5.1.3a.Image.Goals_of_an_attacker_CS.pdf' },
+              { lang: 'no', href: '/materials/social-engineering/part1/images/no/5.1.3a.Image.Goals_of_an_attacker_NO.pdf' },
+              { lang: 'lt', href: '/materials/social-engineering/part1/images/lt/5.1.3a.Image.Goals_of_an_attacker_LT.pdf' },
+              { lang: 'de', href: '/materials/social-engineering/part1/images/de/5.1.3a.Image.Goals_of_an_attacker_DE.pdf' },
+            ],
+          },
+          // Image: Goals of an Attacker (b: three separate images)
+          { id: '5.1.3b',
+            href: '/materials/social-engineering/part1/images/5.1.3b.Images.Goals_of_an_attacker.pdf',
           },
           // Scenario Cards: What Does an Attacker Want?
           { id: '5.1.4',
             href: '/materials/social-engineering/part1/cards/en/5.1.4.Scenario_cards.What_does_an_attacker_want.pdf',
+            languages: [
+              { lang: 'en', href: '/materials/social-engineering/part1/cards/en/5.1.4.Scenario_cards.What_does_an_attacker_want.pdf' },
+              { lang: 'cs', href: '/materials/social-engineering/part1/cards/cs/5.1.4.Scenario_cards.What_does_an_attacker_want_CS.pdf' },
+              { lang: 'no', href: '/materials/social-engineering/part1/cards/no/5.1.4.Scenario_cards.What_does_an_attacker_want_NO.pdf' },
+              { lang: 'lt', href: '/materials/social-engineering/part1/cards/lt/5.1.4.Scenario_cards.What_does_an_attacker_want_LT.pdf' },
+              { lang: 'de', href: '/materials/social-engineering/part1/cards/de/5.1.4.Scenario_cards.What_does_an_attacker_want_DE.pdf' },
+            ],
           },
           // Solution Cards: What Does an Attacker Want?
           { id: '5.1.5',
             href: '/materials/social-engineering/part1/cards/en/5.1.5.Solution_cards.What_does_an_attacker_want.pdf',
+            languages: [
+              { lang: 'en', href: '/materials/social-engineering/part1/cards/en/5.1.5.Solution_cards.What_does_an_attacker_want.pdf' },
+              { lang: 'cs', href: '/materials/social-engineering/part1/cards/cs/5.1.5.Solution_cards.What_does_an_attacker_want_CS.pdf' },
+              { lang: 'no', href: '/materials/social-engineering/part1/cards/no/5.1.5.Solution_cards.What_does_an_attacker_want_NO.pdf' },
+              { lang: 'lt', href: '/materials/social-engineering/part1/cards/lt/5.1.5.Solution_cards.What_does_an_attacker_want_LT.pdf' },
+              { lang: 'de', href: '/materials/social-engineering/part1/cards/de/5.1.5.Solution_cards.What_does_an_attacker_want_DE.pdf' },
+            ],
           },
           // Worksheet: Understanding Social Engineering
           { id: '5.1.6',
             href: '/materials/social-engineering/part1/worksheets/en/5.1.6.Worksheet.Understanding_social_engineering.docx',
             languages: [
               { lang: 'en', href: '/materials/social-engineering/part1/worksheets/en/5.1.6.Worksheet.Understanding_social_engineering.docx' },
+              { lang: 'cs', href: '/materials/social-engineering/part1/worksheets/cs/5.1.6.Worksheet.Understanding_social_engineering_CS.docx' },
               { lang: 'no', href: '/materials/social-engineering/part1/worksheets/no/5.1.6.Worksheet.Understanding_social_engineering_NO.docx' },
               { lang: 'lt', href: '/materials/social-engineering/part1/worksheets/lt/5.1.6.Worksheet.Understanding_social_engineering_LT.docx' },
             ],
@@ -1494,18 +1666,34 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
           // Scenario Cards: Attacker Tactics
           { id: '5.2.1',
             href: '/materials/social-engineering/part2/cards/en/5.2.1.Scenario_cards.Attacker_tactics.pdf',
+            languages: [
+              { lang: 'en', href: '/materials/social-engineering/part2/cards/en/5.2.1.Scenario_cards.Attacker_tactics.pdf' },
+              { lang: 'cs', href: '/materials/social-engineering/part2/cards/cs/5.2.1.Scenario_cards.Attacker_tactics_CS.pdf' },
+              { lang: 'no', href: '/materials/social-engineering/part2/cards/no/5.2.1.Scenario_cards.Attacker_tactics_NO.pdf' },
+              { lang: 'lt', href: '/materials/social-engineering/part2/cards/lt/5.2.1.Scenario_cards.Attacker_tactics_LT.pdf' },
+              { lang: 'de', href: '/materials/social-engineering/part2/cards/de/5.2.1.Scenario_cards.Attacker_tactics_DE.pdf' },
+            ],
           },
           // Scenario Cards: Emotional Manipulation Puzzle
           { id: '5.2.2',
             href: '/materials/social-engineering/part2/cards/en/5.2.2.Scenario_cards.Emotional_manipulation_puzzle.pdf',
+            languages: [
+              { lang: 'en', href: '/materials/social-engineering/part2/cards/en/5.2.2.Scenario_cards.Emotional_manipulation_puzzle.pdf' },
+              { lang: 'cs', href: '/materials/social-engineering/part2/cards/cs/5.2.2.Scenario_cards.Emotional_manipulation_puzzle_CS.pdf' },
+              { lang: 'no', href: '/materials/social-engineering/part2/cards/no/5.2.2.Scenario_cards.Emotional_manipulation_puzzle_NO.pdf' },
+              { lang: 'lt', href: '/materials/social-engineering/part2/cards/lt/5.2.2.Scenario_cards.Emotional_manipulation_puzzle_LT.pdf' },
+              { lang: 'de', href: '/materials/social-engineering/part2/cards/de/5.2.2.Scenario_cards.Emotional_manipulation_puzzle_DE.pdf' },
+            ],
           },
           // Worksheet: Why Social Engineering Works
           { id: '5.2.3',
             href: '/materials/social-engineering/part2/worksheets/en/5.2.3.Worksheet.Why_Social_Engineering_works.docx',
             languages: [
               { lang: 'en', href: '/materials/social-engineering/part2/worksheets/en/5.2.3.Worksheet.Why_Social_Engineering_works.docx' },
+              { lang: 'cs', href: '/materials/social-engineering/part2/worksheets/cs/5.2.3.Worksheet.Why_Social_Engineering_works_CS.docx' },
               { lang: 'no', href: '/materials/social-engineering/part2/worksheets/no/5.2.3.Worksheet.Why_Social_Engineering_works_NO.docx' },
               { lang: 'lt', href: '/materials/social-engineering/part2/worksheets/lt/5.2.3.Worksheet.Why_Social_Engineering_works_LT.docx' },
+              { lang: 'de', href: '/materials/social-engineering/part2/worksheets/de/5.2.3.Worksheet.Why_Social_Engineering_works_DE.docx' },
             ],
           },
         ],
@@ -1529,8 +1717,10 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
             href: '/materials/social-engineering/part3/worksheets/en/5.3.2.Worksheet.Dot_to_dot_activity.docx',
             languages: [
               { lang: 'en', href: '/materials/social-engineering/part3/worksheets/en/5.3.2.Worksheet.Dot_to_dot_activity.docx' },
+              { lang: 'cs', href: '/materials/social-engineering/part3/worksheets/cs/5.3.2.Worksheet.Dot_to_dot_activity_CS.docx' },
               { lang: 'no', href: '/materials/social-engineering/part3/worksheets/no/5.3.2.Worksheet.Dot_to_dot_activity_NO.docx' },
               { lang: 'lt', href: '/materials/social-engineering/part3/worksheets/lt/5.3.2.Worksheet.Dot_to_dot_activity_LT.docx' },
+              { lang: 'de', href: '/materials/social-engineering/part3/worksheets/de/5.3.2.Worksheet.Dot_to_dot_activity_DE.docx' },
             ],
           },
         ],
@@ -1585,29 +1775,53 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
           // Image: Stop, Think, Check, Ask
           { id: '5.4.1',
             href: '/materials/social-engineering/part4/images/en/5.4.1.Image.Stop_think_check_ask.png',
+            languages: [
+              { lang: 'en', href: '/materials/social-engineering/part4/images/en/5.4.1.Image.Stop_think_check_ask.png' },
+              { lang: 'cs', href: '/materials/social-engineering/part4/images/cs/5.4.1.Image.Stop_think_check_ask_CS.png' },
+              { lang: 'no', href: '/materials/social-engineering/part4/images/no/5.4.1.Image.Stop_think_check_ask_NO.png' },
+              { lang: 'lt', href: '/materials/social-engineering/part4/images/lt/5.4.1.Image.Stop_think_check_ask_LT.png' },
+              { lang: 'de', href: '/materials/social-engineering/part4/images/de/5.4.1.Image.Stop_think_check_ask_DE.png' },
+            ],
           },
           // Worksheet: Stop, Think, Check, Ask
           { id: '5.4.2',
             href: '/materials/social-engineering/part4/worksheets/en/5.4.2.Worksheet.Stop_think_check_ask.docx',
             languages: [
               { lang: 'en', href: '/materials/social-engineering/part4/worksheets/en/5.4.2.Worksheet.Stop_think_check_ask.docx' },
+              { lang: 'cs', href: '/materials/social-engineering/part4/worksheets/cs/5.4.2.Worksheet.Stop_think_check_ask_CS.docx' },
               { lang: 'no', href: '/materials/social-engineering/part4/worksheets/no/5.4.2.Worksheet.Stop_think_check_ask_NO.docx' },
               { lang: 'lt', href: '/materials/social-engineering/part4/worksheets/lt/5.4.2.Worksheet.Stop_think_check_ask_LT.docx' },
+              { lang: 'de', href: '/materials/social-engineering/part4/worksheets/de/5.4.2.Worksheet.Stop_think_check_ask_DE.docx' },
             ],
           },
           // Scenario Cards: What Would You Do?
           { id: '5.4.3',
             href: '/materials/social-engineering/part4/cards/en/5.4.3.Scenario_cards.What_would_you_do.pdf',
+            languages: [
+              { lang: 'en', href: '/materials/social-engineering/part4/cards/en/5.4.3.Scenario_cards.What_would_you_do.pdf' },
+              { lang: 'cs', href: '/materials/social-engineering/part4/cards/cs/5.4.3.Scenario_cards.What_would_you_do_CS.pdf' },
+              { lang: 'no', href: '/materials/social-engineering/part4/cards/no/5.4.3.Scenario_cards.What_would_you_do_NO.pdf' },
+              { lang: 'lt', href: '/materials/social-engineering/part4/cards/lt/5.4.3.Scenario_cards.What_would_you_do_LT.pdf' },
+              { lang: 'de', href: '/materials/social-engineering/part4/cards/de/5.4.3.Scenario_cards.What_would_you_do_DE.pdf' },
+            ],
           },
           // Role Cards: Prosocial Behaviour or Bystander Apathy
           { id: '5.4.4',
             href: '/materials/social-engineering/part4/cards/en/5.4.4.Role_cards.Prosocial_behaviour_or_bystander_apathy.pdf',
+            languages: [
+              { lang: 'en', href: '/materials/social-engineering/part4/cards/en/5.4.4.Role_cards.Prosocial_behaviour_or_bystander_apathy.pdf' },
+              { lang: 'cs', href: '/materials/social-engineering/part4/cards/cs/5.4.4.Role_cards.Prosocial_behaviour_or_bystander_apathy_CS.pdf' },
+              { lang: 'no', href: '/materials/social-engineering/part4/cards/no/5.4.4.Role_cards.Prosocial_behaviour_or_bystander_apathy_NO.pdf' },
+              { lang: 'lt', href: '/materials/social-engineering/part4/cards/lt/5.4.4.Role_cards.Prosocial_behaviour_or_bystander_apathy_LT.pdf' },
+              { lang: 'de', href: '/materials/social-engineering/part4/cards/de/5.4.4.Role_cards.Prosocial_behaviour_or_bystander_apathy_DE.pdf' },
+            ],
           },
           // Worksheet: Protecting Myself and Others
           { id: '5.4.5',
             href: '/materials/social-engineering/part4/worksheets/en/5.4.5.Worksheet.Protecting_myself_and_others.docx',
             languages: [
               { lang: 'en', href: '/materials/social-engineering/part4/worksheets/en/5.4.5.Worksheet.Protecting_myself_and_others.docx' },
+              { lang: 'cs', href: '/materials/social-engineering/part4/worksheets/cs/5.4.5.Worksheet.Protecting_myself_and_others_CS.docx' },
               { lang: 'no', href: '/materials/social-engineering/part4/worksheets/no/5.4.5.Worksheet.Protecting_myself_and_others_NO.docx' },
               { lang: 'lt', href: '/materials/social-engineering/part4/worksheets/lt/5.4.5.Worksheet.Protecting_myself_and_others_LT.docx' },
             ],
@@ -1654,6 +1868,7 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
             href: '/materials/malware/part1/worksheets/en/6.1.4.Worksheet.Related_to_malware_or_not.docx',
             languages: [
               { lang: 'en', href: '/materials/malware/part1/worksheets/en/6.1.4.Worksheet.Related_to_malware_or_not.docx' },
+              { lang: 'cs', href: '/materials/malware/part1/worksheets/cs/6.1.4.Worksheet.Related_to_malware_or_not_CS.docx' },
               { lang: 'no', href: '/materials/malware/part1/worksheets/no/6.1.4.Worksheet.Related_to_malware_or_not_NO.docx' },
               { lang: 'lt', href: '/materials/malware/part1/worksheets/lt/6.1.4.Worksheet.Related_to_malware_or_not_LT.docx' },
               { lang: 'de', href: '/materials/malware/part1/worksheets/de/6.1.4.Worksheet.Related_to_malware_or_not_DE.docx' },
@@ -1770,8 +1985,10 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
             href: '/materials/malware/part3/readings/en/6.3.1.Reading.Recognising_malware.docx',
             languages: [
               { lang: 'en', href: '/materials/malware/part3/readings/en/6.3.1.Reading.Recognising_malware.docx' },
+              { lang: 'cs', href: '/materials/malware/part3/readings/cs/6.3.1.Reading.Recognising_malware_CS.docx' },
               { lang: 'no', href: '/materials/malware/part3/readings/no/6.3.1.Reading.Recognising_malware_NO.docx' },
               { lang: 'lt', href: '/materials/malware/part3/readings/lt/6.3.1.Reading.Recognising_malware_LT.docx' },
+              { lang: 'de', href: '/materials/malware/part3/readings/de/6.3.1.Reading.Recognising_malware_DE.docx' },
             ],
           },
           // Poster: Seven Indicators
@@ -1790,8 +2007,10 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
             href: '/materials/malware/part3/worksheets/en/6.3.3.Worksheet.List_of_indicators.docx',
             languages: [
               { lang: 'en', href: '/materials/malware/part3/worksheets/en/6.3.3.Worksheet.List_of_indicators.docx' },
+              { lang: 'cs', href: '/materials/malware/part3/worksheets/cs/6.3.3.Worksheet.List_of_indicators_CS.docx' },
               { lang: 'no', href: '/materials/malware/part3/worksheets/no/6.3.3.Worksheet.List_of_indicators_NO.docx' },
               { lang: 'lt', href: '/materials/malware/part3/worksheets/lt/6.3.3.Worksheet.List_of_indicators_LT.docx' },
+              { lang: 'de', href: '/materials/malware/part3/worksheets/de/6.3.3.Worksheet.List_of_indicators_DE.docx' },
             ],
           },
         ],
@@ -1815,8 +2034,10 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
             href: '/materials/malware/part4/situations/en/6.4.1.Situation.Malware_and_data_theft.docx',
             languages: [
               { lang: 'en', href: '/materials/malware/part4/situations/en/6.4.1.Situation.Malware_and_data_theft.docx' },
+              { lang: 'cs', href: '/materials/malware/part4/situations/cs/6.4.1.Situation.Malware_and_data_theft_CS.docx' },
               { lang: 'no', href: '/materials/malware/part4/situations/no/6.4.1.Situation.Malware_and_data_theft_NO.docx' },
               { lang: 'lt', href: '/materials/malware/part4/situations/lt/6.4.1.Situation.Malware_and_data_theft_LT.docx' },
+              { lang: 'de', href: '/materials/malware/part4/situations/de/6.4.1.Situation.Malware_and_data_theft_DE.docx' },
             ],
           },
           // Poster: DOs and DON'Ts
@@ -1872,6 +2093,9 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
             href: '/materials/digital-misuse/part1/games/en/7.1.2.Game_cards.What_is_misinformation.pdf',
             languages: [
               { lang: 'en', href: '/materials/digital-misuse/part1/games/en/7.1.2.Game_cards.What_is_misinformation.pdf' },
+              { lang: 'cs', href: '/materials/digital-misuse/part1/games/cs/7.1.2.Game_cards.What_is_misinformation_CS.pdf' },
+              { lang: 'no', href: '/materials/digital-misuse/part1/games/no/7.1.2.Game_cards.What_is_misinformation_NO.pdf' },
+              { lang: 'lt', href: '/materials/digital-misuse/part1/games/lt/7.1.2.Game_cards.What_is_misinformation_LT.pdf' },
               { lang: 'de', href: '/materials/digital-misuse/part1/games/de/7.1.2.Game_cards.What_is_misinformation_DE.pdf' },
             ],
           },
@@ -1988,10 +2212,24 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
           // Scenario Cards: Act it Out!
           { id: '7.3.1',
             href: '/materials/digital-misuse/part3/cards/en/7.3.1.Scenario_cards.Act_it_out.pdf',
+            languages: [
+              { lang: 'en', href: '/materials/digital-misuse/part3/cards/en/7.3.1.Scenario_cards.Act_it_out.pdf' },
+              { lang: 'cs', href: '/materials/digital-misuse/part3/cards/cs/7.3.1.Scenario_cards.Act_it_out_CS.pdf' },
+              { lang: 'no', href: '/materials/digital-misuse/part3/cards/no/7.3.1.Scenario_cards.Act_it_out_NO.pdf' },
+              { lang: 'lt', href: '/materials/digital-misuse/part3/cards/lt/7.3.1.Scenario_cards.Act_it_out_LT.pdf' },
+              { lang: 'de', href: '/materials/digital-misuse/part3/cards/de/7.3.1.Scenario_cards.Act_it_out_DE.pdf' },
+            ],
           },
           // Scenario Cards: Is it Just Bad Manners?
           { id: '7.3.3',
             href: '/materials/digital-misuse/part3/cards/en/7.3.3.Scenario_cards.Is_it_just_bad_manners.pdf',
+            languages: [
+              { lang: 'en', href: '/materials/digital-misuse/part3/cards/en/7.3.3.Scenario_cards.Is_it_just_bad_manners.pdf' },
+              { lang: 'cs', href: '/materials/digital-misuse/part3/cards/cs/7.3.3.Scenario_cards.Is_it_just_bad_manners_CS.pdf' },
+              { lang: 'no', href: '/materials/digital-misuse/part3/cards/no/7.3.3.Scenario_cards.Is_it_just_bad_manners_NO.pdf' },
+              { lang: 'lt', href: '/materials/digital-misuse/part3/cards/lt/7.3.3.Scenario_cards.Is_it_just_bad_manners_LT.pdf' },
+              { lang: 'de', href: '/materials/digital-misuse/part3/cards/de/7.3.3.Scenario_cards.Is_it_just_bad_manners_DE.pdf' },
+            ],
           },
         ],
         featuredVideo: {
@@ -2062,6 +2300,7 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
             href: '/materials/digital-misuse/part4/worksheets/en/7.4.3.Worksheet.Stranger_Danger_Champion.docx',
             languages: [
               { lang: 'en', href: '/materials/digital-misuse/part4/worksheets/en/7.4.3.Worksheet.Stranger_Danger_Champion.docx' },
+              { lang: 'cs', href: '/materials/digital-misuse/part4/worksheets/cs/7.4.3.Worksheet.Stranger_Danger_Champion_CS.docx' },
               { lang: 'no', href: '/materials/digital-misuse/part4/worksheets/no/7.4.3.Worksheet.Stranger_Danger_Champion_NO.docx' },
               { lang: 'lt', href: '/materials/digital-misuse/part4/worksheets/lt/7.4.3.Worksheet.Stranger_Danger_Champion_LT.docx' },
             ],
@@ -2085,6 +2324,13 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
           // Scenario Cards: Influencer Posts
           { id: '7.5.2',
             href: '/materials/digital-misuse/part5/cards/en/7.5.2.Scenario_cards.Influencer_posts.pdf',
+            languages: [
+              { lang: 'en', href: '/materials/digital-misuse/part5/cards/en/7.5.2.Scenario_cards.Influencer_posts.pdf' },
+              { lang: 'cs', href: '/materials/digital-misuse/part5/cards/cs/7.5.2.Scenario_cards.Influencer_posts_CS.pdf' },
+              { lang: 'no', href: '/materials/digital-misuse/part5/cards/no/7.5.2.Scenario_cards.Influencer_posts_NO.pdf' },
+              { lang: 'lt', href: '/materials/digital-misuse/part5/cards/lt/7.5.2.Scenario_cards.Influencer_posts_LT.pdf' },
+              { lang: 'de', href: '/materials/digital-misuse/part5/cards/de/7.5.2.Scenario_cards.Influencer_posts_DE.pdf' },
+            ],
           },
         ],
         featuredVideo: {
@@ -2140,6 +2386,7 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
             href: '/materials/digital-misuse/part6/worksheets/en/7.6.1.Worksheet.Digital_superhero.docx',
             languages: [
               { lang: 'en', href: '/materials/digital-misuse/part6/worksheets/en/7.6.1.Worksheet.Digital_superhero.docx' },
+              { lang: 'cs', href: '/materials/digital-misuse/part6/worksheets/cs/7.6.1.Worksheet.Digital_superhero_CS.docx' },
               { lang: 'no', href: '/materials/digital-misuse/part6/worksheets/no/7.6.1.Worksheet.Digital_superhero_NO.docx' },
               { lang: 'lt', href: '/materials/digital-misuse/part6/worksheets/lt/7.6.1.Worksheet.Digital_superhero_LT.docx' },
             ],
@@ -2149,6 +2396,7 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
             href: '/materials/digital-misuse/part6/worksheets/en/7.6.2.Worksheet.CyberDoku_Solving_the_mystery.docx',
             languages: [
               { lang: 'en', href: '/materials/digital-misuse/part6/worksheets/en/7.6.2.Worksheet.CyberDoku_Solving_the_mystery.docx' },
+              { lang: 'cs', href: '/materials/digital-misuse/part6/worksheets/cs/7.6.2.Worksheet.CyberDoku_Solving_the_mystery_CS.docx' },
               { lang: 'no', href: '/materials/digital-misuse/part6/worksheets/no/7.6.2.Worksheet.CyberDoku_Solving_the_mystery_NO.docx' },
               { lang: 'lt', href: '/materials/digital-misuse/part6/worksheets/lt/7.6.2.Worksheet.CyberDoku_Solving_the_mystery_LT.docx' },
             ],

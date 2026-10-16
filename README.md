@@ -12,7 +12,7 @@
 
 [![Learning Modules](https://img.shields.io/badge/Learning_Modules-7-16A34A)](#-the-seven-modules)
 [![Lesson Parts](https://img.shields.io/badge/Lesson_Parts-31-0EA5E9)](#-module-catalogue)
-[![Classroom Materials](https://img.shields.io/badge/Classroom_Materials-102-F59E0B)](#-module-catalogue)
+[![Classroom Materials](https://img.shields.io/badge/Classroom_Materials-104-F59E0B)](#-module-catalogue)
 [![Videos](https://img.shields.io/badge/Videos-20-EF4444)](#-module-catalogue)
 [![Challenges](https://img.shields.io/badge/Interactive_Challenges-7-8850DF)](#-interactive-challenges)
 [![Games](https://img.shields.io/badge/Roblox_Games-5-D946EF)](#-cybersecurity-games-roblox)
@@ -66,7 +66,7 @@ Children are online earlier and more often than ever. Schools need practical, ag
 | 🧑‍🏫 **Teacher-friendly** | Each module comes with a teaching guide, step-by-step activity plans and downloadable packages. Teach the full sequence or pick single parts. |
 | 🎯 **Clear learning goals** | Every module states its aim, learning objectives and "I can…" learning outcomes. |
 | 🌍 **Internationally grounded** | Developed by European universities and cybersecurity practitioners; aligned with the European Digital Competence Framework (DigComp). |
-| 🗣️ **Multilingual** | Full platform in 5 languages, with video subtitles in all of them. |
+| 🗣️ **Multilingual** | Interface, challenges and video subtitles in 5 languages; nearly all printable materials are translated too (see [Languages](#-languages)). |
 | 💸 **Free and open** | MIT-licensed — use, adapt and share the materials freely. |
 
 ---
@@ -75,7 +75,7 @@ Children are online earlier and more often than ever. Schools need practical, ag
 
 1. **Open the [Learning Hub](https://kidcyproject.github.io/learning-hub/introduction/)** and choose your language in the top navigation.
 2. **Pick a module.** It is good to start with *Digital Citizenship*.
-3. **Download the Teaching Guide** from the *Guide* section above Part 1 and pick your language — it explains every material and how to use it. The **Introductory Materials** button at the top of the page gives you the shared introductory materials.
+3. **Download the Teaching Guide** from the *Guide* section above Part 1 (currently available in English and Czech) — it explains every material and how to use it. The **Introductory Materials** button at the top of the page gives you the shared introductory materials.
 4. **Read the module's aim, objectives and outcomes** so you know what students should be able to do afterwards.
 5. **Choose a part** and open it to see its goal, activity plan, materials and video.
 6. **Click "Download Package"** and choose a language to get everything for that part in one ZIP — print worksheets and cards in advance.
@@ -96,7 +96,7 @@ Module  (e.g. Authentication)
 ├── 📦 Part 1 … Part N ........... one lesson unit each
 │     ├── Goal of the part
 │     ├── Activity plan .......... Introduction → Main activity → Plenary & informal assessment
-│     ├── Materials .............. worksheets, scenario/sorting cards, images, posters, checklists
+│     ├── Materials .............. worksheets, scenario/sorting cards, images, posters, readings
 │     └── 🎬 Video (most parts) .. with downloadable subtitles in 5 languages
 ├── 🕹️ Interactive Challenge ..... browser-based, no install needed
 └── 🎮 Game (5 modules) .......... played in the Roblox app
@@ -145,7 +145,7 @@ Click a module to see its parts, videos and materials.
 | 4 | How to Act Savvy in Digital Environments - Being Wise and Resilient | 🎬 Resilience in Digital Environments | — |
 | 5 | How to Act Responsibly in Digital Environments - Respecting Ourselves and Others in Digital Environments | — | 3 |
 
-**Challenge:** *GOOD or BAD Content to Post?* — students sort posts into what is safe and responsible to share.
+**Challenge:** *GOOD or BAD Content to Post?* — students sort 16 posts into four zones: good to share, private, unkind, or "ask first" because it is about someone else.
 
 **Students will be able to say:** *"I can explain what digital citizenship is and why it is important."*
 </details>
@@ -161,7 +161,7 @@ Click a module to see its parts, videos and materials.
 | 2 | What is an Attacker? | 🎬 Who is Behind Cyber Attacks? | 5 |
 | 3 | What are the Attacker Techniques? | — | 6 |
 
-**Challenge:** *In Hacker's Mind* — students examine a social media profile as a hacker would, spotting the weak spots.
+**Challenge:** *In Hacker's Mind* — three steps: find the 4 real weak spots on a social media profile, plan the attack by matching clues to an attacker's goal, then learn why attackers attack and how to stop them.
 
 **Students will be able to say:** *"I can recognise attacker techniques in given scenarios."*
 </details>
@@ -179,7 +179,7 @@ Click a module to see its parts, videos and materials.
 | 4 | How to Manage Passwords Securely - Using a Password Manager | 🎬 What is a Password Manager? | 8 |
 | 5 | How to Protect Our Digital Identity - Making Safe and Responsible Choices | 🎬 Protecting Your Digital Identity | 3 |
 
-**Challenge:** *Password Lab* — build a stronger password one round at a time.
+**Challenge:** *Password Lab* — build a stronger password over 4 rounds, each adding a new rule.
 **Game:** *Master Spell: Unlock the Vault* (Roblox).
 
 **Students will be able to say:** *"I can distinguish between weak and strong usernames and passwords."*
@@ -195,27 +195,27 @@ Click a module to see its parts, videos and materials.
 | 1 | What is Private Data? | 🎬 What is Private Data? | 2 |
 | 2 | Data Sharing | — | 3 |
 | 3 | Data Detectives - Digital Footprints | 🎬 What is a Digital Footprint? | 4 |
-| 4 | Data Detectives - Clean Up Your Digital Footprint | 🎬 Protecting Your Private Data Online | 6 |
+| 4 | Clean Up Your Digital Footprint | 🎬 Protecting Your Private Data Online | 6 |
 
-**Challenge:** *Digital Footprint Sorter* — sort everyday activities by the traces they leave online.
+**Challenge:** *Digital Footprint Sorter* — sort everyday activities by the traces they leave online, then clean up a profile that shares too much.
 **Game:** *Secrets of the Pearl & Shell* (Roblox).
 
 **Students will be able to say:** *"I can demonstrate the principles for protecting data privacy in digital environments in given scenarios and justify why I made those choices."*
 </details>
 
 <details>
-<summary><b>5 · Social Engineering</b> — 4 parts · 14 materials · 2 videos</summary>
+<summary><b>5 · Social Engineering</b> — 4 parts · 16 materials · 2 videos</summary>
 
 **Aim:** To provide core knowledge of what social engineering is, with emphasis on the risks it poses and principles for protecting against it.
 
 | Part | Title | Video | Materials |
 |:-:|---|---|:-:|
-| 1 | What is Social Engineering? | 🎬 What is Social Engineering? | 5 |
+| 1 | What is Social Engineering? | 🎬 What is Social Engineering? | 7 |
 | 2 | Why is Social Engineering Used by Attackers? | — | 3 |
 | 3 | Recognising Social Engineering in Everyday Contexts | 🎬 Types of Social Engineering | 1 |
 | 4 | Protecting Yourself and Others from Social Engineering | — | 5 |
 
-**Challenge:** *Phishing Case Files* — become a Message Detective: trust it, or ignore/report it?
+**Challenge:** *Phishing Case Files* — become a Message Detective: decide whether to trust a message, stop and ask an adult, or ignore and report it — then name the trick the attacker used.
 **Game:** *Scam or Safe? Don't Fall for It!* (Roblox).
 
 **Students will be able to say:** *"I can demonstrate ways to protect against social engineering in given scenarios and justify why I made those choices."*
@@ -233,7 +233,7 @@ Click a module to see its parts, videos and materials.
 | 3 | Recognising Malware | — | 3 |
 | 4 | Protection Measures Against Malware | — | 4 |
 
-**Challenge:** *Malware Detective* — inspect files, emails, pop-ups and app permissions across 4 levels.
+**Challenge:** *Malware Detective* — inspect files, emails, pop-ups and app permissions, name malware types, spot signs of infection and choose protection across 7 levels.
 **Game:** *Malware Madness Race* (Roblox).
 
 **Students will be able to say:** *"I can demonstrate ways to protect against malware infections in given scenarios and justify why I made those choices."*
@@ -253,7 +253,7 @@ Click a module to see its parts, videos and materials.
 | 5 | Influencers | 🎬 Social Media Influencers | 1 |
 | 6 | Dealing with Digital Misusers | — | 3 |
 
-**Challenge:** *Real Talk Stories* — make choices, see consequences, learn how to handle cyberbullying and online pressure.
+**Challenge:** *Real Talk Stories* — branching stories: make choices, see consequences and earn up to 3 stars for finding the safest path through cyberbullying, fake news and online pressure.
 **Game:** *Kindness Quest: Save the City* (Roblox).
 
 **Students will be able to say:** *"I can suggest and discuss ways to deal with digital abuse and misuse in given scenarios."*
@@ -270,13 +270,29 @@ Challenges run **directly in the web browser** — no installation or account ne
 
 | Module | Challenge | What students do |
 |---|---|---|
-| Digital Citizenship | [GOOD or BAD Content to Post?](https://kidcyproject.github.io/learning-hub/digital-citizenship/challenge/) | Drag posts into "good" or "bad" to share |
-| Attacker Perspective | [In Hacker's Mind](https://kidcyproject.github.io/learning-hub/attacker-perspective/challenge/) | Find the weak spots in a social media profile |
-| Authentication | [Password Lab](https://kidcyproject.github.io/learning-hub/authentication/challenge/) | Build a stronger password round by round |
-| Data Privacy | [Digital Footprint Sorter](https://kidcyproject.github.io/learning-hub/data-privacy/challenge/) | Sort activities by the traces they leave |
-| Social Engineering | [Phishing Case Files](https://kidcyproject.github.io/learning-hub/social-engineering/challenge/) | Decide which messages are safe or phishing |
-| Malware | [Malware Detective](https://kidcyproject.github.io/learning-hub/malware/challenge/) | Act as an analyst across 4 levels |
-| Digital Misuse | [Real Talk Stories](https://kidcyproject.github.io/learning-hub/digital-misuse/challenge/) | Make choices and see their consequences |
+| Digital Citizenship | [GOOD or BAD Content to Post?](https://kidcyproject.github.io/learning-hub/digital-citizenship/challenge/) | Sort 16 posts into four zones: good, private, unkind or "ask first" |
+| Attacker Perspective | [In Hacker's Mind](https://kidcyproject.github.io/learning-hub/attacker-perspective/challenge/) | 3 steps: find the weak spots in a profile, plan the attack, learn how to stop it |
+| Authentication | [Password Lab](https://kidcyproject.github.io/learning-hub/authentication/challenge/) | Build a stronger password over 4 rounds with new rules each time |
+| Data Privacy | [Digital Footprint Sorter](https://kidcyproject.github.io/learning-hub/data-privacy/challenge/) | Sort activities by the traces they leave, then clean up a profile |
+| Social Engineering | [Phishing Case Files](https://kidcyproject.github.io/learning-hub/social-engineering/challenge/) | Judge 12 messages (trust, ask an adult, or report) and spot the trick |
+| Malware | [Malware Detective](https://kidcyproject.github.io/learning-hub/malware/challenge/) | Act as an analyst across 7 levels |
+| Digital Misuse | [Real Talk Stories](https://kidcyproject.github.io/learning-hub/digital-misuse/challenge/) | Choose a path through branching stories and see the consequences |
+
+Several challenges deal a fresh random set of cards or questions each time, so students can replay them. *Real Talk Stories* has 12 everyday stories plus two sensitive ones (private photos, strangers asking for an address) that are left out unless the player switches them on; they open with a content note.
+
+<details>
+<summary><b>For maintainers — where the challenge code lives</b></summary>
+
+Every module has the same three pieces, named by the module code (`DC`, `AP`, `AT`, `DP`, `SE`, `MW`, `DM`):
+
+| What | Where |
+|---|---|
+| Page | `src/pages/learning-hub/<module-slug>/challenge.astro` |
+| Game mechanics (answer keys, how a game is dealt, scoring) | `src/data/challenge<XX>.ts` — e.g. `challengeAP.ts`, `challengeMW.ts` |
+| All text, in every language | `src/i18n/translations/<lang>/content<XX>.ts` → `challenge<XX>` (matched to the mechanics by `id`) |
+
+Only language-neutral facts live in `src/data/challenge<XX>.ts`, so every language is graded by the same answer key. Counts such as "4 weak spots" appear in the translated text too — change them in all five languages together.
+</details>
 
 ## 🎮 Cybersecurity games (Roblox)
 
@@ -335,7 +351,7 @@ You can download at whichever level suits you:
 |---|---|---|
 | **Download Introductory Materials** | Top of each module page | Introductory materials shared by all modules |
 | **Download All Materials** | Top of each module page | Every part package and the teaching guide of the module in one ZIP |
-| **Download Teaching Guide** | *Guide* section, above Part 1 | Guidance for every material in the module |
+| **Download Teaching Guide** | *Guide* section, above Part 1 | Guidance for every material in the module (currently English and Czech) |
 | **Download Package** | Each part | Worksheets, cards, images and video for that part |
 | **Single material** | Each part's material list | One worksheet / card set / image |
 | **Video + subtitles** | Under each video | The MP4 and subtitle files (`.vtt`) in all 5 languages |
@@ -348,19 +364,39 @@ Every package and translated material opens a **language menu** (EN · CS · NO 
 > [!TIP]
 > Downloaded videos with subtitles let you teach **offline** — handy if your classroom internet is unreliable. Most video players (e.g. VLC) can load `.vtt` subtitle files.
 
-**Material types you will encounter:** worksheets, scenario cards, sorting cards, role cards, game cards, images and posters, schemas, checklists, comic stories, readings and situation assessments — most are designed to be **printed** for group or individual work.
+**Material types you will encounter:** worksheets, scenario, solution, sorting, role and game cards, card and game sets, single images and sets of images, posters, schemas, readings and situation descriptions — most are designed to be **printed** for group or individual work. Each material has an ID such as `3.2.1` (module · part · material); an `a`/`b` suffix (e.g. `5.1.3a`, `5.1.3b`) marks two related files that share one topic, such as a single image and a set of images.
+
+<details>
+<summary><b>For maintainers — material files and naming</b></summary>
+
+Files live in `public/materials/<module-slug>/part<N>/<kind>/[<lang>/]<file>`, where `<kind>` is `worksheets`, `cards`, `sorting-cards`, `games`, `images`, `posters`, `readings`, `schemas`, `situations` or `videos` (subtitles in `videos/subtitles/<lang>/`). A material that exists in only one language sits directly in its kind folder; translated materials sit in one folder per language (`en`, `cs`, `no`, `lt`, `de`).
+
+File names follow one pattern in every module:
+
+```text
+<module>.<part>.<number>[a|b].<Type>.<Title_with_underscores>[_<LANG>].<ext>
+e.g.  2.2.1.Scenario_cards.Identify_the_behaviour_CS.pdf     3.1.3.Images.Digital_Assets.pdf
+```
+
+`Type` is `Worksheet`, `Image` (one image), `Images` (a set of images), `Scenario_cards`, `Solution_cards`, `Role_cards`, `Sorting_cards`, `Game_cards`, `Game_set`, `Cards`, `Schema`, `Poster`, `Reading`, `Situation`, `Video` or `VideoSubtitles`. English files have no language suffix; others end in `_CS`, `_NO`, `_LT` or `_DE`. Teaching guides are `<ModuleName>_Teaching[_CS].docx` in `teaching-guide/<lang>/`.
+
+Links are listed in `src/data/moduleParts.ts` and the displayed names in `src/i18n/translations/<lang>/content<XX>.ts` (paired by position, with an `// ID:` comment). Material, video and part counts on the site — and the numbers in this README — are derived from `moduleParts.ts`, so update the badges and tables above when materials are added or removed. The ZIP packages are not committed; `scripts/generate-zips.sh` builds them at deploy time from the folder contents, so remove old files from the folders rather than just from the links.
+</details>
+
 
 ---
 
 ## 🌐 Languages
 
-The entire platform — lessons, materials, challenges and video subtitles — is available in:
+The platform interface, lessons, challenges and video subtitles are available in:
 
 | 🇬🇧 English | 🇨🇿 Čeština | 🇩🇪 Deutsch | 🇱🇹 Lietuvių | 🇳🇴 Norsk |
 |:-:|:-:|:-:|:-:|:-:|
 | [kidcyproject.github.io](https://kidcyproject.github.io/) | [/cs/](https://kidcyproject.github.io/cs/) | [/de/](https://kidcyproject.github.io/de/) | [/lt/](https://kidcyproject.github.io/lt/) | [/no/](https://kidcyproject.github.io/no/) |
 
 Switch languages at any time with the language switcher in the navigation. Videos have English narration with subtitles in all five languages. The Roblox games contain their translations inside the game itself.
+
+**Printable materials (state of October 2026).** 71 of the 104 materials offer a language menu: all 71 in English, 70 each in Czech, Norwegian and Lithuanian, and 59 in German. The other 33 are single files (images, posters, schemas and materials without translated versions). The **Teaching Guide** is currently available in English and Czech. Download Package ZIPs contain only the chosen language's files plus the shared ones.
 
 ---
 

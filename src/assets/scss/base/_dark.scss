@@ -316,21 +316,8 @@
   color: #fcd34d;
 }
 
-// ── Challenge card (main card on challenge pages) ─────────────────────────────
-.darkmode .challenge-card {
-  background: var(--dm-surface-1) !important;
-  border-color: var(--dm-border-sub) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45) !important;
-}
-
 .darkmode .challenge-header {
   border-bottom-color: var(--dm-border-sub) !important;
-}
-
-.darkmode .round-badge {
-  color: #fcd34d !important;
-  background: #2a1f05 !important;
-  border-color: #92400e !important;
 }
 
 .darkmode .challenge-title {
@@ -513,27 +500,6 @@
   }
 }
 
-// ── Completion overlay card ────────────────────────────────────────────────────
-.darkmode .completion-card {
-  background: var(--dm-surface-2) !important;
-  border: 1px solid var(--dm-border) !important;
-}
-
-.darkmode .completion-title {
-  color: var(--dm-fg) !important;
-}
-
-.darkmode .completion-text,
-.darkmode .completion-tips {
-  color: var(--dm-fg-muted) !important;
-}
-
-.darkmode .rounds-completed {
-  background: #2a1f05 !important;
-  border-color: #d97706 !important;
-  color: #fcd34d !important;
-}
-
 // ── Game pages ────────────────────────────────────────────────────────────────
 .darkmode .tip-card:has(:not(.tip-amber)) {
   border-color: #075985;
@@ -558,25 +524,6 @@
 // on dark backgrounds.
 .darkmode .sort-game__tray-label {
   color: var(--dm-fg) !important;
-}
-
-// ── Feedback messages ─────────────────────────────────────────────────────────
-.darkmode .sort-game__feedback--correct {
-  color: #6ee7b7 !important;
-  background-color: #052820 !important;
-  border-color: #064e35 !important;
-}
-
-.darkmode .sort-game__feedback--wrong {
-  color: #fca5a5 !important;
-  background-color: #2a0f0f !important;
-  border-color: #640c0c !important;
-}
-
-.darkmode .sort-game__feedback--info {
-  color: #bfdbfe !important;
-  background-color: #0f1f3a !important;
-  border-color: #1e3a8a !important;
 }
 
 // ── Post cards ────────────────────────────────────────────────────────────────
@@ -711,29 +658,6 @@
   color: var(--dm-fg-muted) !important;
 }
 
-// ── Win panel ─────────────────────────────────────────────────────────────────
-.darkmode .sort-game__win-inner {
-  background: linear-gradient(135deg, #052820, #064e35) !important;
-  border-color: #059669 !important;
-}
-
-.darkmode .sort-game__win-inner h2 {
-  color: #6ee7b7 !important;
-}
-
-.darkmode .sort-game__win-inner p {
-  color: #a7f3d0 !important;
-}
-
-.darkmode .sort-game__review {
-  background: rgba(0, 0, 0, 0.25) !important;
-}
-
-.darkmode .sort-game__review-title,
-.darkmode .sort-game__review-item {
-  color: #a7f3d0 !important;
-}
-
 // ══════════════════════════════════════════════════════════════════════════════
 // DATA PRIVACY CHALLENGE  (data-privacy/challenge.astro)
 // Same sort-game pattern as DC but fp-game__* / activity-card class prefix.
@@ -749,25 +673,6 @@
 
 .darkmode .fp-game__tray-label {
   color: var(--dm-fg) !important; // var(--color-neutral-800) is ~30% lightness — invisible on dark bg
-}
-
-// ── Feedback messages ─────────────────────────────────────────────────────────
-.darkmode .fp-game__feedback--correct {
-  color: #6ee7b7 !important;
-  background-color: #052820 !important;
-  border-color: #064e35 !important;
-}
-
-.darkmode .fp-game__feedback--wrong {
-  color: #fca5a5 !important;
-  background-color: #2a0f0f !important;
-  border-color: #640c0c !important;
-}
-
-.darkmode .fp-game__feedback--info {
-  color: #bfdbfe !important;
-  background-color: #0f1f3a !important;
-  border-color: #1e3a8a !important;
 }
 
 // ── Activity cards ────────────────────────────────────────────────────────────
@@ -868,17 +773,6 @@
   border-color: #6b7280 !important;
 }
 
-// ── Between the steps + step 2 (clean up a profile) ───────────────────────────
-.darkmode .fp-game__between {
-  background: linear-gradient(135deg, #04282a, #064e4a) !important;
-  border-color: #0f766e !important;
-}
-
-.darkmode .fp-game__between h2,
-.darkmode .fp-game__between-summary {
-  color: #5eead4 !important;
-}
-
 .darkmode .cleanup-card {
   background-color: var(--dm-surface-1) !important;
   border-color: var(--dm-border) !important;
@@ -921,76 +815,9 @@
   border-color: #059669 !important;
 }
 
-// ── Win panel ─────────────────────────────────────────────────────────────────
-.darkmode .fp-game__win-inner {
-  background: linear-gradient(135deg,
-    color-mix(in oklab, var(--brand-DP) 12%, var(--dm-surface-2)),
-    color-mix(in oklab, var(--brand-DP) 18%, var(--dm-surface-1))
-  ) !important;
-  border-color: var(--brand-DP) !important;
-}
-
-.darkmode .fp-game__win-inner h2 {
-  color: color-mix(in oklab, var(--brand-DP), white 30%) !important;
-}
-
-.darkmode .fp-game__win-inner p {
-  color: color-mix(in oklab, var(--brand-DP), white 50%) !important;
-}
-
-.darkmode .fp-game__review {
-  background: rgba(0, 0, 0, 0.25) !important;
-}
-
-.darkmode .fp-game__review-title,
-.darkmode .fp-game__review-item {
-  color: color-mix(in oklab, var(--brand-DP), white 50%) !important;
-}
-
-// ══════════════════════════════════════════════════════════════════════════════
-// DIGITAL MISUSE CHALLENGE  (digital-misuse/challenge.astro)
-// Story-based adventure: story header/panel, message bubbles, ending cards,
-// action buttons, sidebar story rows, final overlay. Brand color --brand-DM
-// (red #ef4444). Many elements use hardcoded white/light backgrounds.
-// Note: :global() styles compile without scoping hash; !important still needed
-// because Tailwind utilities can conflict.
-// ══════════════════════════════════════════════════════════════════════════════
-
-// ── Story header bar ──────────────────────────────────────────────────────────
-.darkmode .story-header {
-  background: var(--dm-surface-1) !important;
-  border-color: var(--dm-border-sub) !important;
-}
-
-.darkmode .story-title-text {
-  color: var(--dm-fg) !important;
-}
-
-// ── Story panel ───────────────────────────────────────────────────────────────
-.darkmode .story-panel {
-  background: var(--dm-surface-1) !important;
-  border-color: var(--dm-border-sub) !important;
-  border-top-color: var(--brand-DM) !important;
-}
-
 // ── Scrollbar track inside messages-area ──────────────────────────────────────
 .darkmode .messages-area::-webkit-scrollbar-track {
   background: var(--dm-surface-2);
-}
-
-// ── Welcome state ─────────────────────────────────────────────────────────────
-.darkmode .welcome-title {
-  color: var(--dm-fg) !important;
-}
-
-.darkmode .welcome-desc {
-  color: var(--dm-fg-muted) !important;
-}
-
-// ── Message bubbles (global styles — still need !important vs Tailwind) ────────
-.darkmode .msg-narrator .msg-content {
-  background: color-mix(in oklab, var(--brand-DM) 8%, var(--dm-surface-2)) !important;
-  color: var(--dm-fg) !important;
 }
 
 // ── Ending card states ────────────────────────────────────────────────────────
@@ -1036,85 +863,6 @@
 .darkmode .ending-lesson strong,
 .darkmode .ending-lesson p {
   color: var(--dm-fg-muted) !important;
-}
-
-// ── Choice buttons (global — dynamically created via JS) ──────────────────────
-.darkmode .choice-btn {
-  color: color-mix(in oklab, var(--brand-DM), white 30%) !important;
-  background: color-mix(in oklab, var(--brand-DM) 10%, var(--dm-surface-2)) !important;
-  border-color: color-mix(in oklab, var(--brand-DM) 40%, var(--dm-border)) !important;
-}
-
-.darkmode .choice-btn:hover {
-  background: var(--brand-DM) !important;
-  border-color: var(--brand-DM) !important;
-  color: white !important;
-}
-
-// ── Action / nav buttons ──────────────────────────────────────────────────────
-.darkmode .action-buttons .btn-secondary {
-  background: var(--dm-surface-2) !important;
-  color: color-mix(in oklab, var(--brand-DM), white 20%) !important;
-  border-color: color-mix(in oklab, var(--brand-DM) 40%, var(--dm-border)) !important;
-}
-
-.darkmode .action-buttons .btn-secondary:hover {
-  background: color-mix(in oklab, var(--brand-DM) 10%, var(--dm-surface-2)) !important;
-  border-color: var(--brand-DM) !important;
-}
-
-// ── Sidebar: story rows ───────────────────────────────────────────────────────
-.darkmode .s-row-active {
-  background: color-mix(in oklab, var(--brand-DM) 10%, var(--dm-surface-2)) !important;
-}
-
-.darkmode .s-row:hover {
-  background: var(--dm-surface-2) !important;
-}
-
-.darkmode .s-row-title {
-  color: var(--dm-fg) !important;
-}
-
-.darkmode .s-dot-locked {
-  background: var(--dm-border) !important;
-}
-
-// ── Points label / score denominators (medium-gray, explicit for dark) ───────
-.darkmode .pts-label {
-  color: var(--dm-fg-muted) !important;
-}
-
-.darkmode .s-row-label {
-  color: var(--dm-fg-muted) !important;
-}
-
-.darkmode .score-denom,
-.darkmode .final-denom {
-  color: var(--dm-fg-muted) !important;
-}
-
-// ── Final overlay card ────────────────────────────────────────────────────────
-.darkmode .final-card {
-  background: var(--dm-surface-2) !important;
-}
-
-.darkmode .final-title {
-  color: var(--dm-fg) !important;
-}
-
-.darkmode .final-subtitle,
-.darkmode .final-rank-msg {
-  color: var(--dm-fg-muted) !important;
-}
-
-.darkmode .final-score-box {
-  background: color-mix(in oklab, var(--brand-DM) 10%, var(--dm-surface-2)) !important;
-  border-color: color-mix(in oklab, var(--brand-DM) 40%, var(--dm-border)) !important;
-}
-
-.darkmode .final-rank {
-  color: var(--dm-fg) !important;
 }
 
 // ── About page & other content pages ─────────────────────────────────────────
@@ -1324,39 +1072,13 @@
   border-bottom-color: var(--dm-border-sub) !important;
 }
 
-.darkmode .info-row,
-.darkmode .non-click {
+.darkmode .info-row {
   color: var(--dm-fg-muted) !important;
 }
 
 .darkmode .info-row:hover:not([data-found]) {
   background: rgba(255, 255, 255, 0.04) !important;
   border-color: var(--dm-border-sub) !important;
-}
-
-// Password show button (light purple in light mode) ───────────────────────────
-.darkmode .show-pw-btn {
-  color: #c4b5fd !important;
-  background: #1e1b4b !important;
-  border-color: #4338ca !important;
-}
-
-.darkmode .show-pw-btn:hover:not([data-found]) {
-  background: #2e2a5e !important;
-  border-color: #6366f1 !important;
-}
-
-// Security question ───────────────────────────────────────────────────────────
-.darkmode .pw-text {
-  color: var(--dm-fg) !important;
-}
-
-.darkmode .secq-value {
-  color: var(--dm-fg-muted) !important;
-}
-
-.darkmode .secq-answer {
-  color: #c4b5fd !important; // brighter purple readable on dark
 }
 
 // ── Post cards (social feed) ──────────────────────────────────────────────────
@@ -1374,11 +1096,6 @@
   background: var(--dm-surface-2) !important;
 }
 
-.darkmode .post-place-badge {
-  background: var(--dm-surface-3) !important;
-  color: var(--dm-fg) !important;
-}
-
 // ── Post action bars (Like / Comment / Share — white bg) ─────────────────────
 .darkmode .post-actions-bar {
   background: var(--dm-surface-1) !important;
@@ -1388,32 +1105,6 @@
 .darkmode .action-btn:hover:not([data-found]) {
   background: var(--dm-surface-3) !important;
   color: var(--dm-fg) !important;
-}
-
-// ── Sidebar: vuln count + list ────────────────────────────────────────────────
-.darkmode .vuln-count {
-  color: #c4b5fd !important; // dark purple #6d28d9 invisible on dark bg
-}
-
-.darkmode .vuln-item {
-  color: #6ee7b7 !important; // dark green #065f46 invisible on dark bg
-}
-
-// ── Game-end overlay card ─────────────────────────────────────────────────────
-.darkmode .overlay-card {
-  background: var(--dm-surface-2) !important;
-}
-
-.darkmode .overlay-title {
-  color: var(--dm-fg) !important;
-}
-
-.darkmode .overlay-msg {
-  color: var(--dm-fg-muted) !important;
-}
-
-.darkmode .overlay-score {
-  color: #c4b5fd !important; // dark purple #4c1d95 invisible on dark bg
 }
 
 // ── Name/status/bio/stats hover bg ───────────────────────────────────────────
@@ -1484,7 +1175,6 @@
 .darkmode .initiative-partner-card p {
   color: var(--dm-fg-muted);
 }
-
 
 // ══════════════════════════════════════════════════════════════════════════════
 // INTRODUCTION PAGE  (src/pages/learning-hub/introduction.astro)

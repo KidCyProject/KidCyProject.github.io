@@ -29,17 +29,31 @@ export const contentSE = {
       included: {
         materials: [
           {
-            // ID: 5.1.2
+            // ID: 5.1.2a
             kind: 'Bild',
             name: 'Systeme hacken vs. Menschen täuschen',
             filename: 'Bild - Systeme hacken vs. Menschen täuschen',
             ariaLabel: 'Material herunterladen',
           },
           {
-            // ID: 5.1.3
+            // ID: 5.1.2b
+            kind: 'Bilder',
+            name: 'Systeme hacken vs. Menschen täuschen',
+            filename: 'Bilder - Systeme hacken vs. Menschen täuschen',
+            ariaLabel: 'Material herunterladen',
+          },
+          {
+            // ID: 5.1.3a
             kind: 'Bild',
             name: 'Ziele eines Angreifers',
             filename: 'Bild - Ziele eines Angreifers',
+            ariaLabel: 'Material herunterladen',
+          },
+          {
+            // ID: 5.1.3b
+            kind: 'Bilder',
+            name: 'Ziele eines Angreifers',
+            filename: 'Bilder - Ziele eines Angreifers',
             ariaLabel: 'Material herunterladen',
           },
           {

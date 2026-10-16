@@ -29,17 +29,31 @@ export const contentSE = {
       included: {
         materials: [
           {
-            // ID: 5.1.2
+            // ID: 5.1.2a
             kind: 'Paveikslėlis',
             name: 'Sistemų įsilaužimas vs. žmonių apgaudinėjimas',
             filename: 'Paveikslėlis - Sistemų įsilaužimas vs. žmonių apgaudinėjimas',
             ariaLabel: 'Atsisiųsti medžiagą',
           },
           {
-            // ID: 5.1.3
+            // ID: 5.1.2b
+            kind: 'Paveikslėliai',
+            name: 'Sistemų įsilaužimas vs. žmonių apgaudinėjimas',
+            filename: 'Paveikslėliai - Sistemų įsilaužimas vs. žmonių apgaudinėjimas',
+            ariaLabel: 'Atsisiųsti medžiagą',
+          },
+          {
+            // ID: 5.1.3a
             kind: 'Paveikslėlis',
             name: 'Užpuoliko tikslai',
             filename: 'Paveikslėlis - Užpuoliko tikslai',
+            ariaLabel: 'Atsisiųsti medžiagą',
+          },
+          {
+            // ID: 5.1.3b
+            kind: 'Paveikslėliai',
+            name: 'Užpuoliko tikslai',
+            filename: 'Paveikslėliai - Užpuoliko tikslai',
             ariaLabel: 'Atsisiųsti medžiagą',
           },
           {

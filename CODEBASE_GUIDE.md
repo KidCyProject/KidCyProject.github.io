@@ -16,10 +16,11 @@ src/
 │   └── base/
 │       ├── _root.scss    # CSS custom properties (brand colors, spacing, elevation)
 │       ├── _modules.scss # Per-module brand color overrides (--brand-DC, --brand-AT, …)
+│       ├── _challenge.scss # Shared look of the seven interactive challenges (cards, buttons, meters, result cards)
 │       ├── _dark.scss    # Dark mode token overrides
 │       └── …
 ├── components/           # Reusable Astro components
-├── data/                 # Module registry and part/asset data
+├── data/                 # Module registry, part/asset data, challenge mechanics (challenge<XX>.ts), games
 ├── i18n/                 # Translation system
 ├── layouts/              # Page shell (DefaultLayout)
 ├── pages/                # File-system routes
@@ -81,7 +82,7 @@ Defines `modules: ModuleData[]` — one entry per learning module:
 | `dp` | `data-privacy` | `#14B8A6` |
 | `se` | `social-engineering` | `#D946EF` |
 | `mw` | `malware` | `#93CC16` |
-| `da` | `digital-misuse` | `#EF4444` |
+| `dm` | `digital-misuse` | `#EF4444` |
 
 Each `ModuleData` holds: `id`, `slug`, `color`, `materials` (count), `videos` (count), `challenges` (0 or 1), `games` (0 or 1), `teachingGuide.languages` and `materialsPackage.languages` (one zip per language, shown as a language dropdown). `introMaterials.languages` holds the shared introductory-materials zips.
 
@@ -119,6 +120,32 @@ Key behaviors:
 - Activity plan steps are **auto-numbered** from array index.
 - In `DEV` mode: warns if material counts mismatch between assets and translation, and validates translation shape via Zod.
 - Video `tracks` (subtitle VTT paths) come from assets only — never from translation files.
+
+### Challenge mechanics — `src/data/challenge<XX>.ts`
+
+Each module's interactive challenge keeps its **language-neutral game rules** in one file named after the module code: `challengeDC.ts`, `challengeAP.ts`, `challengeAT.ts`, `challengeDP.ts`, `challengeSE.ts`, `challengeMW.ts`, `challengeDM.ts`.
+
+| Module | File | Contains |
+|---|---|---|
+| `dc` | `challengeDC.ts` | Zones, 32 posts (16 dealt per game), ranking |
+| `ap` | `challengeAP.ts` | Part 2 clue → goal key (8 clues), part 3 motive/defend questions and dealing, ranking |
+| `at` | `challengeAT.ts` | Password Lab rules (`evaluatePassword`: length, personal clues, common words, number of words, similarity to earlier passwords) |
+| `dp` | `challengeDP.ts` | 24 activities (15 dealt), 10 profile items (6 dealt), zones and actions |
+| `se` | `challengeSE.ts` | 21 scenarios (12 dealt), best action, trick and goal |
+| `mw` | `challengeMW.ts` | 7 levels, answer keys and dealing (35 cases per game) |
+| `dm` | `challengeDM.ts` | Branching structure of the 14 stories (moods, stars, points; 2 are `sensitive`) |
+
+The page is `src/pages/learning-hub/<slug>/challenge.astro`; all displayed text is in `src/i18n/translations/<locale>/content<XX>.ts` under `challenge<XX>` and is matched to the mechanics by `id` (Digital Misuse by position). Numbers repeated in text (e.g. the 4 weak spots in *In Hacker's Mind*, 7 malware levels) must be changed in all five locales together.
+
+### Challenge pages — shared frame and look
+
+All seven challenges (`attacker-perspective`, `authentication`, `social-engineering`, `malware`, `digital-misuse`, `digital-citizenship`, `data-privacy`) share one frame and one set of styles, so they look and behave alike on desktop, phone and in dark mode.
+
+- **`src/components/ChallengeShell.astro`** renders the page heading, the "result saved" notice, the "How it works" block, the two columns (game on the left, side column on the right) and the "Need to talk to someone?" box. A page passes `ns` (translation namespace, e.g. `challengeMW`) and `brand` (module id, e.g. `MW`) and fills three slots: the default slot (the game), `side` (score, progress, hints) and optionally `after` (overlays; they must live inside the shell's section to get the colour tokens). Extra attributes such as `data-*` or `id` are passed on to the section, so each script keeps its own root element. Options: `sticky` (keep the side column in view), `sideFirst` (on phones the side column sits above or below the game), `layoutId` (id of the two-column block, e.g. for making the game `inert` while a dialog is open).
+- **`src/assets/scss/base/_challenge.scss`** holds the shared building blocks, all prefixed `ch-` so they never collide with a page's own game classes: `ch-card`, `ch-btn` (`--primary`, `--secondary`, `--safe`, `--danger`, `--info`, `--block`), `ch-meter`, `ch-stat`, `ch-note`, `ch-panel`, `ch-badge`, `ch-feedback` (`--ok`, `--bad`, `--info`, `--warn`), `ch-result` and `ch-overlay`. Every colour is derived from the single `--ch-brand` token (set by the shell from `--brand-XX`), so changing a module's colour in `_root.scss` recolours its whole challenge. Light and dark values live in the same file, so a challenge page needs no dark-mode rules for these parts.
+- **What stays in each page:** the game markup specific to that challenge (e.g. the mock social profile in AP, the drag-and-drop board in DC and DP), its script, and a small scoped `<style>` for the game-only parts. Keep the ids and `data-*` attributes the script reads when you restyle a page; scripts also toggle visibility through the `hidden` attribute or class, which the shared styles respect.
+- Elements created by a page's script do not get Astro's scope class, so their styles need `:global(...)`; for the same reason, selectors on the shell's `<section>` use `:global([data-…])`.
+- `_dark.scss` still contains older per-page dark rules (using `!important`) for the game boards that keep their own markup (DC/DP board and cleanup step, DM story endings, AP mock profile, AT/SE/MW details). New challenge UI should use the `ch-` classes instead of adding rules there.
 
 ### Zod schema — `src/data/moduleParts.schema.ts`
 
@@ -178,6 +205,7 @@ Extracted from the component for testability. `initializeNavigation()` must be c
 |------|---------|
 | `_root.scss` | CSS variables: colors, spacing scale (`--space-xs` … `--space-2xl`), elevation shadows, border radii |
 | `_modules.scss` | `--brand-DC`, `--brand-AP`, `--brand-AT`, `--brand-DP`, `--brand-SE`, `--brand-MW`, `--brand-DM` color tokens used by module pages |
+| `_challenge.scss` | Shared look of the interactive challenges: `ch-*` classes and the `--ch-*` tokens derived from the module colour, including their dark-mode values |
 | `_dark.scss` | Dark mode surface/border/fg tokens (`--dm-surface-*`, `--dm-border-*`, `--dm-fg*`) |
 | `_general.scss` | Base typography, container, section spacing |
 | `_button.scss` | `.button`, `.has-icon`, `.is-outline` button styles |
@@ -193,7 +221,7 @@ Module page component styles (e.g. `.dc-*` classes in `content.astro`) live inli
 2. Add a `ModuleData` entry to the `modules` array.
 3. Add a `PartDefinition[]` array under the new ID in `modulePartsData` in `src/data/moduleParts.ts`.
 4. Create `src/pages/learning-hub/<slug>/content.astro` (copy an existing one and change the module ID).
-5. Optionally add `challenge.astro` and `game.astro`.
+5. Optionally add `challenge.astro` (build it on `ChallengeShell` and the `ch-` classes, see *Challenge pages — shared frame and look*) and `game.astro`.
 6. Add translation content files (`contentXX.ts`) in each locale folder, following the existing structure.
 7. Export the new translation from each locale's `index.ts`.
 8. Add a `--brand-XX` CSS variable in `_modules.scss`.
@@ -219,16 +247,30 @@ public/
 │   ├── index/           # Home page illustrations
 │   └── learning-hub/    # Module poster images
 ├── materials/           # Downloadable teaching materials
-│   └── <module-slug>/
-│       ├── part<N>/
-│       │   ├── part<N>.zip       # Bundle for the part
-│       │   ├── <asset-id>.pdf    # Individual materials
-│       │   └── videos/
-│       │       ├── <id>_video.mp4
-│       │       └── subtitles/<locale>/<id>_subtitles_<LOCALE>.vtt
-│       ├── teaching-guide/teaching-guide.zip
-│       └── <module-slug>.zip     # Full module bundle
+│   ├── <module-slug>/                 # digital-citizenship, attacker-perspective, authentication,
+│   │   │                              # data-privacy, social-engineering, malware, digital-misuse
+│   │   ├── part<N>/
+│   │   │   ├── <kind>/[<lang>/]<file> # kind = worksheets, cards, sorting-cards, games, images,
+│   │   │   │                          # posters, readings, schemas, situations
+│   │   │   └── videos/
+│   │   │       ├── <id>.Video.<Title>.mp4
+│   │   │       └── subtitles/<lang>/<id>.VideoSubtitles.<Title>_<LANG>.vtt
+│   │   └── teaching-guide/<lang>/<ModuleName>_Teaching[_<LANG>].docx
+│   ├── introduction/<lang>/           # introductory materials, Roblox guides
+│   └── games-hub/                     # Roblox place files and video walkthroughs
 └── placeholder.txt / placeholder.vtt   # Used for not-yet-available assets
 ```
 
-Asset IDs follow the pattern `<moduleNum>.<partNum>.<assetNum>` (e.g. `1.1.2`, `3.4.5`).
+ZIP packages (`part<N>-<lang>.zip`, `teaching-guide-<lang>.zip`, `<module>-<lang>.zip`, `introduction-<lang>.zip`) are **not committed**: `scripts/generate-zips.sh` builds them at deploy time from the folder contents, so a stale file left in a folder ends up in the downloads.
+
+### Material naming
+
+```
+<module>.<part>.<number>[a|b].<Type>.<Title_with_underscores>[_<LANG>].<ext>
+e.g.  2.2.1.Scenario_cards.Identify_the_behaviour_CS.pdf
+```
+
+- IDs follow `<moduleNum>.<partNum>.<assetNum>` (e.g. `1.1.2`, `3.4.5`). An `a`/`b` suffix marks two related files sharing one topic (e.g. `5.1.3a` single image, `5.1.3b` set of images).
+- `Type`: `Worksheet`, `Image` (single image), `Images` (set of images), `Scenario_cards`, `Solution_cards`, `Role_cards`, `Sorting_cards`, `Game_cards`, `Game_set`, `Cards`, `Schema`, `Poster`, `Reading`, `Situation`, `Video`, `VideoSubtitles`. The displayed type label (`kind` in the translation files) must agree with it — `Image` vs `Images` in particular.
+- English has no language suffix; other languages end in `_CS`, `_NO`, `_LT`, `_DE`. A material with no translated versions sits directly in its kind folder; translated ones sit in one folder per language.
+- Every material needs an entry in `modulePartsData` (`src/data/moduleParts.ts`) and a matching text entry (`// ID: x.y.z`) in all five locale files, in the same order.

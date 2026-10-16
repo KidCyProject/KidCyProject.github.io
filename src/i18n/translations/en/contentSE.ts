@@ -30,17 +30,31 @@ export const contentSE = {
       included: {
         materials: [
           {
-            // ID: 5.1.2
+            // ID: 5.1.2a
             kind: 'Image',
             name: 'Hacking Systems Versus Tricking People',
             filename: 'Image - Hacking Systems Versus Tricking People',
             ariaLabel: 'Download material',
           },
           {
-            // ID: 5.1.3
+            // ID: 5.1.2b
+            kind: 'Images',
+            name: 'Hacking Systems Versus Tricking People',
+            filename: 'Images - Hacking Systems Versus Tricking People',
+            ariaLabel: 'Download material',
+          },
+          {
+            // ID: 5.1.3a
             kind: 'Image',
             name: 'Goals of an Attacker',
             filename: 'Image - Goals of an Attacker',
+            ariaLabel: 'Download material',
+          },
+          {
+            // ID: 5.1.3b
+            kind: 'Images',
+            name: 'Goals of an Attacker',
+            filename: 'Images - Goals of an Attacker',
             ariaLabel: 'Download material',
           },
           {

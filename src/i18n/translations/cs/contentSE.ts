@@ -30,14 +30,28 @@ export const contentSE = {
       included: {
         materials: [
           {
-            // ID: 5.1.2
+            // ID: 5.1.2a
             kind: 'Obrázek',
             name: 'Hackování systémů versus napálení lidí',
             filename: 'Obrázek - Hackování systémů versus napálení lidí',
             ariaLabel: 'Stáhnout materiál',
           },
           {
-            // ID: 5.1.3
+            // ID: 5.1.2b
+            kind: 'Obrázky',
+            name: 'Hackování systémů versus napálení lidí',
+            filename: 'Obrázky - Hackování systémů versus napálení lidí',
+            ariaLabel: 'Stáhnout materiál',
+          },
+          {
+            // ID: 5.1.3a
+            kind: 'Obrázek',
+            name: 'Cíle útočníka',
+            filename: 'Obrázek - Cíle útočníka',
+            ariaLabel: 'Stáhnout materiál',
+          },
+          {
+            // ID: 5.1.3b
             kind: 'Obrázky',
             name: 'Cíle útočníka',
             filename: 'Obrázky - Cíle útočníka',

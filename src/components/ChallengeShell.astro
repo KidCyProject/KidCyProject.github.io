@@ -1,0 +1,76 @@
+---
+/**
+ * ChallengeShell — the frame shared by all seven interactive challenge pages.
+ *
+ * It renders, in this order: the page heading, the "result saved" notice, the "How it works" block,
+ * the two columns (the game on the left, the side column on the right) and the "Need to talk to
+ * someone?" box. It also sets the module colour (`--ch-brand`), from which every shared style in
+ * src/assets/scss/base/_challenge.scss is derived.
+ *
+ * A page fills two slots and keeps its own game markup, styles and script:
+ *
+ *   <ChallengeShell ns="challengeSE" brand="SE">
+ *     …the game…                      (default slot: left column)
+ *     <Fragment slot="side">…</Fragment>   (side column: cards, hint panels)
+ *     <Fragment slot="after">…</Fragment>  (optional: overlays that sit on top of the game)
+ *   </ChallengeShell>
+ *
+ * Translation keys used from the page's own namespace: `.title`, `.subtitle`, and for the intro
+ * `.howItWorks`, `.instruction`, `.tipLabel`, `.tip` (see ChallengeIntro).
+ *
+ * Any other attribute (data-*, id, aria-*) is passed on to the <section>, so scripts can keep using
+ * it as their root element.
+ */
+import PageHeader from './PageHeader.astro'
+import ChallengeProgress from './ChallengeProgress.astro'
+import ChallengeIntro from './ChallengeIntro.astro'
+import HelpBox from './HelpBox.astro'
+import { useTranslations } from 'src/i18n/index'
+
+interface Props {
+  /** Translation namespace, e.g. "challengeMW". */
+  ns: string
+  /** Module id in capitals, e.g. "MW" (selects --brand-MW). */
+  brand: string
+  /** Keep the side column in view while the game scrolls (desktop). Leave off when the column is taller than the screen. */
+  sticky?: boolean
+  /** On phones the side column sits above the game (default) or below it. */
+  sideFirst?: boolean
+  /** id for the two-column block, for a script that must make the game inert while a dialog is open. */
+  layoutId?: string
+  class?: string
+  [attr: string]: unknown
+}
+
+const { ns, brand, sticky = true, sideFirst = true, layoutId, class: className, ...attrs } = Astro.props
+const { t } = useTranslations(Astro.currentLocale)
+---
+
+<PageHeader
+  title={t(`${ns}.title`)}
+  subtitle={t(`${ns}.subtitle`)}
+  bgType="module"
+  underlineColor={`var(--brand-${brand})`}
+/>
+
+<ChallengeProgress />
+
+<section class:list={['ch-section', 'my-12', className]} style={`--ch-brand: var(--brand-${brand})`} {...attrs}>
+  <div class="container">
+    <ChallengeIntro ns={ns} brand={brand} />
+
+    <div class="ch-layout" id={layoutId}>
+      <div class="ch-main">
+        <slot />
+      </div>
+      <div class:list={['ch-side', sticky && 'ch-side--sticky', !sideFirst && 'ch-side--after']}>
+        <slot name="side" />
+      </div>
+    </div>
+
+    <!-- Where to find help (collapsed on phones) -->
+    <HelpBox class="mt-8" />
+
+    <slot name="after" />
+  </div>
+</section>

@@ -1,13 +1,10 @@
 ---
 import DefaultLayout from '@layouts/DefaultLayout.astro'
-import PageHeader from '@components/PageHeader.astro'
-import ChallengeIntro from '@components/ChallengeIntro.astro'
-import ChallengeProgress from '@components/ChallengeProgress.astro'
+import ChallengeShell from '@components/ChallengeShell.astro'
 import HintPanel from '@components/HintPanel.astro'
-import HelpBox from '@components/HelpBox.astro'
 import { useTranslations } from 'src/i18n/index'
 import { toJsonScript } from '../../../utils/jsonScript'
-import { DC_ZONES } from '../../../data/dcPosts'
+import { DC_ZONES } from '../../../data/challengeDC'
 
 const { t, v } = useTranslations(Astro.currentLocale)
 const { v: vEn } = useTranslations('en')
@@ -39,47 +36,17 @@ const labels = {
 ---
 
 <DefaultLayout title={t('challengeDC.title')}>
-  <PageHeader
-    title={t('challengeDC.title')}
-    subtitle={t('challengeDC.subtitle')}
-    bgType="module"
-    underlineColor="var(--brand-DC)"
-  />
-
-  <ChallengeProgress />
-
   <script type="application/json" id="dc-challenge-data" set:html={toJsonScript({ posts, zones: zoneTexts, labels })} />
 
-  <section class="my-12">
-    <div class="container mb-12">
-      <ChallengeIntro ns="challengeDC" brand="DC" />
-    </div>
-  </section>
+  <ChallengeShell ns="challengeDC" brand="DC" data-sort-game="">
 
-  <section class="sort-game" data-sort-game>
-    <div class="container">
-
-      <!-- Three questions to ask before every post (collapsed on phones) -->
-      <HintPanel class="mb-6" title={t('challengeDC.stopTitle')} subtitle={t('challengeDC.stopSubtitle')}>
-        {stopQuestions.map((question) => (
-          <div class="flex gap-2 text-sm">
-            <span class="shrink-0" aria-hidden="true">{question.icon}</span>
-            <div>{question.text}</div>
-          </div>
-        ))}
-        <p class="mt-3 text-xs font-semibold text-slate-700">{t('challengeDC.stopNote')}</p>
-      </HintPanel>
-
-      <!-- Toolbar with score and restart -->
-      <div class="sort-game__toolbar">
-        <div class="sort-game__score" data-score aria-live="polite"></div>
-        <button class="button sort-game__restart" type="button" data-restart>{t('challengeDC.tryAgain')}</button>
-      </div>
+    <!-- ── Main: the game ───────────────────────────────────────────────────── -->
+    <div class="ch-card">
 
       <!-- Feedback: stays in view while scrolling, so the explanation is never left behind -->
-      <div class="sort-game__feedback" data-feedback role="status" aria-live="polite" hidden>
-        <p class="sort-game__feedback-title" data-feedback-title></p>
-        <p class="sort-game__feedback-text" data-feedback-text></p>
+      <div class="ch-feedback sort-game__feedback" data-feedback role="status" aria-live="polite" hidden>
+        <p class="ch-feedback__title" data-feedback-title></p>
+        <p class="ch-feedback__text" data-feedback-text></p>
       </div>
 
       <!-- Game board -->
@@ -142,35 +109,50 @@ const labels = {
           <span class="sort-game__review-zone" data-review-zone></span>
         </li>
       </template>
+    </div>
 
-      <!-- Win celebration -->
-      <div class="sort-game__win" data-win hidden>
-        <div class="sort-game__win-inner">
-          <span class="sort-game__win-icon" aria-hidden="true">🎉</span>
-          <h2 id="win-title" tabindex="-1">{t('challengeDC.winTitle')}</h2>
-          <p class="sort-game__win-summary" data-win-summary></p>
-          <p data-win-message></p>
-          <div class="sort-game__review" data-review hidden>
-            <h3 class="sort-game__review-title">{t('challengeDC.reviewTitle')}</h3>
-            <ul class="sort-game__review-list" data-review-list></ul>
-          </div>
-          <button class="button" type="button" data-restart>{t('challengeDC.playAgain')}</button>
+    <!-- Result: appears under the board, which stays in view so the child can look back at it -->
+    <div class="ch-card ch-result sort-game__win" data-win hidden>
+      <div class="ch-result__icon sort-game__win-icon" aria-hidden="true">🎉</div>
+      <h2 class="ch-result__title" id="win-title" tabindex="-1">{t('challengeDC.winTitle')}</h2>
+      <div class="ch-result__score">
+        <p class="ch-result__highlight" data-win-summary></p>
+      </div>
+      <p class="ch-result__text" data-win-message></p>
+      <div class="sort-game__review" data-review hidden>
+        <h3 class="sort-game__review-title">{t('challengeDC.reviewTitle')}</h3>
+        <ul class="sort-game__review-list" data-review-list></ul>
+      </div>
+      <button class="ch-btn ch-btn--primary" type="button" data-restart>{t('challengeDC.playAgain')}</button>
+    </div>
+
+    <!-- ── Side column (above the game on phones) ───────────────────────────── -->
+    <Fragment slot="side">
+      <div class="ch-card">
+        <p class="sort-game__score" data-score aria-live="polite"></p>
+        <div class="ch-meter mt-3" aria-hidden="true">
+          <span class="ch-meter__fill" data-score-fill></span>
         </div>
+        <button class="ch-btn ch-btn--secondary ch-btn--block mt-4" type="button" data-restart>{t('challengeDC.tryAgain')}</button>
       </div>
 
-    </div>
-  </section>
-
-  <section class="page-section">
-    <div class="container">
-      <HelpBox class="mt-8" />
-    </div>
-  </section>
+      <!-- Three questions to ask before every post (collapsed on phones) -->
+      <HintPanel title={t('challengeDC.stopTitle')} subtitle={t('challengeDC.stopSubtitle')}>
+        {stopQuestions.map((question) => (
+          <div class="flex gap-2 text-sm">
+            <span class="shrink-0" aria-hidden="true">{question.icon}</span>
+            <div>{question.text}</div>
+          </div>
+        ))}
+        <div class="ch-note ch-note--brand mt-4">{t('challengeDC.stopNote')}</div>
+      </HintPanel>
+    </Fragment>
+  </ChallengeShell>
 
 <script>
-  import { DC_POSTS, DC_ZONES, dealPosts, rankFor } from '../../../data/dcPosts'
+  import { DC_POSTS, DC_ZONES, dealPosts, rankFor } from '../../../data/challengeDC'
   import { recordResult } from '../../../utils/challengeProgress'
-  import type { DcPostRule, DcZone } from '../../../data/dcPosts'
+  import type { DcPostRule, DcZone } from '../../../data/challengeDC'
 
   const initializeSortGame = () => {
     document.querySelectorAll('[data-sort-game]').forEach((root) => {
@@ -192,6 +174,7 @@ const labels = {
       const zoneLabel = (zone: string) => `${zoneTexts[zone]?.icon ?? ''} ${zoneTexts[zone]?.title ?? zone}`.trim()
 
       const scoreEl = root.querySelector('[data-score]')
+      const scoreFill = root.querySelector<HTMLElement>('[data-score-fill]')
       const feedbackEl = root.querySelector<HTMLElement>('[data-feedback]')
       const feedbackTitle = root.querySelector<HTMLElement>('[data-feedback-title]')
       const feedbackText = root.querySelector<HTMLElement>('[data-feedback-text]')
@@ -227,13 +210,15 @@ const labels = {
 
       const updateScore = () => {
         scoreEl.textContent = `${placedCount} / ${deck.length} ${labels.scoreLabel}`.trim()
+        if (scoreFill) scoreFill.style.width = deck.length ? `${(placedCount / deck.length) * 100}%` : '0%'
       }
 
       // ── Feedback: explanation of the last card, always in view ────────────
       const showFeedback = (type: 'correct' | 'wrong' | 'info', title: string, text: string) => {
         feedbackTitle.textContent = title
         feedbackText.textContent = text
-        feedbackEl.className = `sort-game__feedback sort-game__feedback--${type}`
+        const tone = type === 'correct' ? 'ok' : type === 'wrong' ? 'bad' : 'info'
+        feedbackEl.className = `ch-feedback sort-game__feedback ch-feedback--${tone}`
         feedbackEl.hidden = false
       }
       const hideFeedback = () => {
@@ -521,39 +506,16 @@ const labels = {
 
 <style>
 
-  /* ── Game wrapper ────────────────────────────────────────────────────────── */
-  .sort-game {
-    margin-bottom: var(--space-3xl);
-  }
+  /* The cards, buttons, feedback bar, progress bar, result card and side column come from the shared
+     challenge styles (src/assets/scss/base/_challenge.scss); below is only what is specific to this game. */
 
-  /* ── Toolbar ─────────────────────────────────────────────────────────────── */
-  .sort-game__toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-m);
-    margin-bottom: var(--space-m);
-    flex-wrap: wrap;
-  }
-
+  /* ── Score (side column) ─────────────────────────────────────────────────── */
   .sort-game__score {
-    font-size: var(--font-size-2);
-    font-weight: 700;
-    padding: var(--space-2xs) var(--space-s);
-    border: 2px solid var(--border-color-subtle);
-    border-radius: var(--radius-l);
-  }
-
-  .sort-game__restart {
-    border-color: var(--link-color);
-    background-color: var(--background-color);
-    color: var(--link-color);
-    border-radius: var(--radius-l);
-  }
-
-  .sort-game__restart:where(:hover, :focus-visible) {
-    background-color: var(--link-color);
-    color: var(--background-color);
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--ch-accent);
   }
 
   /* ── Feedback message (sticks to the top while the board is scrolled) ─────── */
@@ -562,77 +524,36 @@ const labels = {
     top: 0.75rem;
     z-index: 20;
     margin-bottom: var(--space-s);
-    padding: var(--space-s) var(--space-m);
-    border-radius: var(--radius-m);
     box-shadow: var(--elevation-2);
-    font-size: var(--font-size-0);
-    line-height: 1.5;
-  }
-
-  .sort-game__feedback[hidden] {
-    display: none;
-  }
-
-  .sort-game__feedback-title {
-    margin: 0;
-    font-weight: 700;
-  }
-
-  .sort-game__feedback-text {
-    margin: var(--space-3xs) 0 0;
-    font-weight: 500;
-  }
-
-  .sort-game__feedback--correct {
-    color: #14532d;
-    background-color: #f0fdf4;
-    border: 1px solid #86efac;
-  }
-
-  .sort-game__feedback--wrong {
-    color: #7f1d1d;
-    background-color: #fef2f2;
-    border: 1px solid #fca5a5;
-  }
-
-  .sort-game__feedback--info {
-    color: #1e3a5f;
-    background-color: #eff6ff;
-    border: 1px solid #93c5fd;
   }
 
   /* ── Game board layout ───────────────────────────────────────────────────── */
+  /* One column: the game column is narrower than the old full-width page, so the tray sits above the four zones */
   .sort-game__board {
     display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    gap: var(--space-l);
-    margin: var(--space-xl) 0;
-  }
-
-  @media (max-width: 1024px) {
-    .sort-game__board {
-      grid-template-columns: 1fr;
-    }
+    grid-template-columns: 1fr;
+    gap: var(--space-m);
   }
 
   /* ── Tray (source area) ──────────────────────────────────────────────────── */
   .sort-game__tray {
     padding: var(--space-m);
     border-radius: var(--radius-l);
-    background-color: #f3f4f6;
-    border: 2px dashed #d1d5db;
+    background-color: var(--ch-surface-2);
+    border: 2px dashed var(--ch-border);
   }
 
   .sort-game__tray-label {
     font-size: var(--font-size-1);
     font-weight: 700;
     margin-bottom: var(--space-m);
-    color: var(--color-neutral-800);
+    color: var(--ch-text);
   }
 
   .sort-game__cards-container {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+    align-items: start;
     gap: var(--space-2xs);
   }
 
@@ -662,8 +583,8 @@ const labels = {
   }
 
   .post-card:where(:hover, :focus-visible) {
-    border-color: var(--brand-DC);
-    box-shadow: 0 0 0 3px color-mix(in oklab, var(--brand-DC), transparent 80%);
+    border-color: var(--ch-brand);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--ch-brand), transparent 80%);
     transform: translateY(-2px);
   }
 
@@ -872,22 +793,9 @@ const labels = {
     font-size: 0.85rem;
   }
 
-  /* ── Win panel ───────────────────────────────────────────────────────────── */
+  /* ── Result card ─────────────────────────────────────────────────────────── */
   .sort-game__win {
-    margin-top: var(--space-xl);
-  }
-
-  .sort-game__win-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-s);
-    padding: var(--space-xl);
-    border-radius: var(--radius-l);
-    border: 3px solid #10b981;
-    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
-    box-shadow: var(--elevation-2);
-    text-align: center;
+    margin-top: var(--space-l);
     animation: slideUp 0.5s ease;
   }
 
@@ -903,8 +811,6 @@ const labels = {
   }
 
   .sort-game__win-icon {
-    font-size: 3.5rem;
-    line-height: 1;
     animation: bounce 0.6s ease;
   }
 
@@ -913,35 +819,13 @@ const labels = {
     50% { transform: translateY(-10px); }
   }
 
-  .sort-game__win-inner h2 {
-    color: #14532d;
-    margin: 0;
-    font-size: var(--font-size-3);
-  }
-
-  .sort-game__win-inner p {
-    color: #166534;
-    max-width: 50ch;
-    margin: 0;
-    font-size: var(--font-size-0);
-  }
-
-  .sort-game__win-inner .sort-game__win-summary {
-    font-size: var(--font-size-2);
-    font-weight: 700;
-  }
-
-  .sort-game__win-inner .button {
-    margin-top: var(--space-s);
-  }
-
   .sort-game__review {
     width: 100%;
     max-width: 44rem;
-    margin-top: var(--space-s);
     padding: var(--space-m);
     border-radius: var(--radius-m);
-    background: rgba(255, 255, 255, 0.7);
+    background: var(--ch-soft);
+    color: var(--ch-ink);
     text-align: left;
   }
 
@@ -953,7 +837,7 @@ const labels = {
     margin: 0 0 var(--space-xs);
     font-size: var(--font-size-0);
     font-weight: 700;
-    color: #14532d;
+    color: var(--ch-ink);
   }
 
   .sort-game__review-list {
@@ -970,7 +854,7 @@ const labels = {
     justify-content: space-between;
     gap: var(--space-3xs) var(--space-s);
     font-size: 0.9rem;
-    color: #14532d;
+    color: var(--ch-ink);
   }
 
   .sort-game__review-zone {
@@ -998,6 +882,21 @@ const labels = {
 
     .sort-game__zones {
       grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .post-card,
+    .post-card--wrong,
+    .post-card__choices,
+    .sort-game__win,
+    .sort-game__win-icon {
+      animation: none;
+      transition: none;
+    }
+
+    .post-card:where(:hover, :focus-visible) {
+      transform: none;
     }
   }
 </style>

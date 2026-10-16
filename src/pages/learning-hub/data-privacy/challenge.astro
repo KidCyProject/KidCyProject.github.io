@@ -1,13 +1,10 @@
 ---
 import DefaultLayout from '@layouts/DefaultLayout.astro'
-import PageHeader from '@components/PageHeader.astro'
-import ChallengeIntro from '@components/ChallengeIntro.astro'
-import ChallengeProgress from '@components/ChallengeProgress.astro'
+import ChallengeShell from '@components/ChallengeShell.astro'
 import HintPanel from '@components/HintPanel.astro'
-import HelpBox from '@components/HelpBox.astro'
 import { useTranslations } from 'src/i18n/index'
 import { toJsonScript } from '../../../utils/jsonScript'
-import { DP_ACTIONS, DP_ZONES } from '../../../data/dpFootprint'
+import { DP_ACTIONS, DP_ZONES } from '../../../data/challengeDP'
 
 /**
  * Digital Footprint Sorter
@@ -17,7 +14,7 @@ import { DP_ACTIONS, DP_ZONES } from '../../../data/dpFootprint'
  * Step 2: clean up a profile — delete, hide, change or keep each part.
  *
  * Drag and drop with the mouse; on a phone or with a keyboard, select a card and use the buttons under it.
- * Answers and dealing live in src/data/dpFootprint.ts, all text in the translation files.
+ * Answers and dealing live in src/data/challengeDP.ts, all text in the translation files.
  */
 
 const { t, v } = useTranslations(Astro.currentLocale)
@@ -68,32 +65,159 @@ const labels = {
 ---
 
 <DefaultLayout title={t('challengeDP.title')}>
-  <PageHeader
-    title={t('challengeDP.title')}
-    subtitle={t('challengeDP.subtitle')}
-    bgType="module"
-    underlineColor="var(--brand-DP)"
-  />
-
-  <ChallengeProgress />
-
   <script
     type="application/json"
     id="dp-challenge-data"
     set:html={toJsonScript({ activities, profile, zones: zoneTexts, actions: actionTexts, labels })}
   />
 
-  <section class="my-12">
-    <div class="container mb-12">
-      <ChallengeIntro ns="challengeDP" brand="DP" />
-    </div>
-  </section>
+  <ChallengeShell ns="challengeDP" brand="DP" data-fp-game="">
 
-  <section class="fp-game" data-fp-game>
-    <div class="container">
+    <!-- ── Main: the game ───────────────────────────────────────────────────── -->
+    <p class="fp-game__stage ch-badge ch-badge--plain" data-stage-label></p>
+
+    <!-- Feedback: stays in view while scrolling, so the explanation is never left behind -->
+    <div class="ch-feedback fp-game__feedback" data-feedback role="status" aria-live="polite" hidden>
+      <p class="ch-feedback__title" data-feedback-title></p>
+      <p class="ch-feedback__text" data-feedback-text></p>
+    </div>
+
+    <!-- ── STEP 1: sort the footprints ── -->
+    <div class="ch-card" data-stage="sort">
+      <div class="fp-game__board">
+        <div class="fp-game__tray" data-tray>
+          <h3 class="fp-game__tray-label">{t('challengeDP.activitiesToSort')}</h3>
+          <div class="fp-game__cards-container" data-cards-tray></div>
+        </div>
+
+        <div class="fp-game__zones">
+          {DP_ZONES.map((zone) => (
+            <div
+              class={`drop-zone drop-zone--${zone}`}
+              data-zone={zone}
+              role="region"
+              aria-label={t('challengeDP.zoneAriaTemplate').replace('{zone}', zoneTexts[zone]?.title ?? zone)}
+            >
+              <div class="drop-zone__header">
+                <div>
+                  <h3 class="drop-zone__title">{zoneTexts[zone]?.title}</h3>
+                  <p class="drop-zone__hint">{zoneTexts[zone]?.hint}</p>
+                </div>
+                <span class="drop-zone__icon" aria-hidden="true">{zoneTexts[zone]?.icon}</span>
+              </div>
+              <div class="drop-zone__content" data-zone-content>
+                <p class="drop-zone__empty">{t('challengeDP.dragHere')}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Between the steps -->
+    <div class="ch-card ch-result" data-between hidden>
+      <div class="ch-result__icon" aria-hidden="true">👣</div>
+      <h2 class="ch-result__title" id="between-title" tabindex="-1">{t('challengeDP.stage1DoneTitle')}</h2>
+      <div class="ch-result__score">
+        <p class="ch-result__highlight" data-between-summary></p>
+      </div>
+      <button class="ch-btn ch-btn--primary" type="button" data-to-cleanup>{t('challengeDP.toCleanupButton')}</button>
+    </div>
+
+    <!-- ── STEP 2: clean up a profile ── -->
+    <div class="ch-card cleanup" data-stage="cleanup" hidden>
+      <div class="cleanup__intro">
+        <h2 class="ch-title" id="cleanup-title" tabindex="-1">{t('challengeDP.cleanupTitle')}</h2>
+        <p class="ch-lead">{t('challengeDP.cleanupIntro')}</p>
+      </div>
+
+      <div class="cleanup-card">
+        <div class="cleanup-card__icon" data-profile-icon aria-hidden="true"></div>
+        <div class="cleanup-card__body">
+          <p class="cleanup-card__label" id="profile-label-text" data-profile-label></p>
+          <p class="cleanup-card__value" id="profile-value-text" data-profile-value></p>
+          <p class="cleanup-card__visible">
+            {t('challengeDP.profileVisibleLabel')}: <strong>{t('challengeDP.profileEveryone')}</strong>
+          </p>
+        </div>
+      </div>
+
+      <div class="cleanup-actions" role="group" aria-label={t('challengeDP.chooseActionLabel')} aria-describedby="profile-label-text profile-value-text">
+        {DP_ACTIONS.map((action) => (
+          <button type="button" class={`cleanup-action cleanup-action--${action}`} data-action={action}>
+            {actionTexts[action]}
+          </button>
+        ))}
+      </div>
+
+      <button class="ch-btn ch-btn--primary cleanup__next" type="button" data-cleanup-next hidden></button>
+    </div>
+
+    <!-- Templates cloned by the script. Cloning keeps the scoped-style attributes, so the cards look the same as server-rendered ones -->
+    <template data-card-template>
+      <div class="activity-card-wrapper">
+        <div class="activity-card" draggable="true" tabindex="0" role="button" aria-pressed="false">
+          <div class="activity-card__emoji" aria-hidden="true"></div>
+          <div class="activity-card__text"></div>
+          <div class="activity-card__check" aria-hidden="true">✓</div>
+        </div>
+        <div class="activity-card__choices" role="group" aria-label={t('challengeDP.chooseZoneLabel')} hidden>
+          {DP_ZONES.map((zone) => (
+            <button type="button" class={`zone-choice zone-choice--${zone}`} data-choose={zone}>
+              {zoneTexts[zone]?.icon} {zoneTexts[zone]?.title}
+            </button>
+          ))}
+        </div>
+      </div>
+    </template>
+    <template data-empty-template>
+      <p class="drop-zone__empty">{t('challengeDP.dragHere')}</p>
+    </template>
+    <template data-review-template>
+      <li class="fp-game__review-item">
+        <span data-review-text></span>
+        <span class="fp-game__review-answer" data-review-answer></span>
+      </li>
+    </template>
+
+    <!-- Result -->
+    <div class="ch-card ch-result fp-game__win" data-win hidden>
+      <div class="ch-result__icon fp-game__win-icon" aria-hidden="true">🎉</div>
+      <h2 class="ch-result__title" id="win-title" tabindex="-1">{t('challengeDP.winTitle')}</h2>
+      <div class="ch-result__score">
+        <p class="ch-result__highlight" data-win-summary></p>
+      </div>
+      <p class="ch-result__text" data-win-message></p>
+      <div class="fp-game__review" data-review hidden>
+        <h3 class="fp-game__review-title">{t('challengeDP.reviewTitle')}</h3>
+        <ul class="fp-game__review-list" data-review-list></ul>
+      </div>
+      <button class="ch-btn ch-btn--primary" type="button" data-restart>{t('challengeDP.playAgain')}</button>
+    </div>
+
+    <!-- ── Side column (above the game on phones) ───────────────────────────── -->
+    <Fragment slot="side">
+      <div class="ch-card fp-status">
+        <!-- Step 1: how many are sorted -->
+        <div class="fp-status__sort">
+          <p class="fp-game__score" data-score aria-live="polite"></p>
+          <div class="ch-meter mt-3" aria-hidden="true">
+            <span class="ch-meter__fill" data-score-fill></span>
+          </div>
+        </div>
+        <!-- Step 2: how many answers are right, and where in the profile we are -->
+        <div class="fp-status__cleanup">
+          <p class="fp-game__score" data-cleanup-score aria-live="polite"></p>
+          <p class="cleanup__progress" data-cleanup-progress></p>
+          <div class="ch-meter mt-3" aria-hidden="true">
+            <span class="ch-meter__fill" data-cleanup-fill></span>
+          </div>
+        </div>
+        <button class="ch-btn ch-btn--secondary ch-btn--block mt-4" type="button" data-restart>{t('challengeDP.tryAgain')}</button>
+      </div>
 
       <!-- Cheat sheet: the two kinds of footprint and how to make them smaller (collapsed on phones) -->
-      <HintPanel class="mb-6" title={t('challengeDP.cheatTitle')} subtitle={t('challengeDP.cheatSubtitle')}>
+      <HintPanel title={t('challengeDP.cheatTitle')} subtitle={t('challengeDP.cheatSubtitle')}>
         {cheatItems.map((item) => (
           <div class="flex gap-2 text-sm">
             <span class="shrink-0" aria-hidden="true">{item.icon}</span>
@@ -101,150 +225,13 @@ const labels = {
           </div>
         ))}
       </HintPanel>
-
-      <p class="fp-game__stage" data-stage-label></p>
-
-      <!-- Feedback: stays in view while scrolling, so the explanation is never left behind -->
-      <div class="fp-game__feedback" data-feedback role="status" aria-live="polite" hidden>
-        <p class="fp-game__feedback-title" data-feedback-title></p>
-        <p class="fp-game__feedback-text" data-feedback-text></p>
-      </div>
-
-      <!-- ── STEP 1: sort the footprints ── -->
-      <div data-stage="sort">
-        <div class="fp-game__toolbar">
-          <div class="fp-game__score" data-score aria-live="polite"></div>
-          <button class="button fp-game__restart" type="button" data-restart>{t('challengeDP.tryAgain')}</button>
-        </div>
-
-        <div class="fp-game__board">
-          <div class="fp-game__tray" data-tray>
-            <h3 class="fp-game__tray-label">{t('challengeDP.activitiesToSort')}</h3>
-            <div class="fp-game__cards-container" data-cards-tray></div>
-          </div>
-
-          <div class="fp-game__zones">
-            {DP_ZONES.map((zone) => (
-              <div
-                class={`drop-zone drop-zone--${zone}`}
-                data-zone={zone}
-                role="region"
-                aria-label={t('challengeDP.zoneAriaTemplate').replace('{zone}', zoneTexts[zone]?.title ?? zone)}
-              >
-                <div class="drop-zone__header">
-                  <div>
-                    <h3 class="drop-zone__title">{zoneTexts[zone]?.title}</h3>
-                    <p class="drop-zone__hint">{zoneTexts[zone]?.hint}</p>
-                  </div>
-                  <span class="drop-zone__icon" aria-hidden="true">{zoneTexts[zone]?.icon}</span>
-                </div>
-                <div class="drop-zone__content" data-zone-content>
-                  <p class="drop-zone__empty">{t('challengeDP.dragHere')}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <!-- Between the steps -->
-      <div class="fp-game__between" data-between hidden>
-        <span class="fp-game__between-icon" aria-hidden="true">👣</span>
-        <h2 id="between-title" tabindex="-1">{t('challengeDP.stage1DoneTitle')}</h2>
-        <p class="fp-game__between-summary" data-between-summary></p>
-        <button class="button" type="button" data-to-cleanup>{t('challengeDP.toCleanupButton')}</button>
-      </div>
-
-      <!-- ── STEP 2: clean up a profile ── -->
-      <div class="cleanup" data-stage="cleanup" hidden>
-        <div class="cleanup__intro">
-          <h2 id="cleanup-title" tabindex="-1">{t('challengeDP.cleanupTitle')}</h2>
-          <p>{t('challengeDP.cleanupIntro')}</p>
-        </div>
-
-        <div class="fp-game__toolbar">
-          <div class="fp-game__score" data-cleanup-score aria-live="polite"></div>
-          <span class="cleanup__progress" data-cleanup-progress></span>
-          <button class="button fp-game__restart" type="button" data-restart>{t('challengeDP.tryAgain')}</button>
-        </div>
-
-        <div class="cleanup-card">
-          <div class="cleanup-card__icon" data-profile-icon aria-hidden="true"></div>
-          <div class="cleanup-card__body">
-            <p class="cleanup-card__label" id="profile-label-text" data-profile-label></p>
-            <p class="cleanup-card__value" id="profile-value-text" data-profile-value></p>
-            <p class="cleanup-card__visible">
-              {t('challengeDP.profileVisibleLabel')}: <strong>{t('challengeDP.profileEveryone')}</strong>
-            </p>
-          </div>
-        </div>
-
-        <div class="cleanup-actions" role="group" aria-label={t('challengeDP.chooseActionLabel')} aria-describedby="profile-label-text profile-value-text">
-          {DP_ACTIONS.map((action) => (
-            <button type="button" class={`cleanup-action cleanup-action--${action}`} data-action={action}>
-              {actionTexts[action]}
-            </button>
-          ))}
-        </div>
-
-        <button class="button cleanup__next" type="button" data-cleanup-next hidden></button>
-      </div>
-
-      <!-- Templates cloned by the script. Cloning keeps the scoped-style attributes, so the cards look the same as server-rendered ones -->
-      <template data-card-template>
-        <div class="activity-card-wrapper">
-          <div class="activity-card" draggable="true" tabindex="0" role="button" aria-pressed="false">
-            <div class="activity-card__emoji" aria-hidden="true"></div>
-            <div class="activity-card__text"></div>
-            <div class="activity-card__check" aria-hidden="true">✓</div>
-          </div>
-          <div class="activity-card__choices" role="group" aria-label={t('challengeDP.chooseZoneLabel')} hidden>
-            {DP_ZONES.map((zone) => (
-              <button type="button" class={`zone-choice zone-choice--${zone}`} data-choose={zone}>
-                {zoneTexts[zone]?.icon} {zoneTexts[zone]?.title}
-              </button>
-            ))}
-          </div>
-        </div>
-      </template>
-      <template data-empty-template>
-        <p class="drop-zone__empty">{t('challengeDP.dragHere')}</p>
-      </template>
-      <template data-review-template>
-        <li class="fp-game__review-item">
-          <span data-review-text></span>
-          <span class="fp-game__review-answer" data-review-answer></span>
-        </li>
-      </template>
-
-      <!-- Win celebration -->
-      <div class="fp-game__win" data-win hidden>
-        <div class="fp-game__win-inner">
-          <span class="fp-game__win-icon" aria-hidden="true">🎉</span>
-          <h2 id="win-title" tabindex="-1">{t('challengeDP.winTitle')}</h2>
-          <p class="fp-game__win-summary" data-win-summary></p>
-          <p data-win-message></p>
-          <div class="fp-game__review" data-review hidden>
-            <h3 class="fp-game__review-title">{t('challengeDP.reviewTitle')}</h3>
-            <ul class="fp-game__review-list" data-review-list></ul>
-          </div>
-          <button class="button" type="button" data-restart>{t('challengeDP.playAgain')}</button>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <section class="page-section">
-    <div class="container">
-      <HelpBox class="mt-8" />
-    </div>
-  </section>
+    </Fragment>
+  </ChallengeShell>
 
 <script>
-  import { DP_ACTIVITIES, dealActivities, dealProfile, isProfileRight, rankFor } from '../../../data/dpFootprint'
+  import { DP_ACTIVITIES, dealActivities, dealProfile, isProfileRight, rankFor } from '../../../data/challengeDP'
   import { recordResult } from '../../../utils/challengeProgress'
-  import type { DpActivityRule, DpAction, DpProfileRule, DpZone } from '../../../data/dpFootprint'
+  import type { DpActivityRule, DpAction, DpProfileRule, DpZone } from '../../../data/challengeDP'
 
   const initializeFootprintGame = () => {
     document.querySelectorAll('[data-fp-game]').forEach((root) => {
@@ -270,6 +257,8 @@ const labels = {
 
       const q = <T extends HTMLElement>(selector: string) => root.querySelector<T>(selector)
       const scoreEl = q('[data-score]')
+      const scoreFill = q('[data-score-fill]')
+      const cleanupFill = q('[data-cleanup-fill]')
       const stageLabel = q('[data-stage-label]')
       const feedbackEl = q('[data-feedback]')
       const feedbackTitle = q('[data-feedback-title]')
@@ -329,7 +318,8 @@ const labels = {
       const showFeedback = (type: 'correct' | 'wrong' | 'info', title: string, text: string) => {
         feedbackTitle.textContent = title
         feedbackText.textContent = text
-        feedbackEl.className = `fp-game__feedback fp-game__feedback--${type}`
+        const tone = type === 'correct' ? 'ok' : type === 'wrong' ? 'bad' : 'info'
+        feedbackEl.className = `ch-feedback fp-game__feedback ch-feedback--${tone}`
         feedbackEl.hidden = false
       }
       const hideFeedback = () => {
@@ -345,12 +335,14 @@ const labels = {
         cleanupStage.hidden = stage !== 'cleanup'
         winPanel.hidden = stage !== 'done'
         stageLabel.hidden = stage === 'done'
+        root.dataset.fpStage = stage // the side column shows the score of the step that is on screen
         stageLabel.textContent = stage === 'cleanup' ? labels.stage2Label : labels.stage1Label
       }
 
       // ═════════════════════════ STEP 1: SORT ═══════════════════════════════
       const updateScore = () => {
         scoreEl.textContent = `${placedCount} / ${deck.length}`
+        if (scoreFill) scoreFill.style.width = deck.length ? `${(placedCount / deck.length) * 100}%` : '0%'
       }
 
       const buildCard = (rule: DpActivityRule): HTMLElement => {
@@ -510,6 +502,7 @@ const labels = {
       // ═════════════════════════ STEP 2: CLEAN UP ═══════════════════════════
       const updateCleanupScore = () => {
         cleanupScore.textContent = `${profileCorrect} / ${profileDeck.length} ${labels.cleanupScoreLabel}`.trim()
+        if (cleanupFill) cleanupFill.style.width = profileDeck.length ? `${(profileCorrect / profileDeck.length) * 100}%` : '0%'
       }
 
       const renderProfile = () => {
@@ -720,50 +713,38 @@ const labels = {
 
 <style>
 
-  /* ── Game wrapper ────────────────────────────────────────────────────────── */
-  .fp-game {
-    margin-bottom: var(--space-3xl);
-  }
+  /* The cards, buttons, feedback bar, progress bars, result cards and side column come from the shared
+     challenge styles (src/assets/scss/base/_challenge.scss); below is only what is specific to this game. */
 
-  .fp-game__stage {
-    margin: 0 0 var(--space-s);
-    font-size: var(--font-size-1);
-    font-weight: 700;
-  }
+  .fp-game__stage { margin: 0 0 var(--space-s); }
 
+  .fp-game__stage:empty,
   .fp-game__stage[hidden] {
     display: none;
   }
 
-  /* ── Toolbar ─────────────────────────────────────────────────────────────── */
-  .fp-game__toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-m);
-    margin-bottom: var(--space-m);
-    flex-wrap: wrap;
-  }
-
+  /* ── Side column: score of the step on screen ────────────────────────────── */
   .fp-game__score {
-    font-size: var(--font-size-2);
-    font-weight: 700;
-    padding: var(--space-2xs) var(--space-s);
-    border: 2px solid var(--border-color-subtle);
-    border-radius: var(--radius-l);
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--ch-accent);
   }
 
-  .fp-game__restart {
-    border-color: var(--link-color);
-    background-color: var(--background-color);
-    color: var(--link-color);
-    border-radius: var(--radius-l);
+  .cleanup__progress {
+    margin: var(--space-3xs) 0 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ch-text-muted);
   }
 
-  .fp-game__restart:where(:hover, :focus-visible) {
-    background-color: var(--link-color);
-    color: var(--background-color);
-  }
+  .fp-status__cleanup { display: none; }
+
+  /* The script sets data-fp-stage on the game's root element, which belongs to the shared frame: :global */
+  :global([data-fp-game][data-fp-stage='cleanup']) .fp-status__cleanup { display: block; }
+  :global([data-fp-game][data-fp-stage='cleanup']) .fp-status__sort { display: none; }
+  :global([data-fp-game][data-fp-stage='done']) .fp-status { display: none; }
 
   /* ── Feedback message (sticks to the top while the board is scrolled) ─────── */
   .fp-game__feedback {
@@ -771,77 +752,36 @@ const labels = {
     top: 0.75rem;
     z-index: 20;
     margin-bottom: var(--space-s);
-    padding: var(--space-s) var(--space-m);
-    border-radius: var(--radius-m);
     box-shadow: var(--elevation-2);
-    font-size: var(--font-size-0);
-    line-height: 1.5;
-  }
-
-  .fp-game__feedback[hidden] {
-    display: none;
-  }
-
-  .fp-game__feedback-title {
-    margin: 0;
-    font-weight: 700;
-  }
-
-  .fp-game__feedback-text {
-    margin: var(--space-3xs) 0 0;
-    font-weight: 500;
-  }
-
-  .fp-game__feedback--correct {
-    color: #14532d;
-    background-color: #f0fdf4;
-    border: 1px solid #86efac;
-  }
-
-  .fp-game__feedback--wrong {
-    color: #7f1d1d;
-    background-color: #fef2f2;
-    border: 1px solid #fca5a5;
-  }
-
-  .fp-game__feedback--info {
-    color: #1e3a5f;
-    background-color: #eff6ff;
-    border: 1px solid #93c5fd;
   }
 
   /* ── Game board layout ───────────────────────────────────────────────────── */
+  /* One column, like the narrower game column needs: the tray above the three zones */
   .fp-game__board {
     display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    gap: var(--space-l);
-    margin: var(--space-xl) 0;
-  }
-
-  @media (max-width: 1024px) {
-    .fp-game__board {
-      grid-template-columns: 1fr;
-    }
+    grid-template-columns: 1fr;
+    gap: var(--space-m);
   }
 
   /* ── Tray (source area) ──────────────────────────────────────────────────── */
   .fp-game__tray {
     padding: var(--space-m);
     border-radius: var(--radius-l);
-    background-color: #f3f4f6;
-    border: 2px dashed #d1d5db;
+    background-color: var(--ch-surface-2);
+    border: 2px dashed var(--ch-border);
   }
 
   .fp-game__tray-label {
     font-size: var(--font-size-1);
     font-weight: 700;
     margin-bottom: var(--space-m);
-    color: var(--color-neutral-800);
+    color: var(--ch-text);
   }
 
   .fp-game__cards-container {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+    align-items: start;
     gap: var(--space-2xs);
   }
 
@@ -871,8 +811,8 @@ const labels = {
   }
 
   .activity-card:where(:hover, :focus-visible) {
-    border-color: var(--brand-DP);
-    box-shadow: 0 0 0 3px color-mix(in oklab, var(--brand-DP), transparent 80%);
+    border-color: var(--ch-brand);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--ch-brand), transparent 80%);
     transform: translateY(-2px);
   }
 
@@ -980,7 +920,7 @@ const labels = {
   /* ── Zones container ─────────────────────────────────────────────────────── */
   .fp-game__zones {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
     gap: var(--space-m);
     align-content: start;
   }
@@ -1076,61 +1016,9 @@ const labels = {
     font-size: 0.85rem;
   }
 
-  /* ── Between the steps ───────────────────────────────────────────────────── */
-  .fp-game__between {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-s);
-    margin: var(--space-xl) 0;
-    padding: var(--space-xl);
-    border-radius: var(--radius-l);
-    border: 3px solid #0d9488;
-    background: linear-gradient(135deg, #f0fdfa, #ccfbf1);
-    box-shadow: var(--elevation-2);
-    text-align: center;
-  }
-
-  .fp-game__between[hidden] {
-    display: none;
-  }
-
-  .fp-game__between-icon {
-    font-size: 3rem;
-    line-height: 1;
-  }
-
-  .fp-game__between h2 {
-    margin: 0;
-    color: #115e59;
-    font-size: var(--font-size-3);
-  }
-
-  .fp-game__between-summary {
-    margin: 0;
-    color: #115e59;
-    font-size: var(--font-size-2);
-    font-weight: 700;
-  }
-
   /* ── Step 2: clean up a profile ──────────────────────────────────────────── */
-  .cleanup[hidden] {
-    display: none;
-  }
-
-  .cleanup__intro h2 {
-    margin: 0 0 var(--space-2xs);
-    font-size: var(--font-size-3);
-  }
-
-  .cleanup__intro p {
-    margin: 0 0 var(--space-m);
-  }
-
-  .cleanup__progress {
-    font-size: var(--font-size-0);
-    font-weight: 700;
-  }
+  .cleanup__intro { margin-bottom: var(--space-m); }
+  .cleanup__intro .ch-lead { margin-top: 0.5rem; }
 
   .cleanup-card {
     display: flex;
@@ -1225,30 +1113,9 @@ const labels = {
     margin-top: var(--space-m);
   }
 
-  .cleanup__next[hidden] {
-    display: none;
-  }
-
-  /* ── Win panel ───────────────────────────────────────────────────────────── */
+  /* ── Result card ─────────────────────────────────────────────────────────── */
   .fp-game__win {
-    margin-top: var(--space-xl);
-  }
-
-  .fp-game__win[hidden] {
-    display: none;
-  }
-
-  .fp-game__win-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-s);
-    padding: var(--space-xl);
-    border-radius: var(--radius-l);
-    border: 3px solid #0d9488;
-    background: linear-gradient(135deg, #f0fdfa, #ccfbf1);
-    box-shadow: var(--elevation-2);
-    text-align: center;
+    margin-top: var(--space-l);
     animation: slideUp 0.5s ease;
   }
 
@@ -1264,8 +1131,6 @@ const labels = {
   }
 
   .fp-game__win-icon {
-    font-size: 3.5rem;
-    line-height: 1;
     animation: bounce 0.6s ease;
   }
 
@@ -1274,35 +1139,13 @@ const labels = {
     50% { transform: translateY(-10px); }
   }
 
-  .fp-game__win-inner h2 {
-    color: #115e59;
-    margin: 0;
-    font-size: var(--font-size-3);
-  }
-
-  .fp-game__win-inner p {
-    color: #134e4a;
-    max-width: 50ch;
-    margin: 0;
-    font-size: var(--font-size-0);
-  }
-
-  .fp-game__win-inner .fp-game__win-summary {
-    font-size: var(--font-size-2);
-    font-weight: 700;
-  }
-
-  .fp-game__win-inner .button {
-    margin-top: var(--space-s);
-  }
-
   .fp-game__review {
     width: 100%;
     max-width: 44rem;
-    margin-top: var(--space-s);
     padding: var(--space-m);
     border-radius: var(--radius-m);
-    background: rgba(255, 255, 255, 0.7);
+    background: var(--ch-soft);
+    color: var(--ch-ink);
     text-align: left;
   }
 
@@ -1314,7 +1157,7 @@ const labels = {
     margin: 0 0 var(--space-xs);
     font-size: var(--font-size-0);
     font-weight: 700;
-    color: #115e59;
+    color: var(--ch-ink);
   }
 
   .fp-game__review-list {
@@ -1331,7 +1174,7 @@ const labels = {
     justify-content: space-between;
     gap: var(--space-3xs) var(--space-s);
     font-size: 0.9rem;
-    color: #134e4a;
+    color: var(--ch-ink);
   }
 
   .fp-game__review-answer {
@@ -1365,6 +1208,21 @@ const labels = {
 
     .cleanup-actions {
       grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .activity-card,
+    .activity-card--wrong,
+    .activity-card__choices,
+    .fp-game__win,
+    .fp-game__win-icon {
+      animation: none;
+      transition: none;
+    }
+
+    .activity-card:where(:hover, :focus-visible) {
+      transform: none;
     }
   }
 </style>

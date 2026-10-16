@@ -1,18 +1,15 @@
 ---
 import DefaultLayout from '@layouts/DefaultLayout.astro'
-import PageHeader from '@components/PageHeader.astro'
-import ChallengeIntro from '@components/ChallengeIntro.astro'
-import ChallengeProgress from '@components/ChallengeProgress.astro'
+import ChallengeShell from '@components/ChallengeShell.astro'
 import HintPanel from '@components/HintPanel.astro'
-import HelpBox from '@components/HelpBox.astro'
 import { useTranslations } from 'src/i18n/index'
 import { toJsonScript } from '../../../utils/jsonScript'
-import { SE_CASES_PER_GAME, SE_SCENARIOS } from '../../../data/seScenarios'
+import { SE_CASES_PER_GAME, SE_SCENARIOS } from '../../../data/challengeSE'
 
 const { t, v } = useTranslations(Astro.currentLocale)
 const { v: vEn } = useTranslations('en')
 
-// Answer key (channel, best action, trick, goal) comes from src/data/seScenarios.ts and is the same for
+// Answer key (channel, best action, trick, goal) comes from src/data/challengeSE.ts and is the same for
 // every language. The translation files only hold the text of each case, matched by id.
 type CaseText = { id: number; from?: string; subject?: string; message?: string; explanation?: string }
 const rawText = v<ReadonlyArray<CaseText>>('challengeSE.scenarios') ?? []
@@ -77,226 +74,179 @@ const startDescription = t('challengeSE.startDescription').replace('{n}', String
 ---
 
 <DefaultLayout title={t('challengeSE.title')}>
-  <PageHeader
-    title={t('challengeSE.title')}
-    subtitle={t('challengeSE.subtitle')}
-    bgType="module"
-    underlineColor="var(--brand-SE)"
-  />
-
-  <ChallengeProgress />
-
   <script
     type="application/json"
     id="se-challenge-data"
     set:html={toJsonScript({ scenarios, labels, tactics, wants })}
   />
 
-  <section class="my-12">
-    <div class="container">
-      <ChallengeIntro ns="challengeSE" brand="SE" />
-
-      <div class="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_350px]">
-        <!-- Main Challenge Area -->
-        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <!-- Game State: Loading -->
-          <div id="game-loading" class="flex min-h-[28rem] items-center justify-center">
-            <div class="mx-auto flex max-w-2xl flex-col gap-4 text-center">
-              <h2 class="text-2xl font-bold text-slate-900">{t('challengeSE.startTitle')}</h2>
-              <p class="text-slate-600">
-                {startDescription}
-              </p>
-              <button
-                id="btn-start-game"
-                class="mx-auto mt-4 rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-              >
-                {t('challengeSE.startButton')}
-              </button>
-            </div>
-          </div>
-
-          <!-- Game State: Playing -->
-          <div id="game-playing" class="hidden space-y-6">
-            <!-- Progress Bar -->
-            <div>
-              <div class="mb-2 flex items-center justify-between">
-                <span class="text-sm font-semibold text-slate-700">{t('challengeSE.caseProgress')}</span>
-                <span id="progress-text" class="text-sm font-semibold text-slate-600"></span>
-              </div>
-              <div class="h-2 w-full rounded-full bg-slate-200">
-                <div
-                  id="progress-bar"
-                  class="h-2 rounded-full bg-blue-600 transition-all duration-300"
-                  style="width: 0%"
-                ></div>
-              </div>
-            </div>
-
-            <!-- Message Card -->
-            <div class="rounded-xl border-2 border-slate-300 bg-slate-50 p-6">
-              <!-- Message Type Badge -->
-              <div class="mb-4 flex items-center gap-2">
-                <div
-                  id="msg-icon"
-                  class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-lg"
-                  aria-hidden="true"
-                >
-                  ✉️
-                </div>
-                <span id="msg-type-badge" class="text-xs font-bold uppercase text-slate-600"></span>
-              </div>
-
-              <!-- From/Sender -->
-              <div class="mb-4 border-b border-slate-200 pb-4">
-                <p class="text-xs font-bold uppercase text-slate-500">{t('challengeSE.fromLabel')}</p>
-                <p id="msg-from" class="mt-1 font-semibold text-slate-900"></p>
-              </div>
-
-              <!-- Subject (Email only) -->
-              <div id="msg-subject-container" class="mb-4 border-b border-slate-200 pb-4">
-                <p class="text-xs font-bold uppercase text-slate-500">{t('challengeSE.subjectLabel')}</p>
-                <p id="msg-subject" class="mt-1 font-semibold text-slate-900"></p>
-              </div>
-
-              <!-- Message Body -->
-              <div class="mb-4 border-b border-slate-200 pb-4">
-                <p class="text-xs font-bold uppercase text-slate-500">{t('challengeSE.messageLabel')}</p>
-                <div id="msg-body" class="mt-3 rounded-lg bg-white p-4 leading-relaxed text-slate-900"></div>
-              </div>
-
-              <!-- Trick used + what the attacker wanted (shown after the answer, only for tricks) -->
-              <div id="tactic-container" class="hidden mb-4 rounded-lg bg-yellow-50 p-4 border border-yellow-200">
-                <p class="text-xs font-bold uppercase text-yellow-800 mb-1" id="red-flag-label"></p>
-                <p id="msg-tactic" class="text-sm font-semibold text-yellow-900"></p>
-                <p id="msg-want" class="mt-2 text-sm text-yellow-900"></p>
-              </div>
-            </div>
-
-            <!-- Action Buttons: Stop – Think – Check – Ask -->
-            <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
-              <button
-                id="btn-trust"
-                type="button"
-                class="rounded-lg bg-green-700 px-4 py-3 text-center font-semibold text-white transition hover:bg-green-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                {t('challengeSE.trustButton')}
-              </button>
-              <button
-                id="btn-check"
-                type="button"
-                class="rounded-lg bg-blue-700 px-4 py-3 text-center font-semibold text-white transition hover:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                {t('challengeSE.checkButton')}
-              </button>
-              <button
-                id="btn-report"
-                type="button"
-                class="rounded-lg bg-red-700 px-4 py-3 text-center font-semibold text-white transition hover:bg-red-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-700 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                {t('challengeSE.ignoreButton')}
-              </button>
-            </div>
-
-            <!-- Feedback Area -->
-            <div id="feedback-container" class="hidden rounded-lg border-l-4 p-4" role="status" aria-live="assertive">
-              <p id="feedback-text" class="font-semibold"></p>
-              <p id="feedback-explanation" class="mt-2 text-sm"></p>
-              <p id="feedback-note" class="mt-2 text-sm font-semibold"></p>
-            </div>
-
-            <!-- Spot the trick (after a careful answer) -->
-            <div id="quiz-container" class="hidden rounded-lg border border-slate-300 bg-white p-4" role="group" aria-labelledby="quiz-title">
-              <p id="quiz-title" class="font-semibold text-slate-900"></p>
-              <div id="quiz-options" class="mt-3 grid gap-2 sm:grid-cols-3"></div>
-              <p id="quiz-result" class="mt-3 text-sm font-semibold text-slate-900" role="status" aria-live="polite"></p>
-            </div>
-
-            <!-- Next Button -->
-            <button
-              id="btn-next-case"
-              type="button"
-              class="hidden w-full rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-            >
-            </button>
-          </div>
-
-          <!-- Game State: Results -->
-          <div id="game-results" class="hidden space-y-6 text-center">
-            <div>
-              <h2 id="results-title" tabindex="-1" class="text-3xl font-bold text-slate-900">{t('challengeSE.completedTitle')}</h2>
-              <p class="mt-2 text-lg text-slate-600">{t('challengeSE.completedDescription')}</p>
-            </div>
-
-            <!-- Score Display -->
-            <div class="rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 p-8">
-              <div class="text-5xl font-bold text-blue-600" id="final-score">0</div>
-              <p class="mt-2 text-slate-600" id="cases-identified-label"></p>
-              <div id="final-extra" class="mt-3 space-y-1 text-sm text-slate-700"></div>
-            </div>
-
-            <!-- Rank Badge -->
-            <div class="rounded-xl border-2 border-slate-200 bg-white p-6">
-              <p class="text-sm font-bold uppercase text-slate-600 mb-2">{t('challengeSE.detectiveRankLabel')}</p>
-              <div id="rank-display" class="text-4xl font-bold text-slate-900 mb-2">{t('challengeSE.defaultRank')}</div>
-              <p id="rank-message" class="text-slate-600">{t('challengeSE.defaultRankMessage')}</p>
-            </div>
-
-            <!-- Review of every case -->
-            <div class="rounded-lg bg-slate-50 p-6 text-left">
-              <h3 class="mb-3 font-bold text-slate-900">{t('challengeSE.performanceSummary')}</h3>
-              <div id="summary-list" class="space-y-3 text-sm text-slate-700"></div>
-            </div>
-
-            <!-- Play Again Button -->
-            <button
-              id="btn-play-again"
-              class="w-full rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-            >
-              {t('challengeSE.playAgain')}
-            </button>
-          </div>
-        </div>
-
-        <!-- Side Panel: Detective Notes (above the game, collapsed, on phones) -->
-        <div class="order-first h-fit lg:sticky lg:top-6 lg:order-none">
-          <HintPanel title={t('challengeSE.detectiveNotes')} subtitle={t('challengeSE.detectiveTipsTitle')}>
-            <!-- Stop – Think – Check – Ask -->
-            <div class="rounded-lg border border-blue-200 bg-blue-50 p-3 stca-box">
-              <p class="mb-2 text-sm font-bold text-blue-900">{t('challengeSE.stcaTitle')}</p>
-              <ol class="space-y-2">
-                {stca.map((step) => (
-                  <li class="flex gap-2 text-xs text-blue-900">
-                    <span aria-hidden="true">{step.icon}</span>
-                    <span><strong>{step.label}:</strong> {step.text}</span>
-                  </li>
-                ))}
-              </ol>
-            </div>
-
-            <div class="space-y-3 pt-2">
-              {redFlags.map((flag) => (
-                <div class="rounded-lg bg-red-50 p-3">
-                  <p class="text-xs font-bold text-red-900">{flag}</p>
-                </div>
-              ))}
-            </div>
-
-            <div class="mt-4 rounded-lg border border-blue-200 bg-blue-50 p-3 text-xs text-blue-900 stca-box">
-              <strong>💡</strong> {t('challengeSE.proTip')}
-            </div>
-          </HintPanel>
+  <ChallengeShell ns="challengeSE" brand="SE">
+    <!-- Main Challenge Area -->
+    <div class="ch-card">
+      <!-- Game State: Loading -->
+      <div id="game-loading" class="flex min-h-[28rem] items-center justify-center">
+        <div class="mx-auto flex max-w-2xl flex-col items-center gap-4 text-center">
+          <h2 class="ch-title">{t('challengeSE.startTitle')}</h2>
+          <p class="ch-lead">
+            {startDescription}
+          </p>
+          <button id="btn-start-game" type="button" class="ch-btn ch-btn--primary mt-4">
+            {t('challengeSE.startButton')}
+          </button>
         </div>
       </div>
 
-      <!-- Where to find help (collapsed on phones) -->
-      <HelpBox class="mt-8" />
+      <!-- Game State: Playing -->
+      <div id="game-playing" class="hidden space-y-6">
+        <!-- Progress Bar -->
+        <div>
+          <div class="mb-2 flex items-center justify-between">
+            <span class="text-sm font-semibold text-slate-700">{t('challengeSE.caseProgress')}</span>
+            <span id="progress-text" class="text-sm font-semibold text-slate-600"></span>
+          </div>
+          <div class="ch-meter">
+            <div id="progress-bar" class="ch-meter__fill" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <!-- Message Card -->
+        <div class="rounded-xl border-2 border-slate-300 bg-slate-50 p-6">
+          <!-- Message Type Badge -->
+          <div class="mb-4 flex items-center gap-2">
+            <div
+              id="msg-icon"
+              class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-lg"
+              aria-hidden="true"
+            >
+              ✉️
+            </div>
+            <span id="msg-type-badge" class="text-xs font-bold uppercase text-slate-600"></span>
+          </div>
+
+          <!-- From/Sender -->
+          <div class="mb-4 border-b border-slate-200 pb-4">
+            <p class="text-xs font-bold uppercase text-slate-500">{t('challengeSE.fromLabel')}</p>
+            <p id="msg-from" class="mt-1 font-semibold text-slate-900"></p>
+          </div>
+
+          <!-- Subject (Email only) -->
+          <div id="msg-subject-container" class="mb-4 border-b border-slate-200 pb-4">
+            <p class="text-xs font-bold uppercase text-slate-500">{t('challengeSE.subjectLabel')}</p>
+            <p id="msg-subject" class="mt-1 font-semibold text-slate-900"></p>
+          </div>
+
+          <!-- Message Body -->
+          <div class="mb-4 border-b border-slate-200 pb-4">
+            <p class="text-xs font-bold uppercase text-slate-500">{t('challengeSE.messageLabel')}</p>
+            <div id="msg-body" class="mt-3 rounded-lg bg-white p-4 leading-relaxed text-slate-900"></div>
+          </div>
+
+          <!-- Trick used + what the attacker wanted (shown after the answer, only for tricks) -->
+          <div id="tactic-container" class="ch-note ch-note--warn ch-note--roomy hidden mb-4">
+            <p class="mb-1 text-xs font-bold uppercase" id="red-flag-label"></p>
+            <p id="msg-tactic" class="font-semibold"></p>
+            <p id="msg-want" class="mt-2"></p>
+          </div>
+        </div>
+
+        <!-- Action Buttons: Stop – Think – Check – Ask -->
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <button id="btn-trust" type="button" class="ch-btn ch-btn--safe ch-btn--block">
+            {t('challengeSE.trustButton')}
+          </button>
+          <button id="btn-check" type="button" class="ch-btn ch-btn--info ch-btn--block">
+            {t('challengeSE.checkButton')}
+          </button>
+          <button id="btn-report" type="button" class="ch-btn ch-btn--danger ch-btn--block">
+            {t('challengeSE.ignoreButton')}
+          </button>
+        </div>
+
+        <!-- Feedback Area -->
+        <div id="feedback-container" class="ch-feedback hidden" role="status" aria-live="assertive">
+          <p id="feedback-text" class="font-semibold"></p>
+          <p id="feedback-explanation" class="mt-2 text-sm"></p>
+          <p id="feedback-note" class="mt-2 text-sm font-semibold"></p>
+        </div>
+
+        <!-- Spot the trick (after a careful answer) -->
+        <div id="quiz-container" class="hidden rounded-lg border border-slate-300 bg-white p-4" role="group" aria-labelledby="quiz-title">
+          <p id="quiz-title" class="font-semibold text-slate-900"></p>
+          <div id="quiz-options" class="mt-3 grid gap-2 sm:grid-cols-3"></div>
+          <p id="quiz-result" class="mt-3 text-sm font-semibold text-slate-900" role="status" aria-live="polite"></p>
+        </div>
+
+        <!-- Next Button -->
+        <button id="btn-next-case" type="button" class="ch-btn ch-btn--primary ch-btn--block hidden"></button>
+      </div>
+
+      <!-- Game State: Results -->
+      <div id="game-results" class="ch-result hidden">
+        <div>
+          <h2 id="results-title" tabindex="-1" class="ch-result__title">{t('challengeSE.completedTitle')}</h2>
+          <p class="ch-result__text">{t('challengeSE.completedDescription')}</p>
+        </div>
+
+        <!-- Score Display -->
+        <div class="ch-result__score">
+          <div class="ch-result__number" id="final-score">0</div>
+          <p class="ch-result__label" id="cases-identified-label"></p>
+          <div id="final-extra" class="mt-3 space-y-1 text-sm text-slate-700"></div>
+        </div>
+
+        <!-- Rank Badge -->
+        <div class="w-full rounded-xl border-2 border-slate-200 bg-white p-6">
+          <p class="mb-2 text-sm font-bold uppercase text-slate-600">{t('challengeSE.detectiveRankLabel')}</p>
+          <div id="rank-display" class="mb-2 text-4xl font-bold text-slate-900">{t('challengeSE.defaultRank')}</div>
+          <p id="rank-message" class="text-slate-600">{t('challengeSE.defaultRankMessage')}</p>
+        </div>
+
+        <!-- Review of every case -->
+        <div class="w-full rounded-lg bg-slate-50 p-6 text-left">
+          <h3 class="mb-3 font-bold text-slate-900">{t('challengeSE.performanceSummary')}</h3>
+          <div id="summary-list" class="space-y-3 text-sm text-slate-700"></div>
+        </div>
+
+        <!-- Play Again Button -->
+        <button id="btn-play-again" type="button" class="ch-btn ch-btn--primary ch-btn--block">
+          {t('challengeSE.playAgain')}
+        </button>
+      </div>
     </div>
-  </section>
+
+    <!-- Side Panel: Detective Notes (above the game, collapsed, on phones) -->
+    <Fragment slot="side">
+      <HintPanel title={t('challengeSE.detectiveNotes')} subtitle={t('challengeSE.detectiveTipsTitle')}>
+        <!-- Stop – Think – Check – Ask -->
+        <div class="ch-note ch-note--info">
+          <p class="mb-2 text-sm font-bold">{t('challengeSE.stcaTitle')}</p>
+          <ol class="space-y-2">
+            {stca.map((step) => (
+              <li class="flex gap-2 text-xs">
+                <span aria-hidden="true">{step.icon}</span>
+                <span><strong>{step.label}:</strong> {step.text}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <div class="ch-stack pt-2">
+          {redFlags.map((flag) => (
+            <div class="ch-note ch-note--bad">{flag}</div>
+          ))}
+        </div>
+
+        <div class="ch-note ch-note--info mt-4">
+          <strong>💡</strong> {t('challengeSE.proTip')}
+        </div>
+      </HintPanel>
+    </Fragment>
+  </ChallengeShell>
 
   <script>
-    import { dealDeck, evaluateChoice, quizOptions, rankFor } from '../../../data/seScenarios'
+    import { dealDeck, evaluateChoice, quizOptions, rankFor } from '../../../data/challengeSE'
     import { recordResult } from '../../../utils/challengeProgress'
-    import type { SeAction, SeOutcome, SeTactic } from '../../../data/seScenarios'
+    import type { SeAction, SeOutcome, SeTactic } from '../../../data/challengeSE'
 
     type Case = {
       id: number
@@ -393,15 +343,11 @@ const startDescription = t('challengeSE.startDescription').replace('{n}', String
       const wantIcon: Record<string, string> = { information: '🪪', access: '🔑', money: '💰' }
       const outcomeIcon: Record<SeOutcome, string> = { best: '✅', safe: '🛡️', wrong: '❌' }
       const outcomeText: Record<SeOutcome, string> = { best: labels.bestLabel, safe: labels.safeLabel, wrong: labels.incorrectLabel }
+      // Colour of the feedback bar: green (best), blue (safe choice, between the two), red (wrong)
       const feedbackClasses: Record<SeOutcome, string> = {
-        best: 'border-green-400 bg-green-50',
-        safe: 'fb-safe',
-        wrong: 'border-red-400 bg-red-50',
-      }
-      const feedbackTextClasses: Record<SeOutcome, string> = {
-        best: 'text-green-900',
-        safe: 'fb-safe-text',
-        wrong: 'text-red-900',
+        best: 'ch-feedback--ok',
+        safe: 'ch-feedback--info',
+        wrong: 'ch-feedback--bad',
       }
 
       if (btnNextCase) btnNextCase.textContent = labels.nextCase
@@ -497,8 +443,8 @@ const startDescription = t('challengeSE.startDescription').replace('{n}', String
         const outcome = evaluateChoice(scenario, choice)
         setDecisionButtons(true)
 
-        feedbackContainer.className = `rounded-lg border-l-4 p-4 ${feedbackClasses[outcome]}`
-        feedbackText.className = `font-semibold ${feedbackTextClasses[outcome]}`
+        feedbackContainer.className = `ch-feedback ${feedbackClasses[outcome]}`
+        feedbackText.className = 'font-semibold'
         feedbackText.textContent = `${outcomeIcon[outcome]} ${outcomeText[outcome]}`
         feedbackExplanation.textContent = scenario.explanation
 
@@ -510,7 +456,7 @@ const startDescription = t('challengeSE.startDescription').replace('{n}', String
         }
         if (outcome !== 'best') notes.push(fmt(labels.bestAnswerTemplate, { action: actionName[scenario.best] }))
         feedbackNote.textContent = notes.join(' ')
-        feedbackNote.className = `mt-2 text-sm font-semibold ${feedbackTextClasses[outcome]}`
+        feedbackNote.className = 'mt-2 text-sm font-semibold'
 
         const answer: Answer = { scenario, outcome, trick: null }
         answers.push(answer)
@@ -628,25 +574,6 @@ const startDescription = t('challengeSE.startDescription').replace('{n}', String
   </script>
 
   <style>
-
-    :global(body) {
-      --tw-bg-opacity: 1;
-    }
-
-    button:disabled {
-      cursor: not-allowed;
-    }
-
-    /* "Safe choice" feedback: blue, between the green (best) and the red (wrong) */
-    #feedback-container.fb-safe {
-      border-color: #60a5fa;
-      background: #eff6ff;
-    }
-
-    .fb-safe-text {
-      color: #1e3a8a;
-    }
-
     /* The answer buttons of "Spot the trick" are created by the script (no Astro scope attribute) */
     #quiz-options :global(.quiz-btn) {
       min-height: 44px;
@@ -662,12 +589,12 @@ const startDescription = t('challengeSE.startDescription').replace('{n}', String
     }
 
     #quiz-options :global(.quiz-btn:hover:not(:disabled)) {
-      background: #eff6ff;
-      border-color: #2563eb;
+      background: var(--ch-soft);
+      border-color: var(--ch-strong);
     }
 
     #quiz-options :global(.quiz-btn:focus-visible) {
-      outline: 3px solid #2563eb;
+      outline: 3px solid #3b82f6;
       outline-offset: 2px;
     }
 
@@ -686,25 +613,6 @@ const startDescription = t('challengeSE.startDescription').replace('{n}', String
       border-color: #b91c1c;
       background: #fee2e2;
       color: #7f1d1d;
-    }
-
-    :global(.darkmode) #feedback-container.fb-safe {
-      border-color: #3b82f6;
-      background: #14213d;
-    }
-
-    :global(.darkmode) .fb-safe-text {
-      color: #bfdbfe;
-    }
-
-    :global(.darkmode) .stca-box {
-      background: #14213d !important;
-      border-color: #3b5b9a !important;
-    }
-
-    :global(.darkmode) .stca-box,
-    :global(.darkmode) .stca-box * {
-      color: #bfdbfe !important;
     }
 
     :global(.darkmode) #quiz-options :global(.quiz-btn) {

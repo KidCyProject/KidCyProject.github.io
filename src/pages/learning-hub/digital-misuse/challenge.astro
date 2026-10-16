@@ -1,198 +1,19 @@
 ---
 import DefaultLayout from '@layouts/DefaultLayout.astro'
-import PageHeader from '@components/PageHeader.astro'
-import ChallengeIntro from '@components/ChallengeIntro.astro'
-import ChallengeProgress from '@components/ChallengeProgress.astro'
-import HelpBox from '@components/HelpBox.astro'
+import ChallengeShell from '@components/ChallengeShell.astro'
 import { useTranslations } from 'src/i18n/index'
 import { toJsonScript } from '../../../utils/jsonScript'
+import { DM_STORY_STRUCTURE } from '../../../data/challengeDM'
+import type { DmStory, DmStoryNode } from '../../../data/challengeDM'
 
 const { t, v } = useTranslations(Astro.currentLocale)
 const { v: vEn } = useTranslations('en')
-
-// ── Types ──────────────────────────────────────────────────────────────────
-type StructChoice = { next: string; points: number }
-type StructStory = { id: number; sensitive?: true; nodes: Record<string, StructNode> }
-type StructNode = {
-  mood: string
-  ending?: true
-  type?: 'good' | 'okay' | 'bad'
-  stars?: number
-  choices?: StructChoice[]
-}
-
-type Choice = { text: string; next: string; points: number }
-type StoryNode = {
-  text: string
-  mood: string
-  choices?: Choice[]
-  ending?: true
-  type?: 'good' | 'okay' | 'bad'
-  stars?: number
-  title?: string
-  lesson?: string
-}
-type Story = {
-  id: number
-  sensitive?: true
-  title: string
-  emoji: string
-  topic: string
-  nodes: Record<string, StoryNode>
-}
-
-// ── Story structure (game mechanics — not translated) ──────────────────────
-// Star rule: good = 3, okay = 2, bad = 1. 0 stars only when the player hands over photos, an address
-// or a password. `points` is live per-choice feedback ("Points this run"); it does not decide the stars.
-// `sensitive` stories (private photos, strangers asking for your address) are left out unless the player
-// switches them on, and they open with a content note.
-const storyStructure: StructStory[] = [
-  { id: 1, nodes: {
-    start:  { mood: 'worried',   choices: [{ next: 'end_a',  points: 0 }, { next: 'mid_b',  points: 1 }, { next: 'mid_c',  points: 2 }] },
-    end_a:  { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
-    mid_b:  { mood: 'worried',   choices: [{ next: 'end_b1', points: 0 }, { next: 'end_b2', points: 2 }] },
-    end_b1: { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
-    end_b2: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    mid_c:  { mood: 'supportive',choices: [{ next: 'end_c1', points: 2 }, { next: 'end_c2', points: 0 }] },
-    end_c1: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    end_c2: { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
-  }},
-  { id: 2, nodes: {
-    start:  { mood: 'worried',   choices: [{ next: 'end_a',  points: 0 }, { next: 'mid_b',  points: 1 }, { next: 'mid_c',  points: 2 }] },
-    end_a:  { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
-    mid_b:  { mood: 'worried',   choices: [{ next: 'end_b1', points: 0 }, { next: 'end_b2', points: 2 }] },
-    end_b1: { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
-    end_b2: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    mid_c:  { mood: 'supportive',choices: [{ next: 'end_c1', points: 2 }, { next: 'end_c2', points: 1 }] },
-    end_c1: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    end_c2: { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
-  }},
-  { id: 3, nodes: {
-    start:  { mood: 'worried',   choices: [{ next: 'end_a',  points: 0 }, { next: 'mid_b',  points: 1 }, { next: 'mid_c',  points: 2 }] },
-    end_a:  { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
-    mid_b:  { mood: 'worried',   choices: [{ next: 'end_b1', points: 0 }, { next: 'end_b2', points: 2 }] },
-    end_b1: { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
-    end_b2: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    mid_c:  { mood: 'supportive',choices: [{ next: 'end_c1', points: 2 }, { next: 'end_c2', points: 0 }] },
-    end_c1: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    end_c2: { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
-  }},
-  { id: 4, nodes: {
-    start:  { mood: 'worried',   choices: [{ next: 'end_a',  points: 0 }, { next: 'mid_b',  points: 1 }, { next: 'mid_c',  points: 2 }] },
-    end_a:  { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
-    mid_b:  { mood: 'worried',   choices: [{ next: 'end_b1', points: 2 }, { next: 'end_b2', points: 0 }] },
-    end_b1: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    end_b2: { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
-    mid_c:  { mood: 'supportive',choices: [{ next: 'end_c1', points: 2 }, { next: 'end_c2', points: 1 }] },
-    end_c1: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    end_c2: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-  }},
-  { id: 5, nodes: {
-    start:  { mood: 'sad',       choices: [{ next: 'end_a',  points: 0 }, { next: 'end_b',  points: 0 }, { next: 'mid_c',  points: 2 }] },
-    end_a:  { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
-    end_b:  { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
-    mid_c:  { mood: 'supportive',choices: [{ next: 'end_c1', points: 2 }, { next: 'end_c2', points: 2 }] },
-    end_c1: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    end_c2: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-  }},
-  { id: 6, sensitive: true, nodes: {
-    start:  { mood: 'worried',   choices: [{ next: 'end_a',  points: 0 }, { next: 'mid_b',  points: 1 }, { next: 'mid_c',  points: 2 }] },
-    end_a:  { mood: 'bad',       ending: true, type: 'bad',  stars: 0 },
-    mid_b:  { mood: 'worried',   choices: [{ next: 'end_b1', points: 0 }, { next: 'end_b2', points: 2 }] },
-    end_b1: { mood: 'bad',       ending: true, type: 'bad',  stars: 0 },
-    end_b2: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    mid_c:  { mood: 'supportive',choices: [{ next: 'end_c1', points: 2 }, { next: 'end_c2', points: 1 }] },
-    end_c1: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    end_c2: { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
-  }},
-  { id: 7, sensitive: true, nodes: {
-    start:  { mood: 'worried',   choices: [{ next: 'end_a',  points: 0 }, { next: 'mid_b',  points: 1 }, { next: 'mid_c',  points: 2 }] },
-    end_a:  { mood: 'bad',       ending: true, type: 'bad',  stars: 0 },
-    mid_b:  { mood: 'worried',   choices: [{ next: 'end_b1', points: 0 }, { next: 'end_b2', points: 2 }] },
-    end_b1: { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
-    end_b2: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    mid_c:  { mood: 'supportive',choices: [{ next: 'end_c1', points: 2 }, { next: 'end_c2', points: 0 }] },
-    end_c1: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    end_c2: { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
-  }},
-  { id: 8, nodes: {
-    start:  { mood: 'worried',   choices: [{ next: 'end_a',  points: 0 }, { next: 'mid_b',  points: 1 }, { next: 'mid_c',  points: 2 }] },
-    end_a:  { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
-    mid_b:  { mood: 'worried',   choices: [{ next: 'end_b1', points: 2 }, { next: 'end_b2', points: 0 }] },
-    end_b1: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    end_b2: { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
-    mid_c:  { mood: 'supportive',choices: [{ next: 'end_c1', points: 2 }, { next: 'end_c2', points: 1 }] },
-    end_c1: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    end_c2: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-  }},
-  { id: 9, nodes: {
-    start:  { mood: 'worried',   choices: [{ next: 'mid_a',  points: 0 }, { next: 'end_b',  points: 0 }, { next: 'mid_c',  points: 2 }] },
-    mid_a:  { mood: 'worried',   choices: [{ next: 'end_a1', points: 0 }, { next: 'end_a2', points: 1 }] },
-    end_a1: { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
-    end_a2: { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
-    end_b:  { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
-    mid_c:  { mood: 'supportive',choices: [{ next: 'end_c1', points: 2 }, { next: 'end_c2', points: 1 }] },
-    end_c1: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    end_c2: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-  }},
-  { id: 10, nodes: {
-    start:  { mood: 'worried',   choices: [{ next: 'end_a',  points: 0 }, { next: 'mid_b',  points: 0 }, { next: 'mid_c',  points: 2 }] },
-    end_a:  { mood: 'bad',       ending: true, type: 'bad',  stars: 0 },
-    mid_b:  { mood: 'worried',   choices: [{ next: 'end_b1', points: 0 }, { next: 'end_b2', points: 2 }] },
-    end_b1: { mood: 'bad',       ending: true, type: 'bad',  stars: 0 },
-    end_b2: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    mid_c:  { mood: 'worried',   choices: [{ next: 'end_c1', points: 2 }, { next: 'end_c2', points: 0 }] },
-    end_c1: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    end_c2: { mood: 'bad',       ending: true, type: 'bad',  stars: 0 },
-  }},
-  // 11 disinformation · 12 misinformation · 13 harmful influencer · 14 algorithm and fake news
-  { id: 11, nodes: {
-    start:  { mood: 'worried',   choices: [{ next: 'end_a',  points: 0 }, { next: 'mid_b',  points: 1 }, { next: 'mid_c',  points: 2 }] },
-    end_a:  { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
-    mid_b:  { mood: 'worried',   choices: [{ next: 'end_b1', points: 0 }, { next: 'end_b2', points: 2 }] },
-    end_b1: { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
-    end_b2: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    mid_c:  { mood: 'supportive',choices: [{ next: 'end_c1', points: 2 }, { next: 'end_c2', points: 1 }] },
-    end_c1: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    end_c2: { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
-  }},
-  { id: 12, nodes: {
-    start:  { mood: 'worried',   choices: [{ next: 'end_a',  points: 0 }, { next: 'mid_b',  points: 1 }, { next: 'mid_c',  points: 2 }] },
-    end_a:  { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
-    mid_b:  { mood: 'worried',   choices: [{ next: 'end_b1', points: 0 }, { next: 'end_b2', points: 2 }] },
-    end_b1: { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
-    end_b2: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    mid_c:  { mood: 'supportive',choices: [{ next: 'end_c1', points: 2 }, { next: 'end_c2', points: 1 }] },
-    end_c1: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    end_c2: { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
-  }},
-  { id: 13, nodes: {
-    start:  { mood: 'worried',   choices: [{ next: 'end_a',  points: 0 }, { next: 'mid_b',  points: 1 }, { next: 'mid_c',  points: 2 }] },
-    end_a:  { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
-    mid_b:  { mood: 'worried',   choices: [{ next: 'end_b1', points: 0 }, { next: 'end_b2', points: 2 }] },
-    end_b1: { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
-    end_b2: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    mid_c:  { mood: 'supportive',choices: [{ next: 'end_c1', points: 2 }, { next: 'end_c2', points: 1 }] },
-    end_c1: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    end_c2: { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
-  }},
-  { id: 14, nodes: {
-    start:  { mood: 'worried',   choices: [{ next: 'end_a',  points: 0 }, { next: 'mid_b',  points: 1 }, { next: 'mid_c',  points: 2 }] },
-    end_a:  { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
-    mid_b:  { mood: 'worried',   choices: [{ next: 'end_b1', points: 1 }, { next: 'end_b2', points: 0 }] },
-    end_b1: { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
-    end_b2: { mood: 'bad',       ending: true, type: 'bad',  stars: 1 },
-    mid_c:  { mood: 'supportive',choices: [{ next: 'end_c1', points: 2 }, { next: 'end_c2', points: 1 }] },
-    end_c1: { mood: 'good',      ending: true, type: 'good', stars: 3 },
-    end_c2: { mood: 'okay',      ending: true, type: 'okay', stars: 2 },
-  }},
-]
 
 // ── Merge translated text with structural data ─────────────────────────────
 const rawStories = v<ReadonlyArray<Record<string, unknown>>>('challengeDM.stories') ?? []
 const enStories  = vEn<ReadonlyArray<Record<string, unknown>>>('challengeDM.stories') ?? []
 
-const stories: Story[] = storyStructure.map((struct, idx) => {
+const stories: DmStory[] = DM_STORY_STRUCTURE.map((struct, idx) => {
   const raw = (rawStories[idx] ?? {}) as Record<string, unknown>
   const fb  = (enStories[idx]  ?? {}) as Record<string, unknown>
 
@@ -200,13 +21,13 @@ const stories: Story[] = storyStructure.map((struct, idx) => {
   const nodeMap: Record<string, Record<string, unknown>> = {}
   rawNodes.forEach(n => { nodeMap[String(n.id ?? '')] = n })
 
-  const nodes: Record<string, StoryNode> = {}
+  const nodes: Record<string, DmStoryNode> = {}
   Object.entries(struct.nodes).forEach(([nodeId, structNode]) => {
     const tn = nodeMap[nodeId] ?? {}
     const structChoices = structNode.choices ?? []
     const textChoices   = (tn.choices ?? []) as string[]
 
-    const builtNode: StoryNode = {
+    const builtNode: DmStoryNode = {
       text: String(tn.text ?? ''),
       mood: structNode.mood,
     }
@@ -281,173 +102,154 @@ const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0
 ---
 
 <DefaultLayout title={t('challengeDM.title')}>
-  <PageHeader
-    title={t('challengeDM.title')}
-    subtitle={t('challengeDM.subtitle')}
-    bgType="module"
-    underlineColor="var(--brand-DM)"
-  />
-
-  <ChallengeProgress />
-
   <script
     type="application/json"
     id="dm-challenge-data"
     set:html={toJsonScript({ stories, labels })}
   />
 
-  <section class="my-12">
-    <div class="container">
+  <ChallengeShell ns="challengeDM" brand="DM" sticky={false} sideFirst={false} layoutId="dm-grid">
 
-      <!-- How It Works -->
-      <ChallengeIntro ns="challengeDM" brand="DM" />
+    <!-- ── Main: the story ──────────────────────────────────────────────── -->
+    <div class="ch-card ch-card--flush">
 
-      <!-- Two-column layout -->
-      <div class="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_300px]" id="dm-grid">
-
-        <!-- ── Main: Story Area ─────────────────────────────────────────── -->
-        <div>
-
-          <!-- Story header bar -->
-          <div class="story-header">
-            <div class="story-header-left">
-              <span class="story-emoji" id="story-emoji">📖</span>
-              <div class="story-header-text">
-                <span class="story-number" id="story-number">{fmt(labels.storyOfTemplate, { n: 1, total: stories.filter((story) => !story.sensitive).length })}</span>
-                <span class="story-title-text" id="story-title-text">…</span>
-              </div>
-            </div>
-            <div class="session-pts-box">
-              <span class="pts-label" id="pts-label-el">{labels.pointsLabel}</span>
-              <span class="pts-value" id="session-pts">0</span>
-            </div>
+      <!-- Story header bar -->
+      <div class="story-header">
+        <div class="story-header-left">
+          <span class="story-emoji" id="story-emoji">📖</span>
+          <div class="story-header-text">
+            <span class="story-number" id="story-number">{fmt(labels.storyOfTemplate, { n: 1, total: stories.filter((story) => !story.sensitive).length })}</span>
+            <span class="story-title-text" id="story-title-text">…</span>
           </div>
-
-          <!-- Story panel -->
-          <div class="story-panel">
-
-            <!-- Welcome / between-story state -->
-            <div id="welcome-state" class="welcome-state">
-              <div class="welcome-icon" id="welcome-emoji">📱</div>
-              <h3 class="welcome-title" id="welcome-title">{fmt(labels.storyLabelTemplate, { n: 1 })} {firstVisibleStory?.title}</h3>
-              <p class="welcome-topic" id="welcome-topic">{labels.topicLabel}: {firstVisibleStory?.topic}</p>
-              <p class="welcome-desc" id="welcome-desc">{labels.welcomeDesc}</p>
-              <div class="sensitive-note hidden" id="sensitive-note">
-                <strong id="sensitive-note-title">{labels.sensitiveNoteTitle}</strong>
-                <p id="sensitive-note-text"></p>
-              </div>
-              <div class="welcome-buttons">
-                <button class="btn btn-primary" id="start-btn">{labels.startStory}</button>
-                <button class="btn btn-secondary hidden" id="skip-btn">{labels.skipStory}</button>
-              </div>
-            </div>
-
-            <!-- Messages area -->
-            <div id="messages-area" class="messages-area hidden" aria-live="polite" aria-label={t('challengeDM.messagesAriaLabel')}></div>
-
-            <!-- Choices -->
-            <div id="choices-container" class="choices-container hidden"></div>
-
-            <!-- Ending card -->
-            <div id="ending-card" class="ending-card hidden" tabindex="-1" role="group" aria-labelledby="ending-title">
-              <div class="ending-badge" id="ending-badge">{labels.badgeGood}</div>
-              <div class="ending-title" id="ending-title">…</div>
-              <div class="ending-stars" id="ending-stars">★★★</div>
-              <div class="ending-lesson">
-                <strong>{labels.whatWeLearned}</strong>
-                <p id="ending-lesson-text">…</p>
-              </div>
-            </div>
-
-          </div><!-- .story-panel -->
-
-          <!-- Action buttons (shown after ending) -->
-          <div id="action-buttons" class="action-buttons hidden">
-            <button class="btn btn-secondary" id="retry-btn">{labels.tryDifferentPath}</button>
-            <button class="btn btn-primary" id="next-story-btn">{labels.nextStory}</button>
-            <button class="btn btn-primary" id="all-done-btn" style="display:none">{labels.seeFinalScore}</button>
-          </div>
-
-          <!-- Where to find help (collapsed on phones) -->
-          <HelpBox class="mt-6" />
-
-        </div><!-- main column -->
-
-        <!-- ── Sidebar ──────────────────────────────────────────────────── -->
-        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm h-fit">
-
-          <!-- Total score -->
-          <div class="mb-4">
-            <h3 class="text-base font-bold text-slate-900">{labels.yourBestScore}</h3>
-            <p class="mt-1 text-xs text-slate-600">{labels.bestResultDesc}</p>
-          </div>
-          <div class="score-display border-t border-slate-200 pt-4 mb-6">
-            <span class="score-big" id="total-stars-display">0</span>
-            <span class="score-denom" id="score-denom"></span>
-          </div>
-
-          <!-- Sensitive stories are off until a teacher or the player switches them on -->
-          <div class="mb-6 border-t border-slate-200 pt-4">
-            <label class="sensitive-toggle" for="sensitive-toggle">
-              <input type="checkbox" id="sensitive-toggle" aria-describedby="sensitive-toggle-note" />
-              <span class="text-sm font-semibold text-slate-900">{t('challengeDM.sensitiveToggleLabel')}</span>
-            </label>
-            <p id="sensitive-toggle-note" class="mt-1 text-xs text-slate-700">{t('challengeDM.sensitiveToggleNote')}</p>
-          </div>
-
-          <!-- Story progress -->
-          <div class="mb-6 border-t border-slate-200 pt-4">
-            <h3 class="text-sm font-bold text-slate-900 mb-3">{labels.storyLabel}</h3>
-            <div id="story-rows" class="story-rows-list"></div>
-          </div>
-
-          <!-- Tips -->
-          <div class="border-t border-slate-200 pt-4">
-            <h3 class="text-sm font-bold text-slate-900 mb-3">{labels.watchOutTitle}</h3>
-            <div class="space-y-2">
-              {watchOutItems.map((item) => (
-                <div class="rounded-lg bg-red-50 p-3">
-                  <p class="text-xs font-semibold text-red-900">{item}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-        </div><!-- sidebar -->
-
-      </div><!-- grid -->
-
-      <!-- Final score overlay -->
-      <div class="final-overlay hidden" id="final-overlay" role="dialog" aria-modal="true" aria-labelledby="final-title">
-        <div class="final-card">
-          <div class="final-icon">🎉</div>
-          <h2 class="final-title" id="final-title">{labels.allStoriesComplete}</h2>
-          <p class="final-subtitle">{labels.finalScoreDesc}</p>
-          <div class="final-score-box">
-            <span id="final-stars-count">0</span>
-            <span class="final-denom" id="final-denom"></span>
-          </div>
-          <div class="final-rank" id="final-rank"></div>
-          <p class="final-rank-msg" id="final-rank-msg"></p>
-          <button class="btn btn-primary" id="play-again-btn">{labels.playAgain}</button>
+        </div>
+        <div class="session-pts-box">
+          <span class="pts-label" id="pts-label-el">{labels.pointsLabel}</span>
+          <span class="pts-value" id="session-pts">0</span>
         </div>
       </div>
 
-    </div><!-- container -->
-  </section>
+      <!-- Story panel -->
+      <div class="story-panel">
+
+        <!-- Welcome / between-story state -->
+        <div id="welcome-state" class="welcome-state">
+          <div class="welcome-icon" id="welcome-emoji">📱</div>
+          <h3 class="welcome-title" id="welcome-title">{fmt(labels.storyLabelTemplate, { n: 1 })} {firstVisibleStory?.title}</h3>
+          <p class="welcome-topic" id="welcome-topic">{labels.topicLabel}: {firstVisibleStory?.topic}</p>
+          <p class="welcome-desc" id="welcome-desc">{labels.welcomeDesc}</p>
+          <div class="sensitive-note hidden" id="sensitive-note">
+            <strong id="sensitive-note-title">{labels.sensitiveNoteTitle}</strong>
+            <p id="sensitive-note-text"></p>
+          </div>
+          <div class="welcome-buttons">
+            <button type="button" class="ch-btn ch-btn--primary" id="start-btn">{labels.startStory}</button>
+            <button type="button" class="ch-btn ch-btn--secondary hidden" id="skip-btn">{labels.skipStory}</button>
+          </div>
+        </div>
+
+        <!-- Messages area -->
+        <div id="messages-area" class="messages-area hidden" aria-live="polite" aria-label={t('challengeDM.messagesAriaLabel')}></div>
+
+        <!-- Choices -->
+        <div id="choices-container" class="choices-container hidden"></div>
+
+        <!-- Ending card -->
+        <div id="ending-card" class="ending-card hidden" tabindex="-1" role="group" aria-labelledby="ending-title">
+          <div class="ending-badge" id="ending-badge">{labels.badgeGood}</div>
+          <div class="ending-title" id="ending-title">…</div>
+          <div class="ending-stars" id="ending-stars">★★★</div>
+          <div class="ending-lesson">
+            <strong>{labels.whatWeLearned}</strong>
+            <p id="ending-lesson-text">…</p>
+          </div>
+        </div>
+
+      </div><!-- .story-panel -->
+
+      <!-- Action buttons (shown after ending) -->
+      <div id="action-buttons" class="action-buttons hidden">
+        <button type="button" class="ch-btn ch-btn--secondary" id="retry-btn">{labels.tryDifferentPath}</button>
+        <button type="button" class="ch-btn ch-btn--primary" id="next-story-btn">{labels.nextStory}</button>
+        <button type="button" class="ch-btn ch-btn--primary" id="all-done-btn" style="display:none">{labels.seeFinalScore}</button>
+      </div>
+
+    </div>
+
+    <!-- ── Side column (below the game on phones) ───────────────────────── -->
+    <Fragment slot="side">
+      <div class="ch-card">
+
+        <!-- Total score -->
+        <div class="ch-block">
+          <h3 class="ch-card__title">{labels.yourBestScore}</h3>
+          <p class="ch-card__sub">{labels.bestResultDesc}</p>
+          <div class="ch-stat mt-4">
+            <span class="ch-stat__value" id="total-stars-display">0</span>
+            <span class="ch-stat__of" id="score-denom"></span>
+          </div>
+        </div>
+
+        <!-- Sensitive stories are off until a teacher or the player switches them on -->
+        <div class="ch-block">
+          <label class="sensitive-toggle" for="sensitive-toggle">
+            <input type="checkbox" id="sensitive-toggle" aria-describedby="sensitive-toggle-note" />
+            <span class="text-sm font-semibold text-slate-900">{t('challengeDM.sensitiveToggleLabel')}</span>
+          </label>
+          <p id="sensitive-toggle-note" class="mt-1 text-xs text-slate-700">{t('challengeDM.sensitiveToggleNote')}</p>
+        </div>
+
+        <!-- Story progress -->
+        <div class="ch-block">
+          <h3 class="ch-block__title">{labels.storyLabel}</h3>
+          <div id="story-rows" class="story-rows-list"></div>
+        </div>
+
+        <!-- Tips -->
+        <div class="ch-block">
+          <h3 class="ch-block__title">{labels.watchOutTitle}</h3>
+          <div class="ch-stack">
+            {watchOutItems.map((item) => (
+              <div class="ch-note ch-note--bad">{item}</div>
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </Fragment>
+
+    <!-- Final score overlay -->
+    <Fragment slot="after">
+      <div class="ch-overlay hidden" id="final-overlay" role="dialog" aria-modal="true" aria-labelledby="final-title">
+        <div class="ch-overlay__card ch-result">
+          <div class="ch-result__icon" aria-hidden="true">🎉</div>
+          <h2 class="ch-result__title" id="final-title">{labels.allStoriesComplete}</h2>
+          <p class="ch-result__text">{labels.finalScoreDesc}</p>
+          <div class="ch-result__score">
+            <div class="ch-stat justify-center">
+              <span class="ch-result__number" id="final-stars-count">0</span>
+              <span class="ch-stat__of" id="final-denom"></span>
+            </div>
+          </div>
+          <div class="ch-result__highlight" id="final-rank"></div>
+          <p class="ch-result__text" id="final-rank-msg"></p>
+          <button type="button" class="ch-btn ch-btn--primary" id="play-again-btn">{labels.playAgain}</button>
+        </div>
+      </div>
+    </Fragment>
+  </ChallengeShell>
 
   <style>
+
+    /* The game card, buttons, side column and final window come from the shared challenge styles
+       (src/assets/scss/base/_challenge.scss); below is only what is specific to the story game. */
 
     /* ── Story header ──────────────────────────────────────────────────────── */
     .story-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: white;
-      border: 1px solid #e2e8f0;
-      border-radius: 14px 14px 0 0;
       padding: 12px 18px;
-      border-bottom: none;
+      border-bottom: 2px solid var(--ch-strong);
     }
 
     .story-header-left {
@@ -469,13 +271,13 @@ const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: #b91c1c;
+      color: var(--ch-accent);
     }
 
     .story-title-text {
       font-size: 1rem;
       font-weight: 700;
-      color: #1f2937;
+      color: var(--ch-text);
     }
 
     .session-pts-box {
@@ -485,19 +287,11 @@ const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0
       gap: 1px;
     }
 
-    .pts-label { font-size: 0.75rem; color: #64748b; font-weight: 600; }
-    :global(.darkmode) .story-number { color: #fca5a5; }
-    :global(.darkmode) .pts-label,
-    :global(.darkmode) .score-denom,
-    :global(.darkmode) .s-row-label { color: #94a3b8; }
-    .pts-value { font-size: 1.3rem; font-weight: 800; color: #ef4444; line-height: 1; }
+    .pts-label { font-size: 0.75rem; color: var(--ch-text-muted); font-weight: 600; }
+    .pts-value { font-size: 1.3rem; font-weight: 800; color: var(--ch-accent); line-height: 1; }
 
     /* ── Story panel ───────────────────────────────────────────────────────── */
     .story-panel {
-      background: white;
-      border: 1px solid #e2e8f0;
-      border-top: 2px solid #ef4444;
-      border-radius: 0 0 14px 14px;
       min-height: 420px;
       display: flex;
       flex-direction: column;
@@ -521,7 +315,7 @@ const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0
     .welcome-title {
       font-size: 1.25rem;
       font-weight: 800;
-      color: #1f2937;
+      color: var(--ch-text);
       margin: 0;
     }
 
@@ -530,15 +324,13 @@ const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: #b91c1c;
+      color: var(--ch-accent);
       margin: 0;
     }
 
-    :global(.darkmode) .welcome-topic { color: #fca5a5; }
-
     .welcome-desc {
       font-size: 0.9rem;
-      color: #64748b;
+      color: var(--ch-text-muted);
       margin: 0;
       max-width: 360px;
     }
@@ -586,7 +378,7 @@ const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0
       width: 1.25rem;
       height: 1.25rem;
       flex-shrink: 0;
-      accent-color: #dc2626;
+      accent-color: var(--ch-strong);
       cursor: pointer;
     }
 
@@ -603,8 +395,8 @@ const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0
     }
 
     .messages-area::-webkit-scrollbar { width: 5px; }
-    .messages-area::-webkit-scrollbar-track { background: #f8fafc; border-radius: 10px; }
-    .messages-area::-webkit-scrollbar-thumb { background: #ef4444; border-radius: 10px; }
+    .messages-area::-webkit-scrollbar-track { background: var(--ch-surface-2); border-radius: 10px; }
+    .messages-area::-webkit-scrollbar-thumb { background: var(--ch-brand); border-radius: 10px; }
 
     /* ── Message bubbles ───────────────────────────────────────────────────── */
     :global(.msg-bubble) {
@@ -644,15 +436,15 @@ const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0
     }
 
     :global(.msg-narrator .msg-content) {
-      background: #fff1f2;
+      background: var(--ch-soft);
       border-radius: 4px 14px 14px 14px;
-      color: #1f2937;
+      color: var(--ch-text);
       padding: 20px;
       margin-right: 5rem;
     }
 
     :global(.msg-player .msg-content) {
-      background: #dc2626;
+      background: var(--ch-strong);
       border-radius: 14px 4px 14px 14px;
       color: white;
       font-weight: 500;
@@ -677,9 +469,9 @@ const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0
       text-align: center;
       font-size: 0.85rem;
       font-weight: 600;
-      color: #b91c1c;
-      background: #fee2e2;
-      border: 2px solid #f87171;
+      color: var(--ch-ink);
+      background: var(--ch-soft);
+      border: 2px solid var(--ch-line);
       border-radius: 10px;
       cursor: pointer;
       font-family: inherit;
@@ -691,13 +483,18 @@ const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0
     }
 
     :global(.choice-btn:hover) {
-      background: #dc2626;
-      border-color: #dc2626;
+      background: var(--ch-strong);
+      border-color: var(--ch-strong);
       color: white;
       transform: translateY(-2px);
     }
 
     :global(.choice-btn:active) { transform: translateY(0); }
+
+    :global(.choice-btn:focus-visible) {
+      outline: 3px solid #3b82f6;
+      outline-offset: 2px;
+    }
 
     /* ── Ending card ───────────────────────────────────────────────────────── */
     .ending-card {
@@ -763,67 +560,23 @@ const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0
       line-height: 1.6;
     }
 
-    /* ── Action buttons ────────────────────────────────────────────────────── */
+    /* ── Action buttons (after an ending) ──────────────────────────────────── */
     .action-buttons {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
-      margin-top: 14px;
+      padding: 0 1.25rem 1.25rem;
     }
-
-    .btn {
-      display: inline-block;
-      padding: 11px 22px;
-      font-size: 0.9rem;
-      font-weight: 700;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-family: inherit;
-      transition: all 0.25s ease;
-      letter-spacing: 0.02em;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-      color: white;
-      box-shadow: 0 4px 12px rgba(185, 28, 28, 0.3);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(185, 28, 28, 0.4);
-    }
-
-    .btn-secondary {
-      background: white;
-      color: #b91c1c;
-      border: 2px solid #fca5a5;
-    }
-
-    .btn-secondary:hover {
-      background: #fff1f2;
-      border-color: #dc2626;
-    }
-
-    /* ── Sidebar: score display ────────────────────────────────────────────── */
-    .score-display {
-      display: flex;
-      align-items: baseline;
-      gap: 5px;
-    }
-
-    .score-big  { font-size: 2.4rem; font-weight: 900; color: #ef4444; line-height: 1; }
-    .score-denom { font-size: 1rem; color: #64748b; font-weight: 600; }
 
     /* ── Sidebar: story rows ───────────────────────────────────────────────── */
+    /* The rows are created by the script, so they do not carry Astro's scope attribute: :global */
     .story-rows-list {
       display: flex;
       flex-direction: column;
       gap: 6px;
     }
 
-    .s-row {
+    .story-rows-list :global(.s-row) {
       display: flex;
       align-items: center;
       gap: 9px;
@@ -832,10 +585,10 @@ const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0
       transition: background 0.15s;
     }
 
-    .s-row-active { background: #fff1f2; }
-    .s-row:hover  { background: #f8fafc; }
+    .story-rows-list :global(.s-row-active) { background: var(--ch-soft); }
+    .story-rows-list :global(.s-row:hover)  { background: var(--ch-surface-2); }
 
-    .s-dot {
+    .story-rows-list :global(.s-dot) {
       width: 14px;
       height: 14px;
       border-radius: 50%;
@@ -844,18 +597,18 @@ const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0
       transition: all 0.3s ease;
     }
 
-    .s-dot-locked { background: #e2e8f0; }
+    .story-rows-list :global(.s-dot-locked) { background: var(--ch-track); }
 
-    .s-dot-active {
-      background: #ef4444;
-      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25);
+    .story-rows-list :global(.s-dot-active) {
+      background: var(--ch-brand);
+      box-shadow: 0 0 0 3px color-mix(in oklab, var(--ch-brand), transparent 75%);
     }
 
-    .s-dot-done {
+    .story-rows-list :global(.s-dot-done) {
       background: #22c55e;
     }
 
-    .s-dot-done::after {
+    .story-rows-list :global(.s-dot-done::after) {
       content: '\2713';
       position: absolute;
       inset: 0;
@@ -867,7 +620,7 @@ const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0
       color: white;
     }
 
-    .s-row-info {
+    .story-rows-list :global(.s-row-info) {
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -875,96 +628,27 @@ const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0
       min-width: 0;
     }
 
-    .s-row-label {
+    .story-rows-list :global(.s-row-label) {
       font-size: 0.75rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: #64748b;
+      color: var(--ch-text-muted);
     }
 
-    .s-row-title {
+    .story-rows-list :global(.s-row-title) {
       font-size: 0.78rem;
       font-weight: 600;
-      color: #374151;
+      color: var(--ch-text);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    .s-row-stars {
+    .story-rows-list :global(.s-row-stars) {
       font-size: 0.75rem;
       letter-spacing: 1px;
       flex-shrink: 0;
-    }
-
-    /* ── Final overlay ─────────────────────────────────────────────────────── */
-    .final-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.82);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-    }
-
-    .final-overlay.hidden { display: none; }
-
-    .final-card {
-      background: white;
-      border-radius: 20px;
-      padding: 2.5rem 2rem;
-      text-align: center;
-      max-width: 460px;
-      margin: 1rem;
-      animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    @keyframes popIn {
-      from { opacity: 0; transform: scale(0.5); }
-      to   { opacity: 1; transform: scale(1); }
-    }
-
-    .final-icon { font-size: 3.5rem; margin-bottom: 0.75rem; }
-
-    .final-title {
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: #1f2937;
-      margin-bottom: 0.3rem;
-    }
-
-    .final-subtitle { font-size: 0.95rem; color: #6b7280; margin-bottom: 1.25rem; }
-
-    .final-score-box {
-      display: inline-flex;
-      align-items: baseline;
-      gap: 6px;
-      font-size: 3.5rem;
-      font-weight: 900;
-      color: #ef4444;
-      background: #fff1f2;
-      border: 2px solid #fecaca;
-      border-radius: 12px;
-      padding: 12px 28px;
-      margin-bottom: 1rem;
-    }
-
-    .final-denom { font-size: 1.1rem; font-weight: 700; color: #9ca3af; }
-
-    .final-rank {
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: #1f2937;
-      margin-bottom: 6px;
-    }
-
-    .final-rank-msg {
-      font-size: 0.9rem;
-      color: #6b7280;
-      margin-bottom: 1.5rem;
-      line-height: 1.5;
     }
 
     /* ── Utilities ─────────────────────────────────────────────────────────── */

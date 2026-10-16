@@ -29,17 +29,31 @@ export const contentSE = {
       included: {
         materials: [
           {
-            // ID: 5.1.2
+            // ID: 5.1.2a
             kind: 'Bilde',
             name: 'Hacke systemer vs. lure mennesker',
             filename: 'Bilde - Hacke systemer vs. lure mennesker',
             ariaLabel: 'Last ned materiell',
           },
           {
-            // ID: 5.1.3
+            // ID: 5.1.2b
+            kind: 'Bilder',
+            name: 'Hacke systemer vs. lure mennesker',
+            filename: 'Bilder - Hacke systemer vs. lure mennesker',
+            ariaLabel: 'Last ned materiell',
+          },
+          {
+            // ID: 5.1.3a
             kind: 'Bilde',
             name: 'En angripers mål',
             filename: 'Bilde - En angripers mål',
+            ariaLabel: 'Last ned materiell',
+          },
+          {
+            // ID: 5.1.3b
+            kind: 'Bilder',
+            name: 'En angripers mål',
+            filename: 'Bilder - En angripers mål',
             ariaLabel: 'Last ned materiell',
           },
           {
