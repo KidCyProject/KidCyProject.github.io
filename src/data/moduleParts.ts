@@ -1506,35 +1506,35 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
           },
         ],
         featuredVideo: {
-          // Protecting Your Personal Data Online
+          // Protecting Your Private Data Online
           id: '4.4.5',
-          posterSrc: '/images/learning-hub/video-posters/4.4.5_ProtectingYourPersonalDataOnline_video_thumbnail.webp',
-          videoSrc: '/materials/data-privacy/part4/videos/4.4.5.Video.Protecting_Your_Personal_Data.mp4',
+          posterSrc: '/images/learning-hub/video-posters/4.4.5_ProtectingYourPrivateDataOnline_video_thumbnail.webp',
+          videoSrc: '/materials/data-privacy/part4/videos/4.4.5.Video.Protecting_Your_Private_Data.mp4',
           downloads: {
             video:
-            { href: '/materials/data-privacy/part4/videos/4.4.5.Video.Protecting_Your_Personal_Data.mp4'
+            { href: '/materials/data-privacy/part4/videos/4.4.5.Video.Protecting_Your_Private_Data.mp4'
             }
           },
           tracks: [
             { label: 'English',
               srclang: 'en',
-              src: '/materials/data-privacy/part4/videos/subtitles/en/4.4.5.VideoSubtitles.Protecting_Your_Personal_Data_EN.vtt'
+              src: '/materials/data-privacy/part4/videos/subtitles/en/4.4.5.VideoSubtitles.Protecting_Your_Private_Data_EN.vtt'
             },
             { label: 'Čeština',
               srclang: 'cs',
-              src: '/materials/data-privacy/part4/videos/subtitles/cs/4.4.5.VideoSubtitles.Protecting_Your_Personal_Data_CS.vtt'
+              src: '/materials/data-privacy/part4/videos/subtitles/cs/4.4.5.VideoSubtitles.Protecting_Your_Private_Data_CS.vtt'
             },
             { label: 'Norsk',
               srclang: 'no',
-              src: '/materials/data-privacy/part4/videos/subtitles/no/4.4.5.VideoSubtitles.Protecting_Your_Personal_Data_NO.vtt'
+              src: '/materials/data-privacy/part4/videos/subtitles/no/4.4.5.VideoSubtitles.Protecting_Your_Private_Data_NO.vtt'
             },
             { label: 'Lietuvių',
               srclang: 'lt',
-              src: '/materials/data-privacy/part4/videos/subtitles/lt/4.4.5.VideoSubtitles.Protecting_Your_Personal_Data_LT.vtt'
+              src: '/materials/data-privacy/part4/videos/subtitles/lt/4.4.5.VideoSubtitles.Protecting_Your_Private_Data_LT.vtt'
             },
             { label: 'Deutsch',
               srclang: 'de',
-              src: '/materials/data-privacy/part4/videos/subtitles/de/4.4.5.VideoSubtitles.Protecting_Your_Personal_Data_DE.vtt'
+              src: '/materials/data-privacy/part4/videos/subtitles/de/4.4.5.VideoSubtitles.Protecting_Your_Private_Data_DE.vtt'
             },
           ],
         },
@@ -2236,32 +2236,32 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
           // What is Cyber Bullying?
           id: '7.3.2',
           posterSrc: '/images/learning-hub/video-posters/7.3.2_WhatIsCyberbullying_video_thumbnail.webp',
-          videoSrc: '/materials/digital-misuse/part3/videos/7.3.2.Video.Cyber_Bullying.mp4',
+          videoSrc: '/materials/digital-misuse/part3/videos/7.3.2.Video.Cyberbullying.mp4',
           downloads: {
             video:
-            { href: '/materials/digital-misuse/part3/videos/7.3.2.Video.Cyber_Bullying.mp4'
+            { href: '/materials/digital-misuse/part3/videos/7.3.2.Video.Cyberbullying.mp4'
             }
           },
           tracks: [
             { label: 'English',
               srclang: 'en',
-              src: '/materials/digital-misuse/part3/videos/subtitles/en/7.3.2.VideoSubtitles.Cyber_Bullying_EN.vtt'
+              src: '/materials/digital-misuse/part3/videos/subtitles/en/7.3.2.VideoSubtitles.Cyberbullying_EN.vtt'
             },
             { label: 'Čeština',
               srclang: 'cs',
-              src: '/materials/digital-misuse/part3/videos/subtitles/cs/7.3.2.VideoSubtitles.Cyber_Bullying_CS.vtt'
+              src: '/materials/digital-misuse/part3/videos/subtitles/cs/7.3.2.VideoSubtitles.Cyberbullying_CS.vtt'
             },
             { label: 'Norsk',
               srclang: 'no',
-              src: '/materials/digital-misuse/part3/videos/subtitles/no/7.3.2.VideoSubtitles.Cyber_Bullying_NO.vtt'
+              src: '/materials/digital-misuse/part3/videos/subtitles/no/7.3.2.VideoSubtitles.Cyberbullying_NO.vtt'
             },
             { label: 'Lietuvių',
               srclang: 'lt',
-              src: '/materials/digital-misuse/part3/videos/subtitles/lt/7.3.2.VideoSubtitles.Cyber_Bullying_LT.vtt'
+              src: '/materials/digital-misuse/part3/videos/subtitles/lt/7.3.2.VideoSubtitles.Cyberbullying_LT.vtt'
             },
             { label: 'Deutsch',
               srclang: 'de',
-              src: '/materials/digital-misuse/part3/videos/subtitles/de/7.3.2.VideoSubtitles.Cyber_Bullying_DE.vtt'
+              src: '/materials/digital-misuse/part3/videos/subtitles/de/7.3.2.VideoSubtitles.Cyberbullying_DE.vtt'
             },
           ],
         },

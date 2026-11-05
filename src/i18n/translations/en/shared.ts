@@ -309,7 +309,7 @@ export const shared = {
         dp: {
           title: 'Data Privacy',
           description:
-            'Data privacy helps students understand what information is personal, why it matters, and how to make careful choices when sharing online. This module supports educators in building safe, confident decision-making around personal data.',
+            'Data privacy helps students understand what information is personal, why it matters, and how to make careful choices when sharing online. This module supports educators in building safe, confident decision-making around private data.',
           parts: {
             p1: {
               title: 'What is Private Data?',

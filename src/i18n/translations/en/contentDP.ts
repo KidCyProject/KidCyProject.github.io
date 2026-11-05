@@ -251,7 +251,7 @@ export const contentDP = {
         // ID: 4.4.5
         title: 'Protecting Your Private Data Online',
         supportText:
-          'Use this video to introduce the concept of personal data and spark discussion about the types of information students share every day.',
+          'Use this video to introduce the concept of private data and spark discussion about the types of information students share every day.',
         downloads: {
           video: {
             filename: 'Protecting Your Private Data Online',
