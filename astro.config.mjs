@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config'
-import mdx from '@astrojs/mdx'
 import compress from 'astro-compress'
+import sitemap from '@astrojs/sitemap'
+import cspHashes from './scripts/csp-hashes.mjs'
 import icon from 'astro-icon'
 import tailwindcss from '@tailwindcss/vite'
 import { fileURLToPath } from 'url'
@@ -18,7 +19,19 @@ export default defineConfig({
     },
   },
   output: 'static',
-  integrations: [mdx(), icon(), compress()],
+  integrations: [
+    icon(),
+    // sitemap-index.xml with every page in every language, cross-linked with hreflang
+    sitemap({
+      i18n: {
+        defaultLocale: 'en',
+        locales: { en: 'en', cs: 'cs', de: 'de', lt: 'lt', no: 'no' },
+      },
+    }),
+    compress(),
+    // keep last: fills the inline-script hashes into the Content-Security-Policy of the final HTML
+    cspHashes(),
+  ],
   vite: {
     build: {
       cssCodeSplit: false,
@@ -47,11 +60,6 @@ export default defineConfig({
         '@components': fileURLToPath(new URL('./src/components', import.meta.url)),
         '@layouts': fileURLToPath(new URL('./src/layouts', import.meta.url)),
         '@assets': fileURLToPath(new URL('./src/assets', import.meta.url)),
-        '@content': fileURLToPath(new URL('./src/content', import.meta.url)),
-        '@pages': fileURLToPath(new URL('./src/pages', import.meta.url)),
-        '@public': fileURLToPath(new URL('./public', import.meta.url)),
-        '@post-images': fileURLToPath(new URL('./public/posts', import.meta.url)),
-        '@project-images': fileURLToPath(new URL('./public/projects', import.meta.url)),
         '@i18n': fileURLToPath(new URL('./src/i18n', import.meta.url)),
         'src/i18n': fileURLToPath(new URL('./src/i18n', import.meta.url)),
         'src/data': fileURLToPath(new URL('./src/data', import.meta.url)),

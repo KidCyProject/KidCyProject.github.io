@@ -12,7 +12,6 @@ dist/
 
 # dependencies
 node_modules/
-package-lock.json
 
 # logs
 npm-debug.log*
@@ -35,3 +34,7 @@ pnpm-debug.log*
 
 # Claude Code local (per-machine) settings
 .claude/settings.local.json
+
+# Playwright output
+test-results/
+playwright-report/

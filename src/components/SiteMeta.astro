@@ -1,52 +1,118 @@
 ---
 import { ClientRouter } from 'astro:transitions'
+import { getAbsoluteLocaleUrl } from 'astro:i18n'
+import { DEFAULT_LOCALE, SUPPORTED_LOCALES, getCurrentLocale, stripLocaleFromPathname } from '../i18n/i18n'
+import type { SiteLocale } from '../i18n/i18n'
+import { toJsonScript } from '../utils/jsonScript'
 
 /**
  * SiteMeta Component
  *
- * @description Component to handle site metadata and essential head elements
+ * Everything search engines and link previews read from <head>:
+ * - title, description, author
+ * - canonical URL and one hreflang alternate per language (+ x-default → English),
+ *   so each translation is indexed under its own URL instead of competing with the others
+ * - Open Graph / Twitter card for link previews
+ * - schema.org JSON-LD (the site itself + whatever the page passes in `jsonLd`)
+ *
+ * Pages with `noindex` (404) get a robots tag and no canonical / alternates.
  */
 interface Props {
-  /**
-   * The title of the page
-   */
+  /** The title of the page */
   title: string
-  /**
-   * The description of the page
-   */
+  /** The description of the page (plain text) */
   description: string
-  /**
-   * The URL of the page
-   */
-  url: string
-  /**
-   * The image path for social sharing
-   */
+  /** The image path for social sharing */
   image: string
-  /**
-   * The author of the page
-   */
+  /** Alternative text of the social sharing image */
+  imageAlt?: string
+  /** The author of the page */
   author?: string
+  /** Keep the page out of search engines */
+  noindex?: boolean
+  /** Extra schema.org objects describing this page */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[]
 }
 
-const { title, description, url, image, author = 'Mark Teekman' } = Astro.props
+const { title, description, image, imageAlt, author = 'KidCy Team', noindex = false, jsonLd } = Astro.props
 
-const subtitle = 'Wise Web Wanderers'
+const siteName = 'Wise Web Wanderers'
+const fullTitle = `${title} - ${siteName}`
+
+// Open Graph wants language_TERRITORY
+const OG_LOCALES: Record<SiteLocale, string> = {
+  en: 'en_GB',
+  cs: 'cs_CZ',
+  de: 'de_DE',
+  lt: 'lt_LT',
+  no: 'nb_NO',
+}
+
+const locale = getCurrentLocale(Astro.currentLocale)
+const strippedPath = stripLocaleFromPathname(Astro.url.pathname)
+const route = strippedPath === '/' ? '' : strippedPath.slice(1)
+
+// The same page in every language, as absolute URLs on the production domain
+const alternates = SUPPORTED_LOCALES.map((code) => ({ code, href: getAbsoluteLocaleUrl(code, route) }))
+const canonical = alternates.find((entry) => entry.code === locale)!.href
+const defaultHref = alternates.find((entry) => entry.code === DEFAULT_LOCALE)!.href
+const imageUrl = new URL(image, Astro.site).toString()
+
+const siteUrl = new URL('/', Astro.site).toString()
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: siteName,
+    url: siteUrl,
+    inLanguage: [...SUPPORTED_LOCALES],
+  },
+  ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []),
+]
 ---
 
 <!-- general meta -->
-<meta name="title" content={`${title} - ${subtitle}`} />
+<meta name="title" content={fullTitle} />
 <meta name="description" content={description} />
 <meta name="author" content={author} />
+{noindex && <meta name="robots" content="noindex, follow" />}
+
+<!-- canonical + language versions -->
+{
+  !noindex && (
+    <>
+      <link rel="canonical" href={canonical} />
+      {alternates.map((entry) => <link rel="alternate" hreflang={entry.code} href={entry.href} />)}
+      <link rel="alternate" hreflang="x-default" href={defaultHref} />
+    </>
+  )
+}
 
 <!-- open graph -->
-<meta property="og:title" content={`${title} - ${subtitle}`} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:type" content="website" />
-<meta property="og:url" content={url} />
-<meta property="og:image" content={new URL(image, Astro.site).toString()} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={imageUrl} />
+{imageAlt && <meta property="og:image:alt" content={imageAlt} />}
+<meta property="og:locale" content={OG_LOCALES[locale]} />
+{
+  SUPPORTED_LOCALES.filter((code) => code !== locale).map((code) => (
+    <meta property="og:locale:alternate" content={OG_LOCALES[code]} />
+  ))
+}
+
+<!-- twitter card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+
+<!-- structured data (JSON, not executed) -->
+{!noindex && <script type="application/ld+json" is:inline set:html={toJsonScript(structuredData)} />}
 
 <!-- page title -->
-<title>{title} - {subtitle}</title>
+<title>{fullTitle}</title>
 
 <ClientRouter />

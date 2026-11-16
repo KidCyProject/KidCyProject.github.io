@@ -229,6 +229,26 @@ export const handleMenuKeydown = (
 
 // ── Main initializer ──────────────────────────────────────────────────────────
 
+let outsideClickBound = false
+
+/**
+ * Close dropdowns when clicking outside of them.
+ *
+ * Registered once for the lifetime of the window: with view transitions the header is
+ * replaced on every navigation, so a listener per header would pile up and keep the
+ * old headers in memory. The buttons are looked up at click time instead.
+ */
+const bindOutsideClick = (): void => {
+  if (outsideClickBound) return
+  outsideClickBound = true
+  window.addEventListener('click', (event: MouseEvent) => {
+    const el = event.target as Element
+    // clicks on a dropdown button (or the label / icon inside it) and on menu items are handled elsewhere
+    if (el.closest('[aria-haspopup], .submenu-item')) return
+    closeAllDropdowns([...document.querySelectorAll('.has-dropdown button')] as HTMLButtonElement[])
+  })
+}
+
 /**
  * Initialize all navigation behaviour for `#main-navigation`.
  *
@@ -264,13 +284,7 @@ export const initializeNavigation = (): void => {
       })
     })
 
-    // Close dropdowns when clicking outside
-    window.addEventListener('click', (event: MouseEvent) => {
-      const el = event.target as Element
-      if (!el.hasAttribute('aria-haspopup') && !el.classList.contains('submenu-item')) {
-        closeAllDropdowns(dropdownMenus)
-      }
-    })
+    bindOutsideClick()
 
     mainNav.dataset.navBound = 'true'
   }

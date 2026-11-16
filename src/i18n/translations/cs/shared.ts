@@ -7,6 +7,23 @@
 export const shared = {
 
   layout: {
+    // Labels read by screen readers (and the mobile menu button text)
+    a11y: {
+      mainNav: 'Hlavní navigace',
+      mobileNav: 'Mobilní navigace',
+      openMenu: 'Otevřít nabídku',
+      closeMenu: 'Zavřít nabídku',
+      menu: 'Menu',
+      close: 'Zavřít',
+      chooseLanguage: 'Vybrat jazyk',
+      languages: 'Jazyky',
+      footer: 'Zápatí',
+      siteLinks: 'Odkazy webu',
+      footerNav: 'Navigace v zápatí',
+      learningModules: 'Výukové moduly',
+      legal: 'Právní informace',
+      euLogo: 'Spolufinancováno Evropskou unií',
+    },
     nav: {
       home: 'Domů',
       about: 'O projektu',
@@ -85,6 +102,38 @@ export const shared = {
         'Učení funguje nejlíp, když je zábavné — a přesně s tím jsme naše hry o kyberbezpečnosti navrhovali. Pokrývají vše od bezpečnosti hesel až po rozpoznávání online hrozeb a každá hra proměňuje klíčová témata kurikula ve hru, ke které se děti rády vracejí. Ať už je použijete na rozehřátí, jako odměnu nebo jako plnohodnotnou aktivitu v hodině, hry udržují žáky motivované a nenápadně posilují nejdůležitější dovednosti. Hodí se pro různý věk i různé úrovně dovedností a snadno je spustíte ve třídě, v počítačové učebně i jako samostatnou domácí aktivitu.',
 
       aboutInitiative: 'O této iniciativě',
+    },
+
+    // Privacy page (/privacy) — keep in step with what the site really stores, see e2e/privacy.spec.ts
+    privacy: {
+      title: "Ochrana soukromí",
+      footerLink: "Ochrana soukromí",
+      subtitle: "Co o vás tento web ví: téměř nic. Žádné účty, žádné cookies, žádné sledování.",
+      shortTitle: "Stručně",
+      shortItems: [
+        "Nepotřebujete účet, přihlášení ani jméno.",
+        "Web nepoužívá cookies ani nástroje pro sledování či reklamu.",
+        "Nic z toho, co zde děláte, se nám neodesílá. Odpovědi a výsledky výzev zůstávají ve vašem zařízení.",
+        "Písma, obrázky i videa se načítají z tohoto webu, ne od jiných firem.",
+      ],
+      storageTitle: "Co se ukládá ve vašem prohlížeči",
+      storageIntro: "Několik nastavení se ukládá do místního úložiště prohlížeče, pouze ve vašem zařízení. Nikam se neodesílají.",
+      storageName: "Název",
+      storagePurpose: "Co obsahuje",
+      storageLocale: "Jazyk, který jste si zvolili.",
+      storageDark: "Světlý nebo tmavý režim, pokud jste ho přepnuli sami.",
+      storageProgress: "Výsledky výzev: nejlepší skóre, počet her a datum první a poslední hry.",
+      storageSensitive: "Zda jste ve výzvě Příběhy ze skutečného života zapnuli příběhy s citlivými tématy.",
+      storageDelete: "Chcete-li tato data smazat, použijte tlačítko „{button}“ na stránce Můj postup nebo vymažte data webu v nastavení prohlížeče.",
+      certificate: "Jméno, které napíšete na certifikát, slouží jen k jeho vytištění. Neukládá se.",
+      hostingTitle: "Hosting",
+      hostingText: "Web je umístěn na službě GitHub Pages společnosti GitHub, Inc. Jako každý webový server zpracovává GitHub při otevření stránky technické údaje, například vaši IP adresu. Tyto záznamy nedostáváme.",
+      hostingLink: "Zásady ochrany soukromí GitHubu",
+      externalTitle: "Odkazy na jiné weby",
+      externalText: "Hry běží na platformě Roblox a některé odkazy vedou na weby našich partnerů. Po kliknutí na takový odkaz tento web opouštíte a platí pravidla ochrany soukromí druhého webu. Dokud nekliknete, nic se z těchto webů nenačítá.",
+      contactTitle: "Dotazy",
+      contactText: "Máte-li k této stránce dotaz, obraťte se prosím na některého z partnerů projektu.",
+      contactLink: "Partneři projektu",
     },
 
     about: {

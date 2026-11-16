@@ -49,6 +49,20 @@ export const moduleGames: Partial<Record<ModuleId, GameFile>> = {
   dm: gameFile('abuse.rbxl'),
 }
 
+/** Roblox place ids of the published module games — the "Play" button opens them on roblox.com. */
+export const ROBLOX_PLACE_IDS: Partial<Record<ModuleId, string>> = {
+  at: '134845510230995',
+  dp: '111142046769482',
+  se: '136375947731052',
+  mw: '130783553643067',
+  dm: '138834042980410',
+}
+
+export const robloxPlayUrl = (moduleId: ModuleId): string | undefined => {
+  const placeId = ROBLOX_PLACE_IDS[moduleId]
+  return placeId ? `https://www.roblox.com/games/start?placeId=${placeId}` : undefined
+}
+
 export const formatFileSize = (bytes: number, locale = 'en'): string => {
   if (bytes <= 0) return ''
   const mb = bytes / (1024 * 1024)

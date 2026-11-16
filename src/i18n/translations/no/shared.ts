@@ -7,6 +7,23 @@
 export const shared = {
 
   layout: {
+    // Labels read by screen readers (and the mobile menu button text)
+    a11y: {
+      mainNav: 'Hovednavigasjon',
+      mobileNav: 'Mobilnavigasjon',
+      openMenu: 'Åpne menyen',
+      closeMenu: 'Lukk menyen',
+      menu: 'Meny',
+      close: 'Lukk',
+      chooseLanguage: 'Velg språk',
+      languages: 'Språk',
+      footer: 'Bunntekst',
+      siteLinks: 'Nettstedslenker',
+      footerNav: 'Bunntekstnavigasjon',
+      learningModules: 'Læringsmoduler',
+      legal: 'Juridisk informasjon',
+      euLogo: 'Medfinansiert av Den europeiske union',
+    },
     nav: {
       home: 'Hjem',
       about: 'Om oss',
@@ -85,6 +102,38 @@ export const shared = {
         'Læring fester seg når det er gøy — og cybersikkerhetsspillene våre er bygget nettopp med det i tankene. De dekker alt fra passordsikkerhet til identifisering av nettbaserte trusler, og hvert spill gjør viktige læreplankonsepter om til spilldrevne opplevelser som barn genuint ønsker å komme tilbake til. Enten brukt som oppvarming, belønning eller full leksjonsaktivitet, holder spillene elevene motiverte mens de stille forsterker de viktigste ferdighetene. Egnet for en rekke aldersgrupper og ferdighetsnivåer, er de enkle å starte i klassen, i et datarom eller som en selvstendig hjemmeaktivitet.',
 
       aboutInitiative: 'Om dette initiativet',
+    },
+
+    // Privacy page (/privacy) — keep in step with what the site really stores, see e2e/privacy.spec.ts
+    privacy: {
+      title: "Personvern",
+      footerLink: "Personvern",
+      subtitle: "Hva dette nettstedet vet om deg: nesten ingenting. Ingen kontoer, ingen informasjonskapsler, ingen sporing.",
+      shortTitle: "Kort fortalt",
+      shortItems: [
+        "Du trenger ingen konto, ingen innlogging og ikke noe navn.",
+        "Det finnes ingen informasjonskapsler og ingen verktøy for sporing eller reklame.",
+        "Ingenting du gjør her, sendes til oss. Svar og resultater fra utfordringene blir på enheten din.",
+        "Skrifter, bilder og videoer kommer fra dette nettstedet, ikke fra andre selskaper.",
+      ],
+      storageTitle: "Hva som lagres i nettleseren din",
+      storageIntro: "Noen få innstillinger lagres i nettleserens lokale lagring, bare på enheten din. De sendes aldri noe sted.",
+      storageName: "Navn",
+      storagePurpose: "Hva det inneholder",
+      storageLocale: "Språket du har valgt.",
+      storageDark: "Lys eller mørk modus, hvis du har byttet selv.",
+      storageProgress: "Resultater fra utfordringene: beste poengsum, antall forsøk og dato for første og siste forsøk.",
+      storageSensitive: "Om du har slått på historiene om følsomme temaer i utfordringen «Ekte historier».",
+      storageDelete: "For å slette disse dataene bruker du «{button}» på siden Min fremgang, eller sletter nettstedsdata i nettleserinnstillingene.",
+      certificate: "Navnet du skriver på sertifikatet, brukes bare til å skrive det ut. Det lagres ikke.",
+      hostingTitle: "Drift",
+      hostingText: "Nettstedet ligger på GitHub Pages, en tjeneste fra GitHub, Inc. Som alle nettservere behandler GitHub tekniske data, for eksempel IP-adressen din, når du åpner en side. Vi mottar ikke disse loggene.",
+      hostingLink: "GitHubs personvernerklæring",
+      externalTitle: "Lenker til andre nettsteder",
+      externalText: "Spillene kjører på Roblox, og noen lenker går til nettstedene til partnerne våre. Når du følger en slik lenke, forlater du dette nettstedet, og personvernreglene til det andre nettstedet gjelder. Ingenting lastes fra disse nettstedene før du klikker.",
+      contactTitle: "Spørsmål",
+      contactText: "Har du spørsmål om denne siden, kan du kontakte en av prosjektpartnerne.",
+      contactLink: "Prosjektpartnere",
     },
 
     about: {

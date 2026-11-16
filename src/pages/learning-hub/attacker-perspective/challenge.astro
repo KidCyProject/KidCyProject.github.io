@@ -88,7 +88,7 @@ const planLabels = {
 }
 ---
 
-<DefaultLayout title={t('challengeAP.title')}>
+<DefaultLayout title={t('challengeAP.title')} description={t('challengeAP.subtitle')}>
   <script
     type="application/json"
     id="ap-challenge-data"
@@ -1751,7 +1751,7 @@ const planLabels = {
         }
 
         const setFoundEmpty = () => {
-          foundListEl.innerHTML = ''
+          foundListEl.replaceChildren()
           const li = document.createElement('li')
           li.className = 'vuln-empty'
           li.textContent = vulnEmpty
@@ -1765,7 +1765,7 @@ const planLabels = {
             return
           }
 
-          foundListEl.innerHTML = ''
+          foundListEl.replaceChildren()
           Array.from(found).forEach((id) => {
             const btn = hotspotBtns.find((b) => b.dataset.id === id)
             const label = btn?.dataset.label ?? id
@@ -2107,7 +2107,8 @@ const planLabels = {
               const total = TOTAL_CORRECT + PLAN_TOTAL + questions.length
               recordResult('ap', points, total)
               showPart(4)
-              finalScore.textContent = formatTemplate(L.finalScoreTemplate, { n: points, total })
+              // finalScore / finalMessage are null-checked before the game starts; TS loses that inside this hoisted function
+              finalScore!.textContent = formatTemplate(L.finalScoreTemplate, { n: points, total })
               const lines: [string, number, number][] = [
                 [L.finalPart1Template, found.size, TOTAL_CORRECT],
                 [L.finalPart2Template, planFirstTry, PLAN_TOTAL],
@@ -2118,8 +2119,9 @@ const planLabels = {
                 if (li) li.textContent = formatTemplate(template, { n, total: of })
               })
               const rank = rankFor(points, total)
-              finalMessage.textContent = rank === 'great' ? L.rankGreat : rank === 'good' ? L.rankGood : L.rankPractise
-              setVoice(finalMessage.textContent, 'correct')
+              const rankMessage = rank === 'great' ? L.rankGreat : rank === 'good' ? L.rankGood : L.rankPractise
+              finalMessage!.textContent = rankMessage
+              setVoice(rankMessage, 'correct')
               root.querySelector<HTMLElement>('#final-title')?.focus()
             }
 

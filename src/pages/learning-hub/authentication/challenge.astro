@@ -64,7 +64,7 @@ const commonWordsJson = JSON.stringify(commonWords)
 const i18nJson = JSON.stringify(i18n)
 ---
 
-<DefaultLayout title={t('challengeAT.title')}>
+<DefaultLayout title={t('challengeAT.title')} description={t('challengeAT.subtitle')}>
   <ChallengeShell ns="challengeAT" brand="AT" sideFirst={false}>
     <!-- Main Challenge Area -->
     <div
@@ -211,7 +211,7 @@ const i18nJson = JSON.stringify(i18n)
         <button
           class="ch-btn ch-btn--secondary"
           id="resetBtn"
-          aria-label={t('challengeAT.tryAgainAriaLabel')}
+          title={t('challengeAT.tryAgainAriaLabel')}
           type="button"
         >
           {t('challengeAT.tryAgain')}

@@ -3,6 +3,9 @@ import ResponsiveToggle from './ResponsiveToggle.astro'
 import Logo from './Logo.astro'
 import { DarkMode } from 'accessible-astro-components'
 import { SUPPORTED_LOCALES } from 'src/i18n/i18n'
+import { useTranslations } from 'src/i18n/index'
+
+const { t } = useTranslations(Astro.currentLocale)
 
 /**
  * Navigation Component
@@ -28,7 +31,7 @@ import { SUPPORTED_LOCALES } from 'src/i18n/i18n'
     <div class="nav-bar">
       <Logo />
       <div class="wrapper">
-        <nav class="desktop-menu" aria-label="Main navigation">
+        <nav class="desktop-menu" aria-label={t('layout.a11y.mainNav')}>
           <ul class="menu">
             <slot />
           </ul>
@@ -37,7 +40,7 @@ import { SUPPORTED_LOCALES } from 'src/i18n/i18n'
         <ResponsiveToggle />
       </div>
     </div>
-    <nav class="mobile-menu" aria-label="Mobile navigation">
+    <nav class="mobile-menu" aria-label={t('layout.a11y.mobileNav')}>
       <ul class="menu">
         <slot />
       </ul>

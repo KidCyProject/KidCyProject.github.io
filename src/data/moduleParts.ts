@@ -2257,7 +2257,7 @@ export const modulePartsData: Record<ModuleId, PartDefinition[]> = {
             },
             { label: 'Lietuvių',
               srclang: 'lt',
-              src: '/materials/digital-misuse/part3/videos/subtitles/lt/7.3.2.VideoSubtitles.Cyberbullying_LT.vtt'
+              src: '/materials/digital-misuse/part3/videos/subtitles/lt/7.3.2.VideoSubtitles.Cyber_Bullying_LT.vtt'
             },
             { label: 'Deutsch',
               srclang: 'de',

@@ -14,19 +14,26 @@
  * @see WCAG 2.1.1 — Keyboard
  * @see WCAG 4.1.2 — Name, Role, Value
  */
+import { useTranslations } from 'src/i18n/index'
+
 interface Props {
   class?: string
 }
 
 const { class: className } = Astro.props
+const { t } = useTranslations(Astro.currentLocale)
 ---
 
 <button
   class:list={[className, 'responsive-toggle']}
   aria-expanded="false"
-  aria-label="Open menu navigation"
+  aria-label={t('layout.a11y.openMenu')}
+  data-label-open={t('layout.a11y.openMenu')}
+  data-label-close={t('layout.a11y.closeMenu')}
+  data-text-menu={t('layout.a11y.menu')}
+  data-text-close={t('layout.a11y.close')}
 >
-  <span>Menu</span>
+  <span>{t('layout.a11y.menu')}</span>
   <svg width="26" height="21" viewBox="0 0 28 22" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M2 1.667h24m-24 8h24m-24 8h24"
@@ -77,9 +84,9 @@ const { class: className } = Astro.props
       const icon = toggle.querySelector('svg') as SVGSVGElement | null
       if (!text || !icon) return
 
-      text.textContent = isOpen ? 'Close' : 'Menu'
+      text.textContent = (isOpen ? toggle.dataset.textClose : toggle.dataset.textMenu) ?? ''
       toggle.setAttribute('aria-expanded', String(isOpen))
-      toggle.setAttribute('aria-label', isOpen ? 'Close menu navigation' : 'Open menu navigation')
+      toggle.setAttribute('aria-label', (isOpen ? toggle.dataset.labelClose : toggle.dataset.labelOpen) ?? '')
       setIcon(icon, isOpen ? ICON_CLOSE : ICON_HAMBURGER)
     }
 
@@ -99,11 +106,15 @@ const { class: className } = Astro.props
       setMenuState(willOpen)
     })
 
-    // Escape key closes the mobile menu — WCAG 2.1.1 Keyboard
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') closeMenu()
-    })
+    toggle.addEventListener('menu:close', closeMenu)
   }
+
+  // Escape key closes the mobile menu — WCAG 2.1.1 Keyboard.
+  // One listener for the lifetime of the window (the header is replaced on every
+  // view-transition navigation); it talks to whichever toggle is on the page now.
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') document.querySelector('.responsive-toggle')?.dispatchEvent(new Event('menu:close'))
+  })
 
   document.addEventListener('astro:page-load', initializeResponsiveToggle)
   initializeResponsiveToggle()

@@ -75,7 +75,7 @@ const quickSteps = ['quickStep1', 'quickStep2', 'quickStep3', 'quickStep4']
 const languages = ['English', 'Čeština', 'Deutsch', 'Lietuvių', 'Norsk']
 ---
 
-<DefaultLayout title={t('pages.home.title')}>
+<DefaultLayout title={t('pages.home.title')} description={t('layout.hero.subtitle')}>
   <Hero />
 
   <!-- The journey: seven module tiles -->
@@ -158,8 +158,8 @@ const languages = ['English', 'Čeština', 'Deutsch', 'Lietuvių', 'Norsk']
             <ul role="list">
               {challengeLinks.map((link) => (
                 <li>
-                  <a class="dot" href={link.href} title={link.title} aria-label={link.title} style={`--dot: ${link.badge}`}>
-                    {link.num}
+                  <a class="dot" href={link.href} title={link.title} style={`--dot: ${link.badge}`}>
+                    {link.num}<span class="sr-only">: {link.title}</span>
                   </a>
                 </li>
               ))}
@@ -183,8 +183,8 @@ const languages = ['English', 'Čeština', 'Deutsch', 'Lietuvių', 'Norsk']
             <ul role="list">
               {gameLinks.map((link) => (
                 <li>
-                  <a class="dot" href={link.href} title={link.title} aria-label={link.title} style={`--dot: ${link.badge}`}>
-                    {link.num}
+                  <a class="dot" href={link.href} title={link.title} style={`--dot: ${link.badge}`}>
+                    {link.num}<span class="sr-only">: {link.title}</span>
                   </a>
                 </li>
               ))}

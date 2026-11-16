@@ -4,7 +4,7 @@
 
 **KidCy / Wise Web Wanderers** — an Astro-based multilingual e-learning platform teaching cybersecurity to upper-elementary students. Built on the [Accessible Astro Starter](https://accessible-astro.netlify.app/) template; strong WCAG accessibility focus throughout.
 
-Stack: **Astro 6**, **TypeScript**, **Tailwind CSS v4**, **SCSS**, **Zod** (runtime validation), **astro-icon** (Lucide icons), **jszip** (download bundles).
+Stack: **Astro 7**, **TypeScript**, **Tailwind CSS v4**, **SCSS**, **Zod** (runtime validation), **astro-icon** (Lucide icons).
 
 ---
 
@@ -114,7 +114,7 @@ Everything under the Play button of a `game.astro` page is rendered by `GameSupp
 
 ### Merge function — `mergeParts(moduleId, translationParts)`
 
-Called in each `content.astro` page. Combines `modulePartsData[moduleId]` (structural) with the locale's `contentXX.parts` array (text). Returns `MergedPart[]` ready for rendering.
+Called in `src/components/ModuleContentPage.astro` (the template shared by every module's `content.astro`). Combines `modulePartsData[moduleId]` (structural) with the locale's `contentXX.parts` array (text). Returns `MergedPart[]` ready for rendering.
 
 Key behaviors:
 - Activity plan steps are **auto-numbered** from array index.
@@ -159,7 +159,7 @@ Every learning module has pages at `src/pages/learning-hub/<slug>/`:
 
 | File | Purpose |
 |------|---------|
-| `content.astro` | Main module page: aim/objectives/outcomes tabs, expandable parts with materials/video/activity-plan tabs, related modules list |
+| `content.astro` | Thin wrapper that renders `ModuleContentPage.astro` with its module id. Main module page: aim/objectives/outcomes tabs, expandable parts with materials/video/activity-plan tabs, related modules list |
 | `challenge.astro` | Interactive challenge embed |
 | `game.astro` | Roblox game link + instructions + `.rbxl` download block (`GameDownload.astro`) (optional — not all modules have this) |
 
@@ -169,7 +169,7 @@ All content pages follow the same structure:
 3. `mergeParts('xx', translationParts)` to get `MergedPart[]`.
 4. Render using `DefaultLayout` + `PageHeader`.
 
-CSS classes in `content.astro` use the `dc-*` prefix namespace. Module brand color is applied via CSS custom property `var(--brand-DC)` (or `--brand-AT`, `--brand-DP`, etc.) defined in `_modules.scss`.
+CSS classes in `ModuleContentPage.astro` use the `mc-*` prefix. Module brand color is applied via `var(--module-brand)`, which the component sets on `:root` from `--brand-DC` (or `--brand-AT`, `--brand-DP`, etc.) defined in `_modules.scss`.
 
 ---
 
@@ -211,7 +211,7 @@ Extracted from the component for testability. `initializeNavigation()` must be c
 | `_button.scss` | `.button`, `.has-icon`, `.is-outline` button styles |
 | `_font.scss` | `@font-face` for Atkinson Hyperlegible Next (preloaded in DefaultLayout) |
 
-Module page component styles (e.g. `.dc-*` classes in `content.astro`) live inline in each page's `<style>` block, not in the global SCSS.
+Module page styles (`.mc-*` classes) live in the `<style>` block of `src/components/ModuleContentPage.astro`, not in the global SCSS.
 
 ---
 
@@ -220,7 +220,7 @@ Module page component styles (e.g. `.dc-*` classes in `content.astro`) live inli
 1. Add a `ModuleId` literal to the union in `src/data/modules.ts`.
 2. Add a `ModuleData` entry to the `modules` array.
 3. Add a `PartDefinition[]` array under the new ID in `modulePartsData` in `src/data/moduleParts.ts`.
-4. Create `src/pages/learning-hub/<slug>/content.astro` (copy an existing one and change the module ID).
+4. Create `src/pages/learning-hub/<slug>/content.astro` (copy an existing one and change the module ID) and add the module to `PACKAGE_NAMES` in `src/components/ModuleContentPage.astro`.
 5. Optionally add `challenge.astro` (build it on `ChallengeShell` and the `ch-` classes, see *Challenge pages — shared frame and look*) and `game.astro`.
 6. Add translation content files (`contentXX.ts`) in each locale folder, following the existing structure.
 7. Export the new translation from each locale's `index.ts`.
@@ -274,3 +274,32 @@ e.g.  2.2.1.Scenario_cards.Identify_the_behaviour_CS.pdf
 - `Type`: `Worksheet`, `Image` (single image), `Images` (set of images), `Scenario_cards`, `Solution_cards`, `Role_cards`, `Sorting_cards`, `Game_cards`, `Game_set`, `Cards`, `Schema`, `Poster`, `Reading`, `Situation`, `Video`, `VideoSubtitles`. The displayed type label (`kind` in the translation files) must agree with it — `Image` vs `Images` in particular.
 - English has no language suffix; other languages end in `_CS`, `_NO`, `_LT`, `_DE`. A material with no translated versions sits directly in its kind folder; translated ones sit in one folder per language.
 - Every material needs an entry in `modulePartsData` (`src/data/moduleParts.ts`) and a matching text entry (`// ID: x.y.z`) in all five locale files, in the same order.
+
+## Checks and tests
+
+Everything below runs in `.github/workflows/deploy.yml` before a deploy; any failure stops it.
+
+| Command | What it checks |
+|---|---|
+| `npm run lint` | ESLint, incl. accessibility rules for `.astro` files |
+| `npm run check` | TypeScript / Astro type check |
+| `npm test` | Vitest (`tests/`): translations have the same keys in every language, every linked file exists in `public/`, challenge logic (password rules, dealing, scoring), progress store |
+| `npm run check:links` | After `npm run build`: every internal link of `dist/`, including the zip packages |
+| `npm run test:e2e` | After `npm run build`: Playwright (`e2e/`): each page type in 5 languages, language switch, keyboard tabs, phone width, one challenge played to the end, axe accessibility scan in light and dark mode |
+
+First local run of the browser tests needs `npx playwright install chromium`. Colour contrast is reported by the scan but does not fail it (see `REPORT_ONLY` in `e2e/accessibility.spec.ts`).
+
+### Fonts
+
+`public/fonts/` holds 7 files: Atkinson Hyperlegible Next (weights 300–800, upright) and one variable Rubik file (weights 300–900). `Rubik-Variable.woff2` is the official variable Rubik (Google Fonts, OFL licence) reduced to Latin + Latin Extended with fonttools:
+
+```bash
+pyftsubset Rubik-VariableFont_wght.ttf --flavor=woff2 --layout-features='*' --output-file=Rubik-Variable.woff2 --unicodes="U+0000-00FF,U+0100-024F,U+0259,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0300-0304,U+0308,U+0329,U+1E00-1EFF,U+2000-206F,U+20AC,U+2113,U+2122,U+2190-2193,U+2212,U+2215,U+FEFF,U+FFFD"
+```
+
+A new language with another script (Cyrillic, Greek) needs a wider `--unicodes` range.
+
+### Security policy and privacy
+
+- **Content-Security-Policy** is written by `DefaultLayout.astro` as a `<meta>` tag (GitHub Pages cannot send headers). Inline scripts are allowed by SHA-256 hash only: `scripts/csp-hashes.mjs` (last integration in `astro.config.mjs`) collects the hashes from the built pages. Consequences: no `onclick="…"` style attributes, no scripts or fonts from other domains, no `<iframe>` embeds without first widening the policy. `astro dev` allows inline scripts, so always check a production build (`npm run build && npm run test:e2e`).
+- **Privacy page** (`src/pages/privacy.astro`) lists every `localStorage` key. `e2e/privacy.spec.ts` fails when the site stores a key that is not listed, sets a cookie, or contacts another server — add new keys to `STORED` in the page and to the five translations.

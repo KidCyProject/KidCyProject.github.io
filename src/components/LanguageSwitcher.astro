@@ -1,10 +1,14 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { getCurrentLocale, stripLocaleFromPathname, SUPPORTED_LOCALES } from 'src/i18n/i18n'
+import { useTranslations } from 'src/i18n/index'
+
+const { t } = useTranslations(Astro.currentLocale)
 
 const locale = getCurrentLocale(Astro.currentLocale)
 const currentPathname = stripLocaleFromPathname(Astro.url.pathname)
-const route = currentPathname === '/' ? '' : currentPathname.slice(1)
+// The 404 page exists once, not per language — from there the switcher leads to each language's home page
+const route = currentPathname === '/' || currentPathname === '/404' ? '' : currentPathname.slice(1)
 const search = Astro.url.search
 
 const localeLabels: Record<(typeof SUPPORTED_LOCALES)[number], string> = {
@@ -32,8 +36,8 @@ const currentLocaleLabel = localeLinks.find((entry) => entry.isActive)?.shortLab
     class="language-switcher__toggle"
     aria-expanded="false"
     aria-haspopup="true"
-    aria-label="Choose language"
   >
+    <span class="sr-only">{t('layout.a11y.chooseLanguage')}: </span>
     <span class="language-switcher__current">{currentLocaleLabel}</span>
     <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true">
       <path
@@ -46,7 +50,7 @@ const currentLocaleLabel = localeLinks.find((entry) => entry.isActive)?.shortLab
       />
     </svg>
   </button>
-  <ul class="language-switcher__menu" aria-label="Language switcher">
+  <ul class="language-switcher__menu" aria-label={t('layout.a11y.languages')}>
     {
       localeLinks.map((entry) => (
         <li>

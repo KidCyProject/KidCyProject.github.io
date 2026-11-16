@@ -73,7 +73,7 @@ const labels = {
 const startDescription = t('challengeSE.startDescription').replace('{n}', String(SE_CASES_PER_GAME))
 ---
 
-<DefaultLayout title={t('challengeSE.title')}>
+<DefaultLayout title={t('challengeSE.title')} description={t('challengeSE.subtitle')}>
   <script
     type="application/json"
     id="se-challenge-data"
@@ -163,7 +163,7 @@ const startDescription = t('challengeSE.startDescription').replace('{n}', String
         </div>
 
         <!-- Feedback Area -->
-        <div id="feedback-container" class="ch-feedback hidden" role="status" aria-live="assertive">
+        <div id="feedback-container" class="ch-feedback hidden" role="status" aria-live="polite">
           <p id="feedback-text" class="font-semibold"></p>
           <p id="feedback-explanation" class="mt-2 text-sm"></p>
           <p id="feedback-note" class="mt-2 text-sm font-semibold"></p>

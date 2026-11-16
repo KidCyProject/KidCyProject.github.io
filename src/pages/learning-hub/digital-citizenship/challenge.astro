@@ -35,7 +35,7 @@ const labels = {
 }
 ---
 
-<DefaultLayout title={t('challengeDC.title')}>
+<DefaultLayout title={t('challengeDC.title')} description={t('challengeDC.subtitle')}>
   <script type="application/json" id="dc-challenge-data" set:html={toJsonScript({ posts, zones: zoneTexts, labels })} />
 
   <ChallengeShell ns="challengeDC" brand="DC" data-sort-game="">
@@ -150,7 +150,7 @@ const labels = {
   </ChallengeShell>
 
 <script>
-  import { DC_POSTS, DC_ZONES, dealPosts, rankFor } from '../../../data/challengeDC'
+  import { DC_POSTS, dealPosts, rankFor } from '../../../data/challengeDC'
   import { recordResult } from '../../../utils/challengeProgress'
   import type { DcPostRule, DcZone } from '../../../data/challengeDC'
 

@@ -7,6 +7,23 @@
 export const shared = {
 
   layout: {
+    // Labels read by screen readers (and the mobile menu button text)
+    a11y: {
+      mainNav: 'Hauptnavigation',
+      mobileNav: 'Mobile Navigation',
+      openMenu: 'Menü öffnen',
+      closeMenu: 'Menü schließen',
+      menu: 'Menü',
+      close: 'Schließen',
+      chooseLanguage: 'Sprache wählen',
+      languages: 'Sprachen',
+      footer: 'Fußzeile',
+      siteLinks: 'Website-Links',
+      footerNav: 'Fußzeilen-Navigation',
+      learningModules: 'Lernmodule',
+      legal: 'Rechtliche Hinweise',
+      euLogo: 'Kofinanziert von der Europäischen Union',
+    },
     nav: {
       home: 'Startseite',
       about: 'Über uns',
@@ -85,6 +102,38 @@ export const shared = {
         'Lernen bleibt hängen, wenn es Spaß macht — und unsere Cybersicherheitsspiele sind genau mit diesem Gedanken im Hinterkopf entwickelt worden. Sie decken alles ab, von der Passwortsicherheit bis zur Identifizierung von Online-Bedrohungen, und jedes Spiel verwandelt wichtige Lehrplankonzepte in spielerische Erlebnisse, zu denen Kinder gerne zurückkehren. Ob als Aufwärmübung, Belohnung oder vollständige Unterrichtsaktivität verwendet — die Spiele halten die Lernenden motiviert und stärken dabei still die wichtigsten Fähigkeiten. Geeignet für eine Reihe von Altersgruppen und Fähigkeitsniveaus, sind sie leicht im Unterricht, in einem Computerraum oder als unabhängige Hausaufgabe zu starten.',
 
       aboutInitiative: 'Über diese Initiative',
+    },
+
+    // Privacy page (/privacy) — keep in step with what the site really stores, see e2e/privacy.spec.ts
+    privacy: {
+      title: "Datenschutz",
+      footerLink: "Datenschutz",
+      subtitle: "Was diese Website über Sie weiß: fast nichts. Keine Konten, keine Cookies, kein Tracking.",
+      shortTitle: "Kurz gesagt",
+      shortItems: [
+        "Sie brauchen kein Konto, keine Anmeldung und keinen Namen.",
+        "Es gibt keine Cookies und keine Tracking- oder Werbewerkzeuge.",
+        "Nichts, was Sie hier tun, wird an uns gesendet. Antworten und Ergebnisse der Challenges bleiben auf Ihrem Gerät.",
+        "Schriften, Bilder und Videos kommen von dieser Website, nicht von anderen Unternehmen.",
+      ],
+      storageTitle: "Was in Ihrem Browser gespeichert wird",
+      storageIntro: "Einige Einstellungen werden im lokalen Speicher Ihres Browsers abgelegt, nur auf Ihrem Gerät. Sie werden nirgendwohin gesendet.",
+      storageName: "Name",
+      storagePurpose: "Inhalt",
+      storageLocale: "Die Sprache, die Sie gewählt haben.",
+      storageDark: "Heller oder dunkler Modus, wenn Sie ihn selbst umgestellt haben.",
+      storageProgress: "Ergebnisse der Challenges: bestes Ergebnis, Anzahl der Durchgänge sowie Datum des ersten und des letzten Durchgangs.",
+      storageSensitive: "Ob Sie in der Challenge „Echte Geschichten“ die Geschichten zu sensiblen Themen eingeschaltet haben.",
+      storageDelete: "Um diese Daten zu löschen, nutzen Sie „{button}“ auf der Seite Mein Fortschritt oder löschen Sie die Websitedaten in den Einstellungen Ihres Browsers.",
+      certificate: "Der Name, den Sie auf dem Zertifikat eingeben, dient nur dem Ausdruck. Er wird nicht gespeichert.",
+      hostingTitle: "Hosting",
+      hostingText: "Die Website wird bei GitHub Pages gehostet, einem Dienst von GitHub, Inc. Wie jeder Webserver verarbeitet GitHub beim Aufruf einer Seite technische Daten wie Ihre IP-Adresse. Wir erhalten diese Aufzeichnungen nicht.",
+      hostingLink: "Datenschutzerklärung von GitHub",
+      externalTitle: "Links zu anderen Websites",
+      externalText: "Die Spiele laufen auf Roblox, und einige Links führen zu den Websites unserer Partner. Wenn Sie einem solchen Link folgen, verlassen Sie diese Website und es gelten die Datenschutzregeln der anderen Website. Vor dem Klick wird von diesen Websites nichts geladen.",
+      contactTitle: "Fragen",
+      contactText: "Wenn Sie eine Frage zu dieser Seite haben, wenden Sie sich bitte an einen der Projektpartner.",
+      contactLink: "Projektpartner",
     },
 
     about: {

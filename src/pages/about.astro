@@ -69,7 +69,7 @@ const involve = [
 ]
 ---
 
-<DefaultLayout title={t('pages.about.title')}>
+<DefaultLayout title={t('pages.about.title')} description={t('pages.about.subtitle')}>
   <PageHeader title={t('pages.about.title')} subtitle={t('pages.about.subtitle')} bgType="module" />
 
   <!-- Mission -->
@@ -171,7 +171,7 @@ const involve = [
   <section class="page-section" aria-labelledby="funding-title">
     <div class="container split">
       <div class="funding-logo">
-        <img src="/images/EN_Co-fundedbytheEU_RGB_POS.webp" alt="Co-funded by the European Union" loading="lazy" />
+        <img src="/images/EN_Co-fundedbytheEU_RGB_POS.webp" alt={t('layout.a11y.euLogo')} width="1000" height="223" loading="lazy" decoding="async" />
       </div>
       <div>
         <p class="eyebrow">{t('pages.about.fundingEyebrow')}</p>

@@ -71,122 +71,6 @@
   }
 }
 
-// ── Content page panels (dc-panel, and equivalent on other module pages) ─────
-.darkmode .dc-panel {
-  background: linear-gradient(180deg, var(--dm-surface-2) 0%, var(--dm-surface-1) 100%);
-  border-color: var(--dm-border-sub);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.40);
-
-  &:hover,
-  &:focus-within {
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.45);
-  }
-}
-
-.darkmode .dc-panel__content {
-  color: var(--dm-fg);
-  border-top-color: var(--dm-border);
-}
-
-.darkmode .bg-bordered {
-      border: 1px solid var(--border-color-subtle);
-      border-inline: 0;
-    }
-
-// ── dc-list items (objectives / outcomes) ────────────────────────────────────
-.darkmode .dc-list li {
-  color: var(--dm-fg-muted);
-}
-
-.darkmode .dc-list li + li {
-  border-top-color: var(--dm-border-sub);
-}
-
-// ── Section goal text and meta items ─────────────────────────────────────────
-.darkmode .dc-goal {
-  color: var(--dm-fg-muted);
-}
-
-.darkmode .dc-meta-item {
-  color: var(--dm-fg-muted);
-}
-
-.darkmode .dc-section__subtitle {
-  color: var(--dm-fg-muted);
-}
-
-// ── Module accordion (.dc-module) ────────────────────────────────────────────
-.darkmode .dc-module {
-  background: linear-gradient(155deg, var(--dm-surface-2) 0%, var(--dm-surface-1) 55%);
-  border-color: var(--dm-border-sub);
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.45);
-
-  &:hover {
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.45);
-  }
-}
-
-// ── Download section within module ───────────────────────────────────────────
-.darkmode .dc-module__download {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: currentColor; // inherits the per-module brand color
-}
-
-.darkmode .dc-module__download-button:hover {
-  background: var(--dm-surface-3);
-  color: var(--dm-fg);
-}
-
-// ── dc-card (materials grid) ─────────────────────────────────────────────────
-.darkmode .dc-card {
-  background: rgba(255, 255, 255, 0.03);
-  border-color: var(--dm-border-sub);
-}
-
-// ── Material items inside dc-card ────────────────────────────────────────────
-.darkmode .dc-material-item {
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 38%);
-  border-color: var(--dm-border-sub);
-
-  &:hover {
-    border-color: var(--dm-primary);
-  }
-}
-
-// ── Item download links ───────────────────────────────────────────────────────
-.darkmode .dc-item-download {
-  background: var(--dm-surface-1);
-
-  &:hover {
-    color: #fff;
-  }
-}
-
-// ── Video card ────────────────────────────────────────────────────────────────
-.darkmode .dc-video-card {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: var(--dm-border-sub);
-}
-
-// ── Related module cards at bottom of content pages ──────────────────────────
-.darkmode .dc-module-card {
-  background: color-mix(in oklab, var(--module-card-color, var(--brand-DC)) 12%, var(--dm-surface-1));
-  border-color: color-mix(in oklab, var(--module-card-color, var(--brand-DC)) 40%, var(--dm-border-sub));
-}
-
-.darkmode .dc-module-card h4 {
-  color: color-mix(in oklab, var(--module-card-color, var(--brand-DC)), white 35%);
-}
-
-.darkmode .dc-card-text {
-  color: var(--dm-fg-muted);
-}
-
-.darkmode .dc-card-button:hover {
-  background: var(--dm-surface-3);
-  color: var(--dm-fg);
-}
-
 // ── ModuleCard component (introduction page) ──────────────────────────────────
 .darkmode :where(.card) {
   border-color: var(--dm-border-sub);
@@ -243,11 +127,6 @@
 .darkmode #main-navigation .menu-item--language > button {
   background: var(--dm-surface-1);
   border-color: var(--dm-border-sub);
-}
-
-// ── Introduction page module list (introduction.astro) ────────────────────────
-.darkmode .feature-content .dc-module-card {
-  background: color-mix(in oklab, var(--module-card-color, var(--brand-DC)) 10%, var(--dm-surface-2));
 }
 
 // ── Challenge & game pages ────────────────────────────────────────────────────

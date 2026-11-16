@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kidcyproject.github.io/sitemap-index.xml

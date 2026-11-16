@@ -1,1 +1,8 @@
 @import 'tailwindcss';
+
+/* Default subtitle look for all <video> players: white text on dark box. */
+video::cue {
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.8);
+  font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+}

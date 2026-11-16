@@ -101,7 +101,7 @@ const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>(
 const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0]
 ---
 
-<DefaultLayout title={t('challengeDM.title')}>
+<DefaultLayout title={t('challengeDM.title')} description={t('challengeDM.subtitle')}>
   <script
     type="application/json"
     id="dm-challenge-data"
@@ -778,7 +778,7 @@ const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0
         getEl('score-denom').textContent = fmt(labels.scoreDenomTemplate, { max: maxStars() })
 
         const container = getEl('story-rows')
-        container.innerHTML = ''
+        container.replaceChildren()
 
         const visible = visibleIdx()
         visible.forEach((idx, pos) => {
@@ -864,9 +864,9 @@ const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0
         getEl('skip-btn').textContent = labels.skipStory
 
         // Reset panel
-        getEl('messages-area').innerHTML = ''
+        getEl('messages-area').replaceChildren()
         getEl('messages-area').classList.add('hidden')
-        getEl('choices-container').innerHTML = ''
+        getEl('choices-container').replaceChildren()
         getEl('choices-container').classList.add('hidden')
         getEl('ending-card').classList.add('hidden')
         getEl('action-buttons').classList.add('hidden')
@@ -945,7 +945,7 @@ const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0
       // ── Show choices ─────────────────────────────────────────────────────────
       function showChoices(choices: Choice[]) {
         const container = getEl('choices-container')
-        container.innerHTML = ''
+        container.replaceChildren()
         container.classList.remove('hidden')
 
         choices.forEach(choice => {
@@ -960,7 +960,7 @@ const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0
 
       // ── Handle choice selection ──────────────────────────────────────────────
       function selectChoice(choice: Choice) {
-        getEl('choices-container').innerHTML = ''
+        getEl('choices-container').replaceChildren()
         getEl('choices-container').classList.add('hidden')
 
         sessionPoints += choice.points

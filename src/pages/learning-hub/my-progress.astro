@@ -47,7 +47,7 @@ const labels = {
 }
 ---
 
-<DefaultLayout title={t('progress.title')}>
+<DefaultLayout title={t('progress.title')} description={t('progress.subtitle')}>
   <PageHeader title={t('progress.title')} subtitle={t('progress.subtitle')} bgType="module" />
 
   <script type="application/json" id="progress-page-data" set:html={toJsonScript({ challenges, labels })} />

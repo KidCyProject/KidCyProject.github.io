@@ -87,6 +87,13 @@ const bytesOf = (href: string): number => {
   return existsSync(path) ? statSync(path).size : 0
 }
 
+/**
+ * Is there anything to download at this address? For a language package (zip) this is false when the
+ * language has no material in the package's folders — generate-zips.sh creates no zip then, so the
+ * link would lead to a 404 page.
+ */
+export const downloadExists = (href: string | undefined): boolean => !!href && bytesOf(href) > 0
+
 export const fileSize = (href: string | undefined, locale = 'en'): string => {
   if (!href) return ''
   return formatFileSize(bytesOf(href), locale)

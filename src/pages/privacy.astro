@@ -1,0 +1,150 @@
+---
+import DefaultLayout from '@layouts/DefaultLayout.astro'
+import PageHeader from '@components/PageHeader.astro'
+import { localizePath } from '../i18n/i18n'
+import { useTranslations } from '../i18n/index'
+
+/**
+ * Privacy page: what the site stores in the browser and what it does not collect.
+ *
+ * STORED lists every localStorage key the site writes. e2e/privacy.spec.ts compares
+ * this list with what a browser really holds after using the site, so a new key
+ * cannot be added without being described here.
+ */
+const locale = Astro.currentLocale
+const { t, v } = useTranslations(locale)
+const P = 'pages.privacy'
+
+const STORED = [
+  { key: 'kidcy-locale-pref', text: t(`${P}.storageLocale`) },
+  { key: 'darkMode', text: t(`${P}.storageDark`) },
+  { key: 'kidcy-progress-v1', text: t(`${P}.storageProgress`) },
+  { key: 'kidcy-dm-sensitive', text: t(`${P}.storageSensitive`) },
+]
+
+const shortItems = v<ReadonlyArray<string>>(`${P}.shortItems`) ?? []
+const deleteText = t(`${P}.storageDelete`).replace('{button}', t('progress.resetButton'))
+---
+
+<DefaultLayout title={t(`${P}.title`)} description={t(`${P}.subtitle`)}>
+  <PageHeader title={t(`${P}.title`)} subtitle={t(`${P}.subtitle`)} bgType="module" />
+
+  <section class="my-12">
+    <div class="container privacy">
+      <section aria-labelledby="privacy-short">
+        <h2 id="privacy-short">{t(`${P}.shortTitle`)}</h2>
+        <ul>
+          {shortItems.map((item) => <li>{item}</li>)}
+        </ul>
+      </section>
+
+      <section aria-labelledby="privacy-storage">
+        <h2 id="privacy-storage">{t(`${P}.storageTitle`)}</h2>
+        <p>{t(`${P}.storageIntro`)}</p>
+        <div class="privacy__table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">{t(`${P}.storageName`)}</th>
+                <th scope="col">{t(`${P}.storagePurpose`)}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                STORED.map((entry) => (
+                  <tr>
+                    <th scope="row"><code data-storage-key>{entry.key}</code></th>
+                    <td>{entry.text}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+        <p>
+          {deleteText}
+          <a href={localizePath(locale, '/learning-hub/my-progress/')}>{t('progress.title')}</a>
+        </p>
+        <p>{t(`${P}.certificate`)}</p>
+      </section>
+
+      <section aria-labelledby="privacy-hosting">
+        <h2 id="privacy-hosting">{t(`${P}.hostingTitle`)}</h2>
+        <p>{t(`${P}.hostingText`)}</p>
+        <p>
+          <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener noreferrer" hreflang="en">
+            {t(`${P}.hostingLink`)}
+          </a>
+        </p>
+      </section>
+
+      <section aria-labelledby="privacy-external">
+        <h2 id="privacy-external">{t(`${P}.externalTitle`)}</h2>
+        <p>{t(`${P}.externalText`)}</p>
+      </section>
+
+      <section aria-labelledby="privacy-contact">
+        <h2 id="privacy-contact">{t(`${P}.contactTitle`)}</h2>
+        <p>
+          {t(`${P}.contactText`)}
+          <a href={localizePath(locale, '/about')}>{t(`${P}.contactLink`)}</a>
+        </p>
+      </section>
+    </div>
+  </section>
+</DefaultLayout>
+
+<style>
+  .privacy {
+    display: grid;
+    gap: var(--space-xl);
+    max-width: 75ch;
+  }
+
+  .privacy section {
+    display: grid;
+    gap: var(--space-s);
+  }
+
+  .privacy h2 {
+    font-size: var(--font-size-2);
+  }
+
+  .privacy ul {
+    display: grid;
+    gap: var(--space-2xs);
+    padding-inline-start: 1.25rem;
+    list-style: disc;
+  }
+
+  .privacy a {
+    font-weight: 600;
+  }
+
+  /* the table scrolls sideways by itself on narrow phones instead of widening the page */
+  .privacy__table-wrap {
+    overflow-x: auto;
+  }
+
+  .privacy table {
+    inline-size: 100%;
+    border-collapse: collapse;
+  }
+
+  .privacy th,
+  .privacy td {
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--border-color-subtle);
+    text-align: start;
+    vertical-align: top;
+  }
+
+  .privacy thead th {
+    background: color-mix(in oklab, var(--foreground-color) 6%, transparent);
+  }
+
+  .privacy code {
+    font-size: 0.9em;
+    white-space: nowrap;
+  }
+</style>

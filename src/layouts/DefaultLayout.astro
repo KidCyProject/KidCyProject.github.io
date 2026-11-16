@@ -5,13 +5,14 @@ import SiteMeta from '../components/SiteMeta.astro'
 import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
 import { getCurrentLocale } from '../i18n/i18n'
+import { useTranslations } from '../i18n/index'
 
 /**
  * DefaultLayout
  *
  * Root layout wrapping every page. Provides:
  * - <html lang> set from the current locale for screen readers
- * - <head> with charset, viewport, CSP, preloaded font, and SEO meta
+ * - <head> with charset, viewport, Content-Security-Policy, preloaded fonts, and SEO meta
  * - Sticky footer via CSS grid (header auto | main 1fr | footer auto)
  * - SkipLink component lives inside Header.astro (accessible-astro-components)
  *
@@ -28,18 +29,56 @@ import { getCurrentLocale } from '../i18n/i18n'
  * @see WCAG 3.1.1 — Language of Page
  */
 
+interface Props {
+  /** Page title (the site name is appended) */
+  title?: string
+  /** Plain-text or simple-HTML summary for search results; defaults to the site tagline in the page language */
+  description?: string
+  /** Social sharing image */
+  image?: string
+  author?: string
+  /** Keep the page out of search engines (404) */
+  noindex?: boolean
+  /** Extra schema.org objects describing this page */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[]
+}
+
+const currentLocale = getCurrentLocale(Astro.currentLocale)
+const { t } = useTranslations(Astro.currentLocale)
+
 const {
   title = 'KidCy',
-  description = 'Dive into our learning modules designed to teach you about digital citizenship, authentication, data privacy, social engineering, malware, and digital misuse.',
-  url = Astro.url.toString(),
-  image = '/WWW-preview.png',
+  description = t('layout.hero.subtitle'),
+  image = '/og-image.jpg',
   author = 'KidCy Team',
+  noindex = false,
+  jsonLd,
 } = Astro.props
 
-const cleanDescription = description.trim()
+// Content-Security-Policy. GitHub Pages cannot send HTTP headers, so the policy travels in a
+// <meta> tag (which is why there is no frame-ancestors: browsers ignore it there).
+// Scripts: only files from this site plus the inline scripts whose hashes the build puts in
+// place of the token (scripts/csp-hashes.mjs). The dev server has no such step, so it allows
+// inline scripts. Styles keep 'unsafe-inline' because the pages set colours through style="".
+const scriptSources = import.meta.env.DEV ? "'unsafe-inline'" : '__CSP_SCRIPT_HASHES__'
+const contentSecurityPolicy = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "object-src 'none'",
+  "img-src 'self' data: blob:",
+  "font-src 'self'",
+  "media-src 'self' blob:",
+  `script-src 'self' ${scriptSources}`,
+  "style-src 'self' 'unsafe-inline'",
+  "connect-src 'self'",
+  'upgrade-insecure-requests',
+].join('; ')
+
+// Page subtitles are reused as descriptions and may carry inline markup or line breaks
+const cleanDescription = description.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()
 const metaDescription =
   cleanDescription.length > 155 ? `${cleanDescription.slice(0, 152).trimEnd()}...` : cleanDescription
-const currentLocale = getCurrentLocale(Astro.currentLocale)
 ---
 
 <html lang={currentLocale} dir="ltr">
@@ -93,18 +132,24 @@ const currentLocale = getCurrentLocale(Astro.currentLocale)
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; img-src 'self' data: blob: https:; font-src 'self' data:; media-src 'self' blob:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self'; upgrade-insecure-requests"
-    />
+    <meta http-equiv="Content-Security-Policy" content={contentSecurityPolicy} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/images/WWW-icon.svg" />
 
-    <!-- Preload primary font for fast first contentful paint -->
+    <!-- Preload the body font and the heading font for fast first contentful paint -->
     <link rel="preload" href="/fonts/AtkinsonHyperlegibleNext-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Rubik-Variable.woff2" as="font" type="font/woff2" crossorigin />
 
-    <SiteMeta title={title} description={metaDescription} url={url} image={image} author={author} />
+    <SiteMeta
+      title={title}
+      description={metaDescription}
+      image={image}
+      imageAlt={t('layout.hero.eyebrow')}
+      author={author}
+      noindex={noindex}
+      jsonLd={jsonLd}
+    />
   </head>
   <body class="site-shell">
     <Header />

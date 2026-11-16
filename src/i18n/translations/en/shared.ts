@@ -7,6 +7,23 @@
 export const shared = {
 
   layout: {
+    // Labels read by screen readers (and the mobile menu button text)
+    a11y: {
+      mainNav: 'Main navigation',
+      mobileNav: 'Mobile navigation',
+      openMenu: 'Open menu',
+      closeMenu: 'Close menu',
+      menu: 'Menu',
+      close: 'Close',
+      chooseLanguage: 'Choose language',
+      languages: 'Languages',
+      footer: 'Footer',
+      siteLinks: 'Site links',
+      footerNav: 'Footer navigation',
+      learningModules: 'Learning modules',
+      legal: 'Legal information',
+      euLogo: 'Co-funded by the European Union',
+    },
     nav: {
       home: 'Home',
       about: 'About',
@@ -85,6 +102,38 @@ export const shared = {
         'Learning sticks when it\'s fun — and our cybersecurity games are built with exactly that in mind. Covering everything from password security to identifying online threats, each game transforms key curriculum concepts into play-driven experiences that kids genuinely want to return to. Whether used as a warm-up, a reward, or a full lesson activity, the games keep learners motivated while quietly reinforcing the skills that matter most. Appropriate for a range of ages and ability levels, they\'re easy to launch in class, in a computer lab, or as an independent take-home activity.',
 
       aboutInitiative: 'About This Initiative',
+    },
+
+    // Privacy page (/privacy) — keep in step with what the site really stores, see e2e/privacy.spec.ts
+    privacy: {
+      title: "Privacy",
+      footerLink: "Privacy",
+      subtitle: "What this website knows about you: almost nothing. No accounts, no cookies, no tracking.",
+      shortTitle: "In short",
+      shortItems: [
+        "You need no account, no login and no name.",
+        "There are no cookies and no tracking or advertising tools.",
+        "Nothing you do here is sent to us. Challenge answers and results stay on your device.",
+        "Fonts, images and videos all come from this website, not from other companies.",
+      ],
+      storageTitle: "What is saved in your browser",
+      storageIntro: "A few settings are kept in the local storage of your browser, on your device only. They are never sent anywhere.",
+      storageName: "Name",
+      storagePurpose: "What it holds",
+      storageLocale: "The language you chose.",
+      storageDark: "Light or dark mode, if you switched it yourself.",
+      storageProgress: "Challenge results: best score, number of plays, and the dates of the first and last play.",
+      storageSensitive: "Whether you switched on the stories about sensitive topics in Real Talk Stories.",
+      storageDelete: "To delete this data, use “{button}” on the My progress page, or clear the site data in your browser settings.",
+      certificate: "The name you type on the certificate is used only to print it. It is not saved.",
+      hostingTitle: "Hosting",
+      hostingText: "The website is hosted on GitHub Pages, a service of GitHub, Inc. Like every web server, GitHub processes technical data such as your IP address when you open a page. We do not receive these records.",
+      hostingLink: "GitHub privacy statement",
+      externalTitle: "Links to other websites",
+      externalText: "The games run on Roblox, and some links lead to the websites of our partners. When you follow such a link you leave this website and the privacy rules of the other website apply. Nothing is loaded from those websites before you click.",
+      contactTitle: "Questions",
+      contactText: "If you have a question about this page, please contact one of the project partners.",
+      contactLink: "Project partners",
     },
 
     about: {

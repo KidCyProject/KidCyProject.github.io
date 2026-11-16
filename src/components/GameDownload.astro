@@ -74,7 +74,7 @@ const label = (key: string, file: { bytes: number }) => {
                 <>
                   {' '}
                   {t('pages.hub.games.download.moreInfoText')}{' '}
-                  <a href={link.url} target="_blank" rel="noopener noreferrer" aria-label={link.label}>{t('pages.hub.games.download.moreInfoLinkText')}</a>.
+                  <a href={link.url} target="_blank" rel="noopener noreferrer">{t('pages.hub.games.download.moreInfoLinkText')}<span class="sr-only">: {link.label}</span></a>.
                 </>
               )}
             </li>

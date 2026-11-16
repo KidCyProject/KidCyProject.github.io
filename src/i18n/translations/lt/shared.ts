@@ -7,6 +7,23 @@
 export const shared = {
 
   layout: {
+    // Labels read by screen readers (and the mobile menu button text)
+    a11y: {
+      mainNav: 'Pagrindinė navigacija',
+      mobileNav: 'Mobilioji navigacija',
+      openMenu: 'Atidaryti meniu',
+      closeMenu: 'Uždaryti meniu',
+      menu: 'Meniu',
+      close: 'Uždaryti',
+      chooseLanguage: 'Pasirinkti kalbą',
+      languages: 'Kalbos',
+      footer: 'Poraštė',
+      siteLinks: 'Svetainės nuorodos',
+      footerNav: 'Poraštės navigacija',
+      learningModules: 'Mokymo moduliai',
+      legal: 'Teisinė informacija',
+      euLogo: 'Bendrai finansuoja Europos Sąjunga',
+    },
     nav: {
       home: 'Pradžia',
       about: 'Apie',
@@ -85,6 +102,38 @@ export const shared = {
         'Mokymasis pasilieka, kai jis smagus — ir mūsų kibernetinio saugumo žaidimai sukurti lygiai su šia mintimi. Apimantys viską nuo slaptažodžių saugumo iki interneto grėsmių identifikavimo, kiekvienas žaidimas paverčia pagrindinius mokymo plano konceptus žaidimu grindžiamais išgyvenimais, prie kurių vaikai nuoširdžiai nori sugrįžti. Nesvarbu, ar naudojami kaip apšilimas, atlygis ar visa pamokos veikla, žaidimai išlaiko besimokančiuosius motyvuotus, tyliai stiprinant svarbiausius įgūdžius. Tinkami įvairaus amžiaus ir gebėjimų lygio asmenims, juos lengva paleisti klasėje, kompiuterių laboratorijoje arba kaip savarankišką namų veiklą.',
 
       aboutInitiative: 'Apie šią iniciatyvą',
+    },
+
+    // Privacy page (/privacy) — keep in step with what the site really stores, see e2e/privacy.spec.ts
+    privacy: {
+      title: "Privatumas",
+      footerLink: "Privatumas",
+      subtitle: "Ką ši svetainė apie jus žino: beveik nieko. Jokių paskyrų, jokių slapukų, jokio sekimo.",
+      shortTitle: "Trumpai",
+      shortItems: [
+        "Jums nereikia nei paskyros, nei prisijungimo, nei vardo.",
+        "Svetainė nenaudoja slapukų, sekimo ar reklamos įrankių.",
+        "Niekas, ką čia darote, mums nesiunčiama. Iššūkių atsakymai ir rezultatai lieka jūsų įrenginyje.",
+        "Šriftai, paveikslėliai ir vaizdo įrašai įkeliami iš šios svetainės, o ne iš kitų įmonių.",
+      ],
+      storageTitle: "Kas išsaugoma jūsų naršyklėje",
+      storageIntro: "Keli nustatymai laikomi naršyklės vietinėje saugykloje, tik jūsų įrenginyje. Jie niekur nesiunčiami.",
+      storageName: "Pavadinimas",
+      storagePurpose: "Kas saugoma",
+      storageLocale: "Jūsų pasirinkta kalba.",
+      storageDark: "Šviesus arba tamsus režimas, jei jį perjungėte patys.",
+      storageProgress: "Iššūkių rezultatai: geriausias rezultatas, žaidimų skaičius, pirmo ir paskutinio žaidimo datos.",
+      storageSensitive: "Ar iššūkyje „Tikros istorijos“ įjungėte istorijas jautriomis temomis.",
+      storageDelete: "Norėdami ištrinti šiuos duomenis, naudokite mygtuką „{button}“ puslapyje „Mano pažanga“ arba išvalykite svetainės duomenis naršyklės nustatymuose.",
+      certificate: "Vardas, kurį įrašote pažymėjime, naudojamas tik jam atspausdinti. Jis neišsaugomas.",
+      hostingTitle: "Priegloba",
+      hostingText: "Svetainė talpinama „GitHub Pages“ – tai „GitHub, Inc.“ paslauga. Kaip ir kiekvienas žiniatinklio serveris, „GitHub“, jums atidarius puslapį, tvarko techninius duomenis, pavyzdžiui, jūsų IP adresą. Šių įrašų mes negauname.",
+      hostingLink: "„GitHub“ privatumo pareiškimas",
+      externalTitle: "Nuorodos į kitas svetaines",
+      externalText: "Žaidimai veikia „Roblox“ platformoje, o kai kurios nuorodos veda į mūsų partnerių svetaines. Paspaudę tokią nuorodą paliekate šią svetainę ir galioja kitos svetainės privatumo taisyklės. Kol nepaspaudžiate, iš tų svetainių niekas neįkeliama.",
+      contactTitle: "Klausimai",
+      contactText: "Jei turite klausimų apie šį puslapį, kreipkitės į vieną iš projekto partnerių.",
+      contactLink: "Projekto partneriai",
     },
 
     about: {

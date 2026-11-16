@@ -4,7 +4,7 @@
  * exist in several languages.
  *
  * Markup contract (see the materials and featured-video blocks in each
- * module's content.astro):
+ * module page template, src/components/ModuleContentPage.astro):
  *   <button data-download-trigger aria-expanded="false" aria-controls="<menu id>">…</button>
  *   <ul id="<menu id>" data-download-menu hidden> <li><a download>…</a></li> … </ul>
  *
