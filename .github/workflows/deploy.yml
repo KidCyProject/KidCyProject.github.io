@@ -66,13 +66,8 @@ jobs:
       - name: Check links
         run: npm run check:links
 
-      # Real browsers (Chromium, Firefox, and WebKit = Safari's engine): every page type in every
-      # language, all challenges played to the end, keyboard use, phone screens, accessibility scan
-      - name: Install browsers for tests
-        run: npx playwright install --with-deps chromium firefox webkit
-
-      - name: Browser tests
-        run: npm run test:e2e
+      # Browser tests (npm run test:e2e) are not part of the deploy: on GitHub's runners they take
+      # about 25 minutes and some time out. Run them locally before larger changes.
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5

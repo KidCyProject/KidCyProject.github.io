@@ -277,7 +277,7 @@ e.g.  2.2.1.Scenario_cards.Identify_the_behaviour_CS.pdf
 
 ## Checks and tests
 
-Everything below runs in `.github/workflows/deploy.yml` before a deploy; any failure stops it.
+Lint, type check, unit tests and the link check run in `.github/workflows/deploy.yml` before every deploy; any failure stops it. The browser tests (`npm run test:e2e`) are run locally only — on GitHub's runners they took about 25 minutes and some timed out.
 
 | Command | What it checks |
 |---|---|

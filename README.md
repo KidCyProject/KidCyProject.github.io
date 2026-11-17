@@ -377,7 +377,7 @@ npm run dev          # local site with live reload
 npm run build        # production build into dist/
 ```
 
-Checks — all of them run automatically before every deploy, and a failure stops it:
+Checks — the first four run automatically before every deploy, and a failure stops it; the browser tests are run locally:
 
 | Command | Checks |
 |---|---|
