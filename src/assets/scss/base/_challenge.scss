@@ -548,3 +548,77 @@
     animation: none;
   }
 }
+
+// ══════════════════════════════════════════════════════════════════════════════
+// TONES: neutral text, surface and border colours with their dark-mode partner
+//
+// Use these instead of Tailwind colour utilities (text-slate-600, bg-white, border-slate-200 …).
+// A Tailwind colour is a fixed light value, so every use needed a separate override in the dark
+// stylesheet; a tone carries both values in one place.
+//
+//   <p class="text-sm tone-text-muted">            layout from Tailwind, colour from a tone
+//
+// The light values sit in Tailwind's `utilities` layer, so they behave exactly like the
+// utilities they replace: a component's own style always wins over them. The dark values are
+// ordinary rules with the same weight as the rest of _dark.scss.
+// ══════════════════════════════════════════════════════════════════════════════
+@layer utilities {
+  // text on a normal surface, strongest to weakest
+  .tone-text-strong { color: oklch(20.8% 0.042 265.755); }
+  .tone-text { color: oklch(37.2% 0.044 257.287); }
+  .tone-text-soft { color: oklch(44.6% 0.043 257.281); }
+  .tone-text-muted { color: oklch(55.4% 0.046 257.417); }
+  // coloured numbers (same in both modes)
+  .tone-text-info { color: oklch(54.6% 0.245 262.881); }
+  .tone-text-bad { color: oklch(57.7% 0.245 27.325); }
+  .tone-text-warn { color: oklch(66.6% 0.179 58.318); }
+  // text on .tone-surface-dark (same in both modes)
+  .tone-text-on-dark { color: oklch(70.4% 0.04 256.788); }
+  .tone-text-ok-on-dark { color: oklch(76.5% 0.177 163.223); }
+  .tone-text-bad-on-dark { color: oklch(70.4% 0.191 22.216); }
+
+  // surfaces
+  .tone-surface { background-color: #fff; }
+  .tone-surface-soft { background-color: oklch(98.4% 0.003 247.858); }
+  .tone-surface-sunken { background-color: oklch(96.8% 0.007 247.896); }
+  .tone-surface-info { background-color: oklch(93.2% 0.032 255.585); }
+  .tone-surface-dark { background-color: oklch(27.9% 0.041 260.031); } // dark in both modes (score bar)
+
+  // borders (width comes from Tailwind's border / border-2 / border-b)
+  .tone-line { border-color: oklch(92.9% 0.013 255.508); }
+  .tone-line-strong { border-color: oklch(86.9% 0.022 252.894); }
+}
+
+html.darkmode .tone-text-strong,
+html.darkmode .tone-text {
+  color: var(--dm-fg);
+}
+
+html.darkmode .tone-text-soft,
+html.darkmode .tone-text-muted {
+  color: var(--dm-fg-muted);
+}
+
+// buttons and links keep their own fill
+html.darkmode .tone-surface:not(button):not(a):not(.btn) {
+  background-color: var(--dm-surface-1);
+}
+
+html.darkmode .tone-surface-sunken {
+  background-color: var(--dm-surface-2);
+}
+
+html.darkmode .tone-surface-info {
+  background-color: #1e2d45;
+}
+
+html.darkmode .tone-line,
+html.darkmode .tone-line-strong {
+  border-color: var(--dm-border-sub);
+}
+
+// after the lines: a soft panel with a border gets the stronger dark border
+html.darkmode .tone-surface-soft {
+  background-color: var(--dm-surface-2);
+  border-color: var(--dm-border);
+}

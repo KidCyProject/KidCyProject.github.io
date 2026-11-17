@@ -6,8 +6,7 @@
 // the list in place of the token. The browser then runs exactly these scripts and refuses
 // any other inline script (for example one injected through a text) — no 'unsafe-inline'.
 //
-// All pages get the same list: with view transitions the policy of the first page stays
-// in force while other pages are swapped in, so it has to know their scripts too.
+// All pages get the same list (the site has under ten inline scripts, shared by most pages).
 //
 // Must be the LAST integration, after astro-compress: hashes are taken from the final,
 // minified HTML.

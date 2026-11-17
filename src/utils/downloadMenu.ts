@@ -94,7 +94,6 @@ const bindGlobalListeners = () => {
   window.addEventListener('scroll', positionMenu, { capture: true, passive: true })
 
   // Put the menu back before Astro swaps the page on client-side navigation.
-  document.addEventListener('astro:before-swap', () => closeMenu())
 }
 
 export const initDownloadMenus = () => {

@@ -5,6 +5,7 @@ import { useTranslations } from 'src/i18n/index'
 import { toJsonScript } from '../../../utils/jsonScript'
 import { DM_STORY_STRUCTURE } from '../../../data/challengeDM'
 import type { DmStory, DmStoryNode } from '../../../data/challengeDM'
+import { fmt } from '../../../utils/challenge/text'
 
 const { t, v } = useTranslations(Astro.currentLocale)
 const { v: vEn } = useTranslations('en')
@@ -94,8 +95,6 @@ const labels = {
 }
 
 // Server-side defaults for the first story, so no English placeholder flashes before the script runs
-const fmt = (template: string, vars: Record<string, string | number>) =>
-  template.replace(/\{(\w+)\}/g, (_m, key) => String(vars[key] ?? ''))
 
 const watchOutItems = v<string[]>('challengeDM.watchOutItems') ?? vEn<string[]>('challengeDM.watchOutItems') ?? []
 const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0]
@@ -193,9 +192,9 @@ const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0
         <div class="ch-block">
           <label class="sensitive-toggle" for="sensitive-toggle">
             <input type="checkbox" id="sensitive-toggle" aria-describedby="sensitive-toggle-note" />
-            <span class="text-sm font-semibold text-slate-900">{t('challengeDM.sensitiveToggleLabel')}</span>
+            <span class="text-sm font-semibold tone-text-strong">{t('challengeDM.sensitiveToggleLabel')}</span>
           </label>
-          <p id="sensitive-toggle-note" class="mt-1 text-xs text-slate-700">{t('challengeDM.sensitiveToggleNote')}</p>
+          <p id="sensitive-toggle-note" class="mt-1 text-xs tone-text">{t('challengeDM.sensitiveToggleNote')}</p>
         </div>
 
         <!-- Story progress -->
@@ -661,6 +660,7 @@ const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0
 
   <script>
     import { recordResult } from '../../../utils/challengeProgress'
+    import { fmt } from '../../../utils/challenge/text'
 
     // ── Types ─────────────────────────────────────────────────────────────────
     interface Choice {
@@ -733,7 +733,6 @@ const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0
 
       // ── State ───────────────────────────────────────────────────────────────
       let currentStoryIdx  = 0
-      let currentNodeId    = 'start'
       let sessionPoints    = 0
       let completedSet     = new Set<number>()
       let skippedSet       = new Set<number>()   // sensitive stories the player chose to skip: no stars, no penalty
@@ -759,8 +758,6 @@ const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0
       const getEl = (id: string) => document.getElementById(id) as HTMLElement
 
       // ── Helpers ─────────────────────────────────────────────────────────────
-      const fmt = (template: string, vars: Record<string, string | number>) =>
-        template.replace(/\{(\w+)\}/g, (_m, key) => String(vars[key] ?? ''))
 
       // The stories in play: every story, or all but the sensitive ones
       const visibleIdx     = () => stories.map((_s, i) => i).filter((i) => sensitiveOn || !stories[i].sensitive)
@@ -837,7 +834,6 @@ const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0
       function loadStory(idx: number, moveFocus = false) {
         cancelPending()
         currentStoryIdx = idx
-        currentNodeId   = 'start'
         sessionPoints   = 0
 
         const story = stories[idx]
@@ -885,7 +881,6 @@ const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0
 
       // ── Display a story node ─────────────────────────────────────────────────
       function displayNode(nodeId: string) {
-        currentNodeId = nodeId
         const node = stories[currentStoryIdx].nodes[nodeId]
         if (!node) return
 
@@ -1089,7 +1084,6 @@ const firstVisibleStory = stories.find((story) => !story.sensitive) ?? stories[0
       })
     }
 
-    document.addEventListener('astro:page-load', initGame)
     initGame()
   </script>
 </DefaultLayout>

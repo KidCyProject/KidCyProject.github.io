@@ -10,6 +10,9 @@
  * cannot be judged from the text alone.
  */
 
+import { shuffle } from './challengeShared'
+import type { Random } from './challengeShared'
+
 export type SeChannel = 'email' | 'chat' | 'sms' | 'call' | 'person'
 /** trust = it is fine · check = stop and ask an adult / verify another way · report = ignore and report */
 export type SeAction = 'trust' | 'check' | 'report'
@@ -60,16 +63,6 @@ export const SE_SCENARIOS: ReadonlyArray<SeScenarioRule> = [
 export const SE_DECK_PLAN: Readonly<Record<SeAction, number>> = { report: 5, trust: 4, check: 3 }
 export const SE_CASES_PER_GAME = Object.values(SE_DECK_PLAN).reduce((sum, n) => sum + n, 0)
 
-type Random = () => number
-
-export const shuffle = <T>(items: ReadonlyArray<T>, random: Random = Math.random): T[] => {
-  const copy = [...items]
-  for (let i = copy.length - 1; i > 0; i--) {
-    const j = Math.floor(random() * (i + 1))
-    ;[copy[i], copy[j]] = [copy[j], copy[i]]
-  }
-  return copy
-}
 
 /** A balanced, shuffled set of cases for one game. */
 export const dealDeck = (random: Random = Math.random): SeScenarioRule[] => {
@@ -109,3 +102,6 @@ export const rankFor = (best: number, total: number): SeRank => {
   if (share >= 0.45) return 'junior'
   return 'rookie'
 }
+
+// kept as an export of this file for existing imports
+export { shuffle }

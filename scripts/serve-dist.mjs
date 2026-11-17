@@ -3,7 +3,7 @@
 // Behaves like GitHub Pages: folders serve their index.html, unknown addresses get
 // 404.html with status 404, and video requests with a Range header are answered in parts.
 //   node scripts/serve-dist.mjs [port]
-import { createReadStream, existsSync, statSync } from 'node:fs'
+import { createReadStream, existsSync, readFileSync, statSync } from 'node:fs'
 import { createServer } from 'node:http'
 import { extname, join, normalize, resolve } from 'node:path'
 
@@ -49,6 +49,17 @@ createServer((request, response) => {
   if (!file) {
     file = join(ROOT, '404.html')
     status = 404
+  }
+
+  // The pages ask browsers to load everything over https (`upgrade-insecure-requests` in their
+  // security policy). Right on the live site, but this server speaks plain http, and Safari
+  // applies the rule to localhost too — every stylesheet and script would fail. So that one
+  // directive is taken out of the pages served here; the rest of the policy stays as built.
+  if (file.endsWith('.html')) {
+    const html = Buffer.from(readFileSync(file, 'utf8').replace(/;\s*upgrade-insecure-requests/, ''))
+    response.writeHead(status, { 'Content-Type': TYPES['.html'], 'Content-Length': html.length })
+    response.end(request.method === 'HEAD' ? undefined : html)
+    return
   }
 
   const { size } = statSync(file)

@@ -1113,13 +1113,14 @@ const planLabels = {
     /* ── Profile body grid ─────────────────────────────────────────────────── */
     .profile-body {
       display: grid;
-      grid-template-columns: 230px 1fr;
+      grid-template-columns: 230px minmax(0, 1fr);
       gap: 12px;
       padding: 12px;
     }
 
     @media (max-width: 680px) {
-      .profile-body { grid-template-columns: 1fr; }
+      /* minmax(0, …): a plain 1fr column grows with its widest child and gets cut off by the window frame on phones */
+      .profile-body { grid-template-columns: minmax(0, 1fr); }
     }
 
     .profile-left { display: flex; flex-direction: column; }
@@ -1371,6 +1372,8 @@ const planLabels = {
       border-radius: 0 0 12px 12px;
       padding: 4px 10px;
       display: flex;
+      /* on very narrow phones (320 px) the third button moves to a second line instead of being cut off */
+      flex-wrap: wrap;
       gap: 2px;
       border-top: 1px solid #f3f4f6;
       box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 0 2px 8px rgba(16, 24, 40, 0.04);
@@ -1685,6 +1688,7 @@ const planLabels = {
     import { AP_CLUES, AP_GOALS, dealQuestions, rankFor, shuffle } from '../../../data/challengeAP'
     import type { ApGoal, ApQuestion } from '../../../data/challengeAP'
     import { recordResult } from '../../../utils/challengeProgress'
+    import { fmt } from '../../../utils/challenge/text'
 
     const initializeVulnerabilityChallenge = () => {
       document.querySelectorAll('[data-vulnerability-game]').forEach((root) => {
@@ -1739,8 +1743,7 @@ const planLabels = {
         const TOTAL_CORRECT = getTotalCorrect()
 
         // ── Helpers ─────────────────────────────────────────────────────────
-        const formatTemplate = (template: string | null | undefined, vars?: Record<string, string | number>) =>
-          String(template ?? '').replace(/\{(\w+)\}/g, (_m, key) => String(vars?.[key] ?? ''))
+        const formatTemplate = fmt
 
         const setVoice = (msg: string, type: string = 'neutral') => {
           if (attackerVoice instanceof HTMLElement) attackerVoice.textContent = msg
@@ -2151,7 +2154,6 @@ const planLabels = {
       })
     }
 
-    document.addEventListener('astro:page-load', initializeVulnerabilityChallenge)
     initializeVulnerabilityChallenge()
   </script>
 </DefaultLayout>

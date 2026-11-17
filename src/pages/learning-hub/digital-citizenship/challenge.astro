@@ -152,8 +152,12 @@ const labels = {
 <script>
   import { DC_POSTS, dealPosts, rankFor } from '../../../data/challengeDC'
   import { recordResult } from '../../../utils/challengeProgress'
-  import type { DcPostRule, DcZone } from '../../../data/challengeDC'
+  import { createSortBoard } from '../../../utils/challenge/sortBoard'
+  import { fmt } from '../../../utils/challenge/text'
+  import type { DcPostRule } from '../../../data/challengeDC'
 
+  // The card mechanics (drag, tap, keyboard, first-try count) live in utils/challenge/sortBoard.ts.
+  // This script is what makes it the Digital Citizenship game: its texts, score and result screen.
   const initializeSortGame = () => {
     document.querySelectorAll('[data-sort-game]').forEach((root) => {
       if (!(root instanceof HTMLElement)) return
@@ -169,8 +173,6 @@ const labels = {
       }
       const postById = new Map(posts.map((post) => [post.id, post]))
       const ruleById = new Map<number, DcPostRule>(DC_POSTS.map((rule) => [rule.id, rule]))
-      const fmt = (template: string, vars: Record<string, string | number>) =>
-        String(template ?? '').replace(/\{(\w+)\}/g, (_m, key) => String(vars[key] ?? ''))
       const zoneLabel = (zone: string) => `${zoneTexts[zone]?.icon ?? ''} ${zoneTexts[zone]?.title ?? zone}`.trim()
 
       const scoreEl = root.querySelector('[data-score]')
@@ -183,35 +185,13 @@ const labels = {
       const winMessage = root.querySelector<HTMLElement>('[data-win-message]')
       const reviewBox = root.querySelector<HTMLElement>('[data-review]')
       const reviewList = root.querySelector<HTMLElement>('[data-review-list]')
-      const cardsTray = root.querySelector<HTMLElement>('[data-cards-tray]')
-      const zones = root.querySelectorAll<HTMLElement>('[data-zone]')
       const restartBtns = root.querySelectorAll('[data-restart]')
-      const cardTemplate = root.querySelector<HTMLTemplateElement>('template[data-card-template]')
-      const emptyTemplate = root.querySelector<HTMLTemplateElement>('template[data-empty-template]')
       const reviewTemplate = root.querySelector<HTMLTemplateElement>('template[data-review-template]')
 
       if (!scoreEl || !feedbackEl || !feedbackTitle || !feedbackText || !winPanel || !winSummary || !winMessage ||
-          !reviewBox || !reviewList || !cardsTray || !cardTemplate || !emptyTemplate || !reviewTemplate || zones.length === 0) return
+          !reviewBox || !reviewList || !reviewTemplate) return
 
       let deck: DcPostRule[] = []
-      let placedCount = 0
-      let firstTry = 0
-      let missed = new Set<number>()
-      let selectedCard: HTMLElement | null = null
-      let draggedCard: HTMLElement | null = null
-      let busy = false
-
-      const zoneMap = new Map<string, HTMLElement>()
-      zones.forEach((zone) => zoneMap.set(zone.dataset.zone || '', zone))
-
-      const getCards = () => Array.from(root.querySelectorAll<HTMLElement>('[data-post-id]'))
-      const getWrapper = (card: HTMLElement) => card.closest('.post-card-wrapper') as HTMLElement | null
-      const getChoices = (card: HTMLElement) => getWrapper(card)?.querySelector<HTMLElement>('.post-card__choices') ?? null
-
-      const updateScore = () => {
-        scoreEl.textContent = `${placedCount} / ${deck.length} ${labels.scoreLabel}`.trim()
-        if (scoreFill) scoreFill.style.width = deck.length ? `${(placedCount / deck.length) * 100}%` : '0%'
-      }
 
       // ── Feedback: explanation of the last card, always in view ────────────
       const showFeedback = (type: 'correct' | 'wrong' | 'info', title: string, text: string) => {
@@ -226,116 +206,11 @@ const labels = {
         feedbackTitle.textContent = ''
         feedbackText.textContent = ''
       }
-
-      // ── Build one card (with its "where does it go?" buttons) from the template ──
-      const buildCard = (rule: DcPostRule): HTMLElement => {
-        const post = postById.get(rule.id)
-        const wrapper = cardTemplate.content.firstElementChild!.cloneNode(true) as HTMLElement
-        const card = wrapper.querySelector<HTMLElement>('.post-card')!
-        card.dataset.postId = String(rule.id)
-        wrapper.querySelector('.post-card__emoji')!.textContent = post?.emoji ?? ''
-        wrapper.querySelector('.post-card__text')!.textContent = post?.text ?? ''
-        return wrapper
-      }
-
-      // ── Selection (tap, click or keyboard) ────────────────────────────────
-      const deselectCard = () => {
-        if (selectedCard) {
-          selectedCard.classList.remove('post-card--selected')
-          selectedCard.setAttribute('aria-pressed', 'false')
-          const choices = getChoices(selectedCard)
-          if (choices) choices.hidden = true
-        }
-        selectedCard = null
-      }
-
-      const handleCardClick = (card: HTMLElement) => {
-        if (busy) return
-        if (card.dataset.placed === 'true') {
-          // A placed card can be tapped to read its explanation again
-          const post = postById.get(Number(card.dataset.postId))
-          const rule = ruleById.get(Number(card.dataset.postId))
-          if (post && rule) showFeedback('info', zoneLabel(rule.zone), post.explanation)
-          return
-        }
-        if (selectedCard === card) {
-          deselectCard()
-          return
-        }
-        deselectCard()
-        selectedCard = card
-        card.classList.add('post-card--selected')
-        card.setAttribute('aria-pressed', 'true')
-        const choices = getChoices(card)
-        if (choices) choices.hidden = false
-      }
-
-      // ── Move card + wrapper into a drop zone ─────────────────────────────
-      const moveCardToZone = (card: HTMLElement, zone: HTMLElement) => {
-        const wrapper = getWrapper(card)
-        const content = zone.querySelector('[data-zone-content]')
-        if (!content || !wrapper) return
-        content.querySelector('.drop-zone__empty')?.remove()
-        content.appendChild(wrapper)
-      }
-
-      const focusNextCard = () => {
-        getCards().find((card) => card.dataset.placed !== 'true')?.focus()
-      }
-
-      // ── Perform drop logic ────────────────────────────────────────────────
-      const performDrop = (card: HTMLElement, zone: HTMLElement, options: { focusNext?: boolean } = {}) => {
-        if (card.dataset.placed === 'true' || busy) return
-        const id = Number(card.dataset.postId)
-        const rule = ruleById.get(id)
-        const post = postById.get(id)
-        if (!rule || !post) return
-
-        busy = true
-        const chosen = zone.dataset.zone as DcZone
-
-        if (rule.zone === chosen) {
-          card.dataset.placed = 'true'
-          card.classList.add('post-card--placed')
-          card.draggable = false
-          card.tabIndex = -1
-          card.setAttribute('aria-pressed', 'false')
-          deselectCard()
-          moveCardToZone(card, zone)
-
-          placedCount++
-          if (!missed.has(id)) firstTry++
-          updateScore()
-          showFeedback('correct', fmt(labels.correctInTemplate, { zone: zoneLabel(chosen) }), post.explanation)
-          if (options.focusNext) focusNextCard()
-
-          setTimeout(() => {
-            busy = false
-            checkWin()
-          }, 600)
-        } else {
-          // Wrong zone: counts against the first-try score, and the explanation says why
-          missed.add(id)
-          card.classList.add('post-card--wrong')
-          showFeedback('wrong', labels.tryOtherZone, post.explanation)
-
-          setTimeout(() => {
-            card.classList.remove('post-card--wrong')
-            busy = false
-          }, 700)
-        }
-      }
-
-      // ── Mouse: a card is selected, then a zone is clicked ─────────────────
-      const handleZoneClick = (zone: HTMLElement) => {
-        if (!selectedCard || busy || selectedCard.dataset.placed === 'true') return
-        performDrop(selectedCard, zone)
-      }
+      const explanationOf = (id: number) => postById.get(id)?.explanation ?? ''
 
       // ── Win ───────────────────────────────────────────────────────────────
-      const checkWin = () => {
-        if (getCards().length === 0 || !getCards().every((card) => card.dataset.placed === 'true')) return
-
+      const showWin = () => {
+        const { firstTry, missed } = board
         recordResult('dc', firstTry, deck.length)
         winSummary.textContent = fmt(labels.winSummaryTemplate, { n: firstTry, total: deck.length })
         const rank = rankFor(firstTry, deck.length)
@@ -359,148 +234,49 @@ const labels = {
         }, 400)
       }
 
-      // ── Drag event handlers ───────────────────────────────────────────────
-      const handleDragStart = (e: DragEvent) => {
-        if (!(e.target instanceof HTMLElement)) return
-        const card = e.target.closest('[data-post-id]') as HTMLElement | null
-        if (!card || card.dataset.placed === 'true') {
-          e.preventDefault()
-          return
-        }
-        draggedCard = card
-        card.classList.add('post-card--dragging')
-        if (e.dataTransfer) {
-          e.dataTransfer.effectAllowed = 'move'
-          e.dataTransfer.setData('text/plain', card.dataset.postId || '')
-        }
-      }
-
-      const handleDragEnd = (e: DragEvent) => {
-        if (!(e.target instanceof HTMLElement)) return
-        e.target.closest('[data-post-id]')?.classList.remove('post-card--dragging')
-        zones.forEach((zone) => zone.classList.remove('drop-zone--active'))
-      }
-
-      const handleDragOver = (e: DragEvent) => {
-        e.preventDefault()
-        if (e.dataTransfer) e.dataTransfer.dropEffect = 'move'
-        const zone = (e.target as HTMLElement).closest('[data-zone]') as HTMLElement | null
-        zone?.classList.add('drop-zone--active')
-      }
-
-      const handleDragLeave = (e: DragEvent) => {
-        const zone = (e.target as HTMLElement).closest('[data-zone]') as HTMLElement | null
-        if (zone && e.target === zone) zone.classList.remove('drop-zone--active')
-      }
-
-      const handleDrop = (e: DragEvent) => {
-        e.preventDefault()
-        if (!draggedCard) return
-        const zone = (e.target as HTMLElement).closest('[data-zone]') as HTMLElement | null
-        if (!zone) return
-        zone.classList.remove('drop-zone--active')
-        performDrop(draggedCard, zone)
-        draggedCard = null
-      }
+      // ── The board ─────────────────────────────────────────────────────────
+      const created = createSortBoard({
+        root,
+        cardClass: 'post-card',
+        idKey: 'postId',
+        zoneOf: (id) => ruleById.get(id)?.zone,
+        fillCard: (wrapper, id) => {
+          const post = postById.get(id)
+          wrapper.querySelector('.post-card__emoji')!.textContent = post?.emoji ?? ''
+          wrapper.querySelector('.post-card__text')!.textContent = post?.text ?? ''
+        },
+        onProgress: (placed, total) => {
+          scoreEl.textContent = `${placed} / ${total} ${labels.scoreLabel}`.trim()
+          if (scoreFill) scoreFill.style.width = total ? `${(placed / total) * 100}%` : '0%'
+        },
+        onCorrect: (id, zone) => showFeedback('correct', fmt(labels.correctInTemplate, { zone: zoneLabel(zone) }), explanationOf(id)),
+        onWrong: (id) => showFeedback('wrong', labels.tryOtherZone, explanationOf(id)),
+        // A placed card can be tapped to read its explanation again
+        onReview: (id, zone) => showFeedback('info', zoneLabel(zone), explanationOf(id)),
+        onAllPlaced: showWin,
+      })
+      if (!created) return
+      const board = created
 
       // ── Deal a fresh game ─────────────────────────────────────────────────
-      const emptyZones = () => {
-        zones.forEach((zone) => {
-          const content = zone.querySelector<HTMLElement>('[data-zone-content]')
-          if (!content) return
-          content.replaceChildren(emptyTemplate.content.firstElementChild!.cloneNode(true))
-        })
-      }
-
       const deal = () => {
         deck = dealPosts()
-        placedCount = 0
-        firstTry = 0
-        missed = new Set<number>()
-        selectedCard = null
-        draggedCard = null
-        busy = false
-        cardsTray.replaceChildren(...deck.map(buildCard))
-        updateScore()
+        board.deal(deck.map((rule) => rule.id))
       }
 
-      const restart = () => {
-        winPanel.hidden = true
-        hideFeedback()
-        emptyZones()
-        deal()
-        getCards()[0]?.focus({ preventScroll: true })
-      }
+      restartBtns.forEach((btn) =>
+        btn.addEventListener('click', () => {
+          winPanel.hidden = true
+          hideFeedback()
+          deal()
+          board.focusFirst()
+        }),
+      )
 
-      // ── Attach listeners ──────────────────────────────────────────────────
-      root.addEventListener('dragstart', handleDragStart, true)
-      root.addEventListener('dragend', handleDragEnd, true)
-
-      zones.forEach((zone) => {
-        zone.addEventListener('dragover', handleDragOver)
-        zone.addEventListener('dragleave', handleDragLeave)
-        zone.addEventListener('drop', handleDrop)
-        zone.addEventListener('click', (e) => {
-          // A click on a card or its buttons inside the zone is not a click on the zone itself
-          if (e.target instanceof HTMLElement && e.target.closest('[data-post-id], .post-card__choices')) return
-          handleZoneClick(zone)
-        })
-      })
-
-      // Cards are created again for every game, so one set of delegated listeners handles them all
-      const handleBoardClick = (e: Event) => {
-        const target = e.target
-        if (!(target instanceof HTMLElement)) return
-
-        // "Where does it go?" buttons under the selected card
-        const choice = target.closest<HTMLElement>('[data-choose]')
-        if (choice) {
-          const card = getWrapper(choice)?.querySelector<HTMLElement>('[data-post-id]')
-          const zone = zoneMap.get(choice.dataset.choose ?? '')
-          if (card && zone) performDrop(card, zone, { focusNext: true })
-          return
-        }
-
-        const card = target.closest<HTMLElement>('[data-post-id]')
-        if (card) handleCardClick(card)
-      }
-      root.addEventListener('click', handleBoardClick)
-
-      root.addEventListener('keydown', (e) => {
-        const target = e.target
-        if (!(target instanceof HTMLElement)) return
-
-        const card = target.closest<HTMLElement>('[data-post-id]')
-        if (card && target === card) {
-          if (e.key === 'Escape' && selectedCard === card) {
-            deselectCard()
-            return
-          }
-          if ((e.key !== 'Enter' && e.key !== ' ') || e.repeat || card.dataset.placed === 'true') return
-          e.preventDefault()
-          const wasSelected = selectedCard === card
-          handleCardClick(card)
-          // Newly selected → continue with the choice buttons right below the card
-          if (!wasSelected && selectedCard === card) getChoices(card)?.querySelector<HTMLElement>('button')?.focus()
-          return
-        }
-
-        // Escape inside the choice buttons: back to the card
-        if (e.key === 'Escape' && target.closest('.post-card__choices') && selectedCard) {
-          const back = selectedCard
-          deselectCard()
-          back.focus()
-        }
-      })
-
-      restartBtns.forEach((btn) => btn.addEventListener('click', restart))
-
-      // Initial setup
       deal()
     })
   }
 
-  document.addEventListener('astro:page-load', initializeSortGame)
   initializeSortGame()
 </script>
 

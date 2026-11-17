@@ -6,8 +6,7 @@
  *   - Unit-tested without a DOM render
  *   - Reused if a second navigation variant is ever added
  *
- * Entry point: call `initializeNavigation()` on DOMContentLoaded and on
- * every `astro:page-load` event (Astro view transitions re-fire the event).
+ * Entry point: `initializeNavigation()`, called once per page from Navigation.astro.
  *
  * @see WCAG 2.1.1 — Keyboard
  * @see WCAG 2.4.5 — Multiple Ways
@@ -234,9 +233,7 @@ let outsideClickBound = false
 /**
  * Close dropdowns when clicking outside of them.
  *
- * Registered once for the lifetime of the window: with view transitions the header is
- * replaced on every navigation, so a listener per header would pile up and keep the
- * old headers in memory. The buttons are looked up at click time instead.
+ * Registered once; the buttons are looked up at click time.
  */
 const bindOutsideClick = (): void => {
   if (outsideClickBound) return
@@ -252,9 +249,7 @@ const bindOutsideClick = (): void => {
 /**
  * Initialize all navigation behaviour for `#main-navigation`.
  *
- * Safe to call multiple times — uses `data-nav-bound` to ensure event
- * listeners are only attached once per page lifecycle, even when Astro
- * view transitions cause this to run again on navigation.
+ * Safe to call more than once — `data-nav-bound` keeps the listeners from being attached twice.
  */
 export const initializeNavigation = (): void => {
   const mainNav = document.querySelector('#main-navigation') as HTMLElement | null

@@ -13,6 +13,9 @@
  * Stage 2 — "Fix this profile!" (Part 4 of the module): delete, hide, change or keep each part of a profile.
  */
 
+import { shuffle, threeStepRank } from './challengeShared'
+import type { Random } from './challengeShared'
+
 export type DpZone = 'purpose' | 'background' | 'none'
 export const DP_ZONES: ReadonlyArray<DpZone> = ['purpose', 'background', 'none']
 
@@ -85,16 +88,6 @@ export const DP_PROFILE: ReadonlyArray<DpProfileRule> = [
 export const DP_PROFILE_PLAN: Readonly<Record<DpAction, number>> = { delete: 2, hide: 1, change: 1, keep: 2 }
 export const DP_PROFILE_PER_GAME = Object.values(DP_PROFILE_PLAN).reduce((sum, n) => sum + n, 0)
 
-type Random = () => number
-
-export const shuffle = <T>(items: ReadonlyArray<T>, random: Random = Math.random): T[] => {
-  const copy = [...items]
-  for (let i = copy.length - 1; i > 0; i--) {
-    const j = Math.floor(random() * (i + 1))
-    ;[copy[i], copy[j]] = [copy[j], copy[i]]
-  }
-  return copy
-}
 
 const pick = <T extends { tricky?: boolean }>(pool: ReadonlyArray<T>, count: number, random: Random): T[] => {
   const tricky = shuffle(pool.filter((item) => item.tricky), random)
@@ -125,9 +118,7 @@ export const isProfileRight = (rule: DpProfileRule, choice: DpAction): boolean =
 export type DpRank = 'great' | 'good' | 'practise'
 
 /** Based on the share answered right on the first try, over both stages. */
-export const rankFor = (firstTry: number, total: number): DpRank => {
-  const share = total > 0 ? firstTry / total : 0
-  if (share >= 0.85) return 'great'
-  if (share >= 0.55) return 'good'
-  return 'practise'
-}
+export const rankFor: (points: number, total: number) => DpRank = threeStepRank
+
+// kept as an export of this file for existing imports
+export { shuffle }

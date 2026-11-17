@@ -16,7 +16,16 @@ export default defineConfig({
     locale: 'en-GB',
     trace: 'retain-on-failure',
   },
-  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
+  // Three browser engines: Chromium (Chrome, Edge), Firefox, and WebKit (Safari — the only
+  // engine allowed on iPads and iPhones). phone.spec.ts emulates a touch phone, which Firefox
+  // cannot do, so it runs in Chromium and WebKit.
+  projects: [
+    // channel 'chromium' = the full browser in headless mode; the lighter default build (headless shell)
+    // cannot run page-to-page view transitions and reports each one as aborted
+    { name: 'chromium', use: { ...devices['Desktop Chrome'], channel: 'chromium' } },
+    { name: 'firefox', use: { ...devices['Desktop Firefox'] }, testIgnore: /phone\.spec\.ts/ },
+    { name: 'webkit', use: { ...devices['Desktop Safari'] } },
+  ],
   webServer: {
     command: `node scripts/serve-dist.mjs ${PORT}`,
     url: `http://localhost:${PORT}`,

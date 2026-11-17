@@ -7,7 +7,7 @@ const { t } = useTranslations(Astro.currentLocale)
 
 const locale = getCurrentLocale(Astro.currentLocale)
 const currentPathname = stripLocaleFromPathname(Astro.url.pathname)
-// The 404 page exists once, not per language — from there the switcher leads to each language's home page
+// On a 404 page the address that was asked for does not exist in any language — the switcher leads to each language's home page
 const route = currentPathname === '/' || currentPathname === '/404' ? '' : currentPathname.slice(1)
 const search = Astro.url.search
 

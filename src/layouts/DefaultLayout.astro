@@ -85,6 +85,26 @@ const metaDescription =
   <head>
     <!-- Browser language detection — runs before paint to avoid redirect flash.
          Auto-redirects once on first visit; manual switcher clicks override the preference. -->
+    <!-- Page-to-page cross-fade (see @view-transition in _general.scss). The browser skips the
+         fade when it cannot run it (page not ready in time, a fast second click …); the spec then
+         rejects the transition's promises, which would show up as an error in the console. Nothing
+         is wrong in that case, so the rejections are absorbed here. Must run before the page's
+         first render, hence inline in <head>. -->
+    <script is:inline>
+      ;(function () {
+        var quiet = function (event) {
+          var transition = event.viewTransition
+          if (!transition) return
+          var ignore = function () {}
+          if (transition.ready) transition.ready.catch(ignore)
+          if (transition.finished) transition.finished.catch(ignore)
+          if (transition.updateCallbackDone) transition.updateCallbackDone.catch(ignore)
+        }
+        window.addEventListener('pageswap', quiet)
+        window.addEventListener('pagereveal', quiet)
+      })()
+    </script>
+
     <script is:inline>
       ;(function () {
         var SUPPORTED = ['cs', 'de', 'lt', 'no']
@@ -130,6 +150,8 @@ const metaDescription =
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <!-- New page: keep showing the old one until the main content is parsed, so the cross-fade has something to fade to -->
+    <link rel="expect" href="#main-content" blocking="render" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="Content-Security-Policy" content={contentSecurityPolicy} />
@@ -153,7 +175,7 @@ const metaDescription =
   </head>
   <body class="site-shell">
     <Header />
-    <main id="main-content" class="site-main" transition:animate="fade">
+    <main id="main-content" class="site-main">
       <slot />
     </main>
     <Footer />

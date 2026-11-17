@@ -6,6 +6,7 @@ import ModuleRowList from '@components/ModuleRowList.astro'
 import FileMeta from '@components/FileMeta.astro'
 import FileSize from '@components/FileSize.astro'
 import { downloadExists } from '../utils/fileInfo'
+import { VIDEO_META, isoDuration } from 'src/data/videoMeta'
 import { Icon } from 'astro-icon/components'
 import { localizePath } from 'src/i18n/i18n'
 import { getModule, introMaterials } from 'src/data/modules'
@@ -91,6 +92,69 @@ const hasCount = (value: unknown): value is number => typeof value === 'number' 
 
 const getPartTitle = (part: MergedPart) => part.titleKey ? t(part.titleKey) : ''
 
+// ── Structured data (schema.org) ─────────────────────────────────────────────
+// The module is a Course; each part is a LearningResource inside it; a part's video is a
+// VideoObject. Search engines use this for rich results; it changes nothing on the page.
+const absolute = (path: string) => new URL(path, Astro.site).toString()
+const pageUrl = absolute(localizePath(locale, `/learning-hub/${currentModule.slug}/content/`))
+const pageLanguage = locale ?? 'en'
+const moduleTitle = t(`pages.hub.modules.${moduleId}.title`)
+const provider = { '@type': 'Organization', name: 'KidCy', url: absolute('/') }
+
+const partResources = parts.map((part) => {
+  const video = part.featuredVideo
+  const meta = video?.videoSrc ? VIDEO_META[video.videoSrc] : undefined
+  const materialKinds = [...new Set((part.included?.materials ?? []).map((material) => String(material.kind ?? '')).filter(Boolean))]
+  return {
+    '@type': 'LearningResource',
+    '@id': `${pageUrl}#${part.anchorId}`,
+    url: `${pageUrl}#${part.anchorId}`,
+    name: getPartTitle(part),
+    ...(part.goal ? { description: String(part.goal) } : {}),
+    position: part.number,
+    inLanguage: pageLanguage,
+    isAccessibleForFree: true,
+    learningResourceType: ['Lesson plan', ...materialKinds],
+    educationalLevel: 'Upper elementary',
+    audience: { '@type': 'EducationalAudience', educationalRole: 'teacher' },
+    isPartOf: { '@id': `${pageUrl}#course` },
+    ...(video?.videoSrc && meta
+      ? {
+          video: {
+            '@type': 'VideoObject',
+            name: String(video.title ?? getPartTitle(part)),
+            description: String(video.supportText ?? part.goal ?? getPartTitle(part)),
+            contentUrl: absolute(video.videoSrc),
+            ...(video.posterSrc ? { thumbnailUrl: absolute(video.posterSrc) } : {}),
+            uploadDate: meta.published,
+            duration: isoDuration(meta.seconds),
+            inLanguage: 'en', // narration is English in every language version …
+            subtitleLanguage: (video.tracks ?? []).map((track) => track.srclang), // … with these subtitles
+            isFamilyFriendly: true,
+            isAccessibleForFree: true,
+          },
+        }
+      : {}),
+  }
+})
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    '@id': `${pageUrl}#course`,
+    url: pageUrl,
+    name: moduleTitle,
+    description: t(`pages.hub.modules.${moduleId}.description`),
+    inLanguage: pageLanguage,
+    isAccessibleForFree: true,
+    educationalLevel: 'Upper elementary',
+    provider,
+    hasPart: partResources.map((resource) => ({ '@id': resource['@id'] })),
+  },
+  ...partResources.map((resource) => ({ '@context': 'https://schema.org', ...resource })),
+]
+
 const moduleImages = {
   dc: '/images/learning-hub/01_digital-citizenship.webp',
   ap: '/images/learning-hub/02_attacker-perspective.webp',
@@ -105,16 +169,7 @@ const moduleImages = {
 <DefaultLayout
   title={t(`pages.hub.modules.${moduleId}.title`)}
   description={t(`pages.hub.modules.${moduleId}.description`)}
-  jsonLd={{
-    '@context': 'https://schema.org',
-    '@type': 'Course',
-    name: t(`pages.hub.modules.${moduleId}.title`),
-    description: t(`pages.hub.modules.${moduleId}.description`),
-    inLanguage: locale ?? 'en',
-    isAccessibleForFree: true,
-    educationalLevel: 'Upper elementary',
-    provider: { '@type': 'Organization', name: 'KidCy', url: new URL('/', Astro.site).toString() },
-  }}
+  jsonLd={structuredData}
 >
   <PageHeader
       title={t(`pages.hub.modules.${moduleId}.title`)}
@@ -645,9 +700,6 @@ const moduleImages = {
     }
   }
 
-  // astro:page-load fires on every view-transition navigation, so both handlers
-  // must be re-registered here to stay active after client-side routing.
-  document.addEventListener('astro:page-load', expandFromHash)
   expandFromHash()
   // the "Part N" buttons beside each part are in-page links: open the part they point to
   window.addEventListener('hashchange', expandFromHash)
@@ -659,7 +711,6 @@ const moduleImages = {
   const initTabs = () => {
     document.querySelectorAll<HTMLElement>('.mc-tabs').forEach(tabs => {
       const bar = tabs.querySelector<HTMLElement>('.mc-tabs__bar')
-      // astro:page-load also fires on the first load — bind each tab bar only once
       if (!bar || bar.dataset.bound === 'true') return
       bar.dataset.bound = 'true'
 
@@ -715,10 +766,8 @@ const moduleImages = {
     })
   }
 
-  document.addEventListener('astro:page-load', initTabs)
   initTabs()
 
-  document.addEventListener('astro:page-load', initDownloadMenus)
   initDownloadMenus()
 </script>
 

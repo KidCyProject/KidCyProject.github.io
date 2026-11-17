@@ -9,6 +9,9 @@
  * (`challengeAP`), matched by `id`. Motivations follow the module image "Attacker motivations".
  */
 
+import { shuffle, threeStepRank } from './challengeShared'
+import type { Random } from './challengeShared'
+
 export type ApGoal = 'account' | 'person' | 'none'
 export const AP_GOALS: ReadonlyArray<ApGoal> = ['account', 'person', 'none']
 
@@ -70,16 +73,6 @@ export const AP_DEFEND_QUESTIONS: ReadonlyArray<ApQuestionRule> = [
 
 export const AP_MOTIVE_QUESTIONS_PER_GAME = 3
 
-type Random = () => number
-
-export const shuffle = <T>(items: ReadonlyArray<T>, random: Random = Math.random): T[] => {
-  const copy = [...items]
-  for (let i = copy.length - 1; i > 0; i--) {
-    const j = Math.floor(random() * (i + 1))
-    ;[copy[i], copy[j]] = [copy[j], copy[i]]
-  }
-  return copy
-}
 
 export interface ApQuestion extends ApQuestionRule {
   /** Position in the shuffled list of the part (0-based). */
@@ -102,9 +95,7 @@ export const AP_TOTAL_QUESTIONS = AP_MOTIVE_QUESTIONS_PER_GAME + AP_DEFEND_QUEST
 export type ApRank = 'great' | 'good' | 'practise'
 
 /** `points` = weak spots found (0–4) + clues placed right first time (0–8) + questions answered right first time (0–6). */
-export const rankFor = (points: number, total: number): ApRank => {
-  const share = total > 0 ? points / total : 0
-  if (share >= 0.85) return 'great'
-  if (share >= 0.55) return 'good'
-  return 'practise'
-}
+export const rankFor: (points: number, total: number) => ApRank = threeStepRank
+
+// kept as an export of this file for existing imports
+export { shuffle }

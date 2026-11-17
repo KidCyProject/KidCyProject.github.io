@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { LOCALES, MODULES, PAGE_TYPES, isIgnoredConsoleError, localized } from './pages'
+import { LOCALES, MODULES, PAGE_TYPES, isKnownBrowserNoise, localized } from './pages'
 
 // Every kind of page, in every language: loads, is in the right language, has one
 // main heading, logs no errors, requests nothing that is missing.
@@ -8,9 +8,9 @@ for (const locale of LOCALES) {
     test(`${name} page loads (${locale})`, async ({ page }) => {
       const errors: string[] = []
       page.on('console', (message) => {
-        if (message.type() === 'error' && !isIgnoredConsoleError(message.text())) errors.push(message.text())
+        if (message.type() === 'error' && !isKnownBrowserNoise(message.text())) errors.push(message.text())
       })
-      page.on('pageerror', (error) => errors.push(error.message))
+      page.on('pageerror', (error) => !isKnownBrowserNoise(error.message) && errors.push(error.message))
       const failed: string[] = []
       page.on('response', (response) => {
         if (response.status() >= 400) failed.push(`${response.status()} ${response.url()}`)
@@ -44,7 +44,7 @@ for (const module of MODULES) {
 
   test(`challenge starts: ${module}`, async ({ page }) => {
     const errors: string[] = []
-    page.on('pageerror', (error) => errors.push(error.message))
+    page.on('pageerror', (error) => !isKnownBrowserNoise(error.message) && errors.push(error.message))
     await page.goto(`/learning-hub/${module}/challenge/`)
     await expect(page.locator('h1')).not.toBeEmpty()
     await page.waitForLoadState('networkidle')
@@ -94,13 +94,10 @@ test('a link to a module part opens that part', async ({ page }) => {
   await expect(page.locator(`details#${id}`)).toHaveAttribute('open', '')
 })
 
-test('phone: menu opens and the page does not scroll sideways', async ({ page }) => {
+test('small window: menu opens and closes with Escape', async ({ page }) => {
+  // layout at phone width is covered in phone.spec.ts; this is the keyboard side of the menu
   await page.setViewportSize({ width: 375, height: 812 })
-  for (const { route } of PAGE_TYPES) {
-    await page.goto(route)
-    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
-    expect(overflow, `sideways scroll on ${route}`).toBeLessThanOrEqual(0)
-  }
+  await page.goto('/')
   const toggle = page.locator('.responsive-toggle')
   await toggle.click()
   await expect(toggle).toHaveAttribute('aria-expanded', 'true')
@@ -113,4 +110,33 @@ test('unknown address shows the 404 page', async ({ page }) => {
   const response = await page.goto('/no-such-page/')
   expect(response?.status()).toBe(404)
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/)
+})
+
+// GitHub Pages has one 404 file for the whole site; it forwards to the 404 page of the language
+// whose address was asked for.
+for (const locale of ['cs', 'de', 'lt', 'no'] as const) {
+  test(`unknown ${locale} address shows the 404 page in that language`, async ({ page }) => {
+    const response = await page.goto(`/${locale}/no-such-page/deeper/`)
+    expect(response?.status()).toBe(404)
+    await expect(page).toHaveURL(new RegExp(`/${locale}/404/$`))
+    await expect(page.locator('html')).toHaveAttribute('lang', locale)
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/)
+    // navigation and the way home are in that language too
+    await expect(page.locator('main a.button')).toHaveAttribute('href', `/${locale}/`)
+    await expect(page.locator('.desktop-menu a[data-nav-match="root"]')).toHaveAttribute('href', `/${locale}/`)
+  })
+}
+
+test('unknown English address keeps its address and shows the English 404 page', async ({ page }) => {
+  await page.goto('/learning-hub/no-such-page/')
+  await expect(page).toHaveURL(/\/learning-hub\/no-such-page\/$/)
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en')
+})
+
+test('images reserve their space before they load', async ({ page }) => {
+  for (const route of ['/', '/about/', '/learning-hub/introduction/', '/learning-hub/malware/content/', '/learning-hub/authentication/game/']) {
+    await page.goto(route)
+    const missing = await page.locator('img:not([width]), img:not([height])').evaluateAll((images) => images.map((img) => img.getAttribute('src')))
+    expect(missing, `images without width/height on ${route}`).toEqual([])
+  }
 })

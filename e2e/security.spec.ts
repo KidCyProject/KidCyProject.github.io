@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { isIgnoredConsoleError } from './pages'
+import { isKnownBrowserNoise } from './pages'
 
 // The Content-Security-Policy allows the site's own inline scripts by hash
 // (scripts/csp-hashes.mjs) and nothing else.
@@ -38,33 +38,81 @@ test('injected event-handler attributes do not run', async ({ page }) => {
   expect(ran).toBe(false)
 })
 
-test('moving between pages without reload breaks no script', async ({ page }) => {
+/**
+ * Waits until the page's cross-fade has finished. A click during the fade (under 0.2 s after the
+ * page appears) makes Chrome abort the fade and log that as an error — harmless, but not what a
+ * person clicking at normal speed sees, so the test waits like a person would.
+ */
+const settle = async (page: import('@playwright/test').Page) => {
+  await page.waitForLoadState('load')
+  await page.waitForFunction(
+    () =>
+      new Promise<boolean>((resolve) =>
+        // two frames: the fade has started if it is going to
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          let active = false
+          try {
+            active = document.documentElement.matches(':active-view-transition')
+          } catch {
+            // browser without view transitions
+          }
+          resolve(!active)
+        })),
+      ),
+    undefined,
+    { polling: 50 },
+  )
+}
+
+test('following links from page to page breaks no script and logs nothing', async ({ page }) => {
   const errors: string[] = []
   page.on('console', (message) => {
-    if (message.type() === 'error' && !isIgnoredConsoleError(message.text()) && !message.text().includes('404')) errors.push(message.text())
+    if (message.type() === 'error' && !isKnownBrowserNoise(message.text())) errors.push(message.text())
   })
-  page.on('pageerror', (error) => errors.push(error.message))
+  page.on('pageerror', (error) => {
+    if (!isKnownBrowserNoise(error.message)) errors.push(error.message)
+  })
 
-  // every step is a click on a link, so the view-transition router swaps the page in place
+  // every step is a click on a link — an ordinary page load with the browser's own cross-fade
   await page.goto('/')
   await page.locator('.desktop-menu a[data-nav-section="learning-hub"]').click()
   await expect(page).toHaveURL(/learning-hub\/introduction\/$/)
+  await settle(page)
   await page.locator('footer a[href$="/learning-hub/malware/content/"]').click()
   await expect(page).toHaveURL(/malware\/content\/$/)
+  await settle(page)
 
-  // scripts of the swapped-in page work: tabs react
   const tabs = page.locator('.mc-tabs__bar').first().getByRole('tab')
   await tabs.nth(1).click()
   await expect(page.locator('#aoo-objectives')).toBeVisible()
 
   await page.locator('footer a[href$="/learning-hub/my-progress/"]').click()
   await expect(page).toHaveURL(/my-progress\/$/)
+  await settle(page)
   await page.locator('footer a[href$="/learning-hub/authentication/content/"]').click()
+  await expect(page).toHaveURL(/authentication\/content\/$/)
+  await settle(page)
   await page.locator('a[href$="/learning-hub/authentication/challenge/"]').first().click()
   await expect(page).toHaveURL(/authentication\/challenge\/$/)
-  // the challenge swapped in this way is alive: typing updates the rule list
+  await settle(page)
   await page.locator('input[type="text"], input[type="password"]').first().fill('purple tractor sings loudly')
   await expect(page.locator('#criterion-length')).toHaveClass(/met/)
 
+  // back and forward come from the browser's page cache and must still work
+  await page.goBack()
+  await expect(page).toHaveURL(/authentication\/content\/$/)
+  await settle(page)
+  await page.locator('.mc-tabs__bar').first().getByRole('tab').nth(2).click()
+  await expect(page.locator('#aoo-outcomes')).toBeVisible()
+  await page.goForward()
+  await expect(page).toHaveURL(/authentication\/challenge\/$/)
+
   expect(errors).toEqual([])
+})
+
+test('the next page is fetched ahead when a link is pointed at', async ({ page }) => {
+  await page.goto('/')
+  const fetched = page.waitForRequest((request) => request.url().endsWith('/about/'), { timeout: 15_000 })
+  await page.locator('.desktop-menu a[data-nav-match="exact"]').hover()
+  await fetched
 })

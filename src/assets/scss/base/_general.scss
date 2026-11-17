@@ -1,7 +1,26 @@
 @use './mixins' as *;
 
+// Page changes: every link is an ordinary page load, and the browser cross-fades the old page into
+// the new one (Chrome, Edge, Safari; Firefox simply shows the new page). No router script is
+// involved, so every page starts with fresh scripts and nothing has to be re-initialised.
 @view-transition {
   navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 180ms;
+}
+
+// Reduced motion: the page change stays instant. The animation is switched off rather than the
+// transition itself — Chrome treats an @view-transition rule inside @media as always active,
+// which turned the cross-fade off for everyone and logged an error on every page change.
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }
 
 body {
@@ -70,22 +89,6 @@ footer a {
   flex-wrap: wrap;
   gap: 0.25rem 0.75rem;
   margin-block: 0.25rem 0.1rem;
-}
-
-.card-meta-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--foreground-color);
-
-  [data-icon] {
-    width: 0.9rem;
-    height: 0.9rem;
-    flex-shrink: 0;
-    color: var(--module-card-color, currentColor);
-  }
 }
 
 /* ── Global mobile overflow prevention ── */

@@ -110,13 +110,10 @@ const { t } = useTranslations(Astro.currentLocale)
   }
 
   // Escape key closes the mobile menu — WCAG 2.1.1 Keyboard.
-  // One listener for the lifetime of the window (the header is replaced on every
-  // view-transition navigation); it talks to whichever toggle is on the page now.
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') document.querySelector('.responsive-toggle')?.dispatchEvent(new Event('menu:close'))
   })
 
-  document.addEventListener('astro:page-load', initializeResponsiveToggle)
   initializeResponsiveToggle()
 </script>
 

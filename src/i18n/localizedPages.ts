@@ -53,10 +53,8 @@ const isRoutableSourcePage = (filePath: string): boolean => {
 
   const route = toRoute(filePath)
 
-  // 404 is locale-independent; Astro handles it separately.
-  if (route === '404') {
-    return false
-  }
+  // 404 is a normal source page here: /cs/404/, /de/404/ … are built like any other localized page,
+  // and 404.html (the only file GitHub Pages serves for a missing address) sends visitors there.
 
   // Dynamic routes (e.g. [slug].astro) manage their own getStaticPaths —
   // registering them here would produce duplicate or conflicting entries.

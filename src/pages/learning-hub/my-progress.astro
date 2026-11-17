@@ -123,6 +123,7 @@ const labels = {
   <script>
     import { CHALLENGE_IDS, canStoreProgress, clearProgress, completedCount, readProgress, starsFor } from '../../utils/challengeProgress'
     import type { ChallengeId } from '../../utils/challengeProgress'
+    import { fmt } from '../../utils/challenge/text'
 
     const initProgressPage = () => {
       const dataEl = document.getElementById('progress-page-data')
@@ -134,8 +135,6 @@ const labels = {
         challenges: { id: ChallengeId; title: string; href: string }[]
         labels: Record<string, string>
       }
-      const fmt = (template: string, vars: Record<string, string | number>) =>
-        String(template ?? '').replace(/\{(\w+)\}/g, (_m, key) => String(vars[key] ?? ''))
       const q = <T extends HTMLElement>(selector: string) => page.querySelector<T>(selector)
 
       const overall = q('[data-overall]')
@@ -243,7 +242,6 @@ const labels = {
       render()
     }
 
-    document.addEventListener('astro:page-load', initProgressPage)
     initProgressPage()
   </script>
 

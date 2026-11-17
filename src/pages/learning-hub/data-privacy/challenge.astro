@@ -231,7 +231,9 @@ const labels = {
 <script>
   import { DP_ACTIVITIES, dealActivities, dealProfile, isProfileRight, rankFor } from '../../../data/challengeDP'
   import { recordResult } from '../../../utils/challengeProgress'
-  import type { DpActivityRule, DpAction, DpProfileRule, DpZone } from '../../../data/challengeDP'
+  import { createSortBoard } from '../../../utils/challenge/sortBoard'
+  import { fmt } from '../../../utils/challenge/text'
+  import type { DpActivityRule, DpAction, DpProfileRule } from '../../../data/challengeDP'
 
   const initializeFootprintGame = () => {
     document.querySelectorAll('[data-fp-game]').forEach((root) => {
@@ -251,8 +253,6 @@ const labels = {
       const activityById = new Map(activities.map((item) => [item.id, item]))
       const profileById = new Map(profile.map((item) => [item.id, item]))
       const activityRuleById = new Map<number, DpActivityRule>(DP_ACTIVITIES.map((rule) => [rule.id, rule]))
-      const fmt = (template: string, vars: Record<string, string | number>) =>
-        String(template ?? '').replace(/\{(\w+)\}/g, (_m, key) => String(vars[key] ?? ''))
       const zoneLabel = (zone: string) => `${zoneTexts[zone]?.icon ?? ''} ${zoneTexts[zone]?.title ?? zone}`.trim()
 
       const q = <T extends HTMLElement>(selector: string) => root.querySelector<T>(selector)
@@ -278,27 +278,18 @@ const labels = {
       const winMessage = q('[data-win-message]')
       const reviewBox = q('[data-review]')
       const reviewList = q('[data-review-list]')
-      const cardsTray = q('[data-cards-tray]')
-      const zones = root.querySelectorAll<HTMLElement>('[data-zone]')
       const actionButtons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-action]'))
       const restartBtns = root.querySelectorAll('[data-restart]')
-      const cardTemplate = q<HTMLTemplateElement>('template[data-card-template]')
-      const emptyTemplate = q<HTMLTemplateElement>('template[data-empty-template]')
       const reviewTemplate = q<HTMLTemplateElement>('template[data-review-template]')
 
       if (!scoreEl || !stageLabel || !feedbackEl || !feedbackTitle || !feedbackText || !sortStage || !cleanupStage ||
           !betweenPanel || !betweenSummary || !cleanupScore || !cleanupProgress || !profileIcon || !profileLabel ||
           !profileValue || !cleanupNext || !winPanel || !winSummary || !winMessage || !reviewBox || !reviewList ||
-          !cardsTray || !cardTemplate || !emptyTemplate || !reviewTemplate || zones.length === 0) return
+          !reviewTemplate) return
 
       // ── State ─────────────────────────────────────────────────────────────
+      // Step 1 (cards, selection, first-try count) is kept by the sort board, see utils/challenge/sortBoard.ts
       let deck: DpActivityRule[] = []
-      let placedCount = 0
-      let sortFirstTry = 0
-      let sortMissed = new Set<number>()
-      let selectedCard: HTMLElement | null = null
-      let draggedCard: HTMLElement | null = null
-      let busy = false
 
       let profileDeck: DpProfileRule[] = []
       let profileIndex = 0
@@ -306,13 +297,6 @@ const labels = {
       let profileFirstTry = 0
       let profileMissed = new Set<number>()
       let profileAnswered = false
-
-      const zoneMap = new Map<string, HTMLElement>()
-      zones.forEach((zone) => zoneMap.set(zone.dataset.zone || '', zone))
-
-      const getCards = () => Array.from(root.querySelectorAll<HTMLElement>('[data-activity-id]'))
-      const getWrapper = (card: HTMLElement) => card.closest('.activity-card-wrapper') as HTMLElement | null
-      const getChoices = (card: HTMLElement) => getWrapper(card)?.querySelector<HTMLElement>('.activity-card__choices') ?? null
 
       // ── Feedback: explanation of the last answer, always in view ──────────
       const showFeedback = (type: 'correct' | 'wrong' | 'info', title: string, text: string) => {
@@ -340,114 +324,10 @@ const labels = {
       }
 
       // ═════════════════════════ STEP 1: SORT ═══════════════════════════════
-      const updateScore = () => {
-        scoreEl.textContent = `${placedCount} / ${deck.length}`
-        if (scoreFill) scoreFill.style.width = deck.length ? `${(placedCount / deck.length) * 100}%` : '0%'
-      }
+      const explanationOf = (id: number) => activityById.get(id)?.explanation ?? ''
 
-      const buildCard = (rule: DpActivityRule): HTMLElement => {
-        const item = activityById.get(rule.id)
-        const wrapper = cardTemplate.content.firstElementChild!.cloneNode(true) as HTMLElement
-        wrapper.querySelector<HTMLElement>('.activity-card')!.dataset.activityId = String(rule.id)
-        wrapper.querySelector('.activity-card__emoji')!.textContent = item?.emoji ?? ''
-        wrapper.querySelector('.activity-card__text')!.textContent = item?.text ?? ''
-        return wrapper
-      }
-
-      const deselectCard = () => {
-        if (selectedCard) {
-          selectedCard.classList.remove('activity-card--selected')
-          selectedCard.setAttribute('aria-pressed', 'false')
-          const choices = getChoices(selectedCard)
-          if (choices) choices.hidden = true
-        }
-        selectedCard = null
-      }
-
-      const handleCardClick = (card: HTMLElement) => {
-        if (busy) return
-        const id = Number(card.dataset.activityId)
-        if (card.dataset.placed === 'true') {
-          // A placed card can be tapped to read its explanation again
-          const item = activityById.get(id)
-          const rule = activityRuleById.get(id)
-          if (item && rule) showFeedback('info', zoneLabel(rule.zone), item.explanation)
-          return
-        }
-        if (selectedCard === card) {
-          deselectCard()
-          return
-        }
-        deselectCard()
-        selectedCard = card
-        card.classList.add('activity-card--selected')
-        card.setAttribute('aria-pressed', 'true')
-        const choices = getChoices(card)
-        if (choices) choices.hidden = false
-      }
-
-      const moveCardToZone = (card: HTMLElement, zone: HTMLElement) => {
-        const wrapper = getWrapper(card)
-        const content = zone.querySelector('[data-zone-content]')
-        if (!content || !wrapper) return
-        content.querySelector('.drop-zone__empty')?.remove()
-        content.appendChild(wrapper)
-      }
-
-      const focusNextCard = () => {
-        getCards().find((card) => card.dataset.placed !== 'true')?.focus()
-      }
-
-      const performDrop = (card: HTMLElement, zone: HTMLElement, options: { focusNext?: boolean } = {}) => {
-        if (card.dataset.placed === 'true' || busy) return
-        const id = Number(card.dataset.activityId)
-        const rule = activityRuleById.get(id)
-        const item = activityById.get(id)
-        if (!rule || !item) return
-
-        busy = true
-        const chosen = zone.dataset.zone as DpZone
-
-        if (rule.zone === chosen) {
-          card.dataset.placed = 'true'
-          card.classList.add('activity-card--placed')
-          card.draggable = false
-          card.tabIndex = -1
-          card.setAttribute('aria-pressed', 'false')
-          deselectCard()
-          moveCardToZone(card, zone)
-
-          placedCount++
-          if (!sortMissed.has(id)) sortFirstTry++
-          updateScore()
-          showFeedback('correct', fmt(labels.correctInTemplate, { zone: zoneLabel(chosen) }), item.explanation)
-          if (options.focusNext) focusNextCard()
-
-          setTimeout(() => {
-            busy = false
-            checkSortDone()
-          }, 600)
-        } else {
-          // Wrong zone: counts against the first-try score, and the explanation says why
-          sortMissed.add(id)
-          card.classList.add('activity-card--wrong')
-          showFeedback('wrong', labels.tryOtherZone, item.explanation)
-
-          setTimeout(() => {
-            card.classList.remove('activity-card--wrong')
-            busy = false
-          }, 700)
-        }
-      }
-
-      const handleZoneClick = (zone: HTMLElement) => {
-        if (!selectedCard || busy || selectedCard.dataset.placed === 'true') return
-        performDrop(selectedCard, zone)
-      }
-
-      const checkSortDone = () => {
-        if (getCards().length === 0 || !getCards().every((card) => card.dataset.placed === 'true')) return
-        betweenSummary.textContent = fmt(labels.firstTryTemplate, { n: sortFirstTry, total: deck.length })
+      const showBetween = () => {
+        betweenSummary.textContent = fmt(labels.firstTryTemplate, { n: board.firstTry, total: deck.length })
         setTimeout(() => {
           hideFeedback()
           showStage('between')
@@ -455,49 +335,28 @@ const labels = {
         }, 400)
       }
 
-      // ── Drag event handlers ───────────────────────────────────────────────
-      const handleDragStart = (e: DragEvent) => {
-        if (!(e.target instanceof HTMLElement)) return
-        const card = e.target.closest('[data-activity-id]') as HTMLElement | null
-        if (!card || card.dataset.placed === 'true') {
-          e.preventDefault()
-          return
-        }
-        draggedCard = card
-        card.classList.add('activity-card--dragging')
-        if (e.dataTransfer) {
-          e.dataTransfer.effectAllowed = 'move'
-          e.dataTransfer.setData('text/plain', card.dataset.activityId || '')
-        }
-      }
-
-      const handleDragEnd = (e: DragEvent) => {
-        if (!(e.target instanceof HTMLElement)) return
-        e.target.closest('[data-activity-id]')?.classList.remove('activity-card--dragging')
-        zones.forEach((zone) => zone.classList.remove('drop-zone--active'))
-      }
-
-      const handleDragOver = (e: DragEvent) => {
-        e.preventDefault()
-        if (e.dataTransfer) e.dataTransfer.dropEffect = 'move'
-        const zone = (e.target as HTMLElement).closest('[data-zone]') as HTMLElement | null
-        zone?.classList.add('drop-zone--active')
-      }
-
-      const handleDragLeave = (e: DragEvent) => {
-        const zone = (e.target as HTMLElement).closest('[data-zone]') as HTMLElement | null
-        if (zone && e.target === zone) zone.classList.remove('drop-zone--active')
-      }
-
-      const handleDrop = (e: DragEvent) => {
-        e.preventDefault()
-        if (!draggedCard) return
-        const zone = (e.target as HTMLElement).closest('[data-zone]') as HTMLElement | null
-        if (!zone) return
-        zone.classList.remove('drop-zone--active')
-        performDrop(draggedCard, zone)
-        draggedCard = null
-      }
+      const created = createSortBoard({
+        root,
+        cardClass: 'activity-card',
+        idKey: 'activityId',
+        zoneOf: (id) => activityRuleById.get(id)?.zone,
+        fillCard: (wrapper, id) => {
+          const activity = activityById.get(id)
+          wrapper.querySelector('.activity-card__emoji')!.textContent = activity?.emoji ?? ''
+          wrapper.querySelector('.activity-card__text')!.textContent = activity?.text ?? ''
+        },
+        onProgress: (placed, total) => {
+          scoreEl.textContent = `${placed} / ${total}`
+          if (scoreFill) scoreFill.style.width = total ? `${(placed / total) * 100}%` : '0%'
+        },
+        onCorrect: (id, zone) => showFeedback('correct', fmt(labels.correctInTemplate, { zone: zoneLabel(zone) }), explanationOf(id)),
+        onWrong: (id) => showFeedback('wrong', labels.tryOtherZone, explanationOf(id)),
+        // A placed card can be tapped to read its explanation again
+        onReview: (id, zone) => showFeedback('info', zoneLabel(zone), explanationOf(id)),
+        onAllPlaced: showBetween,
+      })
+      if (!created) return
+      const board = created
 
       // ═════════════════════════ STEP 2: CLEAN UP ═══════════════════════════
       const updateCleanupScore = () => {
@@ -569,7 +428,7 @@ const labels = {
 
       const showFinal = () => {
         const total = deck.length + profileDeck.length
-        const firstTry = sortFirstTry + profileFirstTry
+        const firstTry = board.firstTry + profileFirstTry
         recordResult('dp', firstTry, total)
         winSummary.textContent = fmt(labels.firstTryTemplate, { n: firstTry, total })
         const rank = rankFor(firstTry, total)
@@ -582,7 +441,7 @@ const labels = {
           row.querySelector('[data-review-answer]')!.textContent = `→ ${answer}`
           reviewList.append(row)
         }
-        deck.filter((rule) => sortMissed.has(rule.id)).forEach((rule) => {
+        deck.filter((rule) => board.missed.has(rule.id)).forEach((rule) => {
           const item = activityById.get(rule.id)
           addReview(`${item?.emoji ?? ''} ${item?.text ?? ''}`.trim(), zoneLabel(rule.zone))
         })
@@ -599,99 +458,25 @@ const labels = {
       }
 
       // ═════════════════════════ DEAL + RESTART ═════════════════════════════
-      const emptyZones = () => {
-        zones.forEach((zone) => {
-          const content = zone.querySelector<HTMLElement>('[data-zone-content]')
-          content?.replaceChildren(emptyTemplate.content.firstElementChild!.cloneNode(true))
-        })
-      }
-
       const deal = () => {
         deck = dealActivities()
-        placedCount = 0
-        sortFirstTry = 0
-        sortMissed = new Set<number>()
-        selectedCard = null
-        draggedCard = null
-        busy = false
         profileDeck = dealProfile()
         profileIndex = 0
         profileCorrect = 0
         profileFirstTry = 0
         profileMissed = new Set<number>()
         profileAnswered = false
-        cardsTray.replaceChildren(...deck.map(buildCard))
-        updateScore()
+        board.deal(deck.map((rule) => rule.id))
       }
 
       const restart = () => {
         hideFeedback()
-        emptyZones()
         deal()
         showStage('sort')
-        getCards()[0]?.focus({ preventScroll: true })
+        board.focusFirst()
       }
 
       // ── Listeners ─────────────────────────────────────────────────────────
-      root.addEventListener('dragstart', handleDragStart, true)
-      root.addEventListener('dragend', handleDragEnd, true)
-
-      zones.forEach((zone) => {
-        zone.addEventListener('dragover', handleDragOver)
-        zone.addEventListener('dragleave', handleDragLeave)
-        zone.addEventListener('drop', handleDrop)
-        zone.addEventListener('click', (e) => {
-          // A click on a card or its buttons inside the zone is not a click on the zone itself
-          if (e.target instanceof HTMLElement && e.target.closest('[data-activity-id], .activity-card__choices')) return
-          handleZoneClick(zone)
-        })
-      })
-
-      // Cards are created again for every game, so one set of delegated listeners handles them all
-      root.addEventListener('click', (e) => {
-        const target = e.target
-        if (!(target instanceof HTMLElement)) return
-
-        // "Where does it go?" buttons under the selected card
-        const choice = target.closest<HTMLElement>('[data-choose]')
-        if (choice) {
-          const card = getWrapper(choice)?.querySelector<HTMLElement>('[data-activity-id]')
-          const zone = zoneMap.get(choice.dataset.choose ?? '')
-          if (card && zone) performDrop(card, zone, { focusNext: true })
-          return
-        }
-
-        const card = target.closest<HTMLElement>('[data-activity-id]')
-        if (card) handleCardClick(card)
-      })
-
-      root.addEventListener('keydown', (e) => {
-        const target = e.target
-        if (!(target instanceof HTMLElement)) return
-
-        const card = target.closest<HTMLElement>('[data-activity-id]')
-        if (card && target === card) {
-          if (e.key === 'Escape' && selectedCard === card) {
-            deselectCard()
-            return
-          }
-          if ((e.key !== 'Enter' && e.key !== ' ') || e.repeat || card.dataset.placed === 'true') return
-          e.preventDefault()
-          const wasSelected = selectedCard === card
-          handleCardClick(card)
-          // Newly selected → continue with the buttons right below the card
-          if (!wasSelected && selectedCard === card) getChoices(card)?.querySelector<HTMLElement>('button')?.focus()
-          return
-        }
-
-        // Escape inside the zone buttons: back to the card
-        if (e.key === 'Escape' && target.closest('.activity-card__choices') && selectedCard) {
-          const back = selectedCard
-          deselectCard()
-          back.focus()
-        }
-      })
-
       actionButtons.forEach((button) => button.addEventListener('click', () => handleAction(button)))
       cleanupNext.addEventListener('click', () => {
         profileIndex++
@@ -707,7 +492,6 @@ const labels = {
     })
   }
 
-  document.addEventListener('astro:page-load', initializeFootprintGame)
   initializeFootprintGame()
 </script>
 

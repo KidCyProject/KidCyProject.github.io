@@ -16,6 +16,9 @@
  * "look at the source, not only at the look".
  */
 
+import { shuffle } from './challengeShared'
+import type { Random } from './challengeShared'
+
 export type MwLevelKey = 'files' | 'emails' | 'popups' | 'perms' | 'types' | 'signs' | 'shield'
 export type MwMalwareType = 'virus' | 'worm' | 'trojan' | 'ransomware' | 'spyware' | 'adware'
 export type MwMeasure = 'links' | 'trusted' | 'update' | 'antivirus' | 'adult' | 'attachment'
@@ -135,16 +138,6 @@ export interface MwCase {
   danger: boolean
 }
 
-type Random = () => number
-
-export const shuffle = <T>(items: ReadonlyArray<T>, random: Random = Math.random): T[] => {
-  const copy = [...items]
-  for (let i = copy.length - 1; i > 0; i--) {
-    const j = Math.floor(random() * (i + 1))
-    ;[copy[i], copy[j]] = [copy[j], copy[i]]
-  }
-  return copy
-}
 
 /** Tricky items first (they are always dealt), then random ones. */
 const pick = <T extends { tricky?: boolean }>(pool: ReadonlyArray<T>, count: number, random: Random): T[] => {
@@ -209,3 +202,6 @@ export const rankFor = (correct: number, total: number): MwRank => {
   if (share >= 0.55) return 'junior'
   return 'trainee'
 }
+
+// kept as an export of this file for existing imports
+export { shuffle }

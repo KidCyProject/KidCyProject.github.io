@@ -40,9 +40,8 @@ const labels = {
 <script>
   import { PROGRESS_EVENT } from '../utils/challengeProgress'
   import type { ProgressEventDetail } from '../utils/challengeProgress'
+  import { fmt } from '../utils/challenge/text'
 
-  const fmt = (template: string, vars: Record<string, string | number>) =>
-    String(template ?? '').replace(/\{(\w+)\}/g, (_m, key) => String(vars[key] ?? ''))
 
   let hideTimer: ReturnType<typeof setTimeout> | undefined
 

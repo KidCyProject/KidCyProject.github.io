@@ -19,10 +19,15 @@ export default defineConfig({
     },
   },
   output: 'static',
+  // Links are fetched when the pointer rests on them or they get keyboard focus, so the next
+  // page is usually already there when it is opened. Skipped on slow or data-saving connections.
+  prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
   integrations: [
     icon(),
     // sitemap-index.xml with every page in every language, cross-linked with hreflang
     sitemap({
+      // the 404 pages (/404/, /cs/404/ …) are not content
+      filter: (page) => !/\/404\/?$/.test(page),
       i18n: {
         defaultLocale: 'en',
         locales: { en: 'en', cs: 'cs', de: 'de', lt: 'lt', no: 'no' },

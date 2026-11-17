@@ -285,9 +285,9 @@ Everything below runs in `.github/workflows/deploy.yml` before a deploy; any fai
 | `npm run check` | TypeScript / Astro type check |
 | `npm test` | Vitest (`tests/`): translations have the same keys in every language, every linked file exists in `public/`, challenge logic (password rules, dealing, scoring), progress store |
 | `npm run check:links` | After `npm run build`: every internal link of `dist/`, including the zip packages |
-| `npm run test:e2e` | After `npm run build`: Playwright (`e2e/`): each page type in 5 languages, language switch, keyboard tabs, phone width, one challenge played to the end, axe accessibility scan in light and dark mode |
+| `npm run test:e2e` | After `npm run build`: Playwright (`e2e/`): each page type in 5 languages, language switch, keyboard tabs, all seven challenges played to the end, axe accessibility scan in light and dark mode, security policy, privacy claims; `phone.spec.ts`: every page at 375 and 320 px (nothing cut off, tap-target size), menu, hints and games used by tapping |
 
-First local run of the browser tests needs `npx playwright install chromium`. Colour contrast is reported by the scan but does not fail it (see `REPORT_ONLY` in `e2e/accessibility.spec.ts`).
+The browser tests run in Chromium, Firefox and WebKit (Safari's engine); `phone.spec.ts` skips Firefox, which cannot emulate a touch phone. First local run needs `npx playwright install chromium firefox webkit`; one engine only: `npx playwright test --project=webkit`. The test server (`scripts/serve-dist.mjs`) removes `upgrade-insecure-requests` from the pages it serves, because it speaks plain http and Safari would otherwise refuse every file. Colour contrast is reported by the scan but does not fail it (see `REPORT_ONLY` in `e2e/accessibility.spec.ts`).
 
 ### Fonts
 
@@ -303,3 +303,48 @@ A new language with another script (Cyrillic, Greek) needs a wider `--unicodes` 
 
 - **Content-Security-Policy** is written by `DefaultLayout.astro` as a `<meta>` tag (GitHub Pages cannot send headers). Inline scripts are allowed by SHA-256 hash only: `scripts/csp-hashes.mjs` (last integration in `astro.config.mjs`) collects the hashes from the built pages. Consequences: no `onclick="…"` style attributes, no scripts or fonts from other domains, no `<iframe>` embeds without first widening the policy. `astro dev` allows inline scripts, so always check a production build (`npm run build && npm run test:e2e`).
 - **Privacy page** (`src/pages/privacy.astro`) lists every `localStorage` key. `e2e/privacy.spec.ts` fails when the site stores a key that is not listed, sets a cookie, or contacts another server — add new keys to `STORED` in the page and to the five translations.
+
+### Challenge code
+
+Each challenge page (`src/pages/learning-hub/<module>/challenge.astro`) is its own game; what they share lives in three places:
+
+| File | Holds |
+|---|---|
+| `src/data/challenge<XX>.ts` | Answer keys and dealing rules of one challenge — no text, no DOM. Unit-tested in `tests/challenges.test.ts`. |
+| `src/data/challengeShared.ts` | `shuffle`, the `Random` type and the three-step rank (great / good / practise) used by DC, DP and AP. |
+| `src/utils/challenge/sortBoard.ts` | The card-sorting mechanic of Digital Citizenship and Data Privacy: drag and drop, tap + zone, keyboard, first-try count. The page supplies texts and reactions through callbacks. |
+| `src/utils/challenge/text.ts` | `fmt('{n} of {total}', { n, total })` for translated templates. |
+| `src/utils/challengeProgress.ts` | Saved results (`localStorage`), see "My progress". |
+
+`e2e/challenges.spec.ts` plays all seven challenges to the result screen; run it after any change to a challenge.
+
+### Dark mode stylesheet
+
+`src/assets/scss/base/_dark.scss` holds the dark overrides. Its header explains the convention: rules start with `html.darkmode` (one step more specific than a component's own rule, so no `!important` for the usual case); `!important` stays only where a light rule is more specific, for hover/focus rules and for classes that appear only during a game. Six blocks marked "kept weak" still use plain `.darkmode` on purpose. For new work prefer a `light-dark()` token in `_root.scss` over a new override.
+
+### Which styling tool for what
+
+Three tools are in use; each has one job.
+
+| Need | Use | Not |
+|---|---|---|
+| Layout and spacing in markup (`flex`, `grid`, `gap-4`, `mt-6`, `p-4`, `rounded-lg`, `text-sm`, `font-bold`, `hidden`, `sr-only`) | Tailwind utilities | — |
+| Colour of text, surfaces, borders | Tokens: `--brand-*`, `--ch-*`, `--dm-*`, `light-dark()` values in `_root.scss`; in challenge markup the `tone-*` classes from `_challenge.scss` | Tailwind colour utilities (`text-slate-600`, `bg-white`, `border-slate-200` …): they are fixed light values and need a separate dark override each |
+| Look of a component (its own boxes, states, animations) | Scoped `<style>` in the `.astro` file | new global SCSS |
+| Site-wide tokens, reset, the shared challenge look, dark overrides | `src/assets/scss/base/` | component-specific rules |
+
+`tone-*` classes (`tone-text-strong`, `tone-text`, `tone-text-soft`, `tone-text-muted`, `tone-surface`, `tone-surface-soft`, `tone-surface-sunken`, `tone-line`, `tone-line-strong` …) pair a light and a dark value in one place. No Tailwind colour utility is left in the markup. One added later has no dark partner: it keeps its light colour in dark mode (the accessibility scan lists such text under colour contrast, which is reported, not blocking).
+
+### Moving between pages
+
+There is no client-side router. Every link is an ordinary page load; `@view-transition { navigation: auto }` in `_general.scss` lets Chrome, Edge and Safari cross-fade between pages (Firefox shows the new page directly). Consequences:
+
+- A page's scripts run once, on that page. No `astro:page-load` listeners, nothing to re-initialise.
+- `prefetch` in `astro.config.mjs` fetches a link's page when the pointer rests on it or it gets focus, so the load is usually instant.
+- Do not put `@view-transition` inside `@media`: Chrome applies it regardless of the condition. Reduced motion is handled by switching the animation off (same file).
+- `DefaultLayout.astro` has `<link rel="expect" href="#main-content" blocking="render">` (the new page shows once its main content is parsed) and a small inline script that absorbs the promise rejections a skipped fade produces.
+- Chrome sometimes skips the fade anyway and logs "Transition was aborted … ViewTransition opt-in disabled" (in headless Chrome about one page change in three on full pages, never on minimal pages). The page loads normally; the browser tests ignore exactly this message (`isKnownBrowserNoise` in `e2e/pages.ts`).
+
+### Structured data (schema.org)
+
+`SiteMeta.astro` writes one JSON-LD block per page: `WebSite` everywhere, plus what the page passes as `jsonLd`. Module pages (`ModuleContentPage.astro`) pass a `Course`, one `LearningResource` per part and a `VideoObject` for each lesson video. Publication date and length of the videos live in `src/data/videoMeta.ts` — add a line there when a video is added (a unit test fails otherwise). `e2e/structured-data.spec.ts` checks the result on every module page.

@@ -6,6 +6,8 @@ import { MW_CASES_PER_GAME, MW_LEVEL_COUNT, dealGame, isRight } from '../src/dat
 import { DP_ACTIVITIES_PER_GAME, DP_DECK_PLAN, DP_PROFILE_PER_GAME, dealActivities, dealProfile, isProfileRight } from '../src/data/challengeDP'
 import { AP_TOTAL_QUESTIONS, dealQuestions } from '../src/data/challengeAP'
 import { DM_STORY_STRUCTURE } from '../src/data/challengeDM'
+import { shuffle, threeStepRank } from '../src/data/challengeShared'
+import { fmt } from '../src/utils/challenge/text'
 
 /** Repeatable "random" numbers, so a failing deal can be reproduced. */
 const seeded = (seed: number) => () => {
@@ -159,5 +161,31 @@ describe('Real Talk Stories (digital misuse) story graphs', () => {
     }
     visit('start')
     expect(Object.keys(story.nodes).filter((name) => !reached.has(name))).toEqual([])
+  })
+})
+
+describe('shared helpers', () => {
+  it('shuffle keeps every item and leaves the original alone', () => {
+    const original = [1, 2, 3, 4, 5, 6, 7, 8]
+    const mixed = shuffle(original, seeded(11))
+    expect(original).toEqual([1, 2, 3, 4, 5, 6, 7, 8])
+    expect([...mixed].sort((a, b) => a - b)).toEqual(original)
+    expect(mixed).not.toEqual(original)
+    // same seed, same order
+    expect(shuffle(original, seeded(11))).toEqual(mixed)
+  })
+
+  it('three-step rank: 85 % great, 55 % good', () => {
+    expect([0, 54, 55, 84, 85, 100].map((points) => threeStepRank(points, 100))).toEqual([
+      'practise', 'practise', 'good', 'good', 'great', 'great',
+    ])
+    expect(threeStepRank(5, 0)).toBe('practise')
+  })
+
+  it('fmt fills placeholders and drops unknown ones', () => {
+    expect(fmt('{n} of {total}', { n: 3, total: 7 })).toBe('3 of 7')
+    expect(fmt('Hello {name}!', {})).toBe('Hello !')
+    expect(fmt(undefined, { n: 1 })).toBe('')
+    expect(fmt('no placeholders')).toBe('no placeholders')
   })
 })

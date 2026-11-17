@@ -149,7 +149,7 @@ const localizedModules = modules.map((module) => {
             >
               <div class="module-intro-grid">
                 <div class="module-poster">
-                  <img class="module-poster-image" src={module.img} alt={module.title} loading="lazy" />
+                  <img class="module-poster-image" src={module.img} alt={module.title} width="1000" height="1000" loading="lazy" decoding="async" />
                 </div>
 
                 <div class="module-copy">
@@ -773,9 +773,7 @@ const localizedModules = modules.map((module) => {
 </style>
 
 <script>
-  // data-toggle-bound guards against attaching duplicate click listeners when
-  // Astro view transitions cause initializeModuleToggles to run again on the
-  // same DOM nodes that were carried over from the previous page visit.
+  // data-toggle-bound keeps a button from getting its click listener twice
   const initializeModuleToggles = () => {
     document.querySelectorAll<HTMLButtonElement>('[data-module-toggle]').forEach((btn) => {
       if (btn.dataset.toggleBound === 'true') return
@@ -799,6 +797,5 @@ const localizedModules = modules.map((module) => {
     })
   }
 
-  document.addEventListener('astro:page-load', initializeModuleToggles)
   initializeModuleToggles()
 </script>

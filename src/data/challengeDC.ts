@@ -11,6 +11,9 @@
  *   ask     — about another person: post only if they agree, and respect a "no"            (responsible)
  */
 
+import { shuffle, threeStepRank } from './challengeShared'
+import type { Random } from './challengeShared'
+
 export type DcZone = 'good' | 'private' | 'unkind' | 'ask'
 
 export const DC_ZONES: ReadonlyArray<DcZone> = ['good', 'private', 'unkind', 'ask']
@@ -63,16 +66,6 @@ export const DC_POSTS: ReadonlyArray<DcPostRule> = [
 export const DC_DECK_PLAN: Readonly<Record<DcZone, number>> = { good: 4, private: 4, unkind: 4, ask: 4 }
 export const DC_POSTS_PER_GAME = Object.values(DC_DECK_PLAN).reduce((sum, n) => sum + n, 0)
 
-type Random = () => number
-
-export const shuffle = <T>(items: ReadonlyArray<T>, random: Random = Math.random): T[] => {
-  const copy = [...items]
-  for (let i = copy.length - 1; i > 0; i--) {
-    const j = Math.floor(random() * (i + 1))
-    ;[copy[i], copy[j]] = [copy[j], copy[i]]
-  }
-  return copy
-}
 
 /** A balanced, shuffled set of posts for one game. */
 export const dealPosts = (random: Random = Math.random): DcPostRule[] => {
@@ -86,9 +79,7 @@ export const dealPosts = (random: Random = Math.random): DcPostRule[] => {
 export type DcRank = 'great' | 'good' | 'practise'
 
 /** Based on posts sorted right on the first try. */
-export const rankFor = (firstTry: number, total: number): DcRank => {
-  const share = total > 0 ? firstTry / total : 0
-  if (share >= 0.85) return 'great'
-  if (share >= 0.55) return 'good'
-  return 'practise'
-}
+export const rankFor: (points: number, total: number) => DcRank = threeStepRank
+
+// kept as an export of this file for existing imports
+export { shuffle }

@@ -66,10 +66,10 @@ jobs:
       - name: Check links
         run: npm run check:links
 
-      # Real browser: every page type in every language, one challenge played to the end,
-      # keyboard use, phone width, automated accessibility scan (axe)
-      - name: Install browser for tests
-        run: npx playwright install --with-deps chromium
+      # Real browsers (Chromium, Firefox, and WebKit = Safari's engine): every page type in every
+      # language, all challenges played to the end, keyboard use, phone screens, accessibility scan
+      - name: Install browsers for tests
+        run: npx playwright install --with-deps chromium firefox webkit
 
       - name: Browser tests
         run: npm run test:e2e

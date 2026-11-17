@@ -24,12 +24,14 @@ const values = [
   { image: '/images/about/european.webp', title: 'europeanCohesion', desc: 'europeanCohesionDesc' },
 ]
 
+// logoSize: pixel size of the logo file, so the browser can reserve its place before it loads
 const partners = [
   {
     name: 'uniLiechtenstein',
     desc: 'uniLiechtensteinDesc',
     country: 'countryLI',
     logo: '/images/about/Universitat_Liechtenstein_logo.svg',
+    logoSize: [1024, 166],
     url: 'https://www.uni.li/en',
   },
   {
@@ -37,6 +39,7 @@ const partners = [
     desc: 'cyberSecurityHubDesc',
     country: 'countryCZ',
     logo: '/images/about/cyberSecurityHubCZ-logo-black_cut.webp',
+    logoSize: [800, 141],
     url: 'https://www.cybersecurityhub.cz/',
   },
   {
@@ -44,6 +47,7 @@ const partners = [
     desc: 'uniInlandNorwayDesc',
     country: 'countryNO',
     logo: '/images/about/University_of_Inland_Norway_logo.svg.webp',
+    logoSize: [800, 154],
     url: 'https://www.inn.no/english/',
   },
   {
@@ -51,6 +55,7 @@ const partners = [
     desc: 'uniInnsbruckDesc',
     country: 'countryAT',
     logo: '/images/about/Universitaet-innsbruck-logo-rgb-farbe.svg.webp',
+    logoSize: [800, 316],
     url: 'https://www.uibk.ac.at/en',
   },
   {
@@ -58,6 +63,7 @@ const partners = [
     desc: 'vilniusUniDesc',
     country: 'countryLT',
     logo: '/images/about/Logo_vilnius_university.webp',
+    logoSize: [800, 505],
     url: 'https://www.vu.lt/en',
   },
 ]
@@ -121,7 +127,7 @@ const involve = [
         {values.map((value) => (
           <article class="core-value-card value-card">
             <div class="core-value-media">
-              <img src={value.image} alt="" loading="lazy" />
+              <img src={value.image} alt="" width="1000" height="1000" loading="lazy" decoding="async" />
             </div>
             <div class="value-card__text">
               <h3 class="core-value-title" set:html={t(`pages.about.${value.title}`)} />
@@ -143,7 +149,7 @@ const involve = [
       <ul class="partner-grid" role="list">
         {partners.map((partner) => (
           <li class="core-value-card initiative-partner-card">
-            <img class="logo-image" src={partner.logo} alt="" loading="lazy" />
+            <img class="logo-image" src={partner.logo} alt="" width={partner.logoSize[0]} height={partner.logoSize[1]} loading="lazy" decoding="async" />
             <h3 class="partner-name">{t(`pages.about.${partner.name}`)}</h3>
             <p class="partner-country">
               <Icon name="lucide:map-pin" aria-hidden="true" />

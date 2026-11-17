@@ -349,14 +349,14 @@ You can download at whichever level suits you:
 
 | Download | Where to find it | Contains |
 |---|---|---|
-| **Download Introductory Materials** | Top of each module page | Introductory materials shared by all modules |
+| **Download Introductory Materials** | Top of each module page | Introductory materials shared by all modules *(the button appears once files are added to `public/materials/introduction/`)* |
 | **Download All Materials** | Top of each module page | Every part package and the teaching guide of the module in one ZIP |
 | **Download Teaching Guide** | *Guide* section, above Part 1 | Guidance for every material in the module (currently English and Czech) |
 | **Download Package** | Each part | Worksheets, cards, images and video for that part |
 | **Single material** | Each part's material list | One worksheet / card set / image |
 | **Video + subtitles** | Under each video | The MP4 and subtitle files (`.vtt`) in all 5 languages |
 | **Game file (.rbxl)** | Game page, left column | The game's Roblox place file and the Games Hub, ready to open in Roblox Studio |
-| **Game guides** | Game page, right column | Developer, Teacher and Student Guide (language menu) |
+| **Game guides** | Game page, right column | Developer, Teacher and Student Guide (language menu) *(listed once the guide files are added)* |
 | **Game video walkthroughs** | Game page, right column | MP4 demos of each part of the game and of the Games Hub |
 
 Every package and translated material opens a **language menu** (EN · CS · NO · LT · DE) — pick the language you teach in and you get a ZIP with only that language's materials (plus language-neutral files such as videos and images).
@@ -365,6 +365,30 @@ Every package and translated material opens a **language menu** (EN · CS · NO 
 > Downloaded videos with subtitles let you teach **offline** — handy if your classroom internet is unreliable. Most video players (e.g. VLC) can load `.vtt` subtitle files.
 
 **Material types you will encounter:** worksheets, scenario, solution, sorting, role and game cards, card and game sets, single images and sets of images, posters, schemas, readings and situation descriptions — most are designed to be **printed** for group or individual work. Each material has an ID such as `3.2.1` (module · part · material); an `a`/`b` suffix (e.g. `5.1.3a`, `5.1.3b`) marks two related files that share one topic, such as a single image and a set of images.
+
+<details>
+<summary><b>For developers — running and checking the site</b></summary>
+
+The site is a static [Astro](https://astro.build) project (Node 22.12 or newer).
+
+```bash
+npm ci               # install
+npm run dev          # local site with live reload
+npm run build        # production build into dist/
+```
+
+Checks — all of them run automatically before every deploy, and a failure stops it:
+
+| Command | Checks |
+|---|---|
+| `npm run lint` | Code style and accessibility rules |
+| `npm run check` | TypeScript |
+| `npm test` | Translations complete in all 5 languages, every linked file exists, challenge logic |
+| `npm run check:links` | Every internal link of the built site (run after `npm run build`) |
+| `npm run test:e2e` | Chrome, Firefox and Safari engines: all page types in 5 languages, all 7 challenges played to the end, keyboard use, every page on a phone-sized touch screen (375 and 320 px), accessibility scan, security policy, privacy claims (run after `npm run build`; first time: `npx playwright install chromium firefox webkit`) |
+
+How the code is organised: [CODEBASE_GUIDE.md](CODEBASE_GUIDE.md).
+</details>
 
 <details>
 <summary><b>For maintainers — material files and naming</b></summary>

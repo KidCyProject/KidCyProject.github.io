@@ -152,7 +152,6 @@ const size = (bytes: number) => formatFileSize(bytes, locale)
 <script>
   import { initDownloadMenus } from '../utils/downloadMenu'
 
-  document.addEventListener('astro:page-load', initDownloadMenus)
   initDownloadMenus()
 </script>
 

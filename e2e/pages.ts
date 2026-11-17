@@ -31,9 +31,10 @@ export const GAME_MODULES = ['authentication', 'data-privacy', 'social-engineeri
 export const localized = (locale: Locale, route: string) => (locale === 'en' ? route : `/${locale}${route}`)
 
 /**
- * Console noise that is not a page error:
- * - Astro's view-transition router swaps scripts that already ran for an empty
- *   `data:application/javascript,` script; the policy refuses it (as it should refuse any
- *   data: script) and nothing is lost, because the script was empty.
+ * Console messages that are not a fault of the site:
+ * - "Transition was aborted … ViewTransition opt-in disabled": Chrome sometimes skips the
+ *   page-to-page cross-fade (@view-transition in _general.scss) and reports that as an error.
+ *   The page itself loads normally, just without the fade. Seen in headless Chrome on about one
+ *   page change in three on full pages, never on minimal test pages; the cause is inside Chrome.
  */
-export const isIgnoredConsoleError = (text: string) => text.includes("Loading the script 'data:application/javascript,'")
+export const isKnownBrowserNoise = (text: string) => /Transition was aborted because of invalid state\. ViewTransition opt-in disabled/.test(text)
