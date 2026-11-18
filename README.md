@@ -17,7 +17,7 @@
 [![Challenges](https://img.shields.io/badge/Interactive_Challenges-7-8850DF)](#-interactive-challenges)
 [![Games](https://img.shields.io/badge/Roblox_Games-5-D946EF)](#-cybersecurity-games-roblox)
 [![Languages](https://img.shields.io/badge/Languages-EN_·_CS_·_DE_·_LT_·_NO-2563EB)](#-languages)
-[![License](https://img.shields.io/badge/License-MIT-111827)](LICENSE)
+[![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-111827)](LICENSE)
 
 ![Wise Web Wanderers preview](public/WWW-preview.png)
 
@@ -67,7 +67,7 @@ Children are online earlier and more often than ever. Schools need practical, ag
 | 🎯 **Clear learning goals** | Every module states its aim, learning objectives and "I can…" learning outcomes. |
 | 🌍 **Internationally grounded** | Developed by European universities and cybersecurity practitioners; aligned with the European Digital Competence Framework (DigComp). |
 | 🗣️ **Multilingual** | Interface, challenges and video subtitles in 5 languages; nearly all printable materials are translated too (see [Languages](#-languages)). |
-| 💸 **Free and open** | MIT-licensed — use, adapt and share the materials freely. |
+| 💸 **Free and open** | CC BY-NC-SA 4.0 — use, adapt and share the materials freely for non-commercial purposes, with attribution and under the same license. |
 
 ---
 
@@ -487,7 +487,7 @@ Not for the lessons, videos or challenges — only a web browser. The games need
 <details>
 <summary><b>Is it free? Can I adapt the materials?</b></summary>
 
-Yes. Everything is free and released under the MIT License, so you may use, adapt and share it.
+Yes. Everything is free and released under the [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) license, so you may use, adapt and share it for non-commercial purposes, with attribution and under the same license.
 </details>
 
 <details>
@@ -537,4 +537,4 @@ This is an open, evolving educational initiative. Feedback from educators, resea
 
 ## 📄 License
 
-MIT License. See [LICENSE](LICENSE).
+[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/). See [LICENSE](LICENSE).
